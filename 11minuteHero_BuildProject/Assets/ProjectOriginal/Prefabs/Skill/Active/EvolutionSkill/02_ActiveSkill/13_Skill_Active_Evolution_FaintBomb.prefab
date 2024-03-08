@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6058349621801331926
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6058349621801331925}
+  - component: {fileID: 6695125183077823938}
+  - component: {fileID: -9054833956046877722}
+  m_Layer: 0
+  m_Name: 13_Skill_Active_Evolution_FaintBomb
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6058349621801331925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6058349621801331926}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6695125183077823938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6058349621801331926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e49018b3f0f4a474d8dbda6a4c06783c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eSkillType: 2
+  id: 39
+  icon: {fileID: 0}
+  description: "\uD55C\uB300\uB9CC \uB9DE\uC544\uB3C4 \uC815\uC2E0\uC774 \uC544\uCC14\uD569\uB2C8\uB2E4."
+  name: "\uAE30\uC808\uD3ED\uD0C4"
+  bCanEvolution: 0
+  coolTime: 4
+  currentCoolTime: 0
+  damage: 45
+  currentDamage: 0
+  baseDamage: 0
+  rangedAttackUtility:
+    projectilePrefab: {fileID: 2447267553195785924, guid: 608ed1708c3bef5488ec36d73c29c4f4,
+      type: 3}
+    projectileCreateCount: 30
+    projectileSpeed: 0
+  attackRadiusUtility:
+    radius: 12
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  bombAttackRadiusUtility:
+    radius: 2
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  shotInterval: 0.3
+  secondDamage: 0
+  angle: 45
+  shotCount: 7
+--- !u!114 &-9054833956046877722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6058349621801331926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dcd17446a055624884d414276123b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  childIDArray: 0f000000

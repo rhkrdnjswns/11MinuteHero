@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6582196486536549962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1713471482641359602}
+  - component: {fileID: 3574083342088099362}
+  - component: {fileID: -6932872995921954903}
+  m_Layer: 0
+  m_Name: 07_Skill_Active_Evolution_HellFire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1713471482641359602
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6582196486536549962}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3574083342088099362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6582196486536549962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8fee84dacce02f439f0e1765f269e09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eSkillType: 2
+  id: 33
+  icon: {fileID: 0}
+  description: "\uBAA8\uB4E0 \uAC83\uC744 \uBD88\uD0DC\uC6C1\uB2C8\uB2E4."
+  name: "\uD5EC\uD30C\uC774\uC5B4"
+  bCanEvolution: 0
+  coolTime: 4
+  currentCoolTime: 0
+  damage: 40
+  currentDamage: 0
+  baseDamage: 0
+  rangedAttackUtility:
+    projectilePrefab: {fileID: 4706505867181023926, guid: 40c2782506845e741955c6379ad18228,
+      type: 3}
+    projectileCreateCount: 10
+    projectileSpeed: 4
+  activateTime: 2
+  attackRadiusUtility:
+    radius: 12
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  penetrationCount: 8
+  explosionAttackRadiusUtility:
+    radius: 4.5
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  explosionDamage: 100
+--- !u!114 &-6932872995921954903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6582196486536549962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dcd17446a055624884d414276123b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  childIDArray: 08000000

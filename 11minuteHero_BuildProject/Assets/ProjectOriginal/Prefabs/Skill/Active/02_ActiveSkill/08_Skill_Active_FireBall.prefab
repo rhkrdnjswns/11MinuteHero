@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &30835422586831762
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 30835422586831772}
+  - component: {fileID: 30835422586831763}
+  m_Layer: 0
+  m_Name: 08_Skill_Active_FireBall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &30835422586831772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30835422586831762}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &30835422586831763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30835422586831762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7530ca5e3098dd24c969057407bd0df0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 8
+  icon: {fileID: 0}
+  description: "\uCEE4\uB2E4\uB780 \uBD88\uAF43\uC744 \uB0A0\uB824 \uC801\uC744 \uACF5\uACA9\uD569\uB2C8\uB2E4."
+  name: "\uD30C\uC774\uC5B4\uBCFC"
+  coolTime: 3.5
+  currentCoolTime: 0
+  damage: 20
+  currentDamage: 0
+  baseDamage: 0
+  rangedAttackUtility:
+    projectilePrefab: {fileID: 2778722528646606139, guid: 9719faa6ace0d4d4c965a333f070c4a6,
+      type: 3}
+    projectileCreateCount: 4
+    projectileSpeed: 4
+  activateTime: 4
+  attackRadiusUtility:
+    radius: 12
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  penetrationCount: 9

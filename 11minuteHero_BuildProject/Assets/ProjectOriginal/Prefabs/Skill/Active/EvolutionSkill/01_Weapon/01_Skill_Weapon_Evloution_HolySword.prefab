@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4517201749282275000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4517201749282275001}
+  - component: {fileID: 4517201749282274950}
+  - component: {fileID: -5314798333945974204}
+  m_Layer: 0
+  m_Name: 01_Skill_Weapon_Evloution_HolySword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4517201749282275001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4517201749282275000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.23, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4517201749282274950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4517201749282275000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10b315ad299607e4b917d47df50ddf70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eSkillType: 2
+  id: 27
+  icon: {fileID: 0}
+  description: "\uAC80\uC774 \uC545\uC744 \uC815\uD654\uD55C\uB2E4."
+  name: "\uC131\uAC80"
+  bCanEvolution: 0
+  coolTime: 1.4
+  currentCoolTime: 0
+  damage: 100
+  currentDamage: 0
+  baseDamage: 0
+  attackAngle: 140
+  attackRadiusUtility:
+    radius: 3
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  particlePrefab: {fileID: 8065957138504221954, guid: d2db3da969318154084484ea6719ed9e,
+    type: 3}
+  hpRecovery: 0.5
+--- !u!114 &-5314798333945974204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4517201749282275000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dcd17446a055624884d414276123b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  childIDArray: 01000000

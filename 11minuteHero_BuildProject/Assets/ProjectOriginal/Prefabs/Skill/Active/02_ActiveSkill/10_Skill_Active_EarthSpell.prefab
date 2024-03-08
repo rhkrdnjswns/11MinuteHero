@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &365102247730817460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5683256874431316148}
+  - component: {fileID: 1301017619707286493}
+  m_Layer: 0
+  m_Name: 10_Skill_Active_EarthSpell
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5683256874431316148
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365102247730817460}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1301017619707286493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365102247730817460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3fa5dc8928ccc54b854bc993d4b7142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 10
+  icon: {fileID: 0}
+  description: "\uB9C8\uBC95\uC73C\uB85C \uB545\uC744 \uC6B8\uB9AC\uAC8C \uD558\uC5EC
+    \uC801\uC5D0\uAC8C \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."
+  name: "\uB300\uC9C0\uC758 \uB9C8\uBC95\uC11C"
+  coolTime: 1.5
+  currentCoolTime: 0
+  damage: 5
+  currentDamage: 0
+  baseDamage: 0
+  earthSpellPrefab: {fileID: 1812335273778974956, guid: 549f3f251ca567b4197db91e9fff434e,
+    type: 3}
+  attackRadiusUtility:
+    radius: 4
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  secondDamage: 5
+  createCount: 10
+  slowDuration: 1
+  slowPercentage: 20

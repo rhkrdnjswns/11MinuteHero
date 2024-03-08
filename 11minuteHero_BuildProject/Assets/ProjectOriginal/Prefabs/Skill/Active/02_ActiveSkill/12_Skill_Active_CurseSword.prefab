@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7024143259056629973
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7024143259056629974}
+  - component: {fileID: 7024143259056629975}
+  m_Layer: 0
+  m_Name: 12_Skill_Active_CurseSword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7024143259056629974
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7024143259056629973}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7024143259056629975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7024143259056629973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff3559cfd63d6ae4fb7c916d3fea9aa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eSkillType: 0
+  id: 12
+  icon: {fileID: 0}
+  description: "\uAC80\uC774 \uC8FC\uBCC0\uC744 \uD68C\uC804\uD558\uBA74\uC11C \uC801\uC744
+    \uACF5\uACA9\uD569\uB2C8\uB2E4."
+  name: "\uC800\uC8FC\uBC1B\uC740 \uAC80"
+  bCanEvolution: 0
+  coolTime: 1.8
+  currentCoolTime: 0
+  damage: 5
+  currentDamage: 0
+  baseDamage: 0
+  eSwordType: 1
+  attackRadiusUtility:
+    radius: 1.2
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  swordPrefab: {fileID: 76802914061711246, guid: ed8b385abf23d7649bcb988b91a2c38e,
+    type: 3}
+  arrivalSecond: 2
+  degree: 180
+  distance: 4
+  attackInterval: 0.25
+  secondDamage: 5

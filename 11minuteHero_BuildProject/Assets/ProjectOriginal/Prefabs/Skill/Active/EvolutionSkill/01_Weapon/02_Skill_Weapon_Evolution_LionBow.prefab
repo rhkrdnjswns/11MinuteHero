@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4899622676791393710
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4899622676791393704}
+  - component: {fileID: 4899622676791393705}
+  - component: {fileID: -3955167641235347899}
+  m_Layer: 0
+  m_Name: 02_Skill_Weapon_Evolution_LionBow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4899622676791393704
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4899622676791393710}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4899622676791393705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4899622676791393710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63102ee6e387aa34495e661afd669ec2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eSkillType: 2
+  id: 28
+  icon: {fileID: 0}
+  description: "\uBCC4\uC744 \uB5A8\uC5B4\uB728\uB838\uB2E4\uB358 \uC804\uC124\uC758
+    \uD65C"
+  name: "\uC0AC\uC790\uAD81"
+  bCanEvolution: 0
+  coolTime: 1.2
+  currentCoolTime: 0
+  damage: 30
+  currentDamage: 0
+  baseDamage: 0
+  rangedAttackUtility:
+    projectilePrefab: {fileID: 6150599522273784603, guid: e488ac5d5f3a3b54292361166a37f008,
+      type: 3}
+    projectileCreateCount: 30
+    projectileSpeed: 8
+  secondDamage: 0
+  activateTime: 4
+  speedUpValue: 0.1
+  speedUpDuration: 3
+--- !u!114 &-3955167641235347899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4899622676791393710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dcd17446a055624884d414276123b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  childIDArray: 02000000

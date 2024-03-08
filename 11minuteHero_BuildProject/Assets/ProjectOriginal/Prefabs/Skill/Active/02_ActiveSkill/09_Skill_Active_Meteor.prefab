@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9075258513732312034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9075258513732312035}
+  - component: {fileID: 9075258513732312044}
+  m_Layer: 0
+  m_Name: 09_Skill_Active_Meteor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9075258513732312035
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9075258513732312034}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9075258513732312044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9075258513732312034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1eb182c7a32b1b4cb90afee2375b835, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 9
+  icon: {fileID: 0}
+  description: "\uD558\uB298\uC5D0\uC11C \uC6B4\uC11D\uC774 \uB5A8\uC5B4\uC838 \uC801\uC5D0\uAC8C
+    \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."
+  name: "\uBA54\uD14C\uC624"
+  coolTime: 4.2
+  currentCoolTime: 0
+  damage: 15
+  currentDamage: 0
+  baseDamage: 0
+  meteorPrefab: {fileID: 9023581761401557395, guid: be7b6c4b31edf854099d99aa859bbbcb,
+    type: 3}
+  summonInteval: 0.2
+  attackRadiusUtility:
+    radius: 12
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  meteorAttackRadiusUtility:
+    radius: 2
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  createCount: 10

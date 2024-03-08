@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8170997959978788866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8170997959978788877}
+  - component: {fileID: 9018466173932515308}
+  - component: {fileID: 3049443356227956141}
+  m_Layer: 0
+  m_Name: 11_Skill_Active_Evolution_MagicArrow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8170997959978788877
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8170997959978788866}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9018466173932515308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8170997959978788866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe0bfc9b86924e04bb7a935277967a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eSkillType: 2
+  id: 37
+  icon: {fileID: 0}
+  description: "\uB9C8\uBC95\uC758 \uC815\uC218\uB97C \uB0A0\uB9BD\uB2C8\uB2E4."
+  name: "\uB9C8\uB825\uC758 \uD654\uC0B4"
+  bCanEvolution: 0
+  coolTime: 0.4
+  currentCoolTime: 0
+  damage: 30
+  currentDamage: 0
+  baseDamage: 0
+  rangedAttackUtility:
+    projectilePrefab: {fileID: 9010175292445108458, guid: 93f19e88d26cb0c408777acb80b714cf,
+      type: 3}
+    projectileCreateCount: 30
+    projectileSpeed: 10
+  attackRadiusUtility:
+    radius: 8
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  count: 3
+  activateTime: 2
+--- !u!114 &3049443356227956141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8170997959978788866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dcd17446a055624884d414276123b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  childIDArray: 0d000000

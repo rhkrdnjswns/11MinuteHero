@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8095844004425900557
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2668736980935183354}
+  - component: {fileID: 2473900428521412952}
+  m_Layer: 0
+  m_Name: 01_Skill_Active_Weapon_Sword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2668736980935183354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8095844004425900557}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2473900428521412952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8095844004425900557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd7f477b0c2f1774f91abbcd6d7f9b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 1
+  icon: {fileID: 0}
+  description: "\uC804\uBC29\uC744 \uD729\uC4F8\uC5B4 \uC801\uC744 \uACF5\uACA9\uD569\uB2C8\uB2E4."
+  name: "\uAC80"
+  coolTime: 1.4
+  currentCoolTime: 0
+  damage: 20
+  currentDamage: 0
+  baseDamage: 0
+  attackAngle: 140
+  attackRadiusUtility:
+    radius: 2
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  particlePrefab: {fileID: 8065957138504221954, guid: fcb4ab3d4867d814fa743e9ead8de3ef,
+    type: 3}

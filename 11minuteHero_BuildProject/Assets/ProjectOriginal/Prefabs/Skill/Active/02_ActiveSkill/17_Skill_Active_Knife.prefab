@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &319551728528934423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6108138646102466921}
+  - component: {fileID: 99118351183554904}
+  m_Layer: 0
+  m_Name: 17_Skill_Active_Knife
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6108138646102466921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319551728528934423}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &99118351183554904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319551728528934423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b97a51b704578b4c9b80285e0588e87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 17
+  icon: {fileID: 0}
+  description: "\uBB34\uC791\uC704 \uC801\uC5D0\uAC8C \uB2E8\uAC80\uC744 \uD22C\uCC99\uD569\uB2C8\uB2E4."
+  name: "\uB2E8\uAC80"
+  coolTime: 4
+  currentCoolTime: 0
+  damage: 10
+  currentDamage: 0
+  baseDamage: 0
+  rangedAttackUtility:
+    projectilePrefab: {fileID: 1876358657589074605, guid: 2f984c9b83b3cb64c9def4bfd6bf6d57,
+      type: 3}
+    projectileCreateCount: 20
+    projectileSpeed: 7
+  attackRadiusUtility:
+    radius: 12
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  knifeAttackRadiusUtility:
+    radius: 3
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  shotInterval: 0.2

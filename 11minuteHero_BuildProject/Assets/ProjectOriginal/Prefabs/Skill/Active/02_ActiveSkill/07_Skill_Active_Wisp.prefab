@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2333941129292831800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4161751032937442712}
+  - component: {fileID: -7220525583575122194}
+  m_Layer: 0
+  m_Name: 07_Skill_Active_Wisp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4161751032937442712
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2333941129292831800}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-7220525583575122194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2333941129292831800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4c3d915628c7b54f82a5d4c41f73606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 7
+  icon: {fileID: 0}
+  description: "\uBD88\uB369\uC774\uB4E4\uC774 \uC8FC\uBCC0\uC744 \uD68C\uC804\uD558\uBA70
+    \uACF5\uACA9\uD569\uB2C8\uB2E4."
+  name: "\uB3C4\uAE68\uBE44\uBD88"
+  coolTime: 0
+  currentCoolTime: 0
+  damage: 4
+  currentDamage: 0
+  baseDamage: 0
+  wispCount: 2
+  distanceToPlayer: 3.5
+  wispPrefab: {fileID: 4520825829249809158, guid: 5b60db121487cf54a8b9e65d198272ec,
+    type: 3}
+  wispList: []
+  secondDamage: 4

@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8933419120138269552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8933419120138269555}
+  - component: {fileID: 8933419120138269554}
+  - component: {fileID: -8962513225195080663}
+  m_Layer: 0
+  m_Name: 12_Skill_Active_Evolution_HolyWarter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8933419120138269555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8933419120138269552}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8933419120138269554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8933419120138269552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7aeb26852175d4e9a84a08828cb10a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eSkillType: 2
+  id: 38
+  icon: {fileID: 0}
+  description: "\uC0BF\uB41C \uAC83\uB4E4\uC744 \uC815\uD654\uC2DC\uD0B5\uB2C8\uB2E4."
+  name: "\uC131\uC218"
+  bCanEvolution: 0
+  coolTime: 4
+  currentCoolTime: 0
+  damage: 35
+  currentDamage: 0
+  baseDamage: 0
+  rangedAttackUtility:
+    projectilePrefab: {fileID: 1907925760873042682, guid: b0922a04dcd71264a9c77132d8b43feb,
+      type: 3}
+    projectileCreateCount: 20
+    projectileSpeed: 0
+  attackRadiusUtility:
+    radius: 12
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  bombAttackRadiusUtility:
+    radius: 3
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  shotInterval: 0.3
+  secondDamage: 0
+  angle: 45
+  dotDuration: 3
+  dotInterval: 0.5
+  shotCount: 5
+  distance: 5
+--- !u!114 &-8962513225195080663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8933419120138269552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dcd17446a055624884d414276123b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  childIDArray: 0e000000
