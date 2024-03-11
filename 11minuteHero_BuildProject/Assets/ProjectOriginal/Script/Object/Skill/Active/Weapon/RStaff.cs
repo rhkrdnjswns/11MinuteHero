@@ -8,6 +8,18 @@ public class RStaff : WRangedWeapon //마법사가 사용하는 무기. (09/25)액티브 스킬
     [SerializeField] private float shotInterval; //투사체 생성 주기
 
     private bool bShotDone;
+    protected override void Awake()
+    {
+        base.Awake();
+        string[] info = FindObjectOfType<CSVReader>().GetSkillNameAndDescription(id);
+        if(info != null)
+        {
+            name = info[0];
+            description = info[1];
+        }
+        damage = FindObjectOfType<CSVReader>().GetBaseDamage(id);
+        coolTime = FindObjectOfType<CSVReader>().GetCoolTime(id);
+    }
     public override bool GetBShotDone()
     {
         return bShotDone;

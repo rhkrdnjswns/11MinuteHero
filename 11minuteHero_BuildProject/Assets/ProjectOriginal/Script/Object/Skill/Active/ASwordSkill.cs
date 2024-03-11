@@ -74,8 +74,8 @@ public class ASwordSkill : AActiveSkill
     protected override void SetCurrentRange(float value)
     {
         swordSkillObject.transform.localScale += Vector3.one * (value / 100f);
-        swordSkillObject.SetAfterImageSize();
         attackRadiusUtility.Radius += originRadius * value / 100f;
+        swordSkillObject.SetAfterImageSize();
     }
     private void ActivateSkill()
     {
@@ -118,7 +118,7 @@ public class ASwordSkill : AActiveSkill
                 }
                 break;
             case ESwordType.DevilSword:
-                Debug.LogError("UnDefined Type");
+               // Debug.LogError("UnDefined Type");
                 break;
             default:
                 break;

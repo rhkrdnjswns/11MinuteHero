@@ -129,7 +129,7 @@ public class ABattleBluntWeapon : AActiveSkill //전투망치와 전투도끼 클래스
                 }
                 break;
             default:
-                Debug.LogError("UnDefined Type");
+                //Debug.LogError("UnDefined Type");
                 break;
         }
     }

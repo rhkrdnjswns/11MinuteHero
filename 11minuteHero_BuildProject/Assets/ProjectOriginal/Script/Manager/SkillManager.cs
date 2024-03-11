@@ -52,6 +52,7 @@ public class SkillManager : MonoBehaviour
     }
     public void SetCanEvolution(int index)
     {
+        if (evolutionSkillList[index].gameObject.activeSelf) return;
         bEvolutionArray[index] = true;
     }
     public Skill GetActiveSkill(int id)
@@ -72,15 +73,18 @@ public class SkillManager : MonoBehaviour
     }
     public void Test_SkillLevelUp(int index)
     {
-        if(unPossessionSkillList[index].Level == 0)
+        if(allSkillList[index].Level == 0)
         {
-            unPossessionSkillList[index].gameObject.SetActive(true);
-            unPossessionSkillList[index].InitSkill();
+            allSkillList[index].gameObject.SetActive(true);
+            allSkillList[index].InitSkill();
+            unPossessionSkillList.Remove(allSkillList[index]);
+            inPossessionSkillList.Add(allSkillList[index]);
         }
         else
         {
-            unPossessionSkillList[index].Reinforce();
+            allSkillList[index].Reinforce();
         }
+        allSkillList[index].SetEvlotionCondition(); //진화 가능한지 검사
     }
     private void InitGimmickList()
     {
@@ -98,6 +102,7 @@ public class SkillManager : MonoBehaviour
                     unPossessionSkillList.Add(skill);
                     break;
                 case ESkillType.Evolution:
+                    activeSkillList.Add(skill.GetComponent<SActive>());
                     evolutionSkillList.Add(skill);
                     break;
                 default:
@@ -171,6 +176,7 @@ public class SkillManager : MonoBehaviour
                 //보유중이지 않은 스킬 인덱스 리스트에서 방금 선택된 인덱스 제거 (중복 방지를 위한 처리)
                 unPossessionIndexList.Remove(rand);
             }
+            skillChoicePopUp.SetSkillChoicePopUp();
             return;
         }
 
@@ -190,6 +196,7 @@ public class SkillManager : MonoBehaviour
                 selectedChoiceList.Add(evolutionSkillList[rand]);
                 evolutionIndexList.Remove(rand);
             }
+            skillChoicePopUp.SetSkillChoicePopUp();
             return; //함수 종료
         }
         currentSelectCount -= evolutionIndexList.Count; //진화 가능한 스킬의 개수만큼을 선택지 개수에서 빼줌

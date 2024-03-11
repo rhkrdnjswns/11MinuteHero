@@ -1,0 +1,4 @@
+ID,SkillType,SkillName,Description,BaseDamage,SecondDamage,CoolTime
+1,액티브,검,전방의 적을 밴다.,10,0,1.8
+2,액티브,활,화살을 발사한다.,5,5,1.4
+3,액티브,스태프,마법을 발사한다.,5,5,1.2

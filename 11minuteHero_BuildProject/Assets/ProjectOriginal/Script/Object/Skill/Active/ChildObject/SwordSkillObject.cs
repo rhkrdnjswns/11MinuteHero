@@ -90,7 +90,7 @@ public class SwordSkillObject : MonoBehaviour
         {
             yield return new WaitForSeconds(0.1f);
             item.transform.localPosition = activePos;
-            item.SetAfterImage(revAxis, transform, rotDirection, arrivalSecond, degree);
+            item.SetAfterImage(revAxis, transform, rotDirection, arrivalSecond, degree, transform.localScale);
         }
     }
     private IEnumerator Co_AttakcRadius(float attackInterval)

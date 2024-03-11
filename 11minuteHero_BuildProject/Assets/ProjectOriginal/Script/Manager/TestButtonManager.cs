@@ -7,7 +7,7 @@ public class TestButtonManager : MonoBehaviour
     public GameObject buttons;
     public void BtnEvt_InitSkill(int index)
     {
-        FindObjectOfType<SkillManager>().Test_SkillLevelUp(index);
+        FindObjectOfType<SkillManager>().Test_SkillLevelUp(index + 1);
     }
     public void BtnEvt_Weapon()
     {

@@ -23,9 +23,9 @@ public class SwordSkillAfterImage : MonoBehaviour
                 break;
         }
     }
-    public void SetAfterImage(Transform revAxis, Transform parent, Vector3 rotDir, float sec, float degree)
+    public void SetAfterImage(Transform revAxis, Transform parent, Vector3 rotDir, float sec, float degree, Vector3 size)
     {
-        transform.SetParent(revAxis);
+        transform.localScale = size;
         gameObject.SetActive(true);
 
         particle.Play();
