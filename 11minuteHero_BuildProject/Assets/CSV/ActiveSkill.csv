@@ -1,0 +1,18 @@
+ID,SkillType,SkillName,Description,BaseDamage,SecondDamage,CoolTime
+1,0,SkillSword,전방을 휩쓸어 적을 공격합니다.,20,0,1.4
+2,0,SkillBow,바라보는 방향으로 활시위를 당깁니다.,5,5,1.2
+3,0,SkillStaff,가까운 적들에게 유도되는 마법을 시전합니다.,5,5,1
+4,0,SkillHammer,고정된 네 방향으로 되돌아오는 망치를 던집니다.,10,0,5
+5,0,SkillAxe,고정된 네 방향으로 되돌아오는 도끼를 던집니다.,10,0,5
+6,0,SkillAurora,범위 안으로 들어온 적에게 피해를 입힙니다.,5,0,1
+7,0,SkillFire,불덩이들이 주변을 회전하여 공격합니다.,4,4,0
+8,0,SkillFireBall,커다란 불꽃을 날려 적을 공격합니다.,20,0,3.5
+9,0,SkillMeteor,하늘에서 운석이 떨어져 적에게 피해를 입힙니다.,15,0,4.2
+10,0,SkillMagicEarth,마법으로 땅을 울리게 하여 적에게 피해를 입힙니다.,5,5,1.5
+11,0,SkillBloodSword,검이 주변을 회전하면서 적을 공격합니다.,5,5,2
+12,0,SkillCurseSword,검이 주변을 회전하면서 적을 공격합니다.,5,5,2
+13,0,SkillCrystalStaff,가장 가까운 적에게 마법을 시전합니다.,5,0,0.5
+14,0,SkillFireBomb,무작위 적들에게 폭탄을 던져 불타오르는 구역을 생성합니다.,5,10,3.8
+15,0,SkillShockBomb,무작위 적들에게 폭탄을 던집니다.,10,10,3.8
+16,0,SkillMagicShield,고정된 방향으로 방패를 날립니다.,15,0,3
+17,0,SkillKnife,무작위 적에게 단검을 투척합니다.,10,0,4

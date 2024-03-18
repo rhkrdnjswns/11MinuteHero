@@ -1,0 +1,18 @@
+ID,SkillType,SkillName,Description,BaseDamage,CoolTime
+27,2,SkillHolySword,검이 악을 정화한다.,100,1.4
+28,2,SkillLionBow,별을 떨어뜨렸다던 전설의 활,30,1.2
+29,2,SkillMagicMissile,수많은 마법들로 적을 초토화 시킵니다.,40,1
+30,2,SkillThunderStrike,번개가 서린 고대의 망치,50,5
+31,2,SkillSoulHarvest,적들의 영혼을 먹어치웁니다.,20,1
+32,2,SkillFireStorm,모든 적들을 불태우기 전까진 사라지지 않습니다.,20,0
+33,2,SkillHellFire,모든 것을 불태웁니다.,40,4
+34,2,SkillMeteor,하늘에서 별이 내려옵니다.,65,4.2
+35,2,SkillEarthImplosion,땅이 갈라집니다.,35,1.5
+36,2,SkillDevilSword,검이 속삭인다.,120,3
+37,2,SkillMagicArrow,마법의 정수를 날립니다.,30,0.4
+38,2,SkillHolyWater,삿된 것들을 정화시킵니다.,35,4
+39,2,SkillFaintBomb,한대만 맞아도 정신이 아찔합니다.,45,4
+40,2,SkillRenotoros,방패에 신비가 깃들어 있다.,80,2.8
+41,2,SkillShadowKnife,보이지 않는 단검이 적의 목숨을 끊습니다.,65,0
+,,,,,
+,,,,,
