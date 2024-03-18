@@ -15,65 +15,58 @@ public class CSVReader : MonoBehaviour
         CoolTime
     }
 
-    public TextAsset csvFile;
-    public List<string[]> skillData = new List<string[]>();
+    public TextAsset[] csvFileArray;
+    public List<List<string[]>> skillDataList = new List<List<string[]>>();
 
-    // Start is called before the first frame update
-    void Awake()
+    private void Start()
     {
-        if (csvFile == null) Debug.LogError("읽어올 CSV파일이 존재하지 않습니다.\nCSV파일을 할당해주세요.");
-
-        StringReader reader = new StringReader(csvFile.text);
-
-        while (reader.Peek() > -1)
+        StartCoroutine(Co_ReadCSVFile());
+    }
+    private IEnumerator Co_ReadCSVFile() //csvFileArray에 있는 CSV 파일들을 문자열로 변환하여 리스트에 읽어옴
+    {
+        if (csvFileArray.Length < 1) Debug.LogError("읽어올 CSV파일이 존재하지 않습니다.\nCSV파일을 할당해주세요.");
+        for (int i = 0; i < csvFileArray.Length; i++)
         {
-            string line = reader.ReadLine();
-            string[] rowData = line.Split(',');
+            StringReader reader = new StringReader(csvFileArray[i].text); //StringReader클래스로 CSV파일을 string으로 읽어옴
+            while(reader.Peek() > -1)
+            {
+                string line = reader.ReadLine();
+                string[] rowData = line.Split(',');
+                List<string[]> strArrList = new List<string[]>();
+                strArrList.Add(rowData);
 
-            skillData.Add(rowData);
+                skillDataList.Add(strArrList);
+                yield return null;
+            }
         }
     }
 
-    public ESkillType GetSkillType(int id)
+    public string[] GetSkillNameAndDescription(ESkillType skillType, int id)
     {
-        if (id > skillData.Count) return 0;
-        switch (skillData[id][(int)EColumnIndex.SkillType])
-        {
-            case "액티브":
-                return ESkillType.Active;
-            case "패시브":
-                return ESkillType.Passive;
-            case "진화":
-                return ESkillType.Evolution;
-            default:
-                Debug.LogError("유효하지 않은 스킬 타입입니다.");
-                return 0;
-        }
-    }
-    public string[] GetSkillNameAndDescription(int id)
-    {
-        if (id > skillData.Count) return null;
+        if (id > skillDataList.Count) return null;
         string[] strArr = new string[2];
-        strArr[0] = skillData[id][(int)EColumnIndex.SkillName];
-        strArr[1] = skillData[id][(int)EColumnIndex.Description];
+        strArr[0] = skillDataList[(int)skillType][id][(int)EColumnIndex.SkillName];
+        strArr[1] = skillDataList[(int)skillType][id][(int)EColumnIndex.Description];
         return strArr;
     }
-    public float GetBaseDamage(int id)
+    public float GetBaseDamage(ESkillType skillType, int id)
     {
-        if (id > skillData.Count) return -1;
+        if (id > skillDataList.Count) return -1;
+        if (skillType == ESkillType.Passive) return -1;
         float f = 0;
-        if(float.TryParse(skillData[id][(int)EColumnIndex.BaseDamage], out f))
+        if(float.TryParse(skillDataList[(int)skillType][id][(int)EColumnIndex.BaseDamage], out f))
         {
             return f;
         }
         Debug.LogError("문자열을 실수로 변환할 수 없습니다. CSV 파일의 값 또는 행을 확인해 주세요.");
         return -1;
     }
-    public float GetCoolTime(int id)
+    public float GetCoolTime(ESkillType skillType, int id)
     {
-        if (id > skillData.Count) return -1;
+        if (id > skillDataList.Count) return -1;
+        if (skillType == ESkillType.Passive) return -1;
         float f = 0;
-        if (float.TryParse(skillData[id][(int)EColumnIndex.CoolTime], out f))
+        if (float.TryParse(skillDataList[(int)skillType][id][(int)EColumnIndex.CoolTime], out f))
         {
             return f;
         }
