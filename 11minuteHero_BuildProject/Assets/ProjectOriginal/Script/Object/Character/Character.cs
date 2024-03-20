@@ -51,7 +51,6 @@ public abstract class Character : MonoBehaviour //언리얼의 Character와 같은 역할
     {
         DecreaseHp(damage);
     }
-    protected abstract IEnumerator Co_Move(); //이동 코루틴 추상 함수
     protected virtual bool Move() //이동 함수
     {
         if (IsDie || eCharacterActionable == ECharacterActionable.Unactionable) return false; //행동 가능한 상태가 아니면 false

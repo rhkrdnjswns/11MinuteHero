@@ -71,7 +71,7 @@ public class SwordSkillObject : MonoBehaviour
 
         particle.Play();
 
-        StartCoroutine(Co_RotationSword());
+        if(eSwordType != ESwordType.DevilSword) StartCoroutine(Co_RotationSword());
         StartCoroutine(Co_RevolutionSword(revAxis, arrivalSecond, degree));
         StartCoroutine(Co_ActiveAfterImage(revAxis, arrivalSecond, degree));
 
@@ -90,7 +90,7 @@ public class SwordSkillObject : MonoBehaviour
         {
             yield return new WaitForSeconds(0.1f);
             item.transform.localPosition = activePos;
-            item.SetAfterImage(revAxis, transform, rotDirection, arrivalSecond, degree, transform.localScale);
+            item.SetAfterImage(revAxis, transform, rotDirection, arrivalSecond, degree, transform.localScale, eSwordType != ESwordType.DevilSword);
         }
     }
     private IEnumerator Co_AttakcRadius(float attackInterval)

@@ -141,11 +141,11 @@ public abstract class CPlayer : Character
         yield return new WaitForSeconds(1f); //1초 지연 후 무적 해제
         isInvincible = false;
     }
-    protected override IEnumerator Co_Move()
+    protected IEnumerator Co_Move()
     {
         while (InGameManager.Instance.GameState != EGameState.GameOver)
         {
-            yield return InGameManager.Instance.FrameDelay;
+            yield return null;
             if (isDodge) yield return new WaitUntil(() => !isDodge); //회피 중인 경우 회피 종료까지 대기
             animator.SetBool(ConstDefine.BOOL_ISMOVE, IsMove = Move());
         }

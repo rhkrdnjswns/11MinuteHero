@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+// * 일반 몬스터 AI는 상태머신으로 디자인
 public class Monster : Character
 {
+    public enum EMonsterState
+    {
+        Chase = 0,
+        Attack
+    }
+
+    [SerializeField] protected EMonsterState monsterState;
     [SerializeField] protected float damage; //데미지
 
     [SerializeField] private int rewardExp;
@@ -13,13 +20,32 @@ public class Monster : Character
     [SerializeField] private GameObject damageUIPrefab;
 
     private DamageUIContainer damageUIContainer = new DamageUIContainer();
-    private SphereCollider overlappingAvoider; //몬스터 겹침 방지 콜라이더
+    protected SphereCollider overlappingAvoider; //몬스터 겹침 방지 콜라이더
     private BoxCollider boxCollider; //몬스터 충돌처리 콜라이더
     private DebuffList debuffList;
 
     private float distToPlayer;
     public float DistToPlayer { get => distToPlayer; }
     public DebuffList DebuffList { get => debuffList; set => debuffList = value; }
+    private IEnumerator Co_StateMachine() //일반 몬스터 상태머신
+    {
+        while (!IsDie)
+        {
+            switch (monsterState)
+            {
+                case EMonsterState.Chase:
+                    animator.SetBool(ConstDefine.BOOL_ISMOVE, Move());
+                    break;
+                case EMonsterState.Attack:
+                    yield return StartCoroutine(Co_Attack());
+                    break;
+                default:
+                    Debug.LogError("유효하지 않은 몬스터 상태입니다.");
+                    yield break;
+            }
+            yield return null;
+        }
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -38,7 +64,7 @@ public class Monster : Character
         currentHp = maxHp;
         currentSpeed = speed;
 
-        StartCoroutine(Co_Move()); //몬스터 이동 코루틴 실행
+        StartCoroutine(Co_StateMachine()); //몬스터 상태 머신 실행
         StartCoroutine(Co_UpdatePositionData()); //몬스터 위치 관련 코루틴 실행
 
         IsDie = false; //상호작용 유효하도록 초기화
@@ -85,7 +111,7 @@ public class Monster : Character
                 transform.Translate(Vector3.forward * ConstDefine.REPOSITION_VALUE);
             }
             rigidbody.velocity = Vector3.zero;
-            yield return InGameManager.Instance.FrameDelay;
+            yield return null;
         }
     }
     private IEnumerator Co_DieEvent() //사망 효과 코루틴
@@ -103,18 +129,9 @@ public class Monster : Character
         while (transform.position.y > -1.5) //몬스터가 땅 밑으로 사라지는 효과
         {
             transform.position += Vector3.down * 1 * Time.deltaTime;
-            yield return InGameManager.Instance.FrameDelay;
-        }
-        InGameManager.Instance.MonsterPool.ReturnMonster(this); //몬스터 풀로 되돌림     
-    }
-    protected override IEnumerator Co_Move()
-    {
-        while (true)
-        {
-            animator.SetBool(ConstDefine.BOOL_ISMOVE, Move());
-            distToPlayer = (transform.position - InGameManager.Instance.Player.transform.position).sqrMagnitude;
             yield return null;
         }
+        InGameManager.Instance.MonsterPool.ReturnMonster(this); //몬스터 풀로 되돌림     
     }
     protected override bool Move()
     {
@@ -126,9 +143,15 @@ public class Monster : Character
         }
         else
         {
+            monsterState = EMonsterState.Attack;
             return false;
         }
         return true;
+    }
+    protected virtual IEnumerator Co_Attack()
+    {
+        monsterState = EMonsterState.Chase;
+        yield return null;
     }
     /*  -------충돌체크를 플레이어가 아니라 몬스터가 하는 이유---------
      *  1. 몬스터마다 데미지가 다름.

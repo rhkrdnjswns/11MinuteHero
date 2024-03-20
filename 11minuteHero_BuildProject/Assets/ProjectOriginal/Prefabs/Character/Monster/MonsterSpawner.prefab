@@ -85,8 +85,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb3e152a80e337f49897982d75e4e02a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnInterval: 1
-  startDelay: 2
+  spawnInterval: 5
+  startDelay: 5000
 --- !u!1 &7565184027846819334
 GameObject:
   m_ObjectHideFlags: 0

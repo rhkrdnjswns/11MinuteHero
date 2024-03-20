@@ -23,13 +23,13 @@ public class SwordSkillAfterImage : MonoBehaviour
                 break;
         }
     }
-    public void SetAfterImage(Transform revAxis, Transform parent, Vector3 rotDir, float sec, float degree, Vector3 size)
+    public void SetAfterImage(Transform revAxis, Transform parent, Vector3 rotDir, float sec, float degree, Vector3 size, bool bRot)
     {
         transform.localScale = size;
         gameObject.SetActive(true);
 
         particle.Play();
-        StartCoroutine(Co_RotationSword(rotDir));
+        if(bRot) StartCoroutine(Co_RotationSword(rotDir));
         StartCoroutine(Co_RevolutionSword(revAxis, parent, sec, degree));
     }
     private IEnumerator Co_RotationSword(Vector3 rotDir) //검 오브젝트 자전

@@ -7,6 +7,7 @@ public class ConstDefine //모든 상수 정의.
     public const string BOOL_ISMOVE = "IsMove";
     public const string TRIGGER_MELEE_ATTACK = "MeleeAttack";
     public const string TRIGGER_DIE = "Die";
+    public const string TRIGGER_ATTACK = "Attack";
     public const string TRIGGER_Dodge = "Dodge";
     public const string FLOAT_ATTACK_SPEED = "AttackSpeed";
 
