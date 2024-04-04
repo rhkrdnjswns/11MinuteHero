@@ -48,7 +48,7 @@ public class PKnife : Projectile
     {
         if (other.CompareTag(ConstDefine.TAG_MONSTER)) //몬스터와 부딪힌 경우
         {
-            other.GetComponent<Monster>().Hit(rangedAttackUtility.ProjectileDamage); //Monster 클래스를 추출하여 데미지 연산
+            other.GetComponent<Character>().Hit(rangedAttackUtility.ProjectileDamage); //Monster 클래스를 추출하여 데미지 연산
             if (currentCount < 0) rangedAttackUtility.ReturnProjectile(this);
             else
             {

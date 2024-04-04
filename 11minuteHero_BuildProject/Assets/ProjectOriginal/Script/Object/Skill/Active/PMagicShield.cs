@@ -41,9 +41,9 @@ public class PMagicShield : Projectile
     {
         if (other.CompareTag(ConstDefine.TAG_MONSTER)) //몬스터와 부딪힌 경우
         {
-            Monster m = other.GetComponent<Monster>();
-            m.Hit(rangedAttackUtility.ProjectileDamage); //Monster 클래스를 추출하여 데미지 연산
-            if (!m.IsDie) m.KnockBack(0.3f, 0.3f);
+            Character c = other.GetComponent<Character>();
+            c.Hit(rangedAttackUtility.ProjectileDamage); //Monster 클래스를 추출하여 데미지 연산
+            if (!c.IsDie) c.KnockBack(0.3f, 0.3f);
         }
     }
 }

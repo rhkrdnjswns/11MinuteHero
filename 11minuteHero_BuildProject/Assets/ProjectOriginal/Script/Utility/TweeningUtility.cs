@@ -24,14 +24,14 @@ public class TweeningUtility //트위닝 코루틴의 시간 체크는 Time.unscaledDeltaTim
 
         float currentTime = time * 80f / 100f;
 
-        while(timer < currentTime)
+        while (timer < currentTime)
         {
             transform.localScale = Vector3.Lerp(startSize, bounceSize, timer / currentTime);
             timer += Time.unscaledDeltaTime;
             yield return null;
         }
 
-        while(timer < time)
+        while (timer < time)
         {
             transform.localScale = Vector3.Lerp(bounceSize, endSize, timer / time);
             timer += Time.unscaledDeltaTime;
@@ -45,7 +45,7 @@ public class TweeningUtility //트위닝 코루틴의 시간 체크는 Time.unscaledDeltaTim
         float timer = time;
         while (timer > 0)
         {
-            timer -= ConstDefine.FRAME_DELAY;
+            timer -= Time.unscaledDeltaTime;
             canvasGroup.alpha = timer / time;
             yield return null;
         }
@@ -100,7 +100,28 @@ public class TweeningUtility //트위닝 코루틴의 시간 체크는 Time.unscaledDeltaTim
             yield return null;
         }
     }
-    
+    //깜빡이는 효과 (깜빡이는 시간, 깜빡일 횟수, 불투명 -> 투명 사이의 딜레이, 캔버스 그룹)
+    public static IEnumerator Blink(float time, int blinkCount, float blinkDelay, CanvasGroup canvasGroup)
+    {
+        for (int i = 0; i < blinkCount; i++)
+        {
+            float timer = 0;
+            while (timer < time)
+            {
+                timer += Time.unscaledDeltaTime;
+                canvasGroup.alpha = timer / time;
+                yield return null;
+            }
+            timer = time;
+            yield return new WaitForSeconds(blinkDelay);
+            while (timer > 0)
+            {
+                timer -= Time.unscaledDeltaTime;
+                canvasGroup.alpha = timer / time;
+                yield return null;
+            }
+        }
+    }
     public static IEnumerator UpAndDown(float time, float velocity, Transform transform)
     {
         float timer = 0;
@@ -109,19 +130,19 @@ public class TweeningUtility //트위닝 코루틴의 시간 체크는 Time.unscaledDeltaTim
             while (timer < time)
             {
                 timer += Time.unscaledDeltaTime;
-                transform.position += transform.up * velocity * Time.deltaTime;
+                transform.position += transform.up * velocity * Time.unscaledDeltaTime;
                 yield return null;
             }
             while (timer > 0)
             {
                 timer -= Time.unscaledDeltaTime;
-                transform.position += transform.up * -velocity * Time.deltaTime;
+                transform.position += transform.up * -velocity * Time.unscaledDeltaTime;
                 yield return null;
             }
             yield return null;
         }
     }
-    public static IEnumerator ReductionFontSize(float time, Text text, int originSize, int targetSize)
+    public static IEnumerator ReduceFontSize(float time, Text text, int originSize, int targetSize)
     {
         float timer = time;
         while (timer > 0)

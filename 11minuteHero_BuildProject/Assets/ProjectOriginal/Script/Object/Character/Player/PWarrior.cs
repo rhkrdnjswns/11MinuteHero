@@ -33,7 +33,7 @@ public class PWarrior : CPlayer
         yield return new WaitUntil(() => isRush);
         while (isRush)
         {
-            yield return InGameManager.Instance.waitForFixedUpdate;
+            yield return null;
             rigidbody.velocity = dir * currentSpeed * 4;
         }
         rigidbody.velocity = Vector3.zero; //이동 정지

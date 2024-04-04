@@ -28,7 +28,7 @@ public class LevelUpUI : MonoBehaviour
         while(timer > 0)
         {
             timer -= 0.01f;
-            yield return InGameManager.Instance.FrameDelay;
+            yield return null;
             text.color = new Color(1, 1, 0, timer);
             rectTransform.localPosition = new Vector3(0, rectTransform.localPosition.y + 1);
         }

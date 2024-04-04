@@ -43,8 +43,11 @@ public class PMagicMissile : Projectile //마법사가 사용하는 투사체
             //베지어 곡선 공식으로 해당 포인트들 위에서 그려지는 곡선의 timer만큼의 지점을 반환함
             transform.position = CalculateBezierPoint(summonPos, controllPoint, target.position, timer > 1 ? 1 : timer);
 
+            //타겟 위치에 도착했지만 히트하지 않은 경우의 처리
+            if (Vector3.Distance(transform.position, target.position + Vector3.up * 0.5f) < 0.1f) rangedAttackUtility.ReturnProjectile(this);
+
             //타겟 몬스터가 사망한 경우의 처리
-            if(!target.gameObject.activeSelf) rangedAttackUtility.ReturnProjectile(this);
+            if (!target.gameObject.activeSelf) rangedAttackUtility.ReturnProjectile(this);
 
             yield return null;
         }

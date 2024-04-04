@@ -22,7 +22,7 @@ public class RollingButton : ButtonComponent
         {
             timer -= Time.deltaTime;
             coolTimeImage.fillAmount = timer / coolTime;
-            yield return InGameManager.Instance.FrameDelay;
+            yield return null;
         }
         bCoolTime = false;
     }

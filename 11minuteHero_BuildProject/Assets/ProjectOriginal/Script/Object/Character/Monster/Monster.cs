@@ -78,26 +78,30 @@ public class Monster : Character
         damageUIContainer.ActiveDamageUI(damage);
         if (currentHp <= 0) StartCoroutine(Co_DieEvent()); //죽었으면 사망 코루틴 실행
     }
-    public override void KnockBack(float knockBackRange, float stiffnessTime)
+    public override void KnockBack(float speed, float duration)
     {
         overlappingAvoider.enabled = false; //몬스터 겹침방지 콜라이더를 꺼줌 (rigidbody.velocity가 0이라 뒤에 다른 몬스터가 있는 경우 밀려나지 않음)
 
-        base.KnockBack(knockBackRange, stiffnessTime);
+        base.KnockBack(speed, duration);
     }
-    protected override IEnumerator Co_KnockBack(float range, float stiffnessTime)
+    protected override IEnumerator Co_KnockBack(float speed, float duration)
     {
-        Vector3 direction = transform.forward.normalized * -1; //뒷방향 벡터
-        Vector3 pos = transform.position + direction * range; //뒷방향으로 range만큼의 위치 구함
+        rigidbody.velocity = transform.forward * -1 * speed;
 
-        while (Vector3.Distance(transform.position, pos) > 0.1f) //보간으로 pos에 도달할 때까지는 너무 오래걸리기 때문에 오차간격 설정
-        {
-            transform.position = Vector3.Lerp(transform.position, pos, 2 * Time.deltaTime); //선형보간으로 부드럽게 캐릭터 이동
-            if (IsDie) yield break; //넉백 도중 사망하면 코루틴 탈출
-            yield return InGameManager.Instance.waitForFixedUpdate;
-        }
-        overlappingAvoider.enabled = true; //겹침방지 콜라이더를 다시 켜줌
+        yield return new WaitForSeconds(duration); //경직 처리
+        rigidbody.velocity = Vector3.zero;
+        overlappingAvoider.enabled = true;
 
-        yield return new WaitForSeconds(stiffnessTime); //경직 처리
+        IsKnockBack = false;
+        eCharacterActionable = ECharacterActionable.Actionable; //행동 재개
+    }
+    protected override IEnumerator Co_KnockBack(float speed, float duration, Vector3 direction)
+    {
+        rigidbody.velocity = direction * speed;
+
+        yield return new WaitForSeconds(duration); //경직 처리
+        rigidbody.velocity = Vector3.zero;
+        overlappingAvoider.enabled = true;
 
         IsKnockBack = false;
         eCharacterActionable = ECharacterActionable.Actionable; //행동 재개

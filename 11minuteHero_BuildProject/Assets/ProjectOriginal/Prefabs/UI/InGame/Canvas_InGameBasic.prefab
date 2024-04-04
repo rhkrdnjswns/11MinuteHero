@@ -2047,6 +2047,7 @@ GameObject:
   - component: {fileID: 8584074158813939206}
   - component: {fileID: 8584074158813939203}
   - component: {fileID: 8584074158813939204}
+  - component: {fileID: 3446264737386522896}
   m_Layer: 5
   m_Name: Image_PlayerHpBarBackground
   m_TagString: Untagged
@@ -2113,6 +2114,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3446264737386522896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8584074158813939207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dcd819b7f08c704d84ff70c79040caf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: -0.9, z: 0}
+  camera: {fileID: 0}
+  rectCanvas: {fileID: 6347969604964571031}
+  rect: {fileID: 8584074158813939206}
 --- !u!1 &8584074159167316491
 GameObject:
   m_ObjectHideFlags: 0

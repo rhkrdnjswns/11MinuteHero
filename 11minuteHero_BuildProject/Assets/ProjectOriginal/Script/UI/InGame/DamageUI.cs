@@ -18,7 +18,7 @@ public class DamageUI : MonoBehaviour
 
         StartCoroutine(Co_Follow(pos, rectCanvas, cam, container));
         StartCoroutine(TweeningUtility.FadeOut(0.5f, text));
-        StartCoroutine(TweeningUtility.ReductionFontSize(0.5f, text, text.fontSize, 10));
+        StartCoroutine(TweeningUtility.ReduceFontSize(0.5f, text, text.fontSize, 10));
     }
     private IEnumerator Co_Follow(Vector3 pos, RectTransform rectCanvas, Camera cam, DamageUIContainer container)
     {

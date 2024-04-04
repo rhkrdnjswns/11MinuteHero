@@ -11,14 +11,14 @@ public class RStaff : WRangedWeapon //마법사가 사용하는 무기. (09/25)액티브 스킬
     protected override void Awake()
     {
         base.Awake();
-        string[] info = FindObjectOfType<CSVReader>().GetSkillNameAndDescription(eSkillType, id);
-        if(info != null)
-        {
-            name = info[0];
-            description = info[1];
-        }
-        damage = FindObjectOfType<CSVReader>().GetBaseDamage(eSkillType, id);
-        coolTime = FindObjectOfType<CSVReader>().GetCoolTime(eSkillType, id);
+        //string[] info = FindObjectOfType<CSVReader>().GetSkillNameAndDescription(eSkillType, id);
+        //if(info != null)
+        //{
+        //    name = info[0];
+        //    description = info[1];
+        //}
+        //damage = FindObjectOfType<CSVReader>().GetBaseDamage(eSkillType, id);
+        //coolTime = FindObjectOfType<CSVReader>().GetCoolTime(eSkillType, id);
     }
     public override bool GetBShotDone()
     {

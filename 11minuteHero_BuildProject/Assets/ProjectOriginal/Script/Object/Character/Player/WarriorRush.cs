@@ -18,7 +18,7 @@ public class WarriorRush : MonoBehaviour
     {
         if(other.CompareTag(ConstDefine.TAG_MONSTER))
         {
-            other.GetComponent<Monster>().KnockBack(1.5f, 1f);
+            other.GetComponent<Character>().KnockBack(1.5f, 1f);
             //∏ÛΩ∫≈Õ ≥ÀπÈ
         }
     }

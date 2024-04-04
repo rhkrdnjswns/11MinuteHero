@@ -1978,7 +1978,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 100
   speed: 2
+  currentHp: 0
   blinkMat: {fileID: 2100000, guid: d79f574ff340dbe4187cf1a52472a920, type: 2}
+  currentMaxHp: 0
   weaponPrefab: {fileID: 8095844004425900557, guid: 555e6508903d5fc4a992a6b52ff3754b,
     type: 3}
   weaponSocket: {fileID: 1014376094640106828}
@@ -17195,7 +17197,7 @@ PrefabInstance:
     - target: {fileID: 7565184027745486277, guid: a0f353999ae947d4fad86b0875560508,
         type: 3}
       propertyPath: startDelay
-      value: 5
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0f353999ae947d4fad86b0875560508, type: 3}

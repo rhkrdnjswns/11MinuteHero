@@ -8,7 +8,7 @@ public class PLionArrow : PPenetrationProjectile
     {
         if (other.CompareTag(ConstDefine.TAG_MONSTER))
         {
-            other.GetComponent<Monster>().Hit(rangedAttackUtility.ProjectileDamage); //Monster 클래스를 추출하여 데미지 연산
+            other.GetComponent<Character>().Hit(rangedAttackUtility.ProjectileDamage); //Monster 클래스를 추출하여 데미지 연산
             currentCount--;
             InGameManager.Instance.Player.Weapon.SetSpeedUp();
 

@@ -34,7 +34,7 @@ public class PHellFire : PPenetrationProjectile
     {
         if (other.CompareTag(ConstDefine.TAG_MONSTER))
         {
-            other.GetComponent<Monster>().Hit(rangedAttackUtility.ProjectileDamage); //Monster 클래스를 추출하여 데미지 연산
+            other.GetComponent<Character>().Hit(rangedAttackUtility.ProjectileDamage); //Monster 클래스를 추출하여 데미지 연산
             currentCount--;
 
             if (currentCount > 0) return;

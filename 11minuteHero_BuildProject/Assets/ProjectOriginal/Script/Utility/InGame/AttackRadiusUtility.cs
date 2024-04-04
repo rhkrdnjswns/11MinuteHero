@@ -17,6 +17,10 @@ public class AttackRadiusUtility //반경 내에서 특정 레이어를 검사하는 기능을 가�
     {
         return Physics.OverlapSphere(transform.position, radius, layerMask);
     }
+    public Collider[] GetLayerInRadius(Transform transform, float radius) //transform.position에서 반경만큼 원을 그려 검출된 충돌체 배열로 반환
+    {
+        return Physics.OverlapSphere(transform.position, radius, layerMask);
+    }
     public Collider[] GetLayerInRadiusSortedByDistance(Transform transform)//transform.position에서 반경만큼 원을 그려 검출된 충돌체를 가까운 순서로 정렬해서 배열로 반환
     {
         return Physics.OverlapSphere(transform.root.position, radius, layerMask).OrderBy(o => Vector3.SqrMagnitude(o.transform.position - transform.position)).ToArray();

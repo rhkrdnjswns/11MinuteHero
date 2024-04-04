@@ -23,7 +23,7 @@ public class PArcher : CPlayer
         dir.y = 0;
         while (isDodge)
         {
-            yield return InGameManager.Instance.waitForFixedUpdate;
+            yield return null;
             rigidbody.velocity = dir * currentSpeed * 2f;
             //transform.position += dir * currentSpeed * 2f * Time.deltaTime;
         }

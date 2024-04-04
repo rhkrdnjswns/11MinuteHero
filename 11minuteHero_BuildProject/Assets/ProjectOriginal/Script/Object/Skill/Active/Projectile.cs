@@ -54,7 +54,7 @@ public abstract class Projectile : MonoBehaviour //투사체 클래스. 화살, 단검 등 
     {
         if (other.CompareTag(ConstDefine.TAG_MONSTER)) //몬스터와 부딪힌 경우
         {
-            other.GetComponent<Monster>().Hit(rangedAttackUtility.ProjectileDamage); //Monster 클래스를 추출하여 데미지 연산
+            other.GetComponent<Character>().Hit(rangedAttackUtility.ProjectileDamage); //Monster 클래스를 추출하여 데미지 연산
             rangedAttackUtility.ReturnProjectile(this); //이후 풀로 되돌림
             // -> 필드 위에 많은 수의 몬스터가 존재하기 때문에 충돌한 몬스터를 검출하는 게 몬스터 리스트를 순회하는 작업보다 성능면에서 효율적임
         }

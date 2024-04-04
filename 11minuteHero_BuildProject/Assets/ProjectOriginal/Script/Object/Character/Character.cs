@@ -1,6 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
+public enum EApplicableType //수치 적용 방식
+{
+    Value,
+    Percentage
+}
 public enum ECharacterActionable //캐릭터가 행동 가능한 상태인지 구분
 {
     Actionable,
@@ -56,26 +61,39 @@ public abstract class Character : MonoBehaviour //언리얼의 Character와 같은 역할
         if (IsDie || eCharacterActionable == ECharacterActionable.Unactionable) return false; //행동 가능한 상태가 아니면 false
         return true;
     }
-    public virtual void KnockBack(float knockBackRange, float stiffnessTime) //넉백 함수
+    public virtual void KnockBack(float speed, float duration) //캐릭터 뒷방향으로의 넉백 함수
     {
         if (IsKnockBack) return;
         IsKnockBack = true;
         eCharacterActionable = ECharacterActionable.Unactionable; //행동 불가 처리
 
-        StartCoroutine(Co_KnockBack(knockBackRange, stiffnessTime));
+        StartCoroutine(Co_KnockBack(speed, duration));
     }
-    protected virtual IEnumerator Co_KnockBack(float range, float stiffnessTime) //range만큼 뒤로 밀려나고 stiffnessTime만큼 경직
+    public virtual void KnockBack(float speed, float duration, Vector3 direction) //임의의 방향으로의 넉백 함수
     {
-        Vector3 direction = transform.forward.normalized * -1; //뒷방향 벡터
-        Vector3 pos = transform.position + direction * range; //뒷방향으로 range만큼의 위치 구함
+        if (IsKnockBack) return;
+        IsKnockBack = true;
+        eCharacterActionable = ECharacterActionable.Unactionable; //행동 불가 처리
 
-        while (Vector3.Distance(transform.position, pos) > 0.1f) //보간으로 pos에 도달할 때까지는 너무 오래걸리기 때문에 오차간격 설정
-        {
-            transform.position = Vector3.Lerp(transform.position, pos, 2 * Time.deltaTime); //선형보간으로 부드럽게 캐릭터 이동
-            if (IsDie) yield break; //넉백 도중 사망하면 코루틴 탈출
-            yield return null;
-        }
-        yield return new WaitForSeconds(stiffnessTime); //경직 처리
+        StartCoroutine(Co_KnockBack(speed, duration, direction));
+    }
+    protected virtual IEnumerator Co_KnockBack(float speed, float duration) //스피드 속도로 듀레이션 동안 뒤로 밀려남
+    {
+        rigidbody.velocity = transform.forward * -1 * speed;
+
+        yield return new WaitForSeconds(duration); //경직 처리
+        rigidbody.velocity = Vector3.zero;
+
+        IsKnockBack = false;
+        eCharacterActionable = ECharacterActionable.Actionable; //행동 재개
+    }
+    protected virtual IEnumerator Co_KnockBack(float speed, float duration, Vector3 direction) //스피드 속도로 듀레이션 동안 디렉션 방향으로 밀려남
+    {
+        rigidbody.velocity = direction * speed;
+
+        yield return new WaitForSeconds(duration); //경직 처리
+        rigidbody.velocity = Vector3.zero;
+
         IsKnockBack = false;
         eCharacterActionable = ECharacterActionable.Actionable; //행동 재개
     }

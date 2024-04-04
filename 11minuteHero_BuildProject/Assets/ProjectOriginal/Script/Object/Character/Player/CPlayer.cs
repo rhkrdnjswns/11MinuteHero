@@ -83,12 +83,12 @@ public abstract class CPlayer : Character
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Dodge();
-        } 
+        }
         if (Input.GetKeyDown(KeyCode.K))
         {
             KnockBack(2f, 0.3f);
         }
-       // Debug.DrawRay(transform.position, (transform.forward + transform.right) * 3, Color.red);
+        // Debug.DrawRay(transform.position, (transform.forward + transform.right) * 3, Color.red);
     }
 #endif
     public override void Hit(float damage) //피격
@@ -141,7 +141,7 @@ public abstract class CPlayer : Character
         yield return new WaitForSeconds(1f); //1초 지연 후 무적 해제
         isInvincible = false;
     }
-    protected IEnumerator Co_Move()
+    private IEnumerator Co_Move()
     {
         while (InGameManager.Instance.GameState != EGameState.GameOver)
         {
@@ -185,19 +185,26 @@ public abstract class CPlayer : Character
     public void IncreaseExp(int value) //경험치 증가 함수
     {
         currentExp += value + (value * expGained / 100); //경험치 획득량만큼 증가된 경험치 연산
-        if(currentExp >= maxExp)
+        if (currentExp >= maxExp)
         {
             level++;
             currentExp -= maxExp;
             maxExp += 100 * (level - 1);
         }
-        expBar.SetFillAmount((float)currentExp / (float)maxExp, level.ToString()); //경험치바 갱신 (fillAmount가 0~1 값이라 float로 형변환해야 함)
+        if (expBar.gameObject.activeSelf)
+        {
+            expBar.SetFillAmount((float)currentExp / (float)maxExp, level.ToString()); //경험치바 갱신 (fillAmount가 0~1 값이라 float로 형변환해야 함)
+        }
     }
     public void RecoverHp(float value, EApplicableType type) //체력 회복 함수
     {
-        currentHp += type == EApplicableType.None ? value : currentMaxHp * value / 100;
+        currentHp += type == EApplicableType.Value ? value : currentMaxHp * value / 100;
         if (currentHp > currentMaxHp) currentHp = currentMaxHp;
         hpBar.SetFillAmount(currentHp / currentMaxHp);
+    }
+    public void InActiveExpBar()
+    {
+        expBar.transform.parent.gameObject.SetActive(false);
     }
     public void IncreaseItemColliderRadius(float value)
     {
@@ -206,12 +213,12 @@ public abstract class CPlayer : Character
     public void IncreaseMaxHp(float value)
     {
         currentMaxHp += maxHp * value / 100;
-        RecoverHp(maxHp * value / 100, EApplicableType.None);
+        RecoverHp(maxHp * value / 100, EApplicableType.Value);
         hpBar.SetFillAmount(currentHp / currentMaxHp);
     }
     public void IncreaseSpeed(float value, EApplicableType type)
     {
-        currentSpeed += type == EApplicableType.None ? value : speed * value / 100;
+        currentSpeed += type == EApplicableType.Value ? value : speed * value / 100;
     }
     public void DecreaseSpeed(float value)
     {
@@ -228,5 +235,15 @@ public abstract class CPlayer : Character
         weaponSocket.GetChild(1).gameObject.SetActive(true);
         attackCoroutine = Co_Attack();
         StartCoroutine(attackCoroutine);
+    }
+    public override void KnockBack(float speed, float duration) //캐릭터 뒷방향으로의 넉백 함수
+    {
+        base.KnockBack(speed, duration);
+        //rigidbody.velocity = Vector3.zero;
+    }
+    public override void KnockBack(float speed, float duration, Vector3 direction) //임의의 방향으로의 넉백 함수
+    {
+        base.KnockBack(speed, duration, direction);
+        //rigidbody.velocity = Vector3.zero;
     }
 }
