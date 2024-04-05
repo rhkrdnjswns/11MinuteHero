@@ -6,9 +6,9 @@ public abstract class Boss : Character
 {
     protected BehaviorTree behaviorTree;
     [Range(20, 60)]
-    [SerializeField] private float bossAreaWidth;
+    [SerializeField] protected float bossAreaWidth;
     [Range(20, 60)]
-    [SerializeField] private float bossAreaHeight;
+    [SerializeField] protected float bossAreaHeight;
     [SerializeField] private GameObject bossAreaPrefab;
 
     [SerializeField] protected List<Decal> decalList = new List<Decal>();
@@ -19,7 +19,7 @@ public abstract class Boss : Character
         return stateInfo.length;
     }
     protected abstract void InitBehaviorTree();
-    public void InitBoss()
+    public virtual void InitBoss()
     {
         InitBehaviorTree();
         StartCoroutine(Co_ExcuteBehaviorTree());

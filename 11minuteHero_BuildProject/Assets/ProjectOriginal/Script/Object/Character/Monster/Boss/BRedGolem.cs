@@ -4,24 +4,42 @@ using UnityEngine;
 
 public class BRedGolem : Boss
 {
-    private enum EDecalNumber
+    protected enum EDecalNumber
     {
         Jump = 0,
+        KnockbackPunch,
+        SummonStoneRandomPos,
         SummonStone,
-        KnockbackPunch
+        SummonStoneX = 3,
+        SummonStoneZ
     }
     private bool bAction;
     private bool bReturnStone;
     private GameObject modelObject;
-    [SerializeField] private RangedAttackUtility rangedAttackUtility;
+    [SerializeField] protected RangedAttackUtility rangedAttackUtility;
     [SerializeField] private AttackRadiusUtility jumpAttack;
-    [SerializeField] private AttackInSquareUtility knockbackPunch;
+    [SerializeField] protected AttackInSquareUtility attackInSquareUtility;
     [SerializeField] private GameObject stonePrefab;
 
     private int returnStoneCount;
     private List<CRedGolemStone> stoneList = new List<CRedGolemStone>();
+    private List<CRedGolemStone> spareStoneList = new List<CRedGolemStone>();
     private Queue<CRedGolemStone> stoneQueue = new Queue<CRedGolemStone>();
+
+    private Vector3 AppearPos;
+    protected float summonedStonePosY;
     public int ReturnStoneCount { get => returnStoneCount; set => returnStoneCount = value; }
+    protected virtual void SetSummonedStonePosY()
+    {
+        summonedStonePosY = 0.5f;
+    }
+    public override void InitBoss()
+    {
+        AppearPos = transform.position;
+        SetSummonedStonePosY();
+        base.InitBoss();
+        StartCoroutine(Co_SummonStoneRandomPos());
+    }
     protected override void InitBehaviorTree()
     {
         behaviorTree = new BehaviorTree
@@ -85,6 +103,25 @@ public class BRedGolem : Boss
         bAction = true;
         StartCoroutine(Co_LongRangeBehavior());
     }
+    private IEnumerator Co_SummonStoneRandomPos()
+    {
+        while(true)
+        {
+            Vector3 randomPos = new Vector3(AppearPos.x + Random.Range(-(bossAreaWidth / 2), bossAreaWidth / 2), 0, AppearPos.z + Random.Range(-(bossAreaHeight / 2), bossAreaHeight / 2));
+            yield return new WaitForSeconds(5f);
+            Debug.Log(randomPos);
+
+            decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.SetParent(null);
+            decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.position = randomPos;
+            StartCoroutine(decalList[(int)EDecalNumber.SummonStoneRandomPos].Co_ActiveDecal(2));
+
+            yield return new WaitForSeconds(2f);
+
+            jumpAttack.AttackLayerInRadius(jumpAttack.GetLayerInRadius(decalList[(int)EDecalNumber.SummonStoneRandomPos].transform, 1), 10);
+            SummonStone(decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.position);
+            decalList[(int)EDecalNumber.SummonStoneRandomPos].InActiveDecal(transform);
+        }
+    }
     private IEnumerator Co_ShortRangeBehavior()
     {
         int rand = Random.Range(1, 101);
@@ -98,7 +135,7 @@ public class BRedGolem : Boss
         }
         else
         {
-            yield return StartCoroutine(Co_ReturnStone());
+            yield return StartCoroutine(Co_SummonStone()); //StartCoroutine(Co_ReturnStone());
         }
         yield return new WaitForSeconds(2f);
 
@@ -109,7 +146,7 @@ public class BRedGolem : Boss
         int rand = Random.Range(1, 101);
         if (rand < 46)
         {
-            yield return StartCoroutine(Co_ThrowStone());
+            yield return StartCoroutine(Co_SummonStone()); //StartCoroutine(Co_ThrowStone());
         }
         else if (rand > 45 && rand < 76)
         {
@@ -142,17 +179,7 @@ public class BRedGolem : Boss
 
         bAction = false;
     }
-    private IEnumerator Co_SpreadStone()
-    {
-        Debug.Log("돌 뿌리기");
-        foreach (var item in stoneList)
-        {
-            item.StartCoroutine(item.Co_SpreadStone(Quaternion.Euler(0,Random.Range(0,361),0) * Vector3.forward, Random.Range(1f,2.6f)));
-        }
-        stoneList.Clear();
-        yield return null;
-    }
-    private IEnumerator Co_SummonStone()
+    protected virtual IEnumerator Co_SummonStone()
     {
         Debug.Log("돌 소환");
         transform.LookAt(InGameManager.Instance.Player.transform);
@@ -162,6 +189,16 @@ public class BRedGolem : Boss
         decalList[(int)EDecalNumber.SummonStone].transform.position = InGameManager.Instance.Player.transform.position;
         StartCoroutine(decalList[(int)EDecalNumber.SummonStone].Co_ActiveDecal(2));
 
+        yield return null;
+    }
+    private IEnumerator Co_SpreadStone()
+    {
+        Debug.Log("돌 뿌리기");
+        foreach (var item in stoneList)
+        {
+            item.StartCoroutine(item.Co_SpreadStone(Quaternion.Euler(0,Random.Range(0,361),0) * Vector3.forward, Random.Range(1f,2.6f)));
+        }
+        stoneList.Clear();
         yield return null;
     }
     private IEnumerator Co_ReturnStone()
@@ -197,6 +234,11 @@ public class BRedGolem : Boss
         }
         returnStoneCount = 0;
         bReturnStone = false;
+        foreach(var item in spareStoneList)
+        {
+            stoneList.Add(item);
+        }
+        spareStoneList.Clear();
     }
     private IEnumerator Co_KnockBackPunch()
     {
@@ -209,8 +251,8 @@ public class BRedGolem : Boss
         decalList[(int)EDecalNumber.KnockbackPunch].InActiveDecal(transform);
 
         animator.SetTrigger("Punch");
-        knockbackPunch.AttackAndKnockbackLayerInSquare(knockbackPunch.GetLayerInSquare(transform.position + transform.forward * 2, new Vector3(2, 1, 3), transform.rotation),
-            10, 5f, 1f, transform.forward);
+        attackInSquareUtility.AttackLayerInSquare(attackInSquareUtility.GetLayerInSquare(transform.position + transform.forward * 2, new Vector3(2, 1, 3), transform.rotation),10);
+        InGameManager.Instance.Player.KnockBack(5f, 1f, transform.forward); //플레이어 넉백
     }
     private IEnumerator Co_ThrowStone()
     {
@@ -259,14 +301,21 @@ public class BRedGolem : Boss
     }
     public void SummonStone(Vector3 pos)
     {
-        if (bReturnStone) return;
         if (stoneQueue.Count == 0) InitStoneQueue();
         CRedGolemStone obj = stoneQueue.Dequeue();
-        stoneList.Add(obj);
+
+        if (bReturnStone)
+        {
+            spareStoneList.Add(obj);
+        }
+        else
+        {
+            stoneList.Add(obj);
+        }
 
         obj.ResetStatus();
         obj.transform.SetParent(null);
-        obj.transform.position = pos;
+        obj.transform.position = new Vector3(pos.x, summonedStonePosY, pos.z);
         obj.gameObject.SetActive(true);
     }
     public void ReturnStone(CRedGolemStone redGolemStone)
@@ -291,17 +340,17 @@ public class BRedGolem : Boss
     {
         modelObject.SetActive(true);
     }
-    public void AnimEvent_ThrowStone()
+    public virtual void AnimEvent_ThrowStone()
     {
         Projectile p = rangedAttackUtility.SummonProjectile(0.5f);
-        p.SetShotDirection((InGameManager.Instance.Player.transform.position - transform.position).normalized);
+        p.SetShotDirection(transform.forward);
         p.SetDistance(12);
         p.ShotProjectile();
     }
-    public void AnimEvent_SummonStone()
+    public virtual void AnimEvent_SummonStone()
     {
         jumpAttack.AttackLayerInRadius(jumpAttack.GetLayerInRadius(decalList[(int)EDecalNumber.SummonStone].transform, 1), 10);
-        SummonStone(decalList[(int)EDecalNumber.SummonStone].transform.position + Vector3.up * 0.49f);
+        SummonStone(decalList[(int)EDecalNumber.SummonStone].transform.position);
         decalList[(int)EDecalNumber.SummonStone].InActiveDecal(transform);
     }
 }

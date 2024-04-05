@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 (플레이어 공격에 데미지를 입음. 파괴 가능)
 {
+    public enum EStoneType
+    {
+        Destructible,
+        Indestructible
+    }
+
+    [SerializeField] private EStoneType eStoneType;
     private float currentDamage;
 
     private Transform parent;
@@ -65,8 +72,17 @@ public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 
         currentHp = maxHp;
         currentSpeed = speed;
 
-        gameObject.layer = LayerMask.NameToLayer("Monster");
-        gameObject.tag = "Monster";
+        if (eStoneType == EStoneType.Destructible)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Monster");
+            gameObject.tag = "Monster";
+        }
+        else
+        {
+            gameObject.layer = LayerMask.NameToLayer("Default");
+            gameObject.tag = "Untagged";
+        }
+
         eCharacterActionable = ECharacterActionable.Unactionable;
     }
     public CRedGolemStone InitDamageUIContainer() //새로 생성 시 한번만 호출
@@ -82,6 +98,8 @@ public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 
     }
     public override void Hit(float damage) //몬스터 피격 함수
     {
+        if (eStoneType == EStoneType.Indestructible) return;
+
         base.Hit(damage);
         damageUIContainer.ActiveDamageUI(damage);
         if (currentHp <= 0) parent.GetComponent<BRedGolem>().ReturnStone(this);
@@ -90,10 +108,10 @@ public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 
     {
         return;
     }
-    //public override void KnockBack(float speed, float duration, Vector3 direction)
-    //{
-    //    return;
-    //}
+    public override void KnockBack(float speed, float duration, Vector3 direction)
+    {
+        return;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (eCharacterActionable == ECharacterActionable.Unactionable) return;

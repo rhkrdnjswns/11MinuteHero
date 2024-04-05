@@ -19,16 +19,4 @@ public class AttackInSquareUtility
             item.GetComponent<Character>().Hit(damage);
         }
     }
-    public void AttackAndKnockbackLayerInSquare(Collider[] inSquareArray, float damage, float speed, float duration, Vector3 direction) //반경 내 Character 오브젝트에 피해를 줌
-    {
-        if (inSquareArray.Length == 0) return;
-
-        foreach (var item in inSquareArray)
-        {
-            Character c = item.GetComponent<Character>();
-            if (c == null) continue;
-            c.Hit(damage);
-            c.KnockBack(speed, duration, direction);
-        }
-    }
 }
