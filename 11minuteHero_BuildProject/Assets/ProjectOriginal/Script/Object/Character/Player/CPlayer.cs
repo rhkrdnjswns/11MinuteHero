@@ -238,11 +238,13 @@ public abstract class CPlayer : Character
     }
     public override void KnockBack(float speed, float duration) //캐릭터 뒷방향으로의 넉백 함수
     {
+        if (isDodge) return;
         base.KnockBack(speed, duration);
         //rigidbody.velocity = Vector3.zero;
     }
     public override void KnockBack(float speed, float duration, Vector3 direction) //임의의 방향으로의 넉백 함수
     {
+        if (isDodge) return;
         base.KnockBack(speed, duration, direction);
         //rigidbody.velocity = Vector3.zero;
     }

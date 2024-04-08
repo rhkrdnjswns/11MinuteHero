@@ -31,6 +31,8 @@ public class AttackRadiusUtility //¹Ý°æ ³»¿¡¼­ Æ¯Á¤ ·¹ÀÌ¾î¸¦ °Ë»çÇÏ´Â ±â´ÉÀ» °¡Á
 
         foreach (var item in inRadiusArray)
         {
+            if (!item.GetComponent<Character>()) continue;
+
             item.GetComponent<Character>().Hit(damage);
         }      
     }
@@ -40,6 +42,8 @@ public class AttackRadiusUtility //¹Ý°æ ³»¿¡¼­ Æ¯Á¤ ·¹ÀÌ¾î¸¦ °Ë»çÇÏ´Â ±â´ÉÀ» °¡Á
 
         foreach (var item in inRadiusArray)
         {
+            if (!item.GetComponent<Character>()) continue;
+
             item.GetComponent<Character>().Hit(damage);
             Monster m = item.GetComponent<Monster>();
             if(eAttackType == EAttackType.Slow)
@@ -60,6 +64,8 @@ public class AttackRadiusUtility //¹Ý°æ ³»¿¡¼­ Æ¯Á¤ ·¹ÀÌ¾î¸¦ °Ë»çÇÏ´Â ±â´ÉÀ» °¡Á
         int count = 0;
         foreach (var item in inRadiusArray)
         {
+            if (!item.GetComponent<Character>()) continue;
+
             c = item.GetComponent<Character>();
             c.Hit(damage);
             if (c.IsDie) count++;

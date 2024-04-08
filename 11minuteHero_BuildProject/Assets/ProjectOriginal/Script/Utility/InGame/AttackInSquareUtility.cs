@@ -16,6 +16,8 @@ public class AttackInSquareUtility
 
         foreach (var item in inSquareArray)
         {
+            if (!item.GetComponent<Character>()) continue;
+
             item.GetComponent<Character>().Hit(damage);
         }
     }
