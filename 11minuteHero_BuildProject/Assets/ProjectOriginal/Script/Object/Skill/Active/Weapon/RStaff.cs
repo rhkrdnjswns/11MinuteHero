@@ -56,6 +56,8 @@ public class RStaff : WRangedWeapon //마법사가 사용하는 무기. (09/25)액티브 스킬
 
             if (monsterIndex >= inRadiusMonsterArray.Length) monsterIndex = 0; //반경 내의 몬스터가 투사체 수보다 적은 경우의 처리
 
+            if (monsterIndex >= 6) monsterIndex = 0; //반경 내 타격 가능한 최대 몬스터 수에 도달한 경우 인덱스 초기화
+
             if (i < rangedAttackUtility.ShotCount - 1) yield return new WaitForSeconds(shotInterval); //마지막 투사체 발사 시에는 텀 없게 하기
         }
         bShotDone = true;

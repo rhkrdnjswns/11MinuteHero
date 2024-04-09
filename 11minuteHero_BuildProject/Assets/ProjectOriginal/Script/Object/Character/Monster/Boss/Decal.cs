@@ -15,7 +15,7 @@ public class Decal : MonoBehaviour
     public virtual IEnumerator Co_ActiveDecal(Vector3 size) //벡터 스케일로 조정
     {
         transform.localScale = size;
-        transform.position += Vector3.up * 0.01f;
+        transform.position = new Vector3(transform.position.x, 0.01f, transform.position.z);
         gameObject.SetActive(true);
 
         yield return null;

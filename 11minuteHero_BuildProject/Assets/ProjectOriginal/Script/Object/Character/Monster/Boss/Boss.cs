@@ -11,16 +11,23 @@ public abstract class Boss : Character
     [SerializeField] protected float bossAreaHeight;
     [SerializeField] private GameObject bossAreaPrefab;
 
+    protected CameraUtility cameraUtility;
     [SerializeField] protected List<Decal> decalList = new List<Decal>();
 
+    [SerializeField] protected int[] hpEventArray;
+    private int hpEventIndex;
+    protected bool bHpEvent;
+
+    protected abstract void PlayHpEvent(int index);
+    protected abstract void InitBehaviorTree();
     public float GetStartAnimPlayTime()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         return stateInfo.length;
     }
-    protected abstract void InitBehaviorTree();
     public virtual void InitBoss()
     {
+        cameraUtility = Camera.main.GetComponent<CameraUtility>();
         InitBehaviorTree();
         StartCoroutine(Co_ExcuteBehaviorTree());
     }
@@ -50,18 +57,33 @@ public abstract class Boss : Character
             else obj.transform.rotation = Quaternion.Euler(0, 90, 0);
         }
     }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            bHpEvent = true;
+            PlayHpEvent(1);
+        }
+    }
     private IEnumerator Co_ExcuteBehaviorTree()
     {
         while (true)
         {
-            behaviorTree.Execute();
             yield return null;
+            if (bHpEvent) continue;
+            behaviorTree.Execute();
         }
     }
     public override void Hit(float damage)
     {
         base.Hit(damage);
         InGameManager.Instance.BossUIManager.UpdateBossHpBar(currentHp / maxHp);
+        if (hpEventIndex >= hpEventArray.Length) return;
+        if((currentHp / maxHp * 100) <= hpEventArray[hpEventIndex])
+        {
+            bHpEvent = true;
+            PlayHpEvent(hpEventIndex++);
+        }
     }
     protected virtual void IncreaseHp(float value)
     {
