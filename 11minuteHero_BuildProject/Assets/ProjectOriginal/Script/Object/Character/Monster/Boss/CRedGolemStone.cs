@@ -67,7 +67,7 @@ public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 
         eCharacterActionable = ECharacterActionable.Unactionable;
         parent.GetComponent<BRedGolem>().ReturnStoneCount++;
     }
-    public void ResetStatus() //풀에서 꺼내올 때마다 초기화
+    public virtual void ResetStatus() //풀에서 꺼내올 때마다 초기화
     {
         currentHp = maxHp;
         currentSpeed = speed;

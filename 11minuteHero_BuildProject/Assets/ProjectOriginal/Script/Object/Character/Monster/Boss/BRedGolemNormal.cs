@@ -6,9 +6,9 @@ public class BRedGolemNormal : BRedGolem
 {
     private Transform[] decalParentArray = new Transform[2];
     [SerializeField] private GameObject indestructibleStonePrefab;
-    private Queue<CRedGolemStone> indestructibleStoneQueue = new Queue<CRedGolemStone>();
+    protected Queue<CRedGolemStone> indestructibleStoneQueue = new Queue<CRedGolemStone>();
 
-    private float summonedIndestructibleStonePosY;
+    protected float summonedIndestructibleStonePosY;
     protected override void InitStoneQueue()
     {
         base.InitStoneQueue();
@@ -47,7 +47,7 @@ public class BRedGolemNormal : BRedGolem
             p.ShotProjectile();
         }
     }
-    protected override IEnumerator Co_SummonStone()
+    protected override IEnumerator Co_Behavior_SummonStone()
     {
         Debug.Log("µπ º“»Ø");
         transform.LookAt(InGameManager.Instance.Player.transform);
@@ -83,17 +83,21 @@ public class BRedGolemNormal : BRedGolem
     }
     public override void SummonStone(Vector3 pos)
     {
-        int rand = Random.Range(0, 2);
+        int rand = Random.Range(1, 101);
+        float posY;
+
         CRedGolemStone obj;
-        if (rand == 0)
+        if (rand <= 70)
         {
             if (stoneQueue.Count == 0) InitStoneQueue();
             obj = stoneQueue.Dequeue();
+            posY = summonedStonePosY;
         }
         else
         {
             if (indestructibleStoneQueue.Count == 0) InitStoneQueue();
             obj = indestructibleStoneQueue.Dequeue();
+            posY = summonedIndestructibleStonePosY;
         }
 
         if (bReturnStone)
@@ -105,9 +109,9 @@ public class BRedGolemNormal : BRedGolem
             stoneList.Add(obj);
         }
 
-        obj.ResetStatus();
         obj.transform.SetParent(null);
-        obj.transform.position = new Vector3(pos.x, rand == 0? summonedStonePosY : summonedIndestructibleStonePosY, pos.z);
+        obj.transform.position = new Vector3(pos.x, posY, pos.z);
         obj.gameObject.SetActive(true);
+        obj.ResetStatus();
     }
 }

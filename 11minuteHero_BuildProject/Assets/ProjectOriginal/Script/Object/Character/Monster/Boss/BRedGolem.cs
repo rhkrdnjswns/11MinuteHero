@@ -21,17 +21,13 @@ public class BRedGolem : Boss
     [SerializeField] private AttackRadiusUtility jumpAttack;
     [SerializeField] protected AttackInSquareUtility attackInSquareUtility;
     [SerializeField] private GameObject stonePrefab;
-    [SerializeField] private List<Decal> hpEventReleaseDecalList;
-
-    [SerializeField] private List<Decal> hpEventEarthQuakeDecalList;
-    [SerializeField] private List<ParticleSystem> earthQuakeParticleList;
 
     private int returnStoneCount;
     protected List<CRedGolemStone> stoneList = new List<CRedGolemStone>();
     protected List<CRedGolemStone> spareStoneList = new List<CRedGolemStone>();
     protected Queue<CRedGolemStone> stoneQueue = new Queue<CRedGolemStone>();
 
-    private Vector3 appearPos;
+    protected Vector3 appearPos;
     protected float summonedStonePosY;
 
     public int ReturnStoneCount { get => returnStoneCount; set => returnStoneCount = value; }
@@ -41,10 +37,6 @@ public class BRedGolem : Boss
     }
     public override void InitBoss()
     {
-        foreach (var item in earthQuakeParticleList)
-        {
-            item.transform.SetParent(null);
-        }
         appearPos = transform.position;
         SetSummonedStonePosY();
         base.InitBoss();
@@ -57,91 +49,12 @@ public class BRedGolem : Boss
             case 0:
                 StartCoroutine(Co_HpEvent_Release());
                 break;
-            case 1:
-                StartCoroutine(Co_HpEvent_EarthQuake());
-                bHpEvent = false;
-                break;
             default:
                 Debug.LogError($"{this}\nPlayerHpEvent : Index Out Range");
                 break;
         }
     }
-    private IEnumerator Co_HpEvent_EarthQuake()
-    {
-        float spacing;
-        int rand;
-        while(true)
-        {
-            yield return new WaitForSeconds(5f);
-
-            spacing = bossAreaHeight / hpEventEarthQuakeDecalList.Count;
-            rand = Random.Range(0, 2);
-
-            for (int i = 0; i < hpEventEarthQuakeDecalList.Count; i++)
-            {
-                hpEventEarthQuakeDecalList[i].transform.SetParent(null);
-            
-                hpEventEarthQuakeDecalList[i].transform.position = appearPos + (rand == 0? Vector3.back : Vector3.forward) * (((bossAreaHeight - 5) / 2) - spacing * i);
-                hpEventEarthQuakeDecalList[i].transform.rotation = Quaternion.Euler(90,0,0);
-
-                ParticleSystem.ShapeModule shape = earthQuakeParticleList[i].shape;
-                shape.scale = new Vector3(bossAreaWidth, 1, 4);
-                earthQuakeParticleList[i].transform.position = appearPos + (rand == 0 ? Vector3.back : Vector3.forward) * (((bossAreaHeight - 5) / 2) - spacing * i);
-                earthQuakeParticleList[i].transform.rotation = Quaternion.Euler(90,0,0);
-
-                if (i < hpEventEarthQuakeDecalList.Count - 1)
-                {
-                    StartCoroutine(hpEventEarthQuakeDecalList[i].Co_ActiveDecal(new Vector3(bossAreaWidth, 4, 1), 2f));
-                }
-                else
-                {
-                    yield return StartCoroutine(hpEventEarthQuakeDecalList[i].Co_ActiveDecal(new Vector3(bossAreaWidth, 4, 1), 2f));
-                }        
-            }
-            for(int i = 0; i < hpEventEarthQuakeDecalList.Count; i++)
-            {
-                earthQuakeParticleList[i].Play();
-                attackInSquareUtility.AttackLayerInSquare(attackInSquareUtility.GetLayerInSquare(hpEventEarthQuakeDecalList[i].transform.position, new Vector3(bossAreaWidth / 2, 1, 2), Quaternion.identity), 20);
-                hpEventEarthQuakeDecalList[i].InActiveDecal(transform);
-            }
-            StartCoroutine(cameraUtility.Co_ShakeCam(0.2f, 1, 0.1f));
-
-            yield return new WaitForSeconds(5f);
-
-            spacing = bossAreaWidth / hpEventEarthQuakeDecalList.Count;
-            rand = Random.Range(0, 2);
-
-            for (int i = 0; i < hpEventEarthQuakeDecalList.Count; i++)
-            {
-                hpEventEarthQuakeDecalList[i].transform.SetParent(null);
-
-                hpEventEarthQuakeDecalList[i].transform.position = appearPos + (rand == 0 ? Vector3.left : Vector3.right) * (((bossAreaWidth - 5) / 2) - spacing * i);
-                hpEventEarthQuakeDecalList[i].transform.rotation = Quaternion.Euler(90, 0, -90);
-
-                ParticleSystem.ShapeModule shape = earthQuakeParticleList[i].shape;
-                shape.scale = new Vector3(bossAreaHeight, 1, 4);
-                earthQuakeParticleList[i].transform.position = appearPos + (rand == 0 ? Vector3.left : Vector3.right) * (((bossAreaWidth - 5) / 2) - spacing * i);
-                earthQuakeParticleList[i].transform.rotation = Quaternion.Euler(90, 0, -90);
-
-                if (i < hpEventEarthQuakeDecalList.Count - 1)
-                {
-                    StartCoroutine(hpEventEarthQuakeDecalList[i].Co_ActiveDecal(new Vector3(bossAreaHeight, 4, 1), 2f));
-                }
-                else
-                {
-                    yield return StartCoroutine(hpEventEarthQuakeDecalList[i].Co_ActiveDecal(new Vector3(bossAreaHeight, 4, 1), 2f));
-                }
-            }
-            for (int i = 0; i < hpEventEarthQuakeDecalList.Count; i++)
-            {
-                earthQuakeParticleList[i].Play();
-                attackInSquareUtility.AttackLayerInSquare(attackInSquareUtility.GetLayerInSquare(hpEventEarthQuakeDecalList[i].transform.position, new Vector3(2, 1, bossAreaHeight / 2), Quaternion.identity), 20);
-                hpEventEarthQuakeDecalList[i].InActiveDecal(transform);
-            }
-            StartCoroutine(cameraUtility.Co_ShakeCam(0.2f, 1, 0.1f));
-        }
-    }
-    private IEnumerator Co_HpEvent_Release()
+    protected IEnumerator Co_HpEvent_Release()
     {
         yield return new WaitUntil(() => !bAction);
         Debug.Log("Hp 이벤트 실행");
@@ -176,7 +89,7 @@ public class BRedGolem : Boss
 
         yield return new WaitForSeconds(2f);
 
-        yield return StartCoroutine(Co_ReturnStone());
+        yield return StartCoroutine(Co_Behavior_ReturnStone());
 
         yield return new WaitForSeconds(2f);
 
@@ -269,11 +182,11 @@ public class BRedGolem : Boss
         int rand = Random.Range(1, 101);
         if (rand < 61)
         {
-            yield return StartCoroutine(Co_KnockBackPunch());
+            yield return StartCoroutine(Co_Behavior_KnockBackPunch());
         }
         else
         {
-            yield return StartCoroutine(Co_SummonStone());
+            yield return StartCoroutine(Co_Behavior_SummonStone());
         }
 
         yield return new WaitForSeconds(2f);
@@ -287,15 +200,15 @@ public class BRedGolem : Boss
         int rand = Random.Range(1, 101);
         if (rand < 46)
         {
-            yield return StartCoroutine(Co_ThrowStone());
+            yield return StartCoroutine(Co_Behavior_ThrowStone());
         }
         else if (rand > 45 && rand < 76)
         {
-            yield return StartCoroutine(Co_SummonStone());
+            yield return StartCoroutine(Co_Behavior_SummonStone());
         }
         else
         {
-            yield return StartCoroutine(Co_SummonStone());//StartCoroutine(Co_ReturnStone());//StartCoroutine(Co_Jump());
+            yield return StartCoroutine(Co_Behavior_SummonStone());//StartCoroutine(Co_ReturnStone());//StartCoroutine(Co_Jump());
         }
         yield return new WaitForSeconds(2f);
 
@@ -306,21 +219,21 @@ public class BRedGolem : Boss
         int rand = Random.Range(1, 101);
         if (rand < 31)
         {
-            yield return StartCoroutine(Co_Move());
+            yield return StartCoroutine(Co_Behavior_Move());
         }
         else if (rand > 30 && rand < 71)
         {
-            yield return StartCoroutine(Co_ReturnStone());
+            yield return StartCoroutine(Co_Behavior_ReturnStone());
         }
         else
         {
-            yield return StartCoroutine(Co_Jump());
+            yield return StartCoroutine(Co_Behavior_Jump());
         }
         yield return new WaitForSeconds(2f);
 
         bAction = false;
     }
-    protected virtual IEnumerator Co_SummonStone()
+    protected virtual IEnumerator Co_Behavior_SummonStone()
     {
         Debug.Log("돌 소환");
         transform.LookAt(InGameManager.Instance.Player.transform);
@@ -332,7 +245,7 @@ public class BRedGolem : Boss
 
         yield return null;
     }
-    private IEnumerator Co_SpreadStone()
+    private IEnumerator Co_Behavior_SpreadStone()
     {
         Debug.Log("돌 뿌리기");
         foreach (var item in stoneList)
@@ -342,7 +255,7 @@ public class BRedGolem : Boss
         stoneList.Clear();
         yield return null;
     }
-    private IEnumerator Co_ReturnStone()
+    private IEnumerator Co_Behavior_ReturnStone()
     {
         Debug.Log("돌 모으기");
         if (stoneList.Count == 0) yield break;
@@ -361,7 +274,7 @@ public class BRedGolem : Boss
         {
             animator.SetBool("bSpreadStone", true);
             animator.SetBool("IsEndReturn", true);
-            yield return StartCoroutine(Co_SpreadStone());
+            yield return StartCoroutine(Co_Behavior_SpreadStone());
         }
         else
         {
@@ -381,7 +294,7 @@ public class BRedGolem : Boss
         }
         spareStoneList.Clear();
     }
-    private IEnumerator Co_KnockBackPunch()
+    private IEnumerator Co_Behavior_KnockBackPunch()
     {
         Debug.Log("펀치");
         transform.LookAt(InGameManager.Instance.Player.transform);
@@ -392,10 +305,14 @@ public class BRedGolem : Boss
         decalList[(int)EDecalNumber.KnockbackPunch].InActiveDecal(transform);
 
         animator.SetTrigger("Punch");
-        attackInSquareUtility.AttackLayerInSquare(attackInSquareUtility.GetLayerInSquare(transform.position + transform.forward * 2, new Vector3(2, 1, 3), transform.rotation),10);
-        InGameManager.Instance.Player.KnockBack(5f, 1f, transform.forward); //플레이어 넉백
+        Collider[] col = attackInSquareUtility.GetLayerInSquare(transform.position + transform.forward * 2, new Vector3(2, 1, 3), transform.rotation);
+        if(col.Length > 0)
+        {
+            attackInSquareUtility.AttackLayerInSquare(col, 10);
+            InGameManager.Instance.Player.KnockBack(5f, 1f, transform.forward); //플레이어 넉백
+        }
     }
-    private IEnumerator Co_ThrowStone()
+    private IEnumerator Co_Behavior_ThrowStone()
     {
         Debug.Log("돌 던지기");
         transform.LookAt(InGameManager.Instance.Player.transform);
@@ -403,7 +320,7 @@ public class BRedGolem : Boss
 
         yield return null;
     }
-    private IEnumerator Co_Jump()
+    private IEnumerator Co_Behavior_Jump()
     {
         Debug.Log("점프");
         transform.LookAt(InGameManager.Instance.Player.transform);
@@ -424,7 +341,7 @@ public class BRedGolem : Boss
 
         animator.SetTrigger("JumpEnd");
     }
-    private IEnumerator Co_Move()
+    private IEnumerator Co_Behavior_Move()
     {
         Debug.Log("이동");
         while (Vector3.Distance(transform.position, InGameManager.Instance.Player.transform.position) > 4)
@@ -454,10 +371,10 @@ public class BRedGolem : Boss
             stoneList.Add(obj);
         }
 
-        obj.ResetStatus();
         obj.transform.SetParent(null);
         obj.transform.position = new Vector3(pos.x, summonedStonePosY, pos.z);
         obj.gameObject.SetActive(true);
+        obj.ResetStatus();
     }
     public void ReturnStone(CRedGolemStone redGolemStone)
     {
