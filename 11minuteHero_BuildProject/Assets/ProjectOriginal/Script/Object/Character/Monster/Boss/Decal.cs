@@ -44,6 +44,11 @@ public class Decal : MonoBehaviour
 
         yield return null;
     }
+    public virtual void InActiveDecal()
+    {
+        gameObject.SetActive(false);
+        transform.localScale = Vector3.one;
+    }
     public virtual void InActiveDecal(Transform parent)
     {
         gameObject.SetActive(false);
