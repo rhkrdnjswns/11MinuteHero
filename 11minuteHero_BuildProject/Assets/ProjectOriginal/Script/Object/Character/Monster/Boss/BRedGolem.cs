@@ -104,6 +104,7 @@ public class BRedGolem : Boss
                 attackInSquareUtility.AttackLayerInSquare(attackInSquareUtility.GetLayerInSquare(hpEventEarthQuakeDecalList[i].transform.position, new Vector3(bossAreaWidth / 2, 1, 2), Quaternion.identity), 20);
                 hpEventEarthQuakeDecalList[i].InActiveDecal(transform);
             }
+            StartCoroutine(cameraUtility.Co_ShakeCam(0.2f, 1, 0.1f));
 
             yield return new WaitForSeconds(5f);
 
@@ -118,7 +119,7 @@ public class BRedGolem : Boss
                 hpEventEarthQuakeDecalList[i].transform.rotation = Quaternion.Euler(90, 0, -90);
 
                 ParticleSystem.ShapeModule shape = earthQuakeParticleList[i].shape;
-                shape.scale = new Vector3(bossAreaWidth, 1, 4);
+                shape.scale = new Vector3(bossAreaHeight, 1, 4);
                 earthQuakeParticleList[i].transform.position = appearPos + (rand == 0 ? Vector3.left : Vector3.right) * (((bossAreaWidth - 5) / 2) - spacing * i);
                 earthQuakeParticleList[i].transform.rotation = Quaternion.Euler(90, 0, -90);
 
@@ -137,6 +138,7 @@ public class BRedGolem : Boss
                 attackInSquareUtility.AttackLayerInSquare(attackInSquareUtility.GetLayerInSquare(hpEventEarthQuakeDecalList[i].transform.position, new Vector3(2, 1, bossAreaHeight / 2), Quaternion.identity), 20);
                 hpEventEarthQuakeDecalList[i].InActiveDecal(transform);
             }
+            StartCoroutine(cameraUtility.Co_ShakeCam(0.2f, 1, 0.1f));
         }
     }
     private IEnumerator Co_HpEvent_Release()
@@ -166,14 +168,10 @@ public class BRedGolem : Boss
         transform.LookAt(InGameManager.Instance.Player.transform);
         animator.SetTrigger("SummonStoneRelease");
 
-        for (int i = 0; i < hpEventReleaseDecalList.Count; i++)
+        for (int i = 0; i < 24; i++)
         {
-            hpEventReleaseDecalList[i].transform.SetParent(null);
-
-            Vector3 rotDir = Quaternion.Euler(0, i * 30, 0) * Vector3.forward;
-            hpEventReleaseDecalList[i].transform.position = transform.position + rotDir.normalized * 15;
-
-            StartCoroutine(hpEventReleaseDecalList[i].Co_ActiveDecal(2f));
+            Vector3 rotDir = Quaternion.Euler(0, i * 15, 0) * Vector3.forward;
+            SummonStone(transform.position + rotDir.normalized * 40);
         }
 
         yield return new WaitForSeconds(2f);
@@ -339,7 +337,7 @@ public class BRedGolem : Boss
         Debug.Log("µ¹ »Ñ¸®±â");
         foreach (var item in stoneList)
         {
-            item.StartCoroutine(item.Co_SpreadStone(Quaternion.Euler(0,Random.Range(0,361),0) * Vector3.forward, Random.Range(1f,2.6f)));
+            item.StartCoroutine(item.Co_SpreadStone(Quaternion.Euler(0,Random.Range(0,361),0) * Vector3.forward, Random.Range(3f,4.6f)));
         }
         stoneList.Clear();
         yield return null;
@@ -495,15 +493,5 @@ public class BRedGolem : Boss
         jumpAttack.AttackLayerInRadius(jumpAttack.GetLayerInRadius(decalList[(int)EDecalNumber.SummonStone].transform, 1), 10);
         SummonStone(decalList[(int)EDecalNumber.SummonStone].transform.position);
         decalList[(int)EDecalNumber.SummonStone].InActiveDecal(transform);
-    }
-
-    public virtual void AnimEvent_SummonStoneRelease()
-    {
-        foreach (var item in hpEventReleaseDecalList)
-        {
-            jumpAttack.AttackLayerInRadius(jumpAttack.GetLayerInRadius(item.transform, 1), 10);
-            SummonStone(item.transform.position);
-            item.InActiveDecal(transform);
-        }
     }
 }

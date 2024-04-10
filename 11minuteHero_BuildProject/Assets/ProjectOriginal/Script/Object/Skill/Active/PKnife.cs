@@ -33,9 +33,9 @@ public class PKnife : Projectile
             transform.position += transform.forward * rangedAttackUtility.ProjectileSpeed * Time.deltaTime;
             if(Vector3.Distance(transform.position, target.position + Vector3.up * 0.5f) < 0.5f)
             {
-                if (!target.GetComponent<Monster>().IsDie)
+                if (!target.GetComponent<Character>().IsDie)
                 {
-                    target.GetComponent<Monster>().Hit(rangedAttackUtility.ProjectileDamage);
+                    target.GetComponent<Character>().Hit(rangedAttackUtility.ProjectileDamage);
                 }
                 if (currentCount <= 0) rangedAttackUtility.ReturnProjectile(this);
                 FindNewTarget();
