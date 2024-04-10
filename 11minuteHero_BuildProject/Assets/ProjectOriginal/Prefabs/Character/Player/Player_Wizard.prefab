@@ -12372,7 +12372,7 @@ PrefabInstance:
     - target: {fileID: 7565184027745486277, guid: a0f353999ae947d4fad86b0875560508,
         type: 3}
       propertyPath: startDelay
-      value: 99999
+      value: 9999
       objectReference: {fileID: 0}
     - target: {fileID: 7565184027745486277, guid: a0f353999ae947d4fad86b0875560508,
         type: 3}
