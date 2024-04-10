@@ -1979,7 +1979,7 @@ MonoBehaviour:
   maxHp: 100
   speed: 2
   currentHp: 0
-  blinkMat: {fileID: 2100000, guid: d79f574ff340dbe4187cf1a52472a920, type: 2}
+  blinkMat: {fileID: 2100000, guid: cc9fba834a572ae4a80c3b31923d0d6d, type: 2}
   currentMaxHp: 0
   weaponPrefab: {fileID: 8095844004425900557, guid: 555e6508903d5fc4a992a6b52ff3754b,
     type: 3}
