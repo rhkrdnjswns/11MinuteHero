@@ -45,14 +45,17 @@ public class AttackRadiusUtility //반경 내에서 특정 레이어를 검사하는 기능을 가�
             if (!item.GetComponent<Character>()) continue;
 
             item.GetComponent<Character>().Hit(damage);
-            Monster m = item.GetComponent<Monster>();
-            if(eAttackType == EAttackType.Slow)
+            if(item.GetComponent<Monster>())
             {
-                m.DebuffList.Add(new DSlowDown(EDebuffType.Slow, duration, m, m.Speed * percentage / 100));
-            }
-            else if(eAttackType == EAttackType.Sturn)
-            {
-                m.DebuffList.Add(new DSturn(EDebuffType.Slow, duration, m));
+                Monster m = item.GetComponent<Monster>();
+                if (eAttackType == EAttackType.Slow)
+                {
+                    m.DebuffList.Add(new DSlowDown(EDebuffType.Slow, duration, m, m.Speed * percentage / 100));
+                }
+                else if (eAttackType == EAttackType.Sturn)
+                {
+                    m.DebuffList.Add(new DSturn(EDebuffType.Slow, duration, m));
+                }
             }
         }
     }

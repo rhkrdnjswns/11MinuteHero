@@ -30,7 +30,7 @@ public class WispObject : MonoBehaviour //실제로 충돌 연산을 할 도깨비불 클래스
     {
         if(other.CompareTag(ConstDefine.TAG_MONSTER)) //몬스터 충돌 시 damage만큼 피해 입힘
         {
-            other.GetComponent<Monster>().Hit(damage);
+            other.GetComponent<Character>().Hit(damage);
         }
     }
     //private void Update() //프레임마다 이전 위치와 현재 위치로의 방향 벡터를 구해 forwar로 설정해줌. 오브젝트가 공전 궤도를 계속 바라보도록 하는 처리

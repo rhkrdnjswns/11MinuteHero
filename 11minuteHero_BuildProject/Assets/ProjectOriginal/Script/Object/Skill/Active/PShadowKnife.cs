@@ -28,9 +28,9 @@ public class PShadowKnife : PKnife
                     kShadowKnife.IsReturn = true;
                     yield break;
                 }
-                if (!target.GetComponent<Monster>().IsDie)
+                if (!target.GetComponent<Character>().IsDie)
                 {
-                    target.GetComponent<Monster>().Hit(rangedAttackUtility.ProjectileDamage);
+                    target.GetComponent<Character>().Hit(rangedAttackUtility.ProjectileDamage);
                 }
                 FindNewTarget();
             }

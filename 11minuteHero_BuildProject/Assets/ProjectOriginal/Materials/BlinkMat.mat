@@ -74,6 +74,10 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+<<<<<<< HEAD
     - _Color: {r: 0, g: 0, b: 0, a: -0.0023651922}
+=======
+    - _Color: {r: 0, g: 0, b: 0, a: 0}
+>>>>>>> WorkSpace
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

@@ -46,6 +46,40 @@ public class CameraUtility : MonoBehaviour //카메라 기능 클래스
 
         transform.position = InGameManager.Instance.Player.transform.position + offset;
     }
+    public IEnumerator Co_ShakeCam(float shakeTime, int shakeCount, float sensitivity)
+    {
+        bFocus = true;
+
+        Vector3 firstDir = (Vector3.forward + Vector3.right).normalized * sensitivity;
+        Vector3 SecondDir = (Vector3.left + Vector3.back).normalized * sensitivity;
+
+        for(int i = 0; i < shakeCount; i++)
+        {
+            float timer = 0;
+            while (timer < shakeTime / 3)
+            {
+                transform.position = Vector3.Lerp(transform.position - offset, InGameManager.Instance.Player.transform.position + firstDir, timer / (shakeTime / 3)) + offset;
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            timer = 0;
+            while (timer < shakeTime / 3)
+            {
+                transform.position = Vector3.Lerp(transform.position - offset, InGameManager.Instance.Player.transform.position + SecondDir, timer / (shakeTime / 3)) + offset;
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            timer = 0;
+            while (timer < shakeTime / 3)
+            {
+                transform.position = Vector3.Lerp(transform.position - offset, InGameManager.Instance.Player.transform.position, timer / (shakeTime / 3)) + offset;
+                timer += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        bFocus = false;
+    }
     public void UnFocus()
     {
         bFocus = false;

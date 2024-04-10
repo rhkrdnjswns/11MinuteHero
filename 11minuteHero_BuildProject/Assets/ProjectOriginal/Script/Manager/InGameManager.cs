@@ -88,7 +88,7 @@ public class InGameManager : MonoBehaviour
     {
         instance = this;
         //characterIndex = 0;//GameTest.Instance.index;
-        Application.targetFrameRate = ConstDefine.TARGET_FRAME; //프레임 조정
+        Application.targetFrameRate = 120;//ConstDefine.TARGET_FRAME; //프레임 조정
         Screen.SetResolution(1280, 720, true);
 
         GameObject obj = Instantiate(playerCharacterArray[characterIndex]); //캐릭터 생성 후 참조를 가져옴
@@ -138,6 +138,10 @@ public class InGameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             StartCoroutine(Co_AppearBoss());
+        }
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            StartCoroutine(cameraUtility.Co_ShakeCam(0.2f, 1, 0.1f));
         }
     }
     public void IncreaseKillCount()
