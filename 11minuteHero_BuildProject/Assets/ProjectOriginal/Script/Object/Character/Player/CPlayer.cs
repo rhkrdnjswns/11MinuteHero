@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class CPlayer : Character
 {
-    [SerializeField] private Material blinkMat; //히트 시 깜빡이는 머티리얼
+    [SerializeField] private Transform rendererBody;
+    private Renderer renderer; //머티리얼 깜빡이는 효과를 주기 위한 참조
 
     private int maxExp = 100; //요구 경험치
     private int currentExp; //현재 경험치
@@ -61,8 +62,7 @@ public abstract class CPlayer : Character
 
         GameObject obj = Instantiate(weaponPrefab);
         weapon = obj.GetComponent<AWeapon>();
-
-        blinkMat.color = Color.clear;
+        renderer = rendererBody.GetComponent<Renderer>();
     }
     private void Start()
     {
@@ -119,21 +119,21 @@ public abstract class CPlayer : Character
     private IEnumerator Co_HitInvincible() //피격시 n초 무적 코루틴
     {
         float timer = 0;
-        Color color = blinkMat.color;
+        Color color = renderer.materials[1].color;
         for (int i = 0; i < 2; i++) //총 2초동안 플레이어 깜빡거리는 효과
         {
             while (timer < 0.5f)
             {
                 timer += Time.deltaTime; //메테리얼 색상 조정
                 color.a = timer / 0.7f;
-                blinkMat.color = color;
+                renderer.materials[1].color = color;
                 yield return null;
             }
             while (timer > 0f)
             {
                 timer -= Time.deltaTime;
                 color.a = timer / 0.7f;
-                blinkMat.color = color;
+                renderer.materials[1].color = color;
                 yield return null;
             }
             yield return null;

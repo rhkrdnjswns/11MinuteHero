@@ -34,6 +34,7 @@ public class PWizard : CPlayer
         {
             RaycastHit hit; //장애물이 있는 경우 레이를 쏴서 장애물과 닿는 위치 정보를 가져옴
             Physics.Raycast(transform.position, transform.forward, out hit, 3.4f, LayerMask.GetMask("Obstacle", "BossArea"));
+            Debug.Log(hit.point);
             transform.position = hit.point + (transform.forward * -1 * 0.6f); //플레이어 위치를 장애물과 닿는 위치 + 캐릭릭터 콜라이더의 반지름만큼 뒷방향으로 이동시킴
         }
         AnimEvent_EndDodge();

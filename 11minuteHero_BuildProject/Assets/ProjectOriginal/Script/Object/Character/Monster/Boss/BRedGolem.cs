@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class BRedGolem : Boss
 {
@@ -29,7 +30,6 @@ public class BRedGolem : Boss
 
     protected Vector3 appearPos;
     protected float summonedStonePosY;
-
     public int ReturnStoneCount { get => returnStoneCount; set => returnStoneCount = value; }
     protected virtual void SetSummonedStonePosY()
     {
@@ -89,7 +89,7 @@ public class BRedGolem : Boss
 
         yield return new WaitForSeconds(2f);
 
-        yield return StartCoroutine(Co_Behavior_ReturnStone());
+        yield return StartCoroutine(Co_Behavior_CollectStone());
 
         yield return new WaitForSeconds(2f);
 
@@ -177,38 +177,68 @@ public class BRedGolem : Boss
             decalList[(int)EDecalNumber.SummonStoneRandomPos].InActiveDecal(transform);
         }
     }
+    private int GetBehaviorByWeight(params int[] weights)
+    {
+        int rand = Random.Range(0, weights.Sum());
+
+        int index = 0;
+
+        int weight = weights[index];
+
+        while (true)
+        {
+            if (rand < weight)
+            {
+                return index;
+            }
+            else
+            {
+                weight += weights[++index];
+            }
+        }
+    }
     private IEnumerator Co_ShortRangeBehavior()
     {
-        int rand = Random.Range(1, 101);
-        if (rand < 61)
+        int rand = GetBehaviorByWeight(60, 30, stoneList.Count * 10);
+        switch (rand)
         {
-            yield return StartCoroutine(Co_Behavior_KnockBackPunch());
+            case 0:
+                yield return StartCoroutine(Co_Behavior_KnockBackPunch());
+                break;
+            case 1:
+                yield return StartCoroutine(Co_Behavior_SummonStone());
+                break;
+            case 2:
+                yield return StartCoroutine(Co_Behavior_CollectStone());
+                break;
+            default:
+                Debug.LogError("Index Out Range\n근접 패턴 가중치값이 범위를 벗어났습니다. 가중치 값을 확인하세요.");
+                break;
         }
-        else
-        {
-            yield return StartCoroutine(Co_Behavior_SummonStone());
-        }
-
         yield return new WaitForSeconds(2f);
 
         bAction = false;
     }
     private IEnumerator Co_MiddleRangeBehavior()
     {
-        int collectStoneWeight = stoneList.Count * 3;
-        //int 
-        int rand = Random.Range(1, 101);
-        if (rand < 46)
+        int rand = GetBehaviorByWeight(50, 45, stoneList.Count * 10, 5);
+        switch (rand)
         {
-            yield return StartCoroutine(Co_Behavior_ThrowStone());
-        }
-        else if (rand > 45 && rand < 76)
-        {
-            yield return StartCoroutine(Co_Behavior_SummonStone());
-        }
-        else
-        {
-            yield return StartCoroutine(Co_Behavior_SummonStone());//StartCoroutine(Co_ReturnStone());//StartCoroutine(Co_Jump());
+            case 0:
+                yield return StartCoroutine(Co_Behavior_ThrowStone());
+                break;
+            case 1:
+                yield return StartCoroutine(Co_Behavior_SummonStone());
+                break;
+            case 2:
+                yield return StartCoroutine(Co_Behavior_CollectStone());
+                break;
+            case 3:
+                yield return StartCoroutine(Co_Behavior_Jump());
+                break;
+            default:
+                Debug.LogError("Index Out Range\n중거리 패턴 가중치값이 범위를 벗어났습니다. 가중치 값을 확인하세요.");
+                break;
         }
         yield return new WaitForSeconds(2f);
 
@@ -216,18 +246,24 @@ public class BRedGolem : Boss
     }
     private IEnumerator Co_LongRangeBehavior()
     {
-        int rand = Random.Range(1, 101);
-        if (rand < 31)
+        int rand = GetBehaviorByWeight(60, stoneList.Count * 10, 20, 20);
+        switch (rand)
         {
-            yield return StartCoroutine(Co_Behavior_Move());
-        }
-        else if (rand > 30 && rand < 71)
-        {
-            yield return StartCoroutine(Co_Behavior_ReturnStone());
-        }
-        else
-        {
-            yield return StartCoroutine(Co_Behavior_Jump());
+            case 0:
+                yield return StartCoroutine(Co_Behavior_Move());
+                break;
+            case 1:
+                yield return StartCoroutine(Co_Behavior_CollectStone());
+                break;
+            case 2:
+                yield return StartCoroutine(Co_Behavior_SummonStone());
+                break;
+            case 3:
+                yield return StartCoroutine(Co_Behavior_Jump());
+                break;
+            default:
+                Debug.LogError("Index Out Range\n원거리 패턴 가중치값이 범위를 벗어났습니다. 가중치 값을 확인하세요.");
+                break;
         }
         yield return new WaitForSeconds(2f);
 
@@ -255,7 +291,7 @@ public class BRedGolem : Boss
         stoneList.Clear();
         yield return null;
     }
-    private IEnumerator Co_Behavior_ReturnStone()
+    private IEnumerator Co_Behavior_CollectStone()
     {
         Debug.Log("돌 모으기");
         if (stoneList.Count == 0) yield break;
