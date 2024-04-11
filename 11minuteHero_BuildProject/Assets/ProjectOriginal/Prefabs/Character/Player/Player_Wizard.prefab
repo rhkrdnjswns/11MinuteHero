@@ -250,6 +250,7 @@ MonoBehaviour:
   speed: 2
   currentHp: 0
   blinkMat: {fileID: 2100000, guid: cc9fba834a572ae4a80c3b31923d0d6d, type: 2}
+  rendererBody: {fileID: 7095832004032328645}
   currentMaxHp: 0
   weaponPrefab: {fileID: 8410069343088775610, guid: fd011bd0f65ce1e40b1e28affb4ec0fc,
     type: 3}
