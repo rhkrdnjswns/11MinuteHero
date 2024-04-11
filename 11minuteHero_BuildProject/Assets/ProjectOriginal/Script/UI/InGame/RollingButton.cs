@@ -9,11 +9,13 @@ public class RollingButton : ButtonComponent
     private bool bCoolTime;
     protected override void BtnEvt()
     {
-        if (bCoolTime || InGameManager.Instance.Player.ECharacterActionable == ECharacterActionable.Unactionable) return;
+        if (bCoolTime) return;
 
-        InGameManager.Instance.Player.Dodge();
-        bCoolTime = true;
-        StartCoroutine(Co_UpdateCoolTime());
+        if(InGameManager.Instance.Player.Dodge())
+        {
+            bCoolTime = true;
+            StartCoroutine(Co_UpdateCoolTime());
+        }
     }
     private IEnumerator Co_UpdateCoolTime()
     {
