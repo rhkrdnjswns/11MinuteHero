@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4027763282488320194}
   - component: {fileID: 4007770421431914310}
   - component: {fileID: 4015802132122246430}
+  - component: {fileID: 3128337083827034792}
+  - component: {fileID: 1002766615423380199}
   - component: {fileID: -5813320331189238152}
   m_Layer: 0
   m_Name: bank-western
@@ -85,6 +87,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3128337083827034792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4028686615613118564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a453ff2d1d6a2f4db6a27bb1ca040c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1002766615423380199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4028686615613118564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a453ff2d1d6a2f4db6a27bb1ca040c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &-5813320331189238152
 BoxCollider:
   m_ObjectHideFlags: 0

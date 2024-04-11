@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1052804544448161659}
   - component: {fileID: 1073924400145374049}
   - component: {fileID: 1063926725206378845}
+  - component: {fileID: 4487559426472651393}
   - component: {fileID: 6228326553338260259}
   m_Layer: 0
   m_Name: church-western
@@ -86,6 +87,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4487559426472651393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049875661627677671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a453ff2d1d6a2f4db6a27bb1ca040c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &6228326553338260259
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2486421004757897226}
   - component: {fileID: 388855425547297984}
   - component: {fileID: -3490286614606469689}
+  - component: {fileID: -6322602402583640023}
   m_Layer: 0
   m_Name: tree-maple
   m_TagString: Untagged
@@ -97,3 +98,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.77416, y: 6.987444, z: 3.2714853}
   m_Center: {x: 0.017106771, y: 3.4843545, z: 0.00091683824}
+--- !u!114 &-6322602402583640023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2190299194266567957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a453ff2d1d6a2f4db6a27bb1ca040c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
