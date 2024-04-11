@@ -12,6 +12,7 @@ public class BossUIManager : MonoBehaviour
     {
         bossApperation.gameObject.SetActive(true);
         yield return StartCoroutine(TweeningUtility.Blink(0.5f, 2, 0.5f, bossApperation));
+        bossApperation.gameObject.SetActive(false);
     }
     public void ActiveBossHpBar()
     {

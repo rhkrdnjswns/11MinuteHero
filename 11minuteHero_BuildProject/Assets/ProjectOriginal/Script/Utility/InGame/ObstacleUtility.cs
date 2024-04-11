@@ -22,7 +22,14 @@ public class ObstacleUtility : MonoBehaviour
     void Awake()
     {
         renderer = GetComponent<Renderer>();
-        gameObject.layer = LayerMask.NameToLayer("Obstacle");
+        if(GetComponent<BoxCollider>().isTrigger)
+        {
+            gameObject.layer = LayerMask.NameToLayer("PenetrateObstacle");
+        }
+        else
+        {
+            gameObject.layer = LayerMask.NameToLayer("Obstacle");
+        }
     }
 
     public void BecomeTransparent()

@@ -19,7 +19,7 @@ public class CameraUtility : MonoBehaviour //카메라 기능 클래스
     }
     private IEnumerator Co_CheckObstacleBetweenPlayer()
     {
-        LayerMask mask = LayerMask.GetMask("Obstacle");
+        LayerMask mask = LayerMask.GetMask("Obstacle", "PenetrateObstacle");
         waitUntil_CheckObstacleBetweenPlayer = new WaitUntil(() => !bFocus);
         while(true)
         {

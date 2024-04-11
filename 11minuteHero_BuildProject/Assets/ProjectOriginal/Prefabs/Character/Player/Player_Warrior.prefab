@@ -1899,9 +1899,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4158096630655302}
   - component: {fileID: 95905397883882224}
+  - component: {fileID: 2422292495366993666}
   - component: {fileID: 4125324789621031966}
   - component: {fileID: 8839178064486968094}
-  - component: {fileID: 2422292495366993666}
   m_Layer: 6
   m_Name: Player_Warrior
   m_TagString: Player
@@ -1948,6 +1948,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &2422292495366993666
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835885862194036}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &4125324789621031966
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1984,20 +1998,6 @@ MonoBehaviour:
   weaponPrefab: {fileID: 8095844004425900557, guid: 555e6508903d5fc4a992a6b52ff3754b,
     type: 3}
   weaponSocket: {fileID: 1014376094640106828}
---- !u!136 &2422292495366993666
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1835885862194036}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1907504620384056
 GameObject:
   m_ObjectHideFlags: 0

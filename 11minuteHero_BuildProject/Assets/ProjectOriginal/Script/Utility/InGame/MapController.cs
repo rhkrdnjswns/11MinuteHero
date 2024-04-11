@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MapController : MonoBehaviour
 {
-    private const float DISTANCE_OFFSET = 10f; //센터와 멀어지는 거리
-    private const float FLOOR_SIZE = 20f; //floor 하나의 사이즈 (고정값임)
+    private const float DISTANCE_OFFSET = 20f; //센터와 멀어지는 거리
+    private const float FLOOR_SIZE = 40f; //floor 하나의 사이즈 (고정값임)
 
     private Transform[] floorArray; //floor 배열
     [SerializeField] private Transform center; //플레이어와의 거리를 체크할 floor
