@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1526246588859883439}
   - component: {fileID: 2486421004757897226}
   - component: {fileID: 388855425547297984}
-  - component: {fileID: 2386458237558102420}
+  - component: {fileID: -3490286614606469689}
   m_Layer: 0
   m_Name: tree-maple
   m_TagString: Untagged
@@ -29,7 +29,6 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.539026, z: -0, w: 0.84228915}
   m_LocalPosition: {x: 2.6353292, y: -0.68999976, z: -3.2546852}
   m_LocalScale: {x: 0.12071834, y: 1, z: 0.12996317}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -85,17 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2386458237558102420
-MeshCollider:
+--- !u!65 &-3490286614606469689
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2190299194266567957}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 9036535611231648788, guid: df3a17f07117e3247bdbdd02c5962213, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 3.77416, y: 6.987444, z: 3.2714853}
+  m_Center: {x: 0.017106771, y: 3.4843545, z: 0.00091683824}

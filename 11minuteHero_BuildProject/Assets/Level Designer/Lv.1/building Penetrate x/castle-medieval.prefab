@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4156056667883278211}
   - component: {fileID: 4167605561707018871}
   - component: {fileID: 4175615425969806445}
-  - component: {fileID: 4126976992537604259}
+  - component: {fileID: 4608590478583337930}
   m_Layer: 0
   m_Name: castle-medieval
   m_TagString: Untagged
@@ -28,8 +28,7 @@ Transform:
   m_GameObject: {fileID: 4152600304157116201}
   m_LocalRotation: {x: -0, y: 0.6883329, z: -0, w: 0.72539496}
   m_LocalPosition: {x: 1.6708313, y: -0.40000004, z: 1.3502213}
-  m_LocalScale: {x: 0.045172315, y: 0.38128, z: 0.050583314}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -87,8 +86,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4126976992537604259
-MeshCollider:
+--- !u!65 &4608590478583337930
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -97,7 +96,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: d9af8840e47ee464bbbe416fd34d8546, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 20.377253, y: 7, z: 20.362524}
+  m_Center: {x: 0, y: 3.5, z: 0.000001907349}

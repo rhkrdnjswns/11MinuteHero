@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1368361644223785720}
   - component: {fileID: 1334874197664588326}
   - component: {fileID: 1342888750649795198}
-  - component: {fileID: 1302993302196042388}
+  - component: {fileID: -899373290648126839}
   m_Layer: 0
   m_Name: church-medieval
   m_TagString: Untagged
@@ -28,8 +28,7 @@ Transform:
   m_GameObject: {fileID: 1364834599171661854}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.367087, y: 0, z: -0.49879122}
-  m_LocalScale: {x: 0.13271098, y: 1, z: 0.11844046}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -87,8 +86,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1302993302196042388
-MeshCollider:
+--- !u!65 &-899373290648126839
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -97,7 +96,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: c4f92415073154fc3857e770891ef225, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 9.200005, y: 7, z: 18.790058}
+  m_Center: {x: 0.0000014305115, y: 3.5, z: 0.6299715}

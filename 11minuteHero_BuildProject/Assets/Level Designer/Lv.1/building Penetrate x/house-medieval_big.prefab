@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2523999936777903181}
   - component: {fileID: 2556923330322669517}
   - component: {fileID: 2546942883470594077}
-  - component: {fileID: 2588537363594974685}
+  - component: {fileID: 325773205368246228}
   m_Layer: 0
   m_Name: house-medieval_big
   m_TagString: Untagged
@@ -28,8 +28,7 @@ Transform:
   m_GameObject: {fileID: 2525029469598873683}
   m_LocalRotation: {x: -0, y: -0.0037370622, z: -0, w: 0.999993}
   m_LocalPosition: {x: 3.3978226, y: -0.17416877, z: 2.7358322}
-  m_LocalScale: {x: 0.13271008, y: 1, z: 0.118441164}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -89,8 +88,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2588537363594974685
-MeshCollider:
+--- !u!65 &325773205368246228
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -99,7 +98,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: 48e8811cce23043e9833b8c7100940c9, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 8.166501, y: 7, z: 9.282}
+  m_Center: {x: -0.5433919, y: 3.5, z: -0.0000011925989}

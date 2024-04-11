@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1052804544448161659}
   - component: {fileID: 1073924400145374049}
   - component: {fileID: 1063926725206378845}
-  - component: {fileID: 1041520206783725245}
+  - component: {fileID: 6228326553338260259}
   m_Layer: 0
   m_Name: church-western
   m_TagString: Untagged
@@ -28,8 +28,7 @@ Transform:
   m_GameObject: {fileID: 1049875661627677671}
   m_LocalRotation: {x: -0, y: 0.70304126, z: -0, w: 0.7111491}
   m_LocalPosition: {x: 1.8446827, y: -0.2999999, z: 3.2689567}
-  m_LocalScale: {x: 0.11844213, y: 1, z: 0.13270888}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -87,8 +86,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1041520206783725245
-MeshCollider:
+--- !u!65 &6228326553338260259
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -97,7 +96,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: a422ac6e0d5aa401ca079c90d55c1a09, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 6.765585, y: 7, z: 11.600001}
+  m_Center: {x: 0.00000023907054, y: 5.2223444, z: 0.69999987}
