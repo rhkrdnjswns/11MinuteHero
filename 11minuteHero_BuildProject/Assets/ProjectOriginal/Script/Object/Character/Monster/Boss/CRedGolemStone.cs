@@ -43,7 +43,7 @@ public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 
         }
         parent.GetComponent<BRedGolem>().ReturnStone(this);
     }
-    public IEnumerator Co_CollectStone(float collectTime)
+    public virtual IEnumerator Co_CollectStone(float collectTime)
     {
         gameObject.layer = LayerMask.NameToLayer("Projectile");
         gameObject.tag = "Untagged";

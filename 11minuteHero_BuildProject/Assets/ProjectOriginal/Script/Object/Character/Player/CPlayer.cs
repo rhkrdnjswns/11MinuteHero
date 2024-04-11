@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class CPlayer : Character
 {
-    [SerializeField] private Transform rendererBody;
-    private Renderer renderer; //머티리얼 깜빡이는 효과를 주기 위한 참조
+    //[SerializeField] private Transform rendererBody;
+    [SerializeField] private Renderer[] rendererArray; //머티리얼 깜빡이는 효과를 주기 위한 참조
 
     private int maxExp = 100; //요구 경험치
     private int currentExp; //현재 경험치
@@ -44,7 +44,6 @@ public abstract class CPlayer : Character
     public int ExpGained { get => expGained; set => expGained = value; }
     public float DamageReduction { get => damageReduction; set => damageReduction = value; }
     public AWeapon Weapon { get => weapon; }
-
     protected abstract IEnumerator Co_Attack();
     protected abstract IEnumerator Co_Dodge();
 
@@ -62,7 +61,7 @@ public abstract class CPlayer : Character
 
         GameObject obj = Instantiate(weaponPrefab);
         weapon = obj.GetComponent<AWeapon>();
-        renderer = rendererBody.GetComponent<Renderer>();
+        rendererArray = GetComponentsInChildren<Renderer>();
     }
     private void Start()
     {
@@ -100,14 +99,15 @@ public abstract class CPlayer : Character
 
         StartCoroutine(Co_HitInvincible());
     }
-    public void Dodge() //회피
+    public virtual bool Dodge() //회피
     {
-        if (eCharacterActionable == ECharacterActionable.Unactionable) return;
+        if (eCharacterActionable == ECharacterActionable.Unactionable) return false;
 
         isDodge = true;
         rigidbody.velocity = Vector3.zero;
 
         StartCoroutine(Co_Dodge());
+        return true;
     }
     public void AnimEvent_EndDodge() //회피 종료
     {
@@ -119,21 +119,30 @@ public abstract class CPlayer : Character
     private IEnumerator Co_HitInvincible() //피격시 n초 무적 코루틴
     {
         float timer = 0;
-        Color color = renderer.materials[1].color;
         for (int i = 0; i < 2; i++) //총 2초동안 플레이어 깜빡거리는 효과
         {
+            Color color;
             while (timer < 0.5f)
             {
                 timer += Time.deltaTime; //메테리얼 색상 조정
-                color.a = timer / 0.7f;
-                renderer.materials[1].color = color;
+                for(int j = 0; j < rendererArray.Length; j++)
+                {
+                    color = rendererArray[j].materials[1].color;
+                    color.a = timer / 0.7f;
+                    rendererArray[j].materials[1].color = color;
+                }
+
                 yield return null;
             }
             while (timer > 0f)
             {
                 timer -= Time.deltaTime;
-                color.a = timer / 0.7f;
-                renderer.materials[1].color = color;
+                for (int j = 0; j < rendererArray.Length; j++)
+                {
+                    color = rendererArray[j].materials[1].color;
+                    color.a = timer / 0.7f;
+                    rendererArray[j].materials[1].color = color;
+                }
                 yield return null;
             }
             yield return null;

@@ -25,7 +25,7 @@ public class SHolySword : WSword
                                                                                                             //각으로 바꿔주기 위해 상수를 곱해줌
             if (targetAngle <= attackAngle * 0.5f) //양옆으로로 나뉘기 때문에 0.5 곱함. 바로보고있는 방향을 기준으로 양 옆으로 각이 펼쳐지기 때문에
             {
-                monster.GetComponent<Monster>().Hit(currentDamage); //각도 내에 있는 경우 타격
+                monster.GetComponent<Character>().Hit(currentDamage); //각도 내에 있는 경우 타격
                 InGameManager.Instance.Player.RecoverHp(hpRecovery, EApplicableType.Value);
             }
             yield return null;
