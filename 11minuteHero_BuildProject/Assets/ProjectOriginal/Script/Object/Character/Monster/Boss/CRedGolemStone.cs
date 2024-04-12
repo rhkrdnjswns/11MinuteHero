@@ -9,8 +9,15 @@ public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 
         Destructible,
         Indestructible
     }
+    public enum EStoneLevel
+    {
+        Easy = 0,
+        Normal,
+        Hard
+    }
 
     [SerializeField] private EStoneType eStoneType;
+    [SerializeField] private EStoneLevel eStoneLevel;
     private float currentDamage;
 
     private Transform parent;
@@ -20,6 +27,8 @@ public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 
     [SerializeField] private GameObject damageUIPrefab;
     [SerializeField] private Decal chargingDecal;
     [SerializeField] private Decal decal;
+
+    public EStoneLevel StoneLevel { get; }
     private void Start()
     {
         decalParent = transform.GetChild(0).GetComponent<Transform>();
@@ -41,7 +50,7 @@ public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 
             transform.position += direction * currentSpeed * Time.deltaTime;
             yield return null;
         }
-        parent.GetComponent<BRedGolem>().ReturnStone(this);
+        parent.GetComponent<BRedGolem>().ReturnStone(this, (int)eStoneLevel);
     }
     public virtual IEnumerator Co_CollectStone(float collectTime)
     {
@@ -65,7 +74,6 @@ public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 
             yield return null;
         }
         eCharacterActionable = ECharacterActionable.Unactionable;
-        parent.GetComponent<BRedGolem>().ReturnStoneCount++;
     }
     public virtual void ResetStatus() //풀에서 꺼내올 때마다 초기화
     {
@@ -102,7 +110,7 @@ public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 
 
         base.Hit(damage);
         damageUIContainer.ActiveDamageUI(damage);
-        if (currentHp <= 0) parent.GetComponent<BRedGolem>().ReturnStone(this);
+        if (currentHp <= 0) parent.GetComponent<BRedGolem>().ReturnStone(this, (int)eStoneLevel);
     }
     public override void KnockBack(float speed, float duration)
     {
@@ -118,7 +126,7 @@ public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 
         if(other.CompareTag(ConstDefine.TAG_PLAYER))
         {
             InGameManager.Instance.Player.Hit(currentDamage);
-            parent.GetComponent<BRedGolem>().ReturnStone(this);
+            parent.GetComponent<BRedGolem>().ReturnStone(this, (int)eStoneLevel);
         }
     }
 }

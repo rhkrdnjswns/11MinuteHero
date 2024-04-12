@@ -13,6 +13,8 @@ public class PMagicMissile : Projectile //마법사가 사용하는 투사체
     
     private Vector3 summonPos; //투사체가 생성된 위치(곡선 시작지점)
     private Vector3 controllPoint; //곡선 컨트롤 포인트
+
+    private Vector3 targetPosByOffset = Vector3.up * 0.5f; //투사체의 높이에 맞춘 타겟 위치
   
     public override void ShotProjectile(Transform target) //투사체 날아가는 함수 재정의. 몬스터 참조를 받음
     {
@@ -39,14 +41,16 @@ public class PMagicMissile : Projectile //마법사가 사용하는 투사체
         while (true)
         {
             timer += Time.deltaTime * 1.8f; //타이머 측정. timer = 베지어곡선 공식의 스칼라. 0 -> 1까지 커짐
+            targetPosByOffset.x = target.position.x;
+            targetPosByOffset.z = target.position.z;
 
             //베지어 곡선 공식으로 해당 포인트들 위에서 그려지는 곡선의 timer만큼의 지점을 반환함
-            transform.position = CalculateBezierPoint(summonPos, controllPoint, target.position, timer > 1 ? 1 : timer);
+            transform.position = CalculateBezierPoint(summonPos, controllPoint, targetPosByOffset, timer > 1 ? 1 : timer);
 
             //타겟 위치에 도착했지만 히트하지 않은 경우의 처리
-            if (Vector3.Distance(transform.position, target.position + Vector3.up * 0.5f) < 0.1f) rangedAttackUtility.ReturnProjectile(this);
+            if (Vector3.Distance(transform.position, targetPosByOffset) <= 0.1) rangedAttackUtility.ReturnProjectile(this);
 
-            //타겟 몬스터가 사망한 경우의 처리
+            //타겟이 사망한 경우의 처리
             if (!target.gameObject.activeSelf) rangedAttackUtility.ReturnProjectile(this);
 
             yield return null;

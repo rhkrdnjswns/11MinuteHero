@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestButtonManager : MonoBehaviour
 {
-    public GameObject buttons;
+
     public void BtnEvt_InitSkill(int index)
     {
         FindObjectOfType<SkillManager>().Test_SkillLevelUp(index + 1);
@@ -13,9 +13,15 @@ public class TestButtonManager : MonoBehaviour
     {
         FindObjectOfType<AWeapon>().Reinforce();
     }
-    public void BtnEvt_Active(GameObject obj)
+    public void BtnEvt_ActiveObject(GameObject obj)
     {
         obj.SetActive(!obj.activeSelf);
-        buttons.SetActive(!buttons.activeSelf);
+    }
+
+    public void BtnEvt_SummonMonster(int index)
+    {
+        Vector3 RotDir = Quaternion.Euler(0, Random.Range(0, 361), 0) * Vector3.forward;
+
+        InGameManager.Instance.MonsterPool.GetMonster(InGameManager.Instance.Player.transform.position + RotDir.normalized * 25, index);
     }
 }

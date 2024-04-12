@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2480083618361928851}
   - component: {fileID: 1627645272364525972}
   - component: {fileID: 2091842618926796288}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 03_Skill_Weapon_Evolution_MagicMissile_Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
