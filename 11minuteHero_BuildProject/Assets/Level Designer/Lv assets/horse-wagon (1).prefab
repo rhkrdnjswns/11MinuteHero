@@ -45,7 +45,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 3, z: 3}
+  m_Size: {x: 3, y: 3, z: 4}
   m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &6469004317340451177
 GameObject:
@@ -58,7 +58,6 @@ GameObject:
   - component: {fileID: 6470747119361588177}
   - component: {fileID: 6464823664241995797}
   - component: {fileID: 6455684867534992565}
-  - component: {fileID: 6423987644215642073}
   m_Layer: 0
   m_Name: wagon-base
   m_TagString: Untagged
@@ -130,20 +129,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6423987644215642073
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6469004317340451177}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300006, guid: 06213dec9a74a4647a165b3a23b9acaf, type: 3}
 --- !u!1 &6469190040376237571
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +140,6 @@ GameObject:
   - component: {fileID: 6470834805324051903}
   - component: {fileID: 6464088697226269889}
   - component: {fileID: 6455367712199558709}
-  - component: {fileID: 6422647948414928299}
   m_Layer: 0
   m_Name: wagon-wheels_back
   m_TagString: Untagged
@@ -227,20 +211,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6422647948414928299
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6469190040376237571}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: 06213dec9a74a4647a165b3a23b9acaf, type: 3}
 --- !u!1 &6469349145116185529
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +222,6 @@ GameObject:
   - component: {fileID: 6472616466252963249}
   - component: {fileID: 6465578003654861229}
   - component: {fileID: 6455349269509668701}
-  - component: {fileID: 6424175556007669529}
   m_Layer: 0
   m_Name: wagon-wheels_front
   m_TagString: Untagged
@@ -324,17 +293,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6424175556007669529
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6469349145116185529}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: 06213dec9a74a4647a165b3a23b9acaf, type: 3}
