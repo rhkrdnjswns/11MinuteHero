@@ -23,14 +23,12 @@ public class BRedGolem : Boss
     [SerializeField] protected AttackInSquareUtility attackInSquareUtility;
     [SerializeField] private GameObject stonePrefab;
 
-    private int returnStoneCount;
     protected List<CRedGolemStone> stoneList = new List<CRedGolemStone>();
     protected List<CRedGolemStone> spareStoneList = new List<CRedGolemStone>();
     protected Queue<CRedGolemStone> stoneQueue = new Queue<CRedGolemStone>();
 
     protected Vector3 appearPos;
     protected float summonedStonePosY;
-    public int ReturnStoneCount { get => returnStoneCount; set => returnStoneCount = value; }
     protected virtual void SetSummonedStonePosY()
     {
         summonedStonePosY = 0.5f;
@@ -58,6 +56,7 @@ public class BRedGolem : Boss
     {
         yield return new WaitUntil(() => !bAction);
         Debug.Log("Hp 이벤트 실행");
+        gameObject.layer = LayerMask.NameToLayer("Default");
         yield return new WaitForSeconds(1f);
 
         Debug.Log("중앙으로 점프");
@@ -77,6 +76,8 @@ public class BRedGolem : Boss
         yield return new WaitForSeconds(1f);
         yield return StartCoroutine(cameraUtility.Co_FocusCam(0.2f, appearPos, InGameManager.Instance.Player.transform.position));
         cameraUtility.UnFocus();
+
+        gameObject.layer = LayerMask.NameToLayer("Monster");
 
         transform.LookAt(InGameManager.Instance.Player.transform);
         animator.SetTrigger("SummonStoneRelease");
@@ -168,6 +169,7 @@ public class BRedGolem : Boss
 
             decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.SetParent(null);
             decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.position = randomPos;
+            decalList[(int)EDecalNumber.SummonStoneRandomPos].gameObject.SetActive(true);
             StartCoroutine(decalList[(int)EDecalNumber.SummonStoneRandomPos].Co_ActiveDecal(2));
 
             yield return new WaitForSeconds(2f);
@@ -286,7 +288,7 @@ public class BRedGolem : Boss
         Debug.Log("돌 뿌리기");
         foreach (var item in stoneList)
         {
-            item.StartCoroutine(item.Co_SpreadStone(Quaternion.Euler(0,Random.Range(0,361),0) * Vector3.forward, Random.Range(3f,4.6f)));
+            StartCoroutine(item.Co_SpreadStone(Quaternion.Euler(0,Random.Range(0,361),0) * Vector3.forward, Random.Range(3f,4.6f)));
         }
         stoneList.Clear();
         yield return null;
@@ -300,13 +302,24 @@ public class BRedGolem : Boss
         animator.SetBool("IsEndReturn", false);
         foreach (var item in stoneList)
         {
-            item.StartCoroutine(item.Co_CollectStone(2));
+            StartCoroutine(item.Co_CollectStone(2));
             //yield return null;
         }
-        yield return new WaitUntil(() => returnStoneCount == stoneList.Count);
-        IncreaseHp(5 * returnStoneCount);
+        for (int i = 0; i < stoneList.Count; i++)
+        {
+            StartCoroutine(stoneList[i].Co_CollectStone(2));
+            if(i < stoneList.Count - 1)
+            {
+                StartCoroutine(stoneList[i].Co_CollectStone(2));
+            }
+            else
+            {
+                yield return StartCoroutine(stoneList[i].Co_CollectStone(2));
+            }
+        }
+        IncreaseHp(5 * stoneList.Count);
 
-        if(returnStoneCount >= 3)
+        if(stoneList.Count >= 5)
         {
             animator.SetBool("bSpreadStone", true);
             animator.SetBool("IsEndReturn", true);
@@ -318,11 +331,11 @@ public class BRedGolem : Boss
             animator.SetBool("IsEndReturn", true);
             while (stoneList.Count != 0)
             {
-                ReturnStone(stoneList[0]);
+                ReturnStone(stoneList[0], (int)stoneList[0].StoneLevel);
                 yield return null;
             }
         }
-        returnStoneCount = 0;
+
         bReturnStone = false;
         foreach(var item in spareStoneList)
         {
@@ -359,6 +372,7 @@ public class BRedGolem : Boss
     private IEnumerator Co_Behavior_Jump()
     {
         Debug.Log("점프");
+        gameObject.layer = LayerMask.NameToLayer("Default");
         transform.LookAt(InGameManager.Instance.Player.transform);
         animator.SetTrigger("JumpStart");
 
@@ -412,7 +426,7 @@ public class BRedGolem : Boss
         obj.gameObject.SetActive(true);
         obj.ResetStatus();
     }
-    public void ReturnStone(CRedGolemStone redGolemStone)
+    public void ReturnStone(CRedGolemStone redGolemStone, int stoneLevel)
     {
         redGolemStone.gameObject.SetActive(false);
         redGolemStone.transform.SetParent(transform);
@@ -420,7 +434,16 @@ public class BRedGolem : Boss
         redGolemStone.transform.localRotation = Quaternion.identity;
 
         if(stoneList.Contains(redGolemStone)) stoneList.Remove(redGolemStone);
-        stoneQueue.Enqueue(redGolemStone);
+        if (spareStoneList.Contains(redGolemStone)) spareStoneList.Remove(redGolemStone);
+
+        ReturnStoneByLevel(redGolemStone, stoneLevel);
+    }
+    protected virtual void ReturnStoneByLevel(CRedGolemStone redGolemStone, int stoneLevel)
+    {
+        if(stoneLevel == 0)
+        {
+            stoneQueue.Enqueue(redGolemStone);
+        }
     }
     public void AnimEvent_JumpAttack()
     {
@@ -433,6 +456,7 @@ public class BRedGolem : Boss
     public void AnimEvent_JumpEnd()
     {
         modelObject.SetActive(true);
+        gameObject.layer = LayerMask.NameToLayer("Monster");
     }
     public virtual void AnimEvent_ThrowStone()
     {

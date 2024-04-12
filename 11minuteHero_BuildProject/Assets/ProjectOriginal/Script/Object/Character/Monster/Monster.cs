@@ -24,9 +24,13 @@ public class Monster : Character
     private BoxCollider boxCollider; //몬스터 충돌처리 콜라이더
     private DebuffList debuffList;
 
+    private int returnIndex;
+
     private float distToPlayer;
     public float DistToPlayer { get => distToPlayer; }
     public DebuffList DebuffList { get => debuffList; set => debuffList = value; }
+
+    public int ReturnIndex { set => returnIndex = value; }
     private IEnumerator Co_StateMachine() //일반 몬스터 상태머신
     {
         while (!IsDie)
@@ -135,7 +139,7 @@ public class Monster : Character
             transform.position += Vector3.down * 1 * Time.deltaTime;
             yield return null;
         }
-        InGameManager.Instance.MonsterPool.ReturnMonster(this); //몬스터 풀로 되돌림     
+        InGameManager.Instance.MonsterPool.ReturnMonster(this, returnIndex); //몬스터 풀로 되돌림     
     }
     protected override bool Move()
     {

@@ -131,6 +131,7 @@ MonoBehaviour:
   speed: 5
   currentHp: 0
   eStoneType: 1
+  eStoneLevel: 1
   damageUIPrefab: {fileID: 9182912565010467780, guid: 3d13174112c6d8d4e9ac179922aec9cd,
     type: 3}
   chargingDecal: {fileID: 5103106266772992793}

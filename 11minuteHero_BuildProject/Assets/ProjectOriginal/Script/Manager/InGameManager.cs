@@ -36,6 +36,7 @@ public class InGameManager : MonoBehaviour
     public Image fade;
     #endregion
 
+    public bool bAppearBoss { get; private set; }
 
     private EGameState gameState; //현재 게임 상태
 
@@ -150,6 +151,7 @@ public class InGameManager : MonoBehaviour
     }
     public IEnumerator Co_AppearBoss()
     {
+        bAppearBoss = true;
         //몹 생성 정지 -> 몬스터스포너
 
         //타이머 정지 -> 인게임매니저

@@ -36,6 +36,7 @@ public class BRedGolemHard : BRedGolemNormal
     }
     private IEnumerator Co_HpEvent_EarthQuake()
     {
+        bHpEvent = false;
         float spacing;
         int rand;
         while (true)
@@ -165,5 +166,13 @@ public class BRedGolemHard : BRedGolemNormal
         obj.transform.position = new Vector3(pos.x, posY, pos.z);
         obj.gameObject.SetActive(true);
         obj.ResetStatus();
+    }
+    protected override void ReturnStoneByLevel(CRedGolemStone redGolemStone, int stoneLevel)
+    {
+        base.ReturnStoneByLevel(redGolemStone, stoneLevel);
+        if (stoneLevel == 2)
+        {
+            earthQuakeStoneQueue.Enqueue(redGolemStone);
+        }
     }
 }

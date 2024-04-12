@@ -114,4 +114,12 @@ public class BRedGolemNormal : BRedGolem
         obj.gameObject.SetActive(true);
         obj.ResetStatus();
     }
+    protected override void ReturnStoneByLevel(CRedGolemStone redGolemStone, int stoneLevel)
+    {
+        base.ReturnStoneByLevel(redGolemStone, stoneLevel);
+        if(stoneLevel == 1)
+        {
+            indestructibleStoneQueue.Enqueue(redGolemStone);
+        }
+    }
 }
