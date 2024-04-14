@@ -1,18 +1,18 @@
-ID,SkillType,SkillName,Description,BaseDamage,CoolTime
-27,2,SkillHolySword,°ËÀÌ ¾ÇÀ» Á¤È­ÇÑ´Ù.,100,1.4
-28,2,SkillLionBow,º°À» ¶³¾î¶ß·È´Ù´ø Àü¼³ÀÇ È°,30,1.2
-29,2,SkillMagicMissile,¼ö¸¹Àº ¸¶¹ıµé·Î ÀûÀ» ÃÊÅäÈ­ ½ÃÅµ´Ï´Ù.,40,1
-30,2,SkillThunderStrike,¹ø°³°¡ ¼­¸° °í´ëÀÇ ¸ÁÄ¡,50,5
-31,2,SkillSoulHarvest,ÀûµéÀÇ ¿µÈ¥À» ¸Ô¾îÄ¡¿ó´Ï´Ù.,20,1
-32,2,SkillFireStorm,¸ğµç ÀûµéÀ» ºÒÅÂ¿ì±â Àü±îÁø »ç¶óÁöÁö ¾Ê½À´Ï´Ù.,20,0
-33,2,SkillHellFire,¸ğµç °ÍÀ» ºÒÅÂ¿ó´Ï´Ù.,40,4
-34,2,SkillMeteor,ÇÏ´Ã¿¡¼­ º°ÀÌ ³»·Á¿É´Ï´Ù.,65,4.2
-35,2,SkillEarthImplosion,¶¥ÀÌ °¥¶óÁı´Ï´Ù.,35,1.5
-36,2,SkillDevilSword,°ËÀÌ ¼Ó»èÀÎ´Ù.,120,3
-37,2,SkillMagicArrow,¸¶¹ıÀÇ Á¤¼ö¸¦ ³¯¸³´Ï´Ù.,30,0.4
-38,2,SkillHolyWater,»ñµÈ °ÍµéÀ» Á¤È­½ÃÅµ´Ï´Ù.,35,4
-39,2,SkillFaintBomb,ÇÑ´ë¸¸ ¸Â¾Æµµ Á¤½ÅÀÌ ¾ÆÂñÇÕ´Ï´Ù.,45,4
-40,2,SkillRenotoros,¹æÆĞ¿¡ ½Åºñ°¡ ±êµé¾î ÀÖ´Ù.,80,2.8
-41,2,SkillShadowKnife,º¸ÀÌÁö ¾Ê´Â ´Ü°ËÀÌ ÀûÀÇ ¸ñ¼ûÀ» ²÷½À´Ï´Ù.,65,0
-,,,,,
-,,,,,
+ï»¿ID,SkillType,SkillName,Description,SensingRange,BaseDamage,CoolTime,DamageCycle,DamageCount,MaxMobCount,AttactRange,ProjectileCount,ProjectileRemoveTime,ProjectileSpeed,ProjectileLifeCycle,ProjectilePenetrateCount,ProjectileRotationSpeed,ProjectileCreateDistance,ProjectileMaxMoveDistance,ProjectileExplosionRange,FireAreaRange,FireAreaRemoveTime,ProjectileCreateTime,ProjectileSensingRange,MobSpeedDecrease,MobSpeedDecreaseTime,PlayerHpIncreaseCount,PlayerIncreaseMoveSpeed,PlayerIncreaseMoveSpeedCount,PlayerIncreaseMoveSpeedTime,PlayerHpRecovery,MobFaintTime
+27,2,SkillHolySword,ê²€ì´ ì•…ì„ ì •í™”í•œë‹¤.,null,100,1.4,null,1,null,3,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.5,null,null,null,null,null
+28,2,SkillLionBow,ë³„ì„ ë–¨ì–´ëœ¨ë ¸ë‹¤ë˜ ì „ì„¤ì˜ í™œ,null,30,1.2,null,1,null,null,6,4,8,null,4,null,null,null,null,null,null,null,null,null,null,null,0.1,5,3,null,null
+29,2,SkillMagicMissile,ìˆ˜ë§ì€ ë§ˆë²•ë“¤ë¡œ ì ì„ ì´ˆí† í™” ì‹œí‚µë‹ˆë‹¤.,8,40,1,null,1,8,null,14,null,8,0.1,1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+30,2,SkillThunderStrike,ë²ˆê°œê°€ ì„œë¦° ê³ ëŒ€ì˜ ë§ì¹˜,null,50,5,null,1,null,null,8,null,7,null,null,1440,null,6,null,null,null,null,null,null,null,null,null,null,null,null,null
+31,2,SkillSoulHarvest,ì ë“¤ì˜ ì˜í˜¼ì„ ë¨¹ì–´ì¹˜ì›ë‹ˆë‹¤.,null,20,1,null,1,null,null,1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.2,null
+32,2,SkillFireStorm,ëª¨ë“  ì ë“¤ì„ ë¶ˆíƒœìš°ê¸° ì „ê¹Œì§„ ì‚¬ë¼ì§€ì§€ ì•ŠìŠµë‹ˆë‹¤.,null,20,null,null,1,null,null,6,null,6,null,null,null,3.5,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+33,2,SkillHellFire,ëª¨ë“  ê²ƒì„ ë¶ˆíƒœì›ë‹ˆë‹¤.,12,40,4,null,1,null,null,1,4,4,null,8,null,null,null,4.5,null,null,null,null,null,null,null,null,null,null,null,null
+34,2,SkillMeteor,í•˜ëŠ˜ì—ì„œ ë³„ì´ ë‚´ë ¤ì˜µë‹ˆë‹¤.,12,65,4.2,null,1,null,null,12,null,12,0.1,null,null,null,null,1.5,null,null,null,null,null,null,null,null,null,null,null,null
+35,2,SkillEarthImplosion,ë•…ì´ ê°ˆë¼ì§‘ë‹ˆë‹¤.,null,35,1.5,null,1,null,null,1,null,null,null,null,null,null,null,null,null,null,1.5,null,1.5,1.5,null,null,null,null,null,null
+36,2,SkillDevilSword,ê²€ì´ ì†ì‚­ì¸ë‹¤.,null,120,3,null,1,null,null,1,null,15,null,null,null,8,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+37,2,SkillMagicArrow,ë§ˆë²•ì˜ ì •ìˆ˜ë¥¼ ë‚ ë¦½ë‹ˆë‹¤.,8,30,0.4,null,1,null,null,1,2,10,null,3,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+38,2,SkillHolyWater,ì‚¿ëœ ê²ƒë“¤ì„ ì •í™”ì‹œí‚µë‹ˆë‹¤.,12,35,4,0.5,1,null,null,5,null,6,0.1,null,null,null,null,null,3,3,null,null,null,null,null,null,null,null,null,null
+39,2,SkillFaintBomb,í•œëŒ€ë§Œ ë§ì•„ë„ ì •ì‹ ì´ ì•„ì°”í•©ë‹ˆë‹¤.,12,45,4,null,1,null,null,7,null,6,0.3,null,null,null,null,2,null,null,null,null,null,null,null,null,null,null,null,1
+40,2,SkillRenotoros,ë°©íŒ¨ì— ì‹ ë¹„ê°€ ê¹ƒë“¤ì–´ ìˆë‹¤.,null,80,2.8,null,1,null,null,2,5,3.2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+41,2,SkillShadowKnife,ë³´ì´ì§€ ì•ŠëŠ” ë‹¨ê²€ì´ ì ì˜ ëª©ìˆ¨ì„ ëŠìŠµë‹ˆë‹¤.,12,65,null,null,1,null,null,1,null,12,null,null,null,null,null,null,null,null,null,8,null,null,null,null,null,null,null,null
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

@@ -1,18 +1,18 @@
-ID,SkillType,SkillName,Description,BaseDamage,SecondDamage,CoolTime
-1,0,SkillSword,Àü¹æÀ» ÈÛ¾µ¾î ÀûÀ» °ø°İÇÕ´Ï´Ù.,20,0,1.4
-2,0,SkillBow,¹Ù¶óº¸´Â ¹æÇâÀ¸·Î È°½ÃÀ§¸¦ ´ç±é´Ï´Ù.,5,5,1.2
-3,0,SkillStaff,°¡±î¿î Àûµé¿¡°Ô À¯µµµÇ´Â ¸¶¹ıÀ» ½ÃÀüÇÕ´Ï´Ù.,5,5,1
-4,0,SkillHammer,°íÁ¤µÈ ³× ¹æÇâÀ¸·Î µÇµ¹¾Æ¿À´Â ¸ÁÄ¡¸¦ ´øÁı´Ï´Ù.,10,0,5
-5,0,SkillAxe,°íÁ¤µÈ ³× ¹æÇâÀ¸·Î µÇµ¹¾Æ¿À´Â µµ³¢¸¦ ´øÁı´Ï´Ù.,10,0,5
-6,0,SkillAurora,¹üÀ§ ¾ÈÀ¸·Î µé¾î¿Â Àû¿¡°Ô ÇÇÇØ¸¦ ÀÔÈü´Ï´Ù.,5,0,1
-7,0,SkillFire,ºÒµ¢ÀÌµéÀÌ ÁÖº¯À» È¸ÀüÇÏ¿© °ø°İÇÕ´Ï´Ù.,4,4,0
-8,0,SkillFireBall,Ä¿´Ù¶õ ºÒ²ÉÀ» ³¯·Á ÀûÀ» °ø°İÇÕ´Ï´Ù.,20,0,3.5
-9,0,SkillMeteor,ÇÏ´Ã¿¡¼­ ¿î¼®ÀÌ ¶³¾îÁ® Àû¿¡°Ô ÇÇÇØ¸¦ ÀÔÈü´Ï´Ù.,15,0,4.2
-10,0,SkillMagicEarth,¸¶¹ıÀ¸·Î ¶¥À» ¿ï¸®°Ô ÇÏ¿© Àû¿¡°Ô ÇÇÇØ¸¦ ÀÔÈü´Ï´Ù.,5,5,1.5
-11,0,SkillBloodSword,°ËÀÌ ÁÖº¯À» È¸ÀüÇÏ¸é¼­ ÀûÀ» °ø°İÇÕ´Ï´Ù.,5,5,2
-12,0,SkillCurseSword,°ËÀÌ ÁÖº¯À» È¸ÀüÇÏ¸é¼­ ÀûÀ» °ø°İÇÕ´Ï´Ù.,5,5,2
-13,0,SkillCrystalStaff,°¡Àå °¡±î¿î Àû¿¡°Ô ¸¶¹ıÀ» ½ÃÀüÇÕ´Ï´Ù.,5,0,0.5
-14,0,SkillFireBomb,¹«ÀÛÀ§ Àûµé¿¡°Ô ÆøÅºÀ» ´øÁ® ºÒÅ¸¿À¸£´Â ±¸¿ªÀ» »ı¼ºÇÕ´Ï´Ù.,5,10,3.8
-15,0,SkillShockBomb,¹«ÀÛÀ§ Àûµé¿¡°Ô ÆøÅºÀ» ´øÁı´Ï´Ù.,10,10,3.8
-16,0,SkillMagicShield,°íÁ¤µÈ ¹æÇâÀ¸·Î ¹æÆĞ¸¦ ³¯¸³´Ï´Ù.,15,0,3
-17,0,SkillKnife,¹«ÀÛÀ§ Àû¿¡°Ô ´Ü°ËÀ» ÅõÃ´ÇÕ´Ï´Ù.,10,0,4
+ï»¿ID,SkillType,SkillName,Description,SensingRange,BaseDamage,SecondDamage,CoolTime,DamageCycle,DamageCount,MaxMobCount,AttactRange,LevelUpAttactRangeIncrease,ProjectileCount,MultiProjectileCount,PlusProjectileCount,LevelUpProjectileRangeIncrease,ProjectileRemoveTime,ProjectileSpeed,ProjectileLifeCycle,ProjectilePenetrateCount,PlusProjectilePenetrateCount,ProjectileRotationSpeed,ProjectileCreateDistance,ProjectileMaxMoveDistance,ProjectileExplosionRange,FireAreaRange,FireAreaRemoveTime,ProjectileCreateTime,ProjectileSensingRange,PlusProjectileBounceCount,MobSpeedDecrease,MobSpeedDecreaseTime
+1,0,SkillSword,ì „ë°©ì„ íœ©ì“¸ì–´ ì ì„ ê³µê²©í•©ë‹ˆë‹¤.,null,20,null,1.4,null,1,null,2,0.2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+2,0,SkillBow,ë°”ë¼ë³´ëŠ” ë°©í–¥ìœ¼ë¡œ í™œì‹œìœ„ë¥¼ ë‹¹ê¹ë‹ˆë‹¤.,null,5,5,1.2,null,1,null,null,null,null,1,null,null,4,8,null,null,2,null,null,null,null,null,null,null,null,null,null,null
+3,0,SkillStaff,ê°€ê¹Œìš´ ì ë“¤ì—ê²Œ ìœ ë„ë˜ëŠ” ë§ˆë²•ì„ ì‹œì „í•©ë‹ˆë‹¤.,8,5,5,1,null,1,6,null,null,null,2,null,null,null,8,0.15,1,null,null,null,null,null,null,null,null,null,null,null,null
+4,0,SkillHammer,ê³ ì •ëœ ë„¤ ë°©í–¥ìœ¼ë¡œ ë˜ëŒì•„ì˜¤ëŠ” ë§ì¹˜ë¥¼ ë˜ì§‘ë‹ˆë‹¤.,null,10,null,5,null,1,null,null,null,4,null,null,0.1,null,6,null,null,null,1440,null,5,null,null,null,null,null,null,null,null
+5,0,SkillAxe,ê³ ì •ëœ ë„¤ ë°©í–¥ìœ¼ë¡œ ë˜ëŒì•„ì˜¤ëŠ” ë„ë¼ë¥¼ ë˜ì§‘ë‹ˆë‹¤.,null,10,null,5,null,1,null,null,null,4,null,null,0.1,null,6,null,null,null,1440,null,5,null,null,null,null,null,null,null,null
+6,0,SkillAurora,ë²”ìœ„ ì•ˆìœ¼ë¡œ ë“¤ì–´ì˜¨ ì ì—ê²Œ í”¼í•´ë¥¼ ì…í™ë‹ˆë‹¤.,null,5,null,1,null,1,null,null,null,1,null,null,0.5,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+7,0,SkillFire,ë¶ˆë©ì´ë“¤ì´ ì£¼ë³€ì„ íšŒì „í•˜ì—¬ ê³µê²©í•©ë‹ˆë‹¤.,null,4,4,null,null,1,null,null,null,null,null,1,null,null,5,null,null,null,null,3.5,null,null,null,null,null,null,null,null,null
+8,0,SkillFireBall,ì»¤ë‹¤ë€ ë¶ˆê½ƒì„ ë‚ ë ¤ ì ì„ ê³µê²©í•©ë‹ˆë‹¤.,12,20,null,3.5,null,1,null,null,null,1,null,null,0.4,4,4,null,null,9,null,null,null,null,null,null,null,null,null,null,null
+9,0,SkillMeteor,í•˜ëŠ˜ì—ì„œ ìš´ì„ì´ ë–¨ì–´ì ¸ ì ì—ê²Œ í”¼í•´ë¥¼ ì…í™ë‹ˆë‹¤.,12,15,null,4.2,null,1,null,null,null,null,1,null,null,null,12,0.2,null,null,null,null,null,2,null,null,null,null,null,null,null
+10,0,SkillMagicEarth,ë§ˆë²•ìœ¼ë¡œ ë•…ì„ ìš¸ë¦¬ê²Œ í•˜ì—¬ ì ì—ê²Œ í”¼í•´ë¥¼ ì…í™ë‹ˆë‹¤.,null,5,5,1.5,null,1,null,null,null,1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.5,null,null,1.5,1
+11,0,SkillBloodSword,ê²€ì´ ì£¼ë³€ì„ íšŒì „í•˜ë©´ì„œ ì ì„ ê³µê²©í•©ë‹ˆë‹¤.,null,5,5,2,0.25,1,null,null,null,1,null,null,0.2,null,8,null,null,null,720,6,null,null,null,null,null,null,null,null,null
+12,0,SkillCurseSword,ê²€ì´ ì£¼ë³€ì„ íšŒì „í•˜ë©´ì„œ ì ì„ ê³µê²©í•©ë‹ˆë‹¤.,null,5,5,2,0.25,1,null,null,null,1,null,null,0.2,null,8,null,null,null,720,6,null,null,null,null,null,null,null,null,null
+13,0,SkillCrystalStaff,ê°€ì¥ ê°€ê¹Œìš´ ì ì—ê²Œ ë§ˆë²•ì„ ì‹œì „í•©ë‹ˆë‹¤.,8,5,null,0.5,null,1,null,null,null,1,null,null,null,2,10,null,2,null,null,null,null,null,null,null,null,null,null,null,null
+14,0,SkillFireBomb,ë¬´ì‘ìœ„ ì ë“¤ì—ê²Œ í­íƒ„ì„ ë˜ì ¸ ë¶ˆíƒ€ì˜¤ë¥´ëŠ” êµ¬ì—­ì„ ìƒì„±í•©ë‹ˆë‹¤.,12,5,10,3.8,0.6,1,null,null,null,null,1,null,null,null,6,0.3,null,null,null,null,null,null,2,3,null,null,null,null,null
+15,0,SkillShockBomb,ë¬´ì‘ìœ„ ì ë“¤ì—ê²Œ í­íƒ„ì„ ë˜ì§‘ë‹ˆë‹¤.,12,10,10,3.8,null,1,null,null,null,null,1,null,null,null,6,0.3,null,null,null,null,null,1.5,null,null,null,null,null,1.5,1
+16,0,SkillMagicShield,ê³ ì •ëœ ë°©í–¥ìœ¼ë¡œ ë°©íŒ¨ë¥¼ ë‚ ë¦½ë‹ˆë‹¤.,null,15,null,3,null,1,null,null,null,null,1,null,null,null,4,0.3,null,null,720,null,null,null,null,null,null,null,null,null,null
+17,0,SkillKnife,ë¬´ì‘ìœ„ ì ì—ê²Œ ë‹¨ê²€ì„ íˆ¬ì²™í•©ë‹ˆë‹¤.,12,10,null,4,null,1,null,null,null,null,1,null,null,null,7,0.2,null,null,null,null,null,null,null,null,null,3,2,null,null
