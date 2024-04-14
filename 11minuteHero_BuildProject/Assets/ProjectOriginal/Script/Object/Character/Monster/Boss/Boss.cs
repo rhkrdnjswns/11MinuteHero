@@ -76,6 +76,7 @@ public abstract class Boss : Character
     }
     public override void Hit(float damage)
     {
+        if (bHpEvent) return;
         base.Hit(damage);
         InGameManager.Instance.BossUIManager.UpdateBossHpBar(currentHp / maxHp);
         if (hpEventIndex >= hpEventArray.Length) return;

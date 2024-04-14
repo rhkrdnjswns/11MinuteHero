@@ -20,41 +20,21 @@ public class CameraUtility : MonoBehaviour //카메라 기능 클래스
     private IEnumerator Co_CheckObstacleBetweenPlayer()
     {
         LayerMask mask = LayerMask.GetMask("Obstacle", "PenetrateObstacle");
+        RaycastHit[] hits = new RaycastHit[5];
+        ObstacleUtility obj = null;
+
         waitUntil_CheckObstacleBetweenPlayer = new WaitUntil(() => !bFocus);
         while(true)
         {
             yield return waitUntil_CheckObstacleBetweenPlayer;
+
             Vector3 direction = (InGameManager.Instance.Player.transform.position - transform.position).normalized;
-            RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, 15, mask);
-            for (int i = 0; i < hits.Length; i++)
+
+            for (int i = 0; i < Physics.RaycastNonAlloc(transform.position, direction, hits, 15, mask); i++)
             {
-                ObstacleUtility[] obj = hits[i].transform.GetComponentsInChildren<ObstacleUtility>();
-
-                for (int j = 0; j < obj.Length; j++)
-                {
-                    obj[j]?.BecomeTransparent();
-                }
+                obj = hits[i].transform.GetComponent<ObstacleUtility>();
+                obj?.SetTransparent();
             }
-            
-            //foreach (var item in hits)
-            //{
-            //    Material[] mats = item.transform.GetComponent<Renderer>().materials;
-            //    for (int i = 0; i < mats.Length; i++)
-            //    {
-            //        mats[i].SetFloat("_Mode", 3f);
-            //        mats[i].SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-            //        mats[i].SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-            //        mats[i].SetInt("ZWrite", 0);
-            //        mats[i].DisableKeyword("_ALPHATEST_ON");
-            //        mats[i].EnableKeyword("_ALPHABLEND_ON");
-            //        mats[i].DisableKeyword("_ALPHAPREMULTIPLY_ON");
-            //        mats[i].renderQueue = 3000;
-
-            //        Color color = mats[i].color;
-            //        color.a = 0.5f;
-            //        mats[i].color = color;
-            //    }
-            //}
         }
     }
     public IEnumerator Co_FocusCam(float lerpTime, Vector3 start, Vector3 destination)

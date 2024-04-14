@@ -43,10 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c5c23324ba8c2248bd83950550e4fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eSkillType: 0
   id: 16
   icon: {fileID: 0}
   description: "\uACE0\uC815\uB41C \uBC29\uD5A5\uC73C\uB85C \uBC29\uD328\uB97C \uB0A0\uB9BD\uB2C8\uB2E4."
   name: "\uB9C8\uBC95\uC774 \uAE43\uB4E0 \uBC29\uD328"
+  bCanEvolution: 0
   coolTime: 3
   currentCoolTime: 0
   damage: 15
@@ -56,6 +58,6 @@ MonoBehaviour:
     projectilePrefab: {fileID: 9060912379008616560, guid: 7e6d800350297ed46a9ddb886fd15716,
       type: 3}
     projectileCreateCount: 15
-    projectileSpeed: 1
+    projectileSpeed: 1.5
   shotInterval: 0.3
   activateTime: 4

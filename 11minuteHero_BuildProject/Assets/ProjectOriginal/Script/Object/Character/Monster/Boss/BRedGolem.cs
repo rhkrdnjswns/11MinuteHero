@@ -27,7 +27,11 @@ public class BRedGolem : Boss
     protected List<CRedGolemStone> spareStoneList = new List<CRedGolemStone>();
     protected Queue<CRedGolemStone> stoneQueue = new Queue<CRedGolemStone>();
 
+    protected CRedGolemStone stoneRef;
+
     protected Vector3 appearPos;
+
+    protected Vector3 stoneSummonPos = Vector3.zero;
     protected float summonedStonePosY;
     protected virtual void SetSummonedStonePosY()
     {
@@ -56,7 +60,6 @@ public class BRedGolem : Boss
     {
         yield return new WaitUntil(() => !bAction);
         Debug.Log("Hp 이벤트 실행");
-        gameObject.layer = LayerMask.NameToLayer("Default");
         yield return new WaitForSeconds(1f);
 
         Debug.Log("중앙으로 점프");
@@ -76,8 +79,6 @@ public class BRedGolem : Boss
         yield return new WaitForSeconds(1f);
         yield return StartCoroutine(cameraUtility.Co_FocusCam(0.2f, appearPos, InGameManager.Instance.Player.transform.position));
         cameraUtility.UnFocus();
-
-        gameObject.layer = LayerMask.NameToLayer("Monster");
 
         transform.LookAt(InGameManager.Instance.Player.transform);
         animator.SetTrigger("SummonStoneRelease");
@@ -410,21 +411,23 @@ public class BRedGolem : Boss
     public virtual void SummonStone(Vector3 pos)
     {
         if (stoneQueue.Count == 0) InitStoneQueue();
-        CRedGolemStone obj = stoneQueue.Dequeue();
+        stoneRef = stoneQueue.Dequeue();
 
         if (bReturnStone)
         {
-            spareStoneList.Add(obj);
+            spareStoneList.Add(stoneRef);
         }
         else
         {
-            stoneList.Add(obj);
+            stoneList.Add(stoneRef);
         }
+        stoneSummonPos = pos;
+        stoneSummonPos.y = summonedStonePosY;
 
-        obj.transform.SetParent(null);
-        obj.transform.position = new Vector3(pos.x, summonedStonePosY, pos.z);
-        obj.gameObject.SetActive(true);
-        obj.ResetStatus();
+        stoneRef.transform.SetParent(null);
+        stoneRef.transform.position = stoneSummonPos;
+        stoneRef.gameObject.SetActive(true);
+        stoneRef.ResetStatus();
     }
     public void ReturnStone(CRedGolemStone redGolemStone, int stoneLevel)
     {

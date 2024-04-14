@@ -8,6 +8,7 @@ public class RStaff : WRangedWeapon //마법사가 사용하는 무기. (09/25)액티브 스킬
     [SerializeField] private float shotInterval; //투사체 생성 주기
 
     private bool bShotDone;
+    private Collider[] inRangedMonsterArray;
     protected override void Awake()
     {
         base.Awake();
@@ -37,8 +38,8 @@ public class RStaff : WRangedWeapon //마법사가 사용하는 무기. (09/25)액티브 스킬
     protected override IEnumerator Co_Shot()
     {
         bShotDone = false;
-        Collider[] inRadiusMonsterArray = attackRadiusUtility.GetLayerInRadiusSortedByDistance(transform.root); //공격 범위 내의 가까운 몬스터 탐색
-        if (inRadiusMonsterArray.Length == 0)
+        inRangedMonsterArray = attackRadiusUtility.GetLayerInRadiusSortedByDistance(transform.root); //공격 범위 내의 가까운 몬스터 탐색
+        if (inRangedMonsterArray.Length == 0)
         {
             bShotDone = true;
             yield break;
@@ -52,9 +53,9 @@ public class RStaff : WRangedWeapon //마법사가 사용하는 무기. (09/25)액티브 스킬
             }
             Projectile p = rangedAttackUtility.SummonProjectile();
 
-            p.ShotProjectile(inRadiusMonsterArray[monsterIndex++].transform); //위치정보 참조를 위해 타겟 몬스터의 transform 넘겨줌
+            p.ShotProjectile(inRangedMonsterArray[monsterIndex++].transform); //위치정보 참조를 위해 타겟 몬스터의 transform 넘겨줌
 
-            if (monsterIndex >= inRadiusMonsterArray.Length) monsterIndex = 0; //반경 내의 몬스터가 투사체 수보다 적은 경우의 처리
+            if (monsterIndex >= inRangedMonsterArray.Length) monsterIndex = 0; //반경 내의 몬스터가 투사체 수보다 적은 경우의 처리
 
             if (monsterIndex >= 6) monsterIndex = 0; //반경 내 타격 가능한 최대 몬스터 수에 도달한 경우 인덱스 초기화
 

@@ -11,7 +11,9 @@ public class AttackRadiusUtility //¹Ý°æ ³»¿¡¼­ Æ¯Á¤ ·¹ÀÌ¾î¸¦ °Ë»çÇÏ´Â ±â´ÉÀ» °¡Á
 {
     [SerializeField] private float radius; //¹Ý°æ
     [SerializeField] private LayerMask layerMask; //°ËÃâÇÒ ·¹ÀÌ¾î
-    
+
+    private Character character;
+    private Monster monster;
     public float Radius { get => radius; set => radius = value; }
     public Collider[] GetLayerInRadius(Transform transform) //transform.position¿¡¼­ ¹Ý°æ¸¸Å­ ¿øÀ» ±×·Á °ËÃâµÈ Ãæµ¹Ã¼ ¹è¿­·Î ¹ÝÈ¯
     {
@@ -31,9 +33,8 @@ public class AttackRadiusUtility //¹Ý°æ ³»¿¡¼­ Æ¯Á¤ ·¹ÀÌ¾î¸¦ °Ë»çÇÏ´Â ±â´ÉÀ» °¡Á
 
         foreach (var item in inRadiusArray)
         {
-            if (!item.GetComponent<Character>()) continue;
-
-            item.GetComponent<Character>().Hit(damage);
+            character = item.GetComponent<Character>();
+            character?.Hit(damage);
         }      
     }
     public void AttackLayerInRadius(Collider[] inRadiusArray, float damage, EAttackType eAttackType, float duration, float percentage = 0) //¹Ý°æ ³» Character ¿ÀºêÁ§Æ®¿¡ ÇÇÇØ¿Í µð¹öÇÁ Àû¿ë
@@ -42,19 +43,19 @@ public class AttackRadiusUtility //¹Ý°æ ³»¿¡¼­ Æ¯Á¤ ·¹ÀÌ¾î¸¦ °Ë»çÇÏ´Â ±â´ÉÀ» °¡Á
 
         foreach (var item in inRadiusArray)
         {
-            if (!item.GetComponent<Character>()) continue;
+            character = item.GetComponent<Character>();
+            character?.Hit(damage);
 
-            item.GetComponent<Character>().Hit(damage);
-            if(item.GetComponent<Monster>())
+            monster = item.GetComponent<Monster>();
+            if(monster != null) 
             {
-                Monster m = item.GetComponent<Monster>();
-                if (eAttackType == EAttackType.Slow)
+                if (eAttackType == EAttackType.Slow) //µð¹öÇÁ Àû¿ë ºÎºÐÀº ½Ï ¹Ù²ã¾ßÇÒµí(ÀÎ½ºÅÏ½º »ý¼º ¾ÈÇÏ´Â ¹æÇâÀ¸·Î)
                 {
-                    m.DebuffList.Add(new DSlowDown(EDebuffType.Slow, duration, m, m.Speed * percentage / 100));
+                    monster.DebuffList.Add(new DSlowDown(EDebuffType.Slow, duration, monster, monster.Speed * percentage / 100));
                 }
                 else if (eAttackType == EAttackType.Sturn)
                 {
-                    m.DebuffList.Add(new DSturn(EDebuffType.Slow, duration, m));
+                    monster.DebuffList.Add(new DSturn(EDebuffType.Slow, duration, monster));
                 }
             }
         }
@@ -63,15 +64,15 @@ public class AttackRadiusUtility //¹Ý°æ ³»¿¡¼­ Æ¯Á¤ ·¹ÀÌ¾î¸¦ °Ë»çÇÏ´Â ±â´ÉÀ» °¡Á
     {
         if (inRadiusArray.Length == 0) return 0;
 
-        Character c;
         int count = 0;
         foreach (var item in inRadiusArray)
         {
-            if (!item.GetComponent<Character>()) continue;
-
-            c = item.GetComponent<Character>();
-            c.Hit(damage);
-            if (c.IsDie) count++;
+            character = item.GetComponent<Character>();
+            if(character != null)
+            {
+                character.Hit(damage);
+                if (character.IsDie) count++;
+            }
         }
         return count;
     }

@@ -35,6 +35,8 @@ public class RangedAttackUtility //모든 투사체를 사용하는 스킬들의 기능과 데이터
         }
     }
 
+    //public 
+
     public int ShotCount { get => shotCount; set => shotCount = value; }
 
     public float ProjectileSpeed { get => projectileSpeed; }
