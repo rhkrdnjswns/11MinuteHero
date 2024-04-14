@@ -7,6 +7,8 @@ public abstract class WRangedWeapon : AWeapon //원거리 무기. (09/25)액티브 스킬 
     [SerializeField] protected RangedAttackUtility rangedAttackUtility;
     [SerializeField] protected float secondDamage;
     private float secondBaseDamage;
+    private Coroutine attackCoroutine;
+
     protected override void Awake()
     {
         base.Awake();
@@ -28,7 +30,7 @@ public abstract class WRangedWeapon : AWeapon //원거리 무기. (09/25)액티브 스킬 
     }
     public override void Attack() //공격 함수 오버라이딩
     {
-        StartCoroutine(Co_Shot());
+        attackCoroutine = StartCoroutine(Co_Shot());
     }
     protected abstract IEnumerator Co_Shot(); //투사체 발사 코루틴
     protected override void SetCurrentRange(float value)

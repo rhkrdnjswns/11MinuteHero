@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI; //Test
 
@@ -31,7 +32,6 @@ public class InGameManager : MonoBehaviour
     #region --Test--
     public Text timerText;
     public Text killCountText;
-    private float timer;
 
     public Image fade;
     #endregion
@@ -118,6 +118,8 @@ public class InGameManager : MonoBehaviour
     }
     private IEnumerator Co_Timer()
     {
+        float timer = 0;
+
         while (gameState != EGameState.GameOver)
         {
             timer += Time.deltaTime;

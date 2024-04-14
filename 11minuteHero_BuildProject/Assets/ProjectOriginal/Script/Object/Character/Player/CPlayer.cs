@@ -33,6 +33,7 @@ public abstract class CPlayer : Character
     private BarImageUtility expBar; //플레이어 경험치바
 
     private IEnumerator attackCoroutine;
+    private WaitForSeconds invincibleDelay = new WaitForSeconds(1f);
     public Vector3 Direction
     {
         set
@@ -119,9 +120,9 @@ public abstract class CPlayer : Character
     private IEnumerator Co_HitInvincible() //피격시 n초 무적 코루틴
     {
         float timer = 0;
+        Color color;
         for (int i = 0; i < 2; i++) //총 2초동안 플레이어 깜빡거리는 효과
         {
-            Color color;
             while (timer < 0.5f)
             {
                 timer += Time.deltaTime; //메테리얼 색상 조정
@@ -147,15 +148,16 @@ public abstract class CPlayer : Character
             }
             yield return null;
         }
-        yield return new WaitForSeconds(1f); //1초 지연 후 무적 해제
+        yield return invincibleDelay; //1초 지연 후 무적 해제
         isInvincible = false;
     }
     private IEnumerator Co_Move()
     {
+        WaitUntil dodgeEnd = new WaitUntil(() => !isDodge);
         while (InGameManager.Instance.GameState != EGameState.GameOver)
         {
             yield return null;
-            if (isDodge) yield return new WaitUntil(() => !isDodge); //회피 중인 경우 회피 종료까지 대기
+            if (isDodge) yield return dodgeEnd; //회피 중인 경우 회피 종료까지 대기
             animator.SetBool(ConstDefine.BOOL_ISMOVE, IsMove = Move());
         }
     }

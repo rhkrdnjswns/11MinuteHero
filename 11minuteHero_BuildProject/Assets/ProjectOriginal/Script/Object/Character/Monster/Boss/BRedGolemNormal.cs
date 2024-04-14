@@ -86,33 +86,34 @@ public class BRedGolemNormal : BRedGolem
         int rand = Random.Range(1, 101);
         float posY;
 
-        CRedGolemStone obj;
         if (rand <= 70)
         {
             if (stoneQueue.Count == 0) InitStoneQueue();
-            obj = stoneQueue.Dequeue();
+            stoneRef = stoneQueue.Dequeue();
             posY = summonedStonePosY;
         }
         else
         {
             if (indestructibleStoneQueue.Count == 0) InitStoneQueue();
-            obj = indestructibleStoneQueue.Dequeue();
+            stoneRef = indestructibleStoneQueue.Dequeue();
             posY = summonedIndestructibleStonePosY;
         }
 
         if (bReturnStone)
         {
-            spareStoneList.Add(obj);
+            spareStoneList.Add(stoneRef);
         }
         else
         {
-            stoneList.Add(obj);
+            stoneList.Add(stoneRef);
         }
+        stoneSummonPos = pos;
+        stoneSummonPos.y = posY;
 
-        obj.transform.SetParent(null);
-        obj.transform.position = new Vector3(pos.x, posY, pos.z);
-        obj.gameObject.SetActive(true);
-        obj.ResetStatus();
+        stoneRef.transform.SetParent(null);
+        stoneRef.transform.position = stoneSummonPos;
+        stoneRef.gameObject.SetActive(true);
+        stoneRef.ResetStatus();
     }
     protected override void ReturnStoneByLevel(CRedGolemStone redGolemStone, int stoneLevel)
     {
