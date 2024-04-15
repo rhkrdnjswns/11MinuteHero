@@ -29408,11 +29408,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c63ed53f89b4d4bb5a5507c900eff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 45
+  index: 12
   bombObject: {fileID: 828657874844555442}
   explosionParticle: {fileID: 4914594380714728348}
   projectileObj: {fileID: 828657874844799706}
-  particle: {fileID: 4914594380714728348}
 --- !u!1 &5112974713011447943
 GameObject:
   m_ObjectHideFlags: 0

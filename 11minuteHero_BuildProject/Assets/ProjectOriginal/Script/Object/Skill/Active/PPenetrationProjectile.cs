@@ -34,7 +34,9 @@ public class PPenetrationProjectile : Projectile
         {
             other.GetComponent<Character>().Hit(rangedAttackUtility.ProjectileDamage); //Monster 클래스를 추출하여 데미지 연산
             currentCount--;
-
+#if UNITY_EDITOR
+            InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += rangedAttackUtility.ProjectileDamage;
+#endif
             if (currentCount > 0) return;
             currentCount = count; //관통 횟수를 전부 소모한 경우 투사체 회수
             rangedAttackUtility.ReturnProjectile(this);

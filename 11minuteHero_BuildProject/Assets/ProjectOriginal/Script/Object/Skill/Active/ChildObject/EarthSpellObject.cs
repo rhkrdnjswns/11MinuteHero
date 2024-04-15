@@ -7,6 +7,10 @@ public class EarthSpellObject : MonoBehaviour
     [SerializeField] private ParticleSystem particleSystem; //파티클
 
     private AttackRadiusUtility attackRadiusUtility; //반경 공격기능 참조
+
+#if UNITY_EDITOR
+    public int index;
+#endif
     public EarthSpellObject SetAttackRadiusUtility(AttackRadiusUtility reference) //체이닝을 위한 반환타입
     {
         attackRadiusUtility = reference;
@@ -23,6 +27,10 @@ public class EarthSpellObject : MonoBehaviour
     {
         yield return new WaitForSeconds(1.6f); //지진 파티클 타이밍에 맞게 반경 내의 몬스터 타격
         attackRadiusUtility.AttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform), damage, EAttackType.Slow, duration, percentage);
+#if UNITY_EDITOR
+        int count = attackRadiusUtility.GetLayerInRadius(transform).Length;
+        InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += count * damage;
+#endif
         yield return new WaitForSeconds(1.5f); //파티클 종료 딜레이
 
         transform.SetParent(parent);

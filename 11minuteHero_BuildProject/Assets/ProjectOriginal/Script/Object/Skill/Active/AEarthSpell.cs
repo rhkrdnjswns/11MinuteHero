@@ -67,10 +67,13 @@ public class AEarthSpell : AActiveSkill //대지의 마법서 스킬 클래스
     {
         while(true)
         {
-            yield return new WaitForSeconds(currentCoolTime);
+            yield return coolTimeDelay;
             var e = earthSpellQueue.Dequeue();
             e.transform.SetParent(null);
             e.ActivateSkill(transform, earthSpellQueue, currentDamage, slowDuration, slowPercentage);
+#if UNITY_EDITOR
+            AttackCount++;
+#endif
         }
     }
     public override void SetEvlotionCondition()

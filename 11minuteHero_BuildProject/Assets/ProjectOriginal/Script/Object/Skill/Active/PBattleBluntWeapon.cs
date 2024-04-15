@@ -60,6 +60,9 @@ public class PBattleBluntWeapon : Projectile
         {
             Character c = other.GetComponent<Character>();
             c.Hit(rangedAttackUtility.ProjectileDamage); //Monster 클래스를 추출하여 데미지 연산
+#if UNITY_EDITOR
+            InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += rangedAttackUtility.ProjectileDamage;
+#endif
             if (!c.IsDie && !isReturn) c.KnockBack(0.3f, 0.3f);
         }
     }

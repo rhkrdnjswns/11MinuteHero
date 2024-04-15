@@ -84,11 +84,15 @@ public class ASwordSkill : AActiveSkill
     }
     protected override IEnumerator Co_ActiveSkillAction()
     {
-        while(true)
+        WaitUntil endRev = new WaitUntil(() => swordSkillObject.bEndRev);
+        while (true)
         {
-            yield return new WaitForSeconds(currentCoolTime);
+            yield return coolTimeDelay;
             ActivateSkill();
-            yield return new WaitUntil(() => swordSkillObject.bEndRev);
+#if UNITY_EDITOR
+            AttackCount++;
+#endif
+            yield return endRev;
         }
     }
     private IEnumerator Co_FixPos()

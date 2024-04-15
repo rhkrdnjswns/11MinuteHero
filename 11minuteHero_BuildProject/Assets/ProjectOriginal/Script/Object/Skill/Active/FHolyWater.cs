@@ -21,6 +21,9 @@ public class FHolyWater : BFireBomb
     {
         bShotDone = false;
         Projectile p;
+#if UNITY_EDITOR
+        AttackCount++;
+#endif
         for (int i = 0; i < rangedAttackUtility.ShotCount; i++)
         {
             if (!rangedAttackUtility.IsValid())
@@ -29,12 +32,12 @@ public class FHolyWater : BFireBomb
                 SetBombProjectile();
             }
             p = rangedAttackUtility.SummonProjectile();
-            Vector3 angleDirection = transform.position + Quaternion.Euler(0, 72 * i, 0) * ((Vector3.forward + Vector3.right) * distance);
+            Vector3 angleDirection = transform.position + Quaternion.Euler(0, 360 / 5 * i, 0) * ((Vector3.forward + Vector3.right) * distance);
             p.ShotProjectile(angleDirection);
 
             if (i == rangedAttackUtility.ShotCount - 1) break;
 
-            yield return new WaitForSeconds(shotInterval);
+            yield return shotDelay;
         }
         bShotDone = true;
     }

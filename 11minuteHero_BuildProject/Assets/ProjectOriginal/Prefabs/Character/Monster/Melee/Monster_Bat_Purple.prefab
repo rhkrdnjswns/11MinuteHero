@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 1106081042190506299}
   - component: {fileID: 8696100733161512685}
   - component: {fileID: 629643919957088802}
-  - component: {fileID: 2786299049129898615}
+  - component: {fileID: -2204852677219345176}
   m_Layer: 7
   m_Name: Monster_Bat_Purple
   m_TagString: Monster
@@ -278,7 +278,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 1, z: 0.5}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &2786299049129898615
+--- !u!114 &-2204852677219345176
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -287,18 +287,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1011293171234051231}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df3519e99a00dbf4598dfc6592c6784a, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d437b61a5e387746aa2b78c68e07082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 30
-  speed: 3
+  maxHp: 100
+  speed: 2
   currentHp: 0
-  monsterState: 0
-  damage: 5
-  rewardExp: 3
-  attackRange: 0.3
   damageUIPrefab: {fileID: 9182912565010467780, guid: 3d13174112c6d8d4e9ac179922aec9cd,
     type: 3}
+  monsterState: 0
+  damage: 10
+  rewardExp: 10
+  attackRange: 0.5
 --- !u!1 &1011504105098827023
 GameObject:
   m_ObjectHideFlags: 0

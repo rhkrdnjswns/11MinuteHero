@@ -126,7 +126,9 @@ public class BRedGolemHard : BRedGolemNormal
             obj.transform.localPosition = Vector3.zero;
             obj.transform.rotation = Quaternion.identity;
 
-            earthQuakeStoneQueue.Enqueue(obj.GetComponent<CRedGolemStone>().SetReference(transform).InitDamageUIContainer());
+            CRedGolemStone stone = obj.GetComponent<CRedGolemStone>().SetReference(transform);
+            stone.InitDamageUIContainer();
+            earthQuakeStoneQueue.Enqueue(stone);
         }
     }
     public override void SummonStone(Vector3 pos)

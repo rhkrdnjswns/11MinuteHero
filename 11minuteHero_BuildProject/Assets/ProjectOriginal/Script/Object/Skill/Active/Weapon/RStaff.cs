@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class RStaff : WRangedWeapon //마법사가 사용하는 무기. (09/25)액티브 스킬 제작 완료 후 리팩토링 시에 Staff로 클래스 이름 바꿔야함
 {
@@ -9,9 +10,16 @@ public class RStaff : WRangedWeapon //마법사가 사용하는 무기. (09/25)액티브 스킬
 
     private bool bShotDone;
     private Collider[] inRangedMonsterArray;
+    private WaitForSeconds shotDelay;
+
+    private LayerMask test;
+
+    private Projectile projectileRef;
     protected override void Awake()
     {
         base.Awake();
+        shotDelay = new WaitForSeconds(shotInterval);
+        test = LayerMask.GetMask("Monster");
         //string[] info = FindObjectOfType<CSVReader>().GetSkillNameAndDescription(eSkillType, id);
         //if(info != null)
         //{
@@ -38,12 +46,15 @@ public class RStaff : WRangedWeapon //마법사가 사용하는 무기. (09/25)액티브 스킬
     protected override IEnumerator Co_Shot()
     {
         bShotDone = false;
-        inRangedMonsterArray = attackRadiusUtility.GetLayerInRadiusSortedByDistance(transform.root); //공격 범위 내의 가까운 몬스터 탐색
+        Collider[] inRangedMonsterArray = attackRadiusUtility.GetLayerInRadiusSortedByDistance(transform.root); //공격 범위 내의 가까운 몬스터 탐색
         if (inRangedMonsterArray.Length == 0)
         {
             bShotDone = true;
             yield break;
         }
+#if UNITY_EDITOR
+        AttackCount++;
+#endif
         int monsterIndex = 0; //각 투사체의 타겟이 될 몬스터의 인덱스
         for (int i = 0; i < rangedAttackUtility.ShotCount; i++) //투사체 개수만큼 반복
         {
@@ -51,16 +62,17 @@ public class RStaff : WRangedWeapon //마법사가 사용하는 무기. (09/25)액티브 스킬
             {
                 rangedAttackUtility.CreateNewProjectile();
             }
-            Projectile p = rangedAttackUtility.SummonProjectile();
+            Projectile projectileRef = rangedAttackUtility.SummonProjectile();
 
-            p.ShotProjectile(inRangedMonsterArray[monsterIndex++].transform); //위치정보 참조를 위해 타겟 몬스터의 transform 넘겨줌
+            projectileRef.ShotProjectile(inRangedMonsterArray[monsterIndex++].transform); //위치정보 참조를 위해 타겟 몬스터의 transform 넘겨줌
 
             if (monsterIndex >= inRangedMonsterArray.Length) monsterIndex = 0; //반경 내의 몬스터가 투사체 수보다 적은 경우의 처리
 
             if (monsterIndex >= 6) monsterIndex = 0; //반경 내 타격 가능한 최대 몬스터 수에 도달한 경우 인덱스 초기화
 
-            if (i < rangedAttackUtility.ShotCount - 1) yield return new WaitForSeconds(shotInterval); //마지막 투사체 발사 시에는 텀 없게 하기
+            if (i < rangedAttackUtility.ShotCount - 1) yield return shotDelay; //마지막 투사체 발사 시에는 텀 없게 하기
         }
+        yield return null;
         bShotDone = true;
     }
     private void OnDrawGizmos() //씬뷰에서 공격 반경 표시를 위한 기즈모 그리기

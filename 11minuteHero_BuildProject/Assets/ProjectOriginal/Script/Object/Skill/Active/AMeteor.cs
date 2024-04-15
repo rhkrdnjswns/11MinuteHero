@@ -17,6 +17,7 @@ public class AMeteor : AActiveSkill //메테오 스킬 클래스
     private List<MeteorObject> allMeteorList = new List<MeteorObject>(); //모든 메테오 참조 (메테오가 디큐된 상태에서 패시브 스킬 효과 적용 시 참조를 위해)
     private float originRadius; //기본 메테오 피해 범위
 
+    private WaitForSeconds summonDelay;
     protected override void Awake()
     {
         base.Awake();
@@ -29,6 +30,7 @@ public class AMeteor : AActiveSkill //메테오 스킬 클래스
             allMeteorList.Add(m);
         }
         originRadius = meteorAttackRadiusUtility.Radius;
+        summonDelay = new WaitForSeconds(summonInteval);
     }
     public override void InitSkill() //기믹 초기화 시 메테오 생성
     {
@@ -62,7 +64,9 @@ public class AMeteor : AActiveSkill //메테오 스킬 클래스
             bActionDone = true;
             yield break;
         }
-
+#if UNITY_EDITOR
+        AttackCount++;
+#endif
         for (int i = 0; i < meteorCount; i++) //현재 메테오 개수만큼 리스트에서 활성화
         {
             var m = meteorQueue.Dequeue();
@@ -70,17 +74,18 @@ public class AMeteor : AActiveSkill //메테오 스킬 클래스
             m.transform.position = GetRandomPos(); //반경 내 랜덤한 몬스터 위치로 설정
 
             m.ActivateSkill(transform, meteorQueue, currentDamage); //메테오 소환
-            if (i < meteorCount - 1) yield return new WaitForSeconds(summonInteval); //마지막 메테오 소환 시에는 텀 없게하기
+            if (i < meteorCount - 1) yield return summonDelay; //마지막 메테오 소환 시에는 텀 없게하기
         }
         bActionDone = true;
     }
     protected override IEnumerator Co_ActiveSkillAction() //액티브 스킬 기능 코루틴
     {
+        WaitUntil actionDone = new WaitUntil(() => bActionDone);
         while (true)
         {
-            yield return new WaitForSeconds(currentCoolTime);
+            yield return coolTimeDelay;
             StartCoroutine(Co_SummonMeteor());
-            yield return new WaitUntil(() => bActionDone); //모든 메테오가 소환될 때까지 대기
+            yield return actionDone; //모든 메테오가 소환될 때까지 대기
         }
     }
     private Vector3 GetRandomPos()

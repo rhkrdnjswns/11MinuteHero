@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class AWeapon : SActive
 {
-    public float CoolTime { get => currentCoolTime; }
+    public float CoolTime { get => CurrentCoolTime; }
     public virtual bool GetBShotDone() //스태프의 발사 종료 체크를 위한 함수
     {
         return false;

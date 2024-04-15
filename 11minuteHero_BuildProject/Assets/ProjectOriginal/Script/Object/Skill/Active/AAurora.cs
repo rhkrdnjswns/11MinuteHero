@@ -46,8 +46,13 @@ public class AAurora : AActiveSkill //오라 스킬 클래스
     {
         while(true)
         {
-            yield return new WaitForSeconds(currentCoolTime);
+            yield return new WaitForSeconds(CurrentCoolTime);
             attackRadiusUtility.AttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform.root), currentDamage);
+#if UNITY_EDITOR
+            AttackCount++;
+            int count = attackRadiusUtility.GetLayerInRadius(transform.root).Length;
+            TotalDamage += currentDamage * count;
+#endif
         }
     }
     protected virtual void SetParticleByRadius()

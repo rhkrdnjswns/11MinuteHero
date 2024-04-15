@@ -10,12 +10,15 @@ public class AKnife : AActiveSkill
 
     [SerializeField] private float shotInterval;
     private bool bShotDone;
+
+    private WaitForSeconds shotDelay;
     protected override void Awake()
     {
         base.Awake();
 
         rangedAttackUtility.Parent = transform;
         rangedAttackUtility.CreateNewProjectile(knifeAttackRadiusUtility);
+        shotDelay = new WaitForSeconds(shotInterval);
     }
     public override void InitSkill()
     {
@@ -26,11 +29,12 @@ public class AKnife : AActiveSkill
     }
     protected override IEnumerator Co_ActiveSkillAction()
     {
+        WaitUntil shotDone = new WaitUntil(() => bShotDone);
         while (true)
         {
-            yield return new WaitForSeconds(currentCoolTime);
+            yield return coolTimeDelay;
             StartCoroutine(Co_AttackInRadius());
-            yield return new WaitUntil(() => bShotDone);
+            yield return shotDone;
         }
     }
     protected override void SetCurrentDamage()
@@ -56,6 +60,9 @@ public class AKnife : AActiveSkill
             bShotDone = true;
             yield break;
         }
+#if UNITY_EDITOR
+        AttackCount++;
+#endif
         int monsterIndex = Random.Range(0, inRadiusMonsterArray.Length);
         Transform t;
         Projectile p;
@@ -71,7 +78,7 @@ public class AKnife : AActiveSkill
             if (monsterIndex >= inRadiusMonsterArray.Length) monsterIndex = 0;
 
             p.ShotProjectile(t);
-            if (i < rangedAttackUtility.ShotCount - 1) yield return new WaitForSeconds(shotInterval); //마지막 투사체 발사 시에는 텀 없게 하기
+            if (i < rangedAttackUtility.ShotCount - 1) yield return shotInterval; //마지막 투사체 발사 시에는 텀 없게 하기
         }
         bShotDone = true;
     }

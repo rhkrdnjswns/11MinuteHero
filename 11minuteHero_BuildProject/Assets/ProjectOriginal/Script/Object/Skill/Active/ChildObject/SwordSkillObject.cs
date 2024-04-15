@@ -22,6 +22,11 @@ public class SwordSkillObject : MonoBehaviour
 
     private float damage; //공격력
 
+    private WaitForSeconds attackDelay;
+    private WaitForSeconds afterImageDelay;
+#if UNITY_EDITOR
+    public int index;
+#endif
     public bool bEndRev { get; set; }
     public SwordSkillAfterImage[] GetAfterImage()
     {
@@ -52,11 +57,13 @@ public class SwordSkillObject : MonoBehaviour
                 Debug.LogError("UnDefined SwordType");
                 break;
         }
-
         foreach (var item in afterImageArray)
         {
             item.SetAfterImage(eSwordType);
         }
+
+        afterImageDelay = new WaitForSeconds(0.1f);
+        attackDelay = new WaitForSeconds(0.25f);
     }
     public void ActivateSkill(Transform revAxis, float arrivalSecond, float degree, float damage, float attackInterval)
     {
@@ -75,7 +82,7 @@ public class SwordSkillObject : MonoBehaviour
         StartCoroutine(Co_RevolutionSword(revAxis, arrivalSecond, degree));
         StartCoroutine(Co_ActiveAfterImage(revAxis, arrivalSecond, degree));
 
-        StartCoroutine(Co_AttakcRadius(attackInterval));
+        StartCoroutine(Co_AttakcRadius());
     }
     public void SetAfterImageSize()
     {
@@ -88,17 +95,21 @@ public class SwordSkillObject : MonoBehaviour
     {
         foreach(var item in afterImageArray)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return afterImageDelay;
             item.transform.localPosition = activePos;
             item.SetAfterImage(revAxis, transform, rotDirection, arrivalSecond, degree, transform.localScale, eSwordType != ESwordType.DevilSword);
         }
     }
-    private IEnumerator Co_AttakcRadius(float attackInterval)
+    private IEnumerator Co_AttakcRadius()
     {
         while (true)
         {
-            yield return new WaitForSeconds(attackInterval);
+            yield return attackDelay;
             attackRadiusUtility.AttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform), damage);
+#if UNITY_EDITOR
+            int count = attackRadiusUtility.GetLayerInRadius(transform).Length;
+            InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += count * damage;
+#endif
         }
     }
     private IEnumerator Co_RotationSword() //검 오브젝트 자전

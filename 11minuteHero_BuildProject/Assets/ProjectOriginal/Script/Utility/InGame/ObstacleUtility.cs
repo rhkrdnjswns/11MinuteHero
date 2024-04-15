@@ -13,7 +13,7 @@ public class ObstacleUtility : MonoBehaviour
     private bool isReseting;
     private float timer = 0f;
 
-    private Coroutine setTransparentCoroutine;
+
     private Coroutine setOpaqueCoroutine;
     private Coroutine timeCheckCoroutine;
 
@@ -46,7 +46,7 @@ public class ObstacleUtility : MonoBehaviour
         }
         
         isTransparent = true;
-        setTransparentCoroutine = StartCoroutine(Co_SetTransparent()); //해당 함수 호출 최초에 한 번만 코루틴 실행
+        StartCoroutine(Co_SetTransparent()); //해당 함수 호출 최초에 한 번만 코루틴 실행
     }
 
     private void SetMaterialsRenderingMode(float mode, int renderQueue) //모든 머티리얼의 렌더링 모드를 Transparent로 변경 (투명 처리)

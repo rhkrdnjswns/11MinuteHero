@@ -17,9 +17,15 @@ public class PFaintBomb : PBomb
         }
         bombObject.SetActive(false);
         transform.position += Vector3.down * 0.5f;
+
         explosionParticle.Play();
         attackRadiusUtility.AttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform), rangedAttackUtility.ProjectileDamage, EAttackType.Sturn, 1f);
-        yield return new WaitForSeconds(1f);
+#if UNITY_EDITOR
+        int count = attackRadiusUtility.GetLayerInRadius(transform).Length;
+        InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += count * rangedAttackUtility.ProjectileDamage;
+#endif
+
+        yield return coroutineEndDelay;
         rangedAttackUtility.ReturnProjectile(this);
     }
 }

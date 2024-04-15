@@ -9754,6 +9754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleSystem: {fileID: 7640394664566273296}
+  index: 7
 --- !u!1 &2019333954733734691
 GameObject:
   m_ObjectHideFlags: 0

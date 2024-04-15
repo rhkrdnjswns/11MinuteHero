@@ -17,7 +17,7 @@ public class InGameManager : MonoBehaviour
 
     [SerializeField] private GameObject[] playerCharacterArray; //플레이어 캐릭터 배열. 플레이 씬 입장 시 인덱스를 전달받아 선택한 캐릭터를 활성화
     [SerializeField] private int characterIndex;
-    [SerializeField] private List<Monster> monsterList = new List<Monster>(); //현재 필드 위에 존재하는 몬스터 리스트
+    [SerializeField] private List<NormalMonster> monsterList = new List<NormalMonster>(); //현재 필드 위에 존재하는 몬스터 리스트
                                                                               //[SerializeField] private CustomPriorityQueue<Monster> monster
     private SkillManager skillManager;
     private BossUIManager bossUIManager;
@@ -30,11 +30,14 @@ public class InGameManager : MonoBehaviour
     private int killCount;
 
     #region --Test--
-    public Text timerText;
+    public Text timerHourText;
+    public Text timerMinuteText;
     public Text killCountText;
 
     public Image fade;
     #endregion
+
+    public float Timer { get; private set; }
 
     public bool bAppearBoss { get; private set; }
 
@@ -44,7 +47,7 @@ public class InGameManager : MonoBehaviour
 
     public static InGameManager Instance { get => instance; }
     public CPlayer Player { get => player; }
-    public List<Monster> MonsterList { get => monsterList; set => monsterList = value; }
+    public List<NormalMonster> MonsterList { get => monsterList; set => monsterList = value; }
     public EGameState GameState
     { //게임 스테이트가 GameOver가 되면 gameOver 델리게이트 호출. GameOver가 되는 경우는 플레이어 hp가 0이 되는 경우밖에 없음
         get
@@ -118,12 +121,12 @@ public class InGameManager : MonoBehaviour
     }
     private IEnumerator Co_Timer()
     {
-        float timer = 0;
-
         while (gameState != EGameState.GameOver)
-        {
-            timer += Time.deltaTime;
-            timerText.text = ((int)timer / 60).ToString("00") + ":" + ((int)timer % 60).ToString("00");
+        {        
+            Timer += Time.deltaTime;
+
+            timerHourText.text = ((int)Timer / 60).ToString();
+            timerMinuteText.text = ((int)Timer % 60).ToString();
             yield return null;
         }
     }
@@ -138,6 +141,7 @@ public class InGameManager : MonoBehaviour
 
     private void Update()
     {
+        Transform t = GetComponent<Transform>();
         if (Input.GetKeyDown(KeyCode.B))
         {
             StartCoroutine(Co_AppearBoss());

@@ -16,7 +16,6 @@ public class BRedGolem : Boss
     }
     private bool bAction;
     protected bool bReturnStone;
-    private GameObject modelObject;
 
     [SerializeField] protected RangedAttackUtility rangedAttackUtility;
     [SerializeField] private AttackRadiusUtility jumpAttack;
@@ -116,7 +115,6 @@ public class BRedGolem : Boss
     protected override void Awake()
     {
         base.Awake();
-        modelObject = transform.GetChild(0).gameObject;
         InitStoneQueue();
         rangedAttackUtility.Parent = transform;
         rangedAttackUtility.CreateNewProjectile();
@@ -132,7 +130,9 @@ public class BRedGolem : Boss
             obj.transform.localPosition = Vector3.zero;
             obj.transform.rotation = Quaternion.identity;
 
-            stoneQueue.Enqueue(obj.GetComponent<CRedGolemStone>().SetReference(transform).InitDamageUIContainer());
+            CRedGolemStone stone = obj.GetComponent<CRedGolemStone>().SetReference(transform);
+            stone.InitDamageUIContainer();
+            stoneQueue.Enqueue(stone);
         }
     }
     private bool IsInShortRange()

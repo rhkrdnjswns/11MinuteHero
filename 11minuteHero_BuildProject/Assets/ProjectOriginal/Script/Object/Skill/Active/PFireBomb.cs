@@ -8,6 +8,8 @@ public class PFireBomb : PBomb //Ãæ°ÝÆøÅº°ú ±³ÁýÇÕÀÌ ¸¹¾Æ¼­ »ó¼Ó°ü°è·Î µÒ. Å¬·¡½
     private float dotInterval; //ºÒÅ¸´Â ±¸¿ª µ¥¹ÌÁö °£°Ý
     private float currentTime; //ÇöÀç Áö¼Ó ½Ã°£
 
+    private WaitForSeconds dotDelay;
+
     public override void IncreaseSize(float value)
     {
         projectileObj.localScale += Vector3.one * value / 100f;
@@ -18,6 +20,8 @@ public class PFireBomb : PBomb //Ãæ°ÝÆøÅº°ú ±³ÁýÇÕÀÌ ¸¹¾Æ¼­ »ó¼Ó°ü°è·Î µÒ. Å¬·¡½
     {
         dotDuration = duration;
         dotInterval = interval;
+
+        dotDelay = new WaitForSeconds(dotInterval);
     }
     protected override IEnumerator Co_Shot()
     {
@@ -44,11 +48,15 @@ public class PFireBomb : PBomb //Ãæ°ÝÆøÅº°ú ±³ÁýÇÕÀÌ ¸¹¾Æ¼­ »ó¼Ó°ü°è·Î µÒ. Å¬·¡½
         explosionParticle.Play();
         while (currentTime < dotDuration)
         {
-            yield return new WaitForSeconds(dotInterval);
+            yield return dotDelay;
             if (currentTime >= dotDuration) break;
             attackRadiusUtility.AttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform), rangedAttackUtility.ProjectileDamage);
+#if UNITY_EDITOR
+            int count = attackRadiusUtility.GetLayerInRadius(transform).Length;
+            InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += count * rangedAttackUtility.ProjectileDamage;
+#endif
         }
-        yield return new WaitForSeconds(1f);
+        yield return coroutineEndDelay;
         currentTime = 0;
         rangedAttackUtility.ReturnProjectile(this);
     }

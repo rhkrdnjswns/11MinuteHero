@@ -39,8 +39,8 @@ public abstract class Debuff
     protected float currentTime; //디버프 현재 시간
 
     protected List<Debuff> debuffListReference; //디버프 리스트 레퍼런스
-    protected Monster characterReference; //디버프를 적용할 타겟 참조
-    public Debuff(EDebuffType type, float time, Monster monster, float value = 0)
+    protected NormalMonster characterReference; //디버프를 적용할 타겟 참조
+    public Debuff(EDebuffType type, float time, NormalMonster monster, float value = 0)
     {
         eDebuffType = type;
         applyTime = time;
@@ -55,7 +55,7 @@ public abstract class Debuff
 public class DSlowDown : Debuff //둔화
 {
     private float value; //적용 수치
-    public DSlowDown(EDebuffType type, float time, Monster monster, float value = 0) : base(type, time, monster)
+    public DSlowDown(EDebuffType type, float time, NormalMonster monster, float value = 0) : base(type, time, monster)
     {
         this.value = value;
     }
@@ -74,7 +74,7 @@ public class DSlowDown : Debuff //둔화
 }
 public class DSturn : Debuff //스턴
 {
-    public DSturn(EDebuffType type, float time, Monster monster) : base(type, time, monster)
+    public DSturn(EDebuffType type, float time, NormalMonster monster) : base(type, time, monster)
     {
 
     }

@@ -8,12 +8,15 @@ public class AMagicShield : AActiveSkill
     [SerializeField] private float shotInterval;
     [SerializeField] protected float activateTime;
     private bool bShotDone;
+
+    private WaitForSeconds shotDelay;
     protected override void Awake()
     {
         base.Awake();
         rangedAttackUtility.Parent = transform;
         rangedAttackUtility.CreateNewProjectile();
         rangedAttackUtility.SetActivateTime(activateTime);
+        shotDelay = new WaitForSeconds(shotInterval);
     }
     public override void InitSkill()
     {
@@ -37,16 +40,20 @@ public class AMagicShield : AActiveSkill
     }
     protected override IEnumerator Co_ActiveSkillAction()
     {
+        WaitUntil shotDone = new WaitUntil(() => bShotDone);
         while (true)
         {
-            yield return new WaitForSeconds(currentCoolTime);
+            yield return coolTimeDelay;
             StartCoroutine(Co_ShotProjectile());
-            yield return new WaitUntil(() => bShotDone);
+            yield return shotDone;
         }
     }
     private IEnumerator Co_ShotProjectile()
     {
         bShotDone = false;
+#if UNITY_EDITOR
+        AttackCount++;
+#endif
         Projectile p;
         for (int i = 0; i < rangedAttackUtility.ShotCount; i++)
         {
@@ -62,7 +69,7 @@ public class AMagicShield : AActiveSkill
             }
 
             p.ShotProjectile();
-            if(i < rangedAttackUtility.ShotCount - 1) yield return new WaitForSeconds(shotInterval); //마지막 투사체 발사 시에는 텀 없게 하기
+            if(i < rangedAttackUtility.ShotCount - 1) yield return shotDelay; //마지막 투사체 발사 시에는 텀 없게 하기
         }
         bShotDone = true;
     }

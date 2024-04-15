@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Boss : Character
+public abstract class Boss : Monster
 {
     protected BehaviorTree behaviorTree;
     [Range(20, 60)]
@@ -18,8 +18,14 @@ public abstract class Boss : Character
     private int hpEventIndex;
     protected bool bHpEvent;
 
+    protected GameObject modelObject;
     protected abstract void PlayHpEvent(int index);
     protected abstract void InitBehaviorTree();
+    protected override void Awake()
+    {
+        base.Awake();
+        modelObject = transform.GetChild(0).gameObject;
+    }
     public float GetStartAnimPlayTime()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
@@ -27,6 +33,7 @@ public abstract class Boss : Character
     }
     public virtual void InitBoss()
     {
+        InitDamageUIContainer(modelObject.transform.localScale.y);
         cameraUtility = Camera.main.GetComponent<CameraUtility>();
         InitBehaviorTree();
         StartCoroutine(Co_ExcuteBehaviorTree());

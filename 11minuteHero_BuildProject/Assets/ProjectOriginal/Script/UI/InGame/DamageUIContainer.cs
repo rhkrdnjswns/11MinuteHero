@@ -16,8 +16,8 @@ public class DamageUIContainer
     private GameObject damageUIPrefab;
 
     private Transform container;
-    private Vector3 offset = new Vector3(0, 1.5f, 0);
-    public void InitDamageUIContainer(Transform target, int createCount, GameObject prefab)
+    private Vector3 offset;
+    public void InitDamageUIContainer(Transform target, int createCount, GameObject prefab, float offsetY)
     {
         canvas = GameObject.Find(ConstDefine.NAME_DAMAGEUI_CANVAS).GetComponent<Canvas>();
         cam = GameObject.Find(ConstDefine.NAME_UICAMERA).GetComponent<Camera>();
@@ -30,6 +30,8 @@ public class DamageUIContainer
         container = obj.transform;
         damageUIPrefab = prefab;
         CreateDamageUI(createCount, damageUIPrefab);
+
+        offset = new Vector3(0, offsetY, 0);
     }
     private void CreateDamageUI(int createCount, GameObject prefab)
     {
@@ -49,11 +51,11 @@ public class DamageUIContainer
 
         if(damage.ToString().IndexOf('.') >= 1)
         {
-            obj.SetDamageUI(damage.ToString("F1"), target.position, rectCanvas, cam, this);
+            obj.SetDamageUI(damage.ToString("F1"), target.position + offset, rectCanvas, cam, this);
         }
         else
         {
-            obj.SetDamageUI(damage.ToString("F0"), target.position, rectCanvas, cam, this);
+            obj.SetDamageUI(damage.ToString("F0"), target.position + offset, rectCanvas, cam, this);
         }
     }
     public void ReturnDamageUI(DamageUI damageUI)

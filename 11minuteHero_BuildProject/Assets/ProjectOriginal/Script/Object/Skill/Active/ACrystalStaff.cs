@@ -29,7 +29,7 @@ public class ACrystalStaff : AActiveSkill
     {
         while (true)
         {
-            yield return new WaitForSeconds(currentCoolTime);
+            yield return coolTimeDelay;
             StartCoroutine(Co_AttackInRadius());
         }
     }
@@ -52,6 +52,9 @@ public class ACrystalStaff : AActiveSkill
         Collider[] inRadiusMonsterArray = attackRadiusUtility.GetLayerInRadiusSortedByDistance(transform.root);
         if (inRadiusMonsterArray.Length == 0) yield break;
 
+#if UNITY_EDITOR
+        AttackCount++;
+#endif
         Transform t = inRadiusMonsterArray[0].transform;
 
         if (!rangedAttackUtility.IsValid())

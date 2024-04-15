@@ -49,7 +49,7 @@ public class AFireBall : AActiveSkill //파이어볼 스킬 클래스
     {
         while (true)
         {
-            yield return new WaitForSeconds(currentCoolTime);
+            yield return new WaitForSeconds(CurrentCoolTime);
             StartCoroutine(Co_AttackInRadius());
         }
     }

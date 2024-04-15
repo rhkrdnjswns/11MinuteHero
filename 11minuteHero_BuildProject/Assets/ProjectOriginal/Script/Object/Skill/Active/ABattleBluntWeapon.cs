@@ -55,6 +55,9 @@ public class ABattleBluntWeapon : AActiveSkill //전투망치와 전투도끼 클래스
     }
     private void ShotProjectile()
     {
+#if UNITY_EDITOR
+        AttackCount++;
+#endif
         returnCount = 0;
         SetDirectionArrayByType(); //현재 플레이어의 앞방향을 기준으로 타입에 맞는 사출 방향 결정
 
@@ -75,7 +78,7 @@ public class ABattleBluntWeapon : AActiveSkill //전투망치와 전투도끼 클래스
     {
         while (true)
         {
-            yield return new WaitForSeconds(currentCoolTime);
+            yield return new WaitForSeconds(CurrentCoolTime);
             ShotProjectile();
             yield return new WaitUntil(() => returnCount == rangedAttackUtility.ShotCount);
         }

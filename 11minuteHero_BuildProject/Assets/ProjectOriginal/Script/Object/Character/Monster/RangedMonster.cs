@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedMonster : Monster
+public class RangedMonster : NormalMonster
 {
     [SerializeField] protected RangedAttackUtility rangedAttackUtility;
     [SerializeField] protected float projectileActivateTime;

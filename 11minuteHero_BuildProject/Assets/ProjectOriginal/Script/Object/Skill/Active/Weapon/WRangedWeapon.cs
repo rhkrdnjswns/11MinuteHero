@@ -15,6 +15,7 @@ public abstract class WRangedWeapon : AWeapon //원거리 무기. (09/25)액티브 스킬 
         rangedAttackUtility.Parent = transform;
         rangedAttackUtility.CreateNewProjectile();
         secondBaseDamage = secondDamage;
+        
     }
     public override void IncreaseDamage(float value)
     {

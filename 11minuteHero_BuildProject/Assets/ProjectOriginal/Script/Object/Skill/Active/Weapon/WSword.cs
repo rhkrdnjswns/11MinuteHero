@@ -81,6 +81,9 @@ public class WSword : AWeapon
         Collider[] inRadiusMonsterArray = attackRadiusUtility.GetLayerInRadius(transform.root);
         if (inRadiusMonsterArray.Length == 0) yield break; //범위 안에 몬스터 없으면 종료
 
+#if UNITY_EDITOR
+        AttackCount++;
+#endif
         foreach (var monster in inRadiusMonsterArray) //범위 안 몬스터 중 공격 가능한 각도에 있는 몬스터 검사
         {
             Vector3 targetDir = (monster.transform.position - transform.root.position).normalized; //타겟 방향 벡터 정규화.
@@ -90,6 +93,9 @@ public class WSword : AWeapon
             if (targetAngle <= attackAngle * 0.5f) //양옆으로로 나뉘기 때문에 0.5 곱함. 바로보고있는 방향을 기준으로 양 옆으로 각이 펼쳐지기 때문에
             { 
                 monster.GetComponent<Character>().Hit(currentDamage); //각도 내에 있는 경우 타격
+#if UNITY_EDITOR
+                TotalDamage += currentDamage;
+#endif
             }
             yield return null;
         }

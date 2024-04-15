@@ -100,9 +100,9 @@ public class CustomPriorityQueue<T> //커스터마이징 우선순위 큐
         heap.Clear();
     }
 }
-public class MonsterDistCompare : IComparer<Monster> //우선순위 큐의 우선순위 비교 조건을 구현한 실체 클래스
+public class MonsterDistCompare : IComparer<NormalMonster> //우선순위 큐의 우선순위 비교 조건을 구현한 실체 클래스
 {
-    public int Compare(Monster x, Monster y) //x와 y의 플레이어와의 거리를 비교하여 우선순위 설정
+    public int Compare(NormalMonster x, NormalMonster y) //x와 y의 플레이어와의 거리를 비교하여 우선순위 설정
     {
         if (x.DistToPlayer < y.DistToPlayer)
         {

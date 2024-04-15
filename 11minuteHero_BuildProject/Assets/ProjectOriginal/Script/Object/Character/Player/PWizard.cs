@@ -8,6 +8,7 @@ public class PWizard : CPlayer
     protected override IEnumerator Co_Attack()
     {
         float timer = 0;
+        WaitUntil shotDone = new WaitUntil(() => weapon.GetBShotDone());
         while (true)
         {
             timer = 0;
@@ -19,7 +20,7 @@ public class PWizard : CPlayer
             if (!isDodge && eCharacterActionable == ECharacterActionable.Actionable)
             {
                 weapon.Attack();
-                yield return new WaitUntil(() => weapon.GetBShotDone());
+                yield return shotDone;
             }
             yield return null;
         }

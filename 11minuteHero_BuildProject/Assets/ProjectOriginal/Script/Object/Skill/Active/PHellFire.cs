@@ -9,9 +9,12 @@ public class PHellFire : PPenetrationProjectile
     private AttackRadiusUtility attackRadiusUtility;
     private float explosionDamage;
     private bool isExplosion;
+
+    private WaitForSeconds explosionDelay;
     public override void SetAttackRadiusUtility(AttackRadiusUtility attackRadiusUtility)
     {
         this.attackRadiusUtility = attackRadiusUtility;
+        explosionDelay = new WaitForSeconds(2f);
     }
     public void SetExplosionDamage(float value)
     {
@@ -35,6 +38,9 @@ public class PHellFire : PPenetrationProjectile
         if (other.CompareTag(ConstDefine.TAG_MONSTER))
         {
             other.GetComponent<Character>().Hit(rangedAttackUtility.ProjectileDamage); //Monster 클래스를 추출하여 데미지 연산
+#if UNITY_EDITOR
+            InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += rangedAttackUtility.ProjectileDamage;
+#endif
             currentCount--;
 
             if (currentCount > 0) return;
@@ -48,7 +54,11 @@ public class PHellFire : PPenetrationProjectile
         isExplosion = true;
         explosionParticle.Play();
         attackRadiusUtility.AttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform), explosionDamage);
-        yield return new WaitForSeconds(2f);
+#if UNITY_EDITOR
+        int count = attackRadiusUtility.GetLayerInRadius(transform).Length;
+        InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += count * explosionDamage;
+#endif
+        yield return explosionDelay;
 
         currentCount = count;
         rangedAttackUtility.ReturnProjectile(this);

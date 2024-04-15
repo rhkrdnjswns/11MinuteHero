@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 (플레이어 공격에 데미지를 입음. 파괴 가능)
+public class CRedGolemStone : Monster //1스테이지 보스 레드골렘의 돌 오브젝트 (플레이어 공격에 데미지를 입음. 파괴 가능)
 {
     public enum EStoneType
     {
@@ -24,7 +24,6 @@ public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 
     private Transform decalParent;
     private DamageUIContainer damageUIContainer = new DamageUIContainer();
 
-    [SerializeField] private GameObject damageUIPrefab;
     [SerializeField] private Decal chargingDecal;
     [SerializeField] private Decal decal;
 
@@ -92,11 +91,6 @@ public class CRedGolemStone : Character //1스테이지 보스 레드골렘의 돌 오브젝트 
         }
 
         eCharacterActionable = ECharacterActionable.Unactionable;
-    }
-    public CRedGolemStone InitDamageUIContainer() //새로 생성 시 한번만 호출
-    {
-        damageUIContainer.InitDamageUIContainer(transform, 20, damageUIPrefab);
-        return this;
     }
     public CRedGolemStone SetReference(Transform parent)
     {

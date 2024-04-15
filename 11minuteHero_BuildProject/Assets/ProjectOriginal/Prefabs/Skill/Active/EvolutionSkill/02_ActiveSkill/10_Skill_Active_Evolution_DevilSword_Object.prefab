@@ -19893,6 +19893,7 @@ MonoBehaviour:
   - {fileID: 3246602146289771046}
   - {fileID: 3246602144972861069}
   - {fileID: 3246602145459987555}
+  index: 24
 --- !u!1 &7861730492707258945
 GameObject:
   m_ObjectHideFlags: 0

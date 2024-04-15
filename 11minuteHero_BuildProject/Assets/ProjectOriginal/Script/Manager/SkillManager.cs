@@ -22,6 +22,7 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private List<SPassive> passiveSkillList = new List<SPassive>();
     public List<Skill> SelectedChoiceList { get => selectedChoiceList; }
     public List<SActive> ActiveSkillList { get => activeSkillList; set => activeSkillList = value; }
+    public List<Skill> InPossessionSkillList { get => inPossessionSkillList; set => inPossessionSkillList = value; }
 
     private void Start()
     {

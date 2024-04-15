@@ -1043,7 +1043,7 @@ GameObject:
   - component: {fileID: 5821135776235372858}
   - component: {fileID: 6679398268951887179}
   - component: {fileID: 6433486838181939578}
-  - component: {fileID: 3131216144744035966}
+  - component: {fileID: 7880322509324271186}
   m_Layer: 7
   m_Name: Monster_Spider_Green
   m_TagString: Monster
@@ -1132,7 +1132,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &3131216144744035966
+--- !u!114 &7880322509324271186
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1141,18 +1141,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5881256594797755318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df3519e99a00dbf4598dfc6592c6784a, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d437b61a5e387746aa2b78c68e07082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 50
-  speed: 1.8
+  maxHp: 100
+  speed: 2
   currentHp: 0
+  damageUIPrefab: {fileID: 9182912565010467780, guid: 3d13174112c6d8d4e9ac179922aec9cd,
+    type: 3}
   monsterState: 0
   damage: 10
   rewardExp: 10
   attackRange: 0.5
-  damageUIPrefab: {fileID: 9182912565010467780, guid: 3d13174112c6d8d4e9ac179922aec9cd,
-    type: 3}
 --- !u!1 &5881268190674856256
 GameObject:
   m_ObjectHideFlags: 0

@@ -17132,6 +17132,8 @@ MonoBehaviour:
   maxHp: 1000
   speed: 2
   currentHp: 0
+  damageUIPrefab: {fileID: 9182912565010467780, guid: 3d13174112c6d8d4e9ac179922aec9cd,
+    type: 3}
   bossAreaWidth: 50
   bossAreaHeight: 50
   bossAreaPrefab: {fileID: 7016737946596677984, guid: 408d202e34c9e8a4d9ac5c5eb2ca8c06,
@@ -17158,20 +17160,6 @@ MonoBehaviour:
       m_Bits: 64
   stonePrefab: {fileID: 18903384890475446, guid: a01e366ed1f40974abfa43ec615c4f91,
     type: 3}
-  hpEventEarthQuakeDecalList:
-  - {fileID: 3999508858315921809}
-  - {fileID: 8823138079018593563}
-  - {fileID: 5617672815512303514}
-  - {fileID: 6880002112628409512}
-  - {fileID: 8994198488404360737}
-  - {fileID: 6746762929835813770}
-  earthQuakeParticleList:
-  - {fileID: 5425088578306706195}
-  - {fileID: 9055045598452033760}
-  - {fileID: 3034052373130306955}
-  - {fileID: 8346399672003259564}
-  - {fileID: 7373952689864565711}
-  - {fileID: 8616548571362811363}
 --- !u!1 &6650333540463887087
 GameObject:
   m_ObjectHideFlags: 0

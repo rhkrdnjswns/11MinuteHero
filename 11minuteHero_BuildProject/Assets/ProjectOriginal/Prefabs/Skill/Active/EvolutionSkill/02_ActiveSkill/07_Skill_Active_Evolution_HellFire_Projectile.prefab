@@ -97547,5 +97547,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88648a33e42da844db136cd562446164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 21
   explosionParticle: {fileID: 3722294737987530193}
   fireBallObj: {fileID: 1975706875607185854}

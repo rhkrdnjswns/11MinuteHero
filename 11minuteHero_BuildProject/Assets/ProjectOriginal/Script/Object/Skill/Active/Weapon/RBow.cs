@@ -32,6 +32,9 @@ public class RBow : WRangedWeapon //궁수가 사용하는 무기. (09/25)액티브 스킬 제�
     }
     private void SummonArrow() //화살 쏘는 로직은 코루틴으로 작성하면 프레임 딜레이때문에 동시에 발사되지 않고, 플레이어가 회전하면 각도도 이상하게 나감
     {
+#if UNITY_EDITOR
+        AttackCount++;
+#endif
         float angleY = arrowAngle; //첫 화살의 각도
 
         for (int i = 0; i < rangedAttackUtility.ShotCount; i++) //화살 개수만큼 반복

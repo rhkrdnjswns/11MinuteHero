@@ -23,6 +23,7 @@ public class KShadowKnife : AKnife
     }
     protected override IEnumerator Co_ActiveSkillAction()
     {
+        WaitUntil bReturn = new WaitUntil(() => isReturn);
         while (true)
         {
             yield return null;
@@ -31,10 +32,15 @@ public class KShadowKnife : AKnife
             {
                 continue;
             }
+#if UNITY_EDITOR
+            AttackCount++;
+#endif
             int monsterIndex = Random.Range(0, inRadiusMonsterArray.Length);
             Projectile p = rangedAttackUtility.SummonProjectile();
             p.ShotProjectile(inRadiusMonsterArray[monsterIndex].transform);
-            yield return new WaitUntil(() => isReturn);
+
+            yield return bReturn;
+
             isReturn = false;
         }
     }

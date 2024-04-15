@@ -23,17 +23,21 @@ public class MRenotoros : AMagicShield
     }
     protected override IEnumerator Co_ActiveSkillAction()
     {
+        WaitUntil bReturn = new WaitUntil(() => returnCount == 2);
         while (true)
         {
-            yield return new WaitForSeconds(currentCoolTime);
+            yield return coolTimeDelay;
             ShotProjectile();
-            yield return new WaitUntil(() => returnCount == 2);
+            yield return bReturn;
         }
     }
     private void ShotProjectile()
     {
         Projectile p;
         returnCount = 0;
+#if UNITY_EDITOR
+        AttackCount++;
+#endif
         for (int i = 0; i < rangedAttackUtility.ShotCount; i++)
         {
             if (!rangedAttackUtility.IsValid()) rangedAttackUtility.CreateNewProjectile();

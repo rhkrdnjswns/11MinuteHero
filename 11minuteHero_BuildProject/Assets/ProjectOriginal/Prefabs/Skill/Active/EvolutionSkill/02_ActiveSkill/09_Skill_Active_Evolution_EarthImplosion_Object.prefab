@@ -58813,6 +58813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleSystem: {fileID: 5698893592897463119}
+  index: 23
 --- !u!1 &8000604520722705113
 GameObject:
   m_ObjectHideFlags: 0

@@ -238,7 +238,7 @@ public abstract class CPlayer : Character
     public void ChangeWeapon(AWeapon weapon)
     {
         StopCoroutine(attackCoroutine);
-        InGameManager.Instance.SkillManager.ActiveSkillList.Remove(this.weapon);
+        InGameManager.Instance.SkillManager.InPossessionSkillList.Remove(this.weapon);
         Destroy(this.weapon.gameObject);
         this.weapon = weapon;
 

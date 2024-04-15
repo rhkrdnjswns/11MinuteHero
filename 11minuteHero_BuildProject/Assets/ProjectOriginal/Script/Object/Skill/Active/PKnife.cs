@@ -9,6 +9,8 @@ public class PKnife : Projectile
     protected AttackRadiusUtility attackRadiusUtility; //ÆøÅº Æø¹ß ¹Ý°æ ÂüÁ¶
     protected Transform target;
     protected bool bFinding;
+
+    protected WaitUntil finding;
     public override void SetCount(int count)
     {
         bounceCount = count;
@@ -16,6 +18,7 @@ public class PKnife : Projectile
     public override void SetAttackRadiusUtility(AttackRadiusUtility attackRadiusUtility)
     {
         this.attackRadiusUtility = attackRadiusUtility;
+        finding = new WaitUntil(() => !bFinding);
     }
     public override void ShotProjectile(Transform target)
     {
@@ -28,16 +31,23 @@ public class PKnife : Projectile
     {
         while(true)
         {
-            if (bFinding) yield return new WaitUntil(() => !bFinding);
+            if(bFinding) yield return finding;
+
             transform.forward = ((target.position + Vector3.up * 0.5f) - transform.position).normalized;
             transform.position += transform.forward * rangedAttackUtility.ProjectileSpeed * Time.deltaTime;
+
             if(Vector3.Distance(transform.position, target.position + Vector3.up * 0.5f) < 0.5f)
             {
                 if (!target.GetComponent<Character>().IsDie)
                 {
                     target.GetComponent<Character>().Hit(rangedAttackUtility.ProjectileDamage);
+#if UNITY_EDITOR
+                    InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += rangedAttackUtility.ProjectileDamage;
+#endif
                 }
+
                 if (currentCount <= 0) rangedAttackUtility.ReturnProjectile(this);
+
                 FindNewTarget();
                 currentCount--;
             }

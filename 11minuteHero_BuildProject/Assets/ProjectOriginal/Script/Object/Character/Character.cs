@@ -11,7 +11,7 @@ public enum ECharacterActionable //캐릭터가 행동 가능한 상태인지 구분
     Actionable,
     Unactionable
 }
-public abstract class Character : MonoBehaviour //언리얼의 Character와 같은 역할. 플레이어, 몬스터의 부모 클래스
+public abstract class Character : MonoBehaviour //플레이어, 몬스터의 부모 클래스
 {
     [SerializeField] protected float maxHp; //최대 체력
     [SerializeField] protected float speed; //이동속도

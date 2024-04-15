@@ -14,9 +14,15 @@ public class PWarrior : CPlayer
 
     protected override IEnumerator Co_Attack()
     {
+        float timer;
         while (true)
         {
-            yield return new WaitForSeconds(weapon.CoolTime);
+            timer = 0;
+            while (timer < weapon.CoolTime)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
             if (!isDodge && eCharacterActionable == ECharacterActionable.Actionable)
             {
                 animator.SetTrigger(ConstDefine.TRIGGER_MELEE_ATTACK);

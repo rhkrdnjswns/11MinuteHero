@@ -10,6 +10,9 @@ public class PLionArrow : PPenetrationProjectile
         {
             other.GetComponent<Character>().Hit(rangedAttackUtility.ProjectileDamage); //Monster 클래스를 추출하여 데미지 연산
             currentCount--;
+#if UNITY_EDITOR
+            InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += rangedAttackUtility.ProjectileDamage;
+#endif
             InGameManager.Instance.Player.Weapon.SetSpeedUp();
 
             if (currentCount > 0) return;

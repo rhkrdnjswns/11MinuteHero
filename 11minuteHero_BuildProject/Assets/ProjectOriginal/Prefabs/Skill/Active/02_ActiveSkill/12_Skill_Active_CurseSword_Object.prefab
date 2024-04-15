@@ -54,6 +54,7 @@ MonoBehaviour:
   - {fileID: 1285809801013659393}
   - {fileID: 2780065386860838901}
   - {fileID: 2780065386891922617}
+  index: 9
 --- !u!1 &1285809801013659392
 GameObject:
   m_ObjectHideFlags: 0

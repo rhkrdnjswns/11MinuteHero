@@ -16,9 +16,14 @@ public class ASoulHarvest : AAurora
     {
         while (true)
         {
-            yield return new WaitForSeconds(currentCoolTime);
+            yield return coolTimeDelay;
             mainParticle.Play();
             killCount = attackRadiusUtility.GetKillCountAttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform.root), currentDamage);
+#if UNITY_EDITOR
+            AttackCount++;
+            int count = attackRadiusUtility.GetLayerInRadius(transform.root).Length;
+            TotalDamage += currentDamage * count;
+#endif
             InGameManager.Instance.Player.RecoverHp(recoverValue * killCount, EApplicableType.Value);
         }
     }

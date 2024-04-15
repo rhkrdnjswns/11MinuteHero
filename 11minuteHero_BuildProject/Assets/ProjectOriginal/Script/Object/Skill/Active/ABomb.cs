@@ -14,6 +14,8 @@ public class ABomb : AActiveSkill
     private float secondBaseDamage;
     protected bool bShotDone;
 
+    protected WaitForSeconds shotDelay;
+
     private float originRadius;
     protected override void Awake()
     {
@@ -23,6 +25,7 @@ public class ABomb : AActiveSkill
         rangedAttackUtility.CreateNewProjectile(bombAttackRadiusUtility);
         SetBombProjectile();
         secondBaseDamage = secondDamage;
+        shotDelay = new WaitForSeconds(shotInterval);
     }
     protected virtual void SetBombProjectile()
     {
@@ -61,11 +64,12 @@ public class ABomb : AActiveSkill
     }
     protected override IEnumerator Co_ActiveSkillAction()
     {
+        WaitUntil shotDone = new WaitUntil(() => bShotDone);
         while (true)
         {
-            yield return new WaitForSeconds(currentCoolTime);
+            yield return coolTimeDelay;
             StartCoroutine(Co_AttackInRadius());
-            yield return new WaitUntil(() => bShotDone);
+            yield return shotDone;
         }
     }
     protected virtual IEnumerator Co_AttackInRadius()
@@ -77,7 +81,10 @@ public class ABomb : AActiveSkill
             bShotDone = true;
             yield break;
         }
-
+#if UNITY_EDITOR
+        AttackCount++;
+#endif
+        
         int monsterIndex = Random.Range(0, inRadiusMonsterArray.Length);
         Transform t;
         Projectile p;
@@ -95,8 +102,8 @@ public class ABomb : AActiveSkill
             if (monsterIndex >= inRadiusMonsterArray.Length) monsterIndex = 0;
             
             if (i == rangedAttackUtility.ShotCount - 1) break;
-            
-            yield return new WaitForSeconds(shotInterval);
+
+            yield return shotDelay;
         }
         bShotDone = true;
     }

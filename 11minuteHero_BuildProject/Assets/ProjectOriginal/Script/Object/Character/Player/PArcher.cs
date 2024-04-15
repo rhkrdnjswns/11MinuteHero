@@ -6,9 +6,15 @@ public class PArcher : CPlayer
 {
     protected override IEnumerator Co_Attack()
     {
+        float timer = 0;
         while (true)
         {
-            yield return new WaitForSeconds(weapon.CoolTime);
+            timer = 0;
+            while (timer < weapon.CoolTime)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
             if (!isDodge && eCharacterActionable == ECharacterActionable.Actionable)
             {
                 weapon.Attack();

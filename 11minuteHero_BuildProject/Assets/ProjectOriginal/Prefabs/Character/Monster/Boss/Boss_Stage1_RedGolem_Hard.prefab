@@ -26930,6 +26930,8 @@ MonoBehaviour:
   maxHp: 6000
   speed: 3
   currentHp: 0
+  damageUIPrefab: {fileID: 9182912565010467780, guid: 3d13174112c6d8d4e9ac179922aec9cd,
+    type: 3}
   bossAreaWidth: 50
   bossAreaHeight: 50
   bossAreaPrefab: {fileID: 7016737946596677984, guid: 408d202e34c9e8a4d9ac5c5eb2ca8c06,
@@ -26957,6 +26959,10 @@ MonoBehaviour:
       m_Bits: 64
   stonePrefab: {fileID: 18903384890475446, guid: a01e366ed1f40974abfa43ec615c4f91,
     type: 3}
+  indestructibleStonePrefab: {fileID: 2052526799263781474, guid: e9f216d5ae621fc4abb39ad60820e20c,
+    type: 3}
+  earthQuakeStonePrefab: {fileID: 6464859794024432219, guid: 7589b29d2e4725f4abb2c5fde02cb4dc,
+    type: 3}
   hpEventEarthQuakeDecalList:
   - {fileID: 6836497375631397745}
   - {fileID: 6062450686248586752}
@@ -26971,10 +26977,6 @@ MonoBehaviour:
   - {fileID: 8131795715018572595}
   - {fileID: 1459158124241290367}
   - {fileID: 1357910140713836971}
-  indestructibleStonePrefab: {fileID: 2052526799263781474, guid: e9f216d5ae621fc4abb39ad60820e20c,
-    type: 3}
-  earthQuakeStonePrefab: {fileID: 6464859794024432219, guid: 7589b29d2e4725f4abb2c5fde02cb4dc,
-    type: 3}
 --- !u!1 &6650333540463887087
 GameObject:
   m_ObjectHideFlags: 0

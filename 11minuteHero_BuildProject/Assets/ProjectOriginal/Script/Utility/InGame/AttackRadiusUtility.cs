@@ -13,7 +13,7 @@ public class AttackRadiusUtility //반경 내에서 특정 레이어를 검사하는 기능을 가�
     [SerializeField] private LayerMask layerMask; //검출할 레이어
 
     private Character character;
-    private Monster monster;
+    private NormalMonster monster;
     public float Radius { get => radius; set => radius = value; }
     public Collider[] GetLayerInRadius(Transform transform) //transform.position에서 반경만큼 원을 그려 검출된 충돌체 배열로 반환
     {
@@ -46,7 +46,7 @@ public class AttackRadiusUtility //반경 내에서 특정 레이어를 검사하는 기능을 가�
             character = item.GetComponent<Character>();
             character?.Hit(damage);
 
-            monster = item.GetComponent<Monster>();
+            monster = item.GetComponent<NormalMonster>();
             if(monster != null) 
             {
                 if (eAttackType == EAttackType.Slow) //디버프 적용 부분은 싹 바꿔야할듯(인스턴스 생성 안하는 방향으로)

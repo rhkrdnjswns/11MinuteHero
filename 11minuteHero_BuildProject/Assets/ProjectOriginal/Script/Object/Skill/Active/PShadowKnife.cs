@@ -16,7 +16,7 @@ public class PShadowKnife : PKnife
     {
         while (true)
         {
-            if (bFinding) yield return new WaitUntil(() => !bFinding);
+            if (bFinding) yield return finding;
             transform.forward = ((target.position + Vector3.up * 0.5f) - transform.position).normalized;
             transform.position += transform.forward * rangedAttackUtility.ProjectileSpeed * Time.deltaTime;
             if (Vector3.Distance(transform.position, target.position + Vector3.up * 0.5f) < 0.5f)
@@ -31,6 +31,10 @@ public class PShadowKnife : PKnife
                 if (!target.GetComponent<Character>().IsDie)
                 {
                     target.GetComponent<Character>().Hit(rangedAttackUtility.ProjectileDamage);
+#if UNITY_EDITOR
+                    InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += rangedAttackUtility.ProjectileDamage;
+#endif
+
                 }
                 FindNewTarget();
             }

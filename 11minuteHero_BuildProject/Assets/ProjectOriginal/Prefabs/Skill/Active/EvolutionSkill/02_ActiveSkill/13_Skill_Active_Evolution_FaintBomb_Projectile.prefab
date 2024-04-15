@@ -29500,6 +29500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f16f8dfe8a8a1104d9cd04d1f60986f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 27
   bombObject: {fileID: 7817514774685906432}
   explosionParticle: {fileID: 7332516959427732497}
   projectileObj: {fileID: 7817514774685662312}

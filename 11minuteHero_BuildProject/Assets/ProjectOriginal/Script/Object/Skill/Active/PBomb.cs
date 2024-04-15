@@ -17,9 +17,12 @@ public class PBomb : Projectile
     protected AttackRadiusUtility attackRadiusUtility; //ÆøÅº Æø¹ß ¹Ý°æ ÂüÁ¶
 
     [SerializeField] protected Transform projectileObj;
+
+    protected WaitForSeconds coroutineEndDelay;
     public override void SetAttackRadiusUtility(AttackRadiusUtility attackRadiusUtility)
     {
         this.attackRadiusUtility = attackRadiusUtility;
+        coroutineEndDelay = new WaitForSeconds(1f);
     }
     public void SetAngle(float angle)
     {
@@ -60,9 +63,15 @@ public class PBomb : Projectile
         }
         bombObject.SetActive(false);
         transform.position += Vector3.down * 0.5f;
+
         explosionParticle.Play();
         attackRadiusUtility.AttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform), rangedAttackUtility.ProjectileDamage, EAttackType.Slow, 1f, 50f);
-        yield return new WaitForSeconds(1f);
+#if UNITY_EDITOR
+        int count = attackRadiusUtility.GetLayerInRadius(transform).Length;
+        InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += count * rangedAttackUtility.ProjectileDamage;
+#endif
+
+        yield return coroutineEndDelay;
         rangedAttackUtility.ReturnProjectile(this);
     }
 }
