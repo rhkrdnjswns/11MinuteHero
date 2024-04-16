@@ -31,7 +31,7 @@ public class InGameManager : MonoBehaviour
     private int killCount;
 
     public float Timer { get; private set; }
-
+    public bool bTimeStop { get; set; }
     public bool bAppearBoss { get; private set; }
 
     private EGameState gameState; //현재 게임 상태

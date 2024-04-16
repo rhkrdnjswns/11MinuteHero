@@ -6,9 +6,9 @@ public abstract class InteractiveItem : Item
 {
     protected override IEnumerator Co_ItemAnimation(Vector3 direction)
     {
-        if (anim != null)
+        if (upAndDownAnim != null)
         {
-            StopCoroutine(anim);
+            StopCoroutine(upAndDownAnim);
         }
         transform.position = new Vector3(transform.position.x, 0.3f, transform.position.z);
         direction.y = 0; //방향 벡터의 y값을 0으로 해서 y축 이동 제한

@@ -41,18 +41,19 @@ public class GrayscaleUtility : MonoBehaviour
     private IEnumerator Co_SetGrayscale(float time, float value)
     {
         float timer = 0;
-
+        InGameManager.Instance.bTimeStop = true;
         while (timer < time)
         {
             timer += Time.deltaTime;
             grayScale = Mathf.Lerp(0, value, timer / time);
             yield return null;
         }
+        InGameManager.Instance.bTimeStop = false;
     }
     private IEnumerator Co_SetGrayscale(float time, float fadeTime, float value)
     {
         float timer = 0;
-
+        InGameManager.Instance.bTimeStop = true;
         while (timer < fadeTime)
         {
             timer += Time.deltaTime;
@@ -71,5 +72,6 @@ public class GrayscaleUtility : MonoBehaviour
             grayScale = Mathf.Lerp(value, 0, timer / fadeTime);
             yield return null;
         }
+        InGameManager.Instance.bTimeStop = false;
     }
 }

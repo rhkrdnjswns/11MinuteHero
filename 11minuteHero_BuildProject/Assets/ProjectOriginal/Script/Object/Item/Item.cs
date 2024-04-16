@@ -5,10 +5,12 @@ using UnityEngine;
 public abstract class Item : MonoBehaviour
 {
     protected bool isGet; //획득한 아이템인지 체크
-    protected Coroutine anim; //코루틴 참조
+    protected Coroutine upAndDownAnim; //코루틴 참조
+    protected Coroutine stopAnim; //코루틴 참조
     [SerializeField] private EItemID itemID;
 
     private SpriteRenderer spriteRenderer;
+    private WaitUntil waitUntilTimeStopFalse;
     protected abstract void Interaction();
     private void Awake()
     {
@@ -20,7 +22,13 @@ public abstract class Item : MonoBehaviour
         gameObject.SetActive(true);
         isGet = false;
 
-        anim = StartCoroutine(TweeningUtility.UpAndDown(0.5f, 0.3f, transform)); //스태틱 코루틴을 열거자 변수로 참조 (코루틴 중단 기능을 사용하기 위해)
+        if (InGameManager.Instance.bTimeStop)
+        {
+            if(waitUntilTimeStopFalse == null) waitUntilTimeStopFalse = new WaitUntil(() => !InGameManager.Instance.bTimeStop);
+            StartCoroutine(Co_WaitUntilTimeStopFalse());
+            return;
+        }
+        upAndDownAnim = StartCoroutine(TweeningUtility.UpAndDown(0.5f, 0.3f, transform)); //스태틱 코루틴을 열거자 변수로 참조 (코루틴 중단 기능을 사용하기 위해)
     }
     protected void ReturnItem()
     {
@@ -28,9 +36,9 @@ public abstract class Item : MonoBehaviour
     }
     protected virtual IEnumerator Co_ItemAnimation(Vector3 direction)
     {
-        if(anim != null)
+        if(upAndDownAnim != null)
         {
-            StopCoroutine(anim);
+            StopCoroutine(upAndDownAnim);
         }
         transform.position = new Vector3(transform.position.x, 0.3f, transform.position.z);
         direction.y = 0; //방향 벡터의 y값을 0으로 해서 y축 이동 제한
@@ -50,21 +58,30 @@ public abstract class Item : MonoBehaviour
     }
     public void StopAnim(float time)
     {
-        StartCoroutine(Co_StopAnim(time));
+        if(stopAnim != null)
+        {
+            StopCoroutine(stopAnim);
+        }
+        stopAnim = StartCoroutine(Co_StopAnim(time));
+    }
+    private IEnumerator Co_WaitUntilTimeStopFalse()
+    {
+        yield return waitUntilTimeStopFalse;
+        upAndDownAnim = StartCoroutine(TweeningUtility.UpAndDown(0.5f, 0.3f, transform));
     }
     private IEnumerator Co_StopAnim(float time)
     {
-        if(anim != null)
+        if(upAndDownAnim != null)
         {
-            StopCoroutine(anim);
+            StopCoroutine(upAndDownAnim);
         }
         float timer = 0;
         while(timer < time)
         {
             timer += Time.deltaTime;
             yield return null;
-        }
-        if(!isGet) anim = StartCoroutine(TweeningUtility.UpAndDown(0.5f, 0.3f, transform));
+        }        
+        if(!isGet) upAndDownAnim = StartCoroutine(TweeningUtility.UpAndDown(0.5f, 0.3f, transform));
     }
     private void OnTriggerEnter(Collider other)
     {
