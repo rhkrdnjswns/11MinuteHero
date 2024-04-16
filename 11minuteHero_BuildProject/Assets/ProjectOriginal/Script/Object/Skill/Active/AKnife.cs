@@ -39,8 +39,8 @@ public class AKnife : AActiveSkill
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage;
-        rangedAttackUtility.SetDamage(currentDamage);
+        CurrentDamage = damage;
+        rangedAttackUtility.SetDamage(CurrentDamage);
     }
     protected override void UpdateSkillData()
     {

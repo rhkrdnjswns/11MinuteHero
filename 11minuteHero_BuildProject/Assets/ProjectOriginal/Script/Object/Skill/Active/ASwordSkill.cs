@@ -69,7 +69,7 @@ public class ASwordSkill : AActiveSkill
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage + secondDamage * level;
+        CurrentDamage = damage + secondDamage * level;
     }
     protected override void SetCurrentRange(float value)
     {
@@ -80,7 +80,7 @@ public class ASwordSkill : AActiveSkill
     private void ActivateSkill()
     {
         swordSkillObject.bEndRev = false;
-        swordSkillObject.ActivateSkill(transform, arrivalSecond, degree, currentDamage, attackInterval);
+        swordSkillObject.ActivateSkill(transform, arrivalSecond, degree, CurrentDamage, attackInterval);
     }
     protected override IEnumerator Co_ActiveSkillAction()
     {

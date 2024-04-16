@@ -4,12 +4,14 @@ using UnityEngine;
 
 public abstract class CPlayer : Character
 {
-    //[SerializeField] private Transform rendererBody;
+    private Coroutine invincibilityCoroutine;
+
     [SerializeField] private Renderer[] rendererArray; //머티리얼 깜빡이는 효과를 주기 위한 참조
 
     private int maxExp = 100; //요구 경험치
     private int currentExp; //현재 경험치
     private int level = 1; //레벨
+    private float dodgeCoolTime;
 
     [SerializeField] private float currentMaxHp; //현재 최대 체력
 
@@ -29,9 +31,6 @@ public abstract class CPlayer : Character
     private SphereCollider itemCollider; //아이템 획득 콜라이더
     private float itemGainRadius; //아이템 획득 콜라이더 반경
 
-    private BarImageUtility hpBar;  //플레이어 체력바
-    private BarImageUtility expBar; //플레이어 경험치바
-
     private IEnumerator attackCoroutine;
     private WaitForSeconds invincibleDelay = new WaitForSeconds(1f);
     public Vector3 Direction
@@ -45,6 +44,8 @@ public abstract class CPlayer : Character
     public int ExpGained { get => expGained; set => expGained = value; }
     public float DamageReduction { get => damageReduction; set => damageReduction = value; }
     public AWeapon Weapon { get => weapon; }
+    public float DodgeCoolTime { get => dodgeCoolTime; }
+
     protected abstract IEnumerator Co_Attack();
     protected abstract IEnumerator Co_Dodge();
 
@@ -57,21 +58,19 @@ public abstract class CPlayer : Character
         itemCollider = transform.Find(ConstDefine.NAME_ITEMGAINER).GetComponent<SphereCollider>();
         itemGainRadius = itemCollider.radius;
 
-        hpBar = GameObject.Find(ConstDefine.NAME_PLAYER_UI_HP).GetComponent<BarImageUtility>();
-        expBar = GameObject.Find(ConstDefine.NAME_PLAYER_UI_EXP).GetComponent<BarImageUtility>();
-
         GameObject obj = Instantiate(weaponPrefab);
         weapon = obj.GetComponent<AWeapon>();
         rendererArray = GetComponentsInChildren<Renderer>();
     }
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         weapon.InitSkill();
 
         transform.forward = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * -1; //정면으로 시점 변경
 
-        hpBar.SetFillAmount(currentHp);
-        expBar.SetFillAmount(0, level.ToString());
+        InGameManager.Instance.InGameBasicUIManager.PlayerHpBar.SetFillAmount(currentHp);
+        InGameManager.Instance.InGameBasicUIManager.PlayerExpBar.SetFillAmount(0, level.ToString());
 
         StartCoroutine(Co_Move());
         attackCoroutine = Co_Attack();
@@ -154,7 +153,7 @@ public abstract class CPlayer : Character
     private IEnumerator Co_Move()
     {
         WaitUntil dodgeEnd = new WaitUntil(() => !isDodge);
-        while (InGameManager.Instance.GameState != EGameState.GameOver)
+        while (true)
         {
             yield return null;
             if (isDodge) yield return dodgeEnd; //회피 중인 경우 회피 종료까지 대기
@@ -189,9 +188,9 @@ public abstract class CPlayer : Character
         if (currentHp < 0)
         {
             currentHp = 0;
-            InGameManager.Instance.GameState = EGameState.GameOver; //사망한 경우 게임 상태 게임오버로 변경
+            InGameManager.Instance.DGameOver(); //사망한 경우 게임 상태 게임오버로 변경
         }
-        hpBar.SetFillAmount(currentHp / currentMaxHp);
+        InGameManager.Instance.InGameBasicUIManager.PlayerHpBar.SetFillAmount(currentHp / currentMaxHp);
     }
     public void IncreaseExp(int value) //경험치 증가 함수
     {
@@ -201,21 +200,18 @@ public abstract class CPlayer : Character
             level++;
             currentExp -= maxExp;
             maxExp += 100 * (level - 1);
+            InGameManager.Instance.DLevelUp();
         }
-        if (expBar.gameObject.activeSelf)
+        if (InGameManager.Instance.InGameBasicUIManager.PlayerExpBar.gameObject.activeSelf)
         {
-            expBar.SetFillAmount((float)currentExp / (float)maxExp, level.ToString()); //경험치바 갱신 (fillAmount가 0~1 값이라 float로 형변환해야 함)
+            InGameManager.Instance.InGameBasicUIManager.PlayerExpBar.SetFillAmount((float)currentExp / (float)maxExp, level.ToString()); //경험치바 갱신 (fillAmount가 0~1 값이라 float로 형변환해야 함)
         }
     }
     public void RecoverHp(float value, EApplicableType type) //체력 회복 함수
     {
         currentHp += type == EApplicableType.Value ? value : currentMaxHp * value / 100;
         if (currentHp > currentMaxHp) currentHp = currentMaxHp;
-        hpBar.SetFillAmount(currentHp / currentMaxHp);
-    }
-    public void InActiveExpBar()
-    {
-        expBar.transform.parent.gameObject.SetActive(false);
+        InGameManager.Instance.InGameBasicUIManager.PlayerHpBar.SetFillAmount(currentHp / currentMaxHp);
     }
     public void IncreaseItemColliderRadius(float value)
     {
@@ -225,20 +221,35 @@ public abstract class CPlayer : Character
     {
         currentMaxHp += maxHp * value / 100;
         RecoverHp(maxHp * value / 100, EApplicableType.Value);
-        hpBar.SetFillAmount(currentHp / currentMaxHp);
+        InGameManager.Instance.InGameBasicUIManager.PlayerHpBar.SetFillAmount(currentHp / currentMaxHp);
+    }
+    public void IncreaseDamage(float value, EApplicableType type)
+    {
+        foreach (var item in InGameManager.Instance.SkillManager.InPossessionSkillList)
+        {
+            item.IncreaseAdditionalDamage(value, type);
+        }
+    }
+    public void DecreaseDamage(float value, EApplicableType type)
+    {
+        foreach (var item in InGameManager.Instance.SkillManager.InPossessionSkillList)
+        {
+            item.DecreaseAdditionalDamage();
+        }
     }
     public void IncreaseSpeed(float value, EApplicableType type)
     {
         currentSpeed += type == EApplicableType.Value ? value : speed * value / 100;
     }
-    public void DecreaseSpeed(float value)
+    public void DecreaseSpeed(float value, EApplicableType type)
     {
-        currentSpeed -= value;
+        currentSpeed -= type == EApplicableType.Value ? value : speed * value / 100;
     }
     public void ChangeWeapon(AWeapon weapon)
     {
         StopCoroutine(attackCoroutine);
         InGameManager.Instance.SkillManager.InPossessionSkillList.Remove(this.weapon);
+        InGameManager.Instance.SkillManager.ActiveSkillList.Remove(this.weapon);
         Destroy(this.weapon.gameObject);
         this.weapon = weapon;
 
@@ -251,12 +262,38 @@ public abstract class CPlayer : Character
     {
         if (isDodge) return;
         base.KnockBack(speed, duration);
-        //rigidbody.velocity = Vector3.zero;
     }
     public override void KnockBack(float speed, float duration, Vector3 direction) //임의의 방향으로의 넉백 함수
     {
         if (isDodge) return;
         base.KnockBack(speed, duration, direction);
-        //rigidbody.velocity = Vector3.zero;
+    }
+    public void SetInvincibility(float speedValue, float damagePercentage, float duration, EApplicableType speedApplicableType, EApplicableType damageApplicableType)
+    {
+        if(invincibilityCoroutine != null)
+        {
+            StopCoroutine(invincibilityCoroutine);
+
+            DecreaseSpeed(speedValue, speedApplicableType);
+            DecreaseDamage(damagePercentage, damageApplicableType);
+        }
+        invincibilityCoroutine = StartCoroutine(Co_SetInvincibility(speedValue, damagePercentage, duration, speedApplicableType, damageApplicableType));
+    }
+    private IEnumerator Co_SetInvincibility(float speedValue, float damagePercentage, float duration, EApplicableType speedApplicableType, EApplicableType damageApplicableType)
+    {
+        isInvincible = true;
+        IncreaseSpeed(speedValue, speedApplicableType);
+        IncreaseDamage(damagePercentage, damageApplicableType);
+
+        float timer = 0;
+        while(timer < duration)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        DecreaseSpeed(speedValue, speedApplicableType);
+        DecreaseDamage(damagePercentage, damageApplicableType);
+        isInvincible = false;
     }
 }

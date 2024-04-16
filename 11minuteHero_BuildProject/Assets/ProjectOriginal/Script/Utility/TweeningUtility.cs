@@ -90,6 +90,19 @@ public class TweeningUtility //트위닝 코루틴의 시간 체크는 Time.unscaledDeltaTim
             yield return null;
         }
     }
+    public static IEnumerator FadeIn(float time, float targetAlpha, Image image)
+    {
+        float timer = 0;
+        float alpha = 0;
+        while (timer < time)
+        {
+            timer += Time.unscaledDeltaTime;
+            alpha = timer;
+            if (alpha > targetAlpha) alpha = targetAlpha;
+            image.color = new Color(image.color.r, image.color.g, image.color.b, alpha / time);
+            yield return null;
+        }
+    }
     public static IEnumerator FadeIn(float time, Text text)
     {
         float timer = 0;
@@ -97,6 +110,16 @@ public class TweeningUtility //트위닝 코루틴의 시간 체크는 Time.unscaledDeltaTim
         {
             timer += Time.unscaledDeltaTime;
             text.color = new Color(text.color.r, text.color.g, text.color.b, timer / time);
+            yield return null;
+        }
+    }
+    public static IEnumerator FadeIn(float time, SpriteRenderer spriteRenderer)
+    {
+        float timer = 0;
+        while (timer < time)
+        {
+            timer += Time.unscaledDeltaTime;
+            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, timer / time);
             yield return null;
         }
     }
@@ -142,7 +165,18 @@ public class TweeningUtility //트위닝 코루틴의 시간 체크는 Time.unscaledDeltaTim
             yield return null;
         }
     }
-    public static IEnumerator ReduceFontSize(float time, Text text, int originSize, int targetSize)
+    public static IEnumerator Up(float time, float velocity, RectTransform transform)
+    {
+        float timer = 0;
+        while(timer < time)
+        {
+            timer += Time.unscaledDeltaTime;
+            transform.anchoredPosition += Vector2.up * velocity * Time.unscaledDeltaTime;
+          //  transform.position += Vector3.up * velocity * Time.unscaledDeltaTime;
+            yield return null;
+        }
+    }
+    public static IEnumerator SetFontSize(float time, Text text, int originSize, int targetSize)
     {
         float timer = time;
         while (timer > 0)

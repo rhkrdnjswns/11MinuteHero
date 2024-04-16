@@ -30,6 +30,7 @@ public class SkillManager : MonoBehaviour
         allSkillList.Add(inPossessionSkillList[0]);
         activeSkillList.Add(inPossessionSkillList[0].GetComponent<SActive>());
         InitGimmickList();
+        InGameManager.Instance.DLevelUp += MixSkillOptions;
         //StartCoroutine(Co_SuffleGimmick());
     }
     private void Update()
@@ -177,7 +178,7 @@ public class SkillManager : MonoBehaviour
                 //보유중이지 않은 스킬 인덱스 리스트에서 방금 선택된 인덱스 제거 (중복 방지를 위한 처리)
                 unPossessionIndexList.Remove(rand);
             }
-            skillChoicePopUp.SetSkillChoicePopUp();
+            StartCoroutine(skillChoicePopUp.Co_SetSkillChoicePopUp());
             return;
         }
 
@@ -197,7 +198,7 @@ public class SkillManager : MonoBehaviour
                 selectedChoiceList.Add(evolutionSkillList[rand]);
                 evolutionIndexList.Remove(rand);
             }
-            skillChoicePopUp.SetSkillChoicePopUp();
+            StartCoroutine(skillChoicePopUp.Co_SetSkillChoicePopUp());
             return; //함수 종료
         }
         currentSelectCount -= evolutionIndexList.Count; //진화 가능한 스킬의 개수만큼을 선택지 개수에서 빼줌
@@ -261,7 +262,7 @@ public class SkillManager : MonoBehaviour
             }
         }
 
-        skillChoicePopUp.SetSkillChoicePopUp();
+        StartCoroutine(skillChoicePopUp.Co_SetSkillChoicePopUp());
     }
     private int GetRandomIndexByLevel(List<int> refList) //보유 스킬 리스트의 랜덤 인덱스 반환
     {

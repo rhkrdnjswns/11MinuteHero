@@ -6,6 +6,6 @@ public class SDevilSword : ASwordSkill
 {
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage;
+        CurrentDamage = damage;
     }
 }

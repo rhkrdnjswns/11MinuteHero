@@ -91,6 +91,14 @@ public abstract class Skill : MonoBehaviour //무기, 패시브, 액티브 스킬 등 모든 
 
         gameObject.SetActive(true);
     }
+    public virtual void IncreaseAdditionalDamage(float value, EApplicableType eApplicableType)
+    {
+        //Only Active
+    }
+    public virtual void DecreaseAdditionalDamage()
+    {
+        //Only Active;
+    }
     protected abstract void UpdateSkillData();
     public abstract void SetEvlotionCondition();
 }

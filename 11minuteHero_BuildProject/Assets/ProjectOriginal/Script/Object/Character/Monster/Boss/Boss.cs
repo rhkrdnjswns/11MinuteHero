@@ -18,6 +18,7 @@ public abstract class Boss : Monster
     private int hpEventIndex;
     protected bool bHpEvent;
 
+    public bool IsActivate { get; private set; }
     protected GameObject modelObject;
     protected abstract void PlayHpEvent(int index);
     protected abstract void InitBehaviorTree();
@@ -37,6 +38,7 @@ public abstract class Boss : Monster
         cameraUtility = Camera.main.GetComponent<CameraUtility>();
         InitBehaviorTree();
         StartCoroutine(Co_ExcuteBehaviorTree());
+        IsActivate = true;
     }
     public void CreateBossArea()
     {

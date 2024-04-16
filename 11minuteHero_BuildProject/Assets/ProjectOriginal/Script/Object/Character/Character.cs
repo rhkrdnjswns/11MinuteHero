@@ -42,6 +42,10 @@ public abstract class Character : MonoBehaviour //플레이어, 몬스터의 부모 클래스
         animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody>();
     }
+    protected virtual void Start()
+    {
+        InGameManager.Instance.DGameOver += StopAllCoroutines;
+    }
     protected virtual void DecreaseHp(float value) //체력 감소
     {
         currentHp -= value;
@@ -81,7 +85,12 @@ public abstract class Character : MonoBehaviour //플레이어, 몬스터의 부모 클래스
     {
         rigidbody.velocity = transform.forward * -1 * speed;
 
-        yield return new WaitForSeconds(duration); //경직 처리
+        float timer = 0;
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
         rigidbody.velocity = Vector3.zero;
 
         IsKnockBack = false;
@@ -91,7 +100,12 @@ public abstract class Character : MonoBehaviour //플레이어, 몬스터의 부모 클래스
     {
         rigidbody.velocity = direction * speed;
 
-        yield return new WaitForSeconds(duration); //경직 처리
+        float timer = 0;
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
         rigidbody.velocity = Vector3.zero;
 
         IsKnockBack = false;

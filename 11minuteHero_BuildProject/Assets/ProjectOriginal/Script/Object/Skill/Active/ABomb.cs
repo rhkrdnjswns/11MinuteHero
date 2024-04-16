@@ -54,8 +54,8 @@ public class ABomb : AActiveSkill
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage + secondDamage * level;
-        rangedAttackUtility.SetDamage(currentDamage);
+        CurrentDamage = damage + secondDamage * level;
+        rangedAttackUtility.SetDamage(CurrentDamage);
     }
     protected override void SetCurrentRange(float value)
     {

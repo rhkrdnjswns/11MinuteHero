@@ -46,8 +46,8 @@ public class ABattleBluntWeapon : AActiveSkill //전투망치와 전투도끼 클래스
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage * level;
-        rangedAttackUtility.SetDamage(currentDamage);
+        CurrentDamage = damage * level;
+        rangedAttackUtility.SetDamage(CurrentDamage);
     }
     protected override void SetCurrentRange(float value)
     {

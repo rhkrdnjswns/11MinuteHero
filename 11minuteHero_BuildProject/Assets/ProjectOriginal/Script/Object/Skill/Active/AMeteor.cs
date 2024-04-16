@@ -45,7 +45,7 @@ public class AMeteor : AActiveSkill //메테오 스킬 클래스
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage * level;
+        CurrentDamage = damage * level;
     }
     protected override void SetCurrentRange(float value)
     {
@@ -73,7 +73,7 @@ public class AMeteor : AActiveSkill //메테오 스킬 클래스
             m.transform.SetParent(null);
             m.transform.position = GetRandomPos(); //반경 내 랜덤한 몬스터 위치로 설정
 
-            m.ActivateSkill(transform, meteorQueue, currentDamage); //메테오 소환
+            m.ActivateSkill(transform, meteorQueue, CurrentDamage); //메테오 소환
             if (i < meteorCount - 1) yield return summonDelay; //마지막 메테오 소환 시에는 텀 없게하기
         }
         bActionDone = true;

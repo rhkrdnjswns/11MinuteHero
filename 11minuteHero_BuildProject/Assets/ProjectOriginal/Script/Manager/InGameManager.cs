@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
-using UnityEngine.UI; //Test
 
 public enum EGameState //인게임 상태 체크. GameOver면 모든 코루틴 작동 정지함.
 {
@@ -21,21 +19,16 @@ public class InGameManager : MonoBehaviour
                                                                               //[SerializeField] private CustomPriorityQueue<Monster> monster
     private SkillManager skillManager;
     private BossUIManager bossUIManager;
+    private InGameBasicUIManager inGameBasicUIManager;
+    private ItemManager itemManager;
 
     [SerializeField] private GameObject[] bossPrefabArray;
 
     private Boss currentBoss;
     private CameraUtility cameraUtility;
+    private GrayscaleUtility grayscaleUtility;
 
     private int killCount;
-
-    #region --Test--
-    public Text timerHourText;
-    public Text timerMinuteText;
-    public Text killCountText;
-
-    public Image fade;
-    #endregion
 
     public float Timer { get; private set; }
 
@@ -48,26 +41,15 @@ public class InGameManager : MonoBehaviour
     public static InGameManager Instance { get => instance; }
     public CPlayer Player { get => player; }
     public List<NormalMonster> MonsterList { get => monsterList; set => monsterList = value; }
-    public EGameState GameState
-    { //게임 스테이트가 GameOver가 되면 gameOver 델리게이트 호출. GameOver가 되는 경우는 플레이어 hp가 0이 되는 경우밖에 없음
-        get
-        {
-            return gameState;
-        }
-        set
-        {
-            gameState = value;
-            if (gameState == EGameState.GameOver) dGameOver();
-        }
-    }
+    public EGameState GameState { get; }
 
     public delegate void LevelUpEvent(); // 플레이어 레벨업 시 발생하는 이벤트들의 트리거 작용을 할 델리게이트 정의
 
-    public delegate void StopAllCoroutinesWhenGameOver(); //게임오버 시 모든 코루틴 정지를 위한 델리게이트 정의
+    public delegate void GameOverEvent(); //게임오버 시 모든 코루틴 정지를 위한 델리게이트 정의
 
-    private StopAllCoroutinesWhenGameOver dGameOver; //코루틴을 사용하는 인게임 클래스에서 델리게이트 체인을 통해 해당 델리게이트에 StopAllCoroutines 함수 추가.
+    private GameOverEvent dGameOver; //코루틴을 사용하는 인게임 클래스에서 델리게이트 체인을 통해 해당 델리게이트에 StopAllCoroutines 함수 추가.
     private LevelUpEvent dLevelUp; //레벨업 시 발생하는 모든 이벤트 함수를 해당 델리게이트에 추가
-    public StopAllCoroutinesWhenGameOver DGameOver { get => dGameOver; set => dGameOver = value; }
+    public GameOverEvent DGameOver { get => dGameOver; set => dGameOver = value; }
     public LevelUpEvent DLevelUp { get => dLevelUp; set => dLevelUp = value; }
     public MonsterPool MonsterPool { get => monsterPool; }
 
@@ -81,13 +63,15 @@ public class InGameManager : MonoBehaviour
         set
         {
             killCount = value;
-            killCountText.text = killCount.ToString();
+            inGameBasicUIManager.KillCountText.text = killCount.ToString();
         }
     }
-
     public SkillManager SkillManager { get => skillManager; }
-
     public BossUIManager BossUIManager { get => bossUIManager; }
+    public InGameBasicUIManager InGameBasicUIManager { get => inGameBasicUIManager; }
+    public ItemManager ItemManager { get => itemManager; }
+    public GrayscaleUtility GrayscaleUtility { get => grayscaleUtility; }
+
     private void Awake() //싱글턴으로 인스턴스화. 인게임 내에서는 씬전환이 일어나지 않기 때문에 인게임 씬 로드 시에만 this로 초기화 해주면 됨.
     {
         instance = this;
@@ -98,9 +82,11 @@ public class InGameManager : MonoBehaviour
         GameObject obj = Instantiate(playerCharacterArray[characterIndex]); //캐릭터 생성 후 참조를 가져옴
         player = obj.GetComponent<CPlayer>();
         monsterPool = FindObjectOfType<MonsterPool>();
-        skillManager = FindObjectOfType<SkillManager>();
 
+        skillManager = FindObjectOfType<SkillManager>();
         bossUIManager = FindObjectOfType<BossUIManager>();
+        inGameBasicUIManager = FindObjectOfType<InGameBasicUIManager>();
+        itemManager = FindObjectOfType<ItemManager>();
 
         // * 스테이지마다 인덱스 다르게 적용해야함
         GameObject boss = Instantiate(bossPrefabArray[0]);
@@ -109,8 +95,7 @@ public class InGameManager : MonoBehaviour
         boss.SetActive(false);
 
         cameraUtility = Camera.main.GetComponent<CameraUtility>();
-
-        StartCoroutine(TweeningUtility.FadeOut(2f, fade));
+        grayscaleUtility = Camera.main.GetComponent<GrayscaleUtility>();
     }
     //아래 로직은 전부 테스트 (09/25)
     private void Start()
@@ -121,13 +106,18 @@ public class InGameManager : MonoBehaviour
     }
     private IEnumerator Co_Timer()
     {
-        while (gameState != EGameState.GameOver)
+        while (gameState != EGameState.GameOver || !bAppearBoss)
         {        
             Timer += Time.deltaTime;
 
-            timerHourText.text = ((int)Timer / 60).ToString();
-            timerMinuteText.text = ((int)Timer % 60).ToString();
+            inGameBasicUIManager.TimerHourText.text = ((int)Timer / 60).ToString();
+            inGameBasicUIManager.TimerMinuteText.text = ((int)Timer % 60).ToString();
             yield return null;
+        }
+        if(bAppearBoss)
+        {
+            inGameBasicUIManager.TimerHourText.text = "11";
+            inGameBasicUIManager.TimerMinuteText.text = "0";
         }
     }
     private void GameOverDebug()
@@ -148,7 +138,7 @@ public class InGameManager : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.C))
         {
-            StartCoroutine(cameraUtility.Co_ShakeCam(0.2f, 1, 0.1f));
+            dLevelUp();
         }
     }
     public void IncreaseKillCount()
@@ -158,9 +148,6 @@ public class InGameManager : MonoBehaviour
     public IEnumerator Co_AppearBoss()
     {
         bAppearBoss = true;
-        //몹 생성 정지 -> 몬스터스포너
-
-        //타이머 정지 -> 인게임매니저
 
         //보스 UI 출력 -> 보스UI매니저
         StartCoroutine(bossUIManager.Co_AppearBoss());
@@ -172,7 +159,7 @@ public class InGameManager : MonoBehaviour
         yield return StartCoroutine(cameraUtility.Co_FocusCam(2.5f, player.transform.position, currentBoss.transform.position)); //카메라 이동
 
         //보스 체력바 활성화, 보스 오브젝트 활성화
-        player.InActiveExpBar();
+        inGameBasicUIManager.InActiveExpBar();
         bossUIManager.ActiveBossHpBar();
         currentBoss.gameObject.SetActive(true);
 

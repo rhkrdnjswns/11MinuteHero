@@ -14,7 +14,7 @@ public class SMagicMissile : RStaff
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage;
-        rangedAttackUtility.SetDamage(currentDamage);
+        CurrentDamage = damage;
+        rangedAttackUtility.SetDamage(CurrentDamage);
     }
 }

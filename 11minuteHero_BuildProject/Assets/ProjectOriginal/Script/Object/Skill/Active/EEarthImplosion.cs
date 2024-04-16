@@ -6,6 +6,6 @@ public class EEarthImplosion : AEarthSpell
 {
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage;
+        CurrentDamage = damage;
     }
 }

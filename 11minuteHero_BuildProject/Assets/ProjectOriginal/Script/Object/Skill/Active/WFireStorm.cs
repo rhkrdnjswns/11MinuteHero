@@ -11,7 +11,7 @@ public class WFireStorm : AWisp
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage;
+        CurrentDamage = damage;
     }
     protected override void SetCurrentRange(float value)
     {

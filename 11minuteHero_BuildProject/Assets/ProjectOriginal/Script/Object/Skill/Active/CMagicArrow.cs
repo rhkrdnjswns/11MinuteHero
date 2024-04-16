@@ -6,7 +6,7 @@ public class CMagicArrow : ACrystalStaff
 {
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage;
-        rangedAttackUtility.SetDamage(currentDamage);
+        CurrentDamage = damage;
+        rangedAttackUtility.SetDamage(CurrentDamage);
     }
 }

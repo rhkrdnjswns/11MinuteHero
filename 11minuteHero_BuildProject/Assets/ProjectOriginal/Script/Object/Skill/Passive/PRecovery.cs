@@ -10,7 +10,6 @@ public class PRecovery : SPassive //체력 재생 패시브 스킬
     {
         base.InitSkill();
         StartCoroutine(Co_Recovery());
-        InGameManager.Instance.DGameOver += StopAllCoroutines; //게임오버 델리게이트에 이벤트 추가
         description = $"초당 최대 체력의 {recoveryPercentage + 0.25f}%를 회복합니다.";
     }
     protected override void UpdateSkillData()

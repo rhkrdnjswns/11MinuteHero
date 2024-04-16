@@ -18,8 +18,8 @@ public class MRenotoros : AMagicShield
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage;
-        rangedAttackUtility.SetDamage(currentDamage);
+        CurrentDamage = damage;
+        rangedAttackUtility.SetDamage(CurrentDamage);
     }
     protected override IEnumerator Co_ActiveSkillAction()
     {

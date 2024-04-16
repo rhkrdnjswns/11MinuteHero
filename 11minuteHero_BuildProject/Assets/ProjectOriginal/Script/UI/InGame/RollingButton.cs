@@ -7,6 +7,10 @@ public class RollingButton : ButtonComponent
     [SerializeField] private Image coolTimeImage;
     [SerializeField] private float coolTime;
     private bool bCoolTime;
+    private void Start()
+    {
+        coolTime = InGameManager.Instance.Player.DodgeCoolTime;
+    }
     protected override void BtnEvt()
     {
         if (bCoolTime) return;

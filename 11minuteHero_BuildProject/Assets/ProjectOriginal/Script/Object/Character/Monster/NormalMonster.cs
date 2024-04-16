@@ -11,10 +11,11 @@ public class NormalMonster : Monster
         Attack
     }
 
+    private Coroutine stiffnessCoroutine;
+
     [SerializeField] protected EMonsterState monsterState;
     [SerializeField] protected float damage; //데미지
 
-    [SerializeField] private int rewardExp;
     [SerializeField] private float attackRange;
 
     protected SphereCollider overlappingAvoider; //몬스터 겹침 방지 콜라이더
@@ -27,6 +28,7 @@ public class NormalMonster : Monster
 
     private WaitForSeconds dieAnimDelay;
 
+    private bool isStiffness;
     public float DistToPlayer { get => distToPlayer; }
     public DebuffList DebuffList { get => debuffList; set => debuffList = value; }
     public int ReturnIndex { set => returnIndex = value; }
@@ -57,6 +59,10 @@ public class NormalMonster : Monster
         overlappingAvoider = transform.Find("OverlappingAvoider").GetComponent<SphereCollider>();
         boxCollider = GetComponent<BoxCollider>();
     }
+    protected override void Start()
+    {
+        base.Start();
+    }
     public void ResetMonster() //몬스터 생성 시 초기화
     {
         currentHp = maxHp;
@@ -85,7 +91,12 @@ public class NormalMonster : Monster
     {
         rigidbody.velocity = transform.forward * -1 * speed;
 
-        yield return new WaitForSeconds(duration); //경직 처리
+        float timer = 0;
+        while(timer < duration)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
         rigidbody.velocity = Vector3.zero;
         overlappingAvoider.enabled = true;
 
@@ -96,7 +107,12 @@ public class NormalMonster : Monster
     {
         rigidbody.velocity = direction * speed;
 
-        yield return new WaitForSeconds(duration); //경직 처리
+        float timer = 0;
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
         rigidbody.velocity = Vector3.zero;
         overlappingAvoider.enabled = true;
 
@@ -116,24 +132,27 @@ public class NormalMonster : Monster
         }
     }
     private IEnumerator Co_DieEvent() //사망 효과 코루틴
-    {
+    { 
         IsDie = true; //상호작용 하지 않게 처리
         overlappingAvoider.enabled = false;
         boxCollider.enabled = false;
 
         animator.SetTrigger(ConstDefine.TRIGGER_DIE); //사망 애니메이션
-        InGameManager.Instance.Player.IncreaseExp(rewardExp); //사망 애니메이션과 같이 플레이어 경험치 증가
         InGameManager.Instance.KillCount++; //킬카운트 1 증가
 
-        if (dieAnimDelay == null) dieAnimDelay = new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-        yield return dieAnimDelay;//애니메이션 재생 시간만큼 딜레이
+        InGameManager.Instance.ItemManager.GetItem(transform.position, GetItemIDByWeight());
 
         while (transform.position.y > -1.5) //몬스터가 땅 밑으로 사라지는 효과
         {
             transform.position += Vector3.down * 1 * Time.deltaTime;
             yield return null;
         }
-        InGameManager.Instance.MonsterPool.ReturnMonster(this, returnIndex); //몬스터 풀로 되돌림     
+
+        if (dieAnimDelay == null) dieAnimDelay = new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        yield return dieAnimDelay;//애니메이션 재생 시간만큼 딜레이
+        InGameManager.Instance.MonsterPool.ReturnMonster(this, returnIndex); //몬스터 풀로 되돌림   
+
+        InGameManager.Instance.MonsterList.Remove(this);
     }
     protected override bool Move()
     {
@@ -164,9 +183,38 @@ public class NormalMonster : Monster
      */
     private void OnTriggerStay(Collider other) //플레이어와의 충돌 체크
     {
+        if (isStiffness) return;
         if (other.CompareTag(ConstDefine.TAG_PLAYER))
         {
             InGameManager.Instance.Player.Hit(damage);
         }
+    }
+    public void SetStiffness(float sec)
+    {
+        isStiffness = true;
+        eCharacterActionable = ECharacterActionable.Unactionable;
+        animator.enabled = false;
+
+        if(stiffnessCoroutine != null)
+        {
+            StopCoroutine(stiffnessCoroutine);
+        }
+        stiffnessCoroutine = StartCoroutine(Co_Stiffness(sec));
+    }
+    private IEnumerator Co_Stiffness(float sec)
+    {
+        float timer = 0;
+        while(timer < sec)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        animator.enabled = true;
+        isStiffness = false;
+        eCharacterActionable = ECharacterActionable.Actionable;
+    }
+    private EItemID GetItemIDByWeight()
+    {
+        return EItemID.Clock;
     }
 }

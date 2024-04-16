@@ -53,7 +53,7 @@ public class AEarthSpell : AActiveSkill //대지의 마법서 스킬 클래스
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage + secondDamage * level;
+        CurrentDamage = damage + secondDamage * level;
     }
     protected override void SetCurrentRange(float value)
     {
@@ -70,7 +70,7 @@ public class AEarthSpell : AActiveSkill //대지의 마법서 스킬 클래스
             yield return coolTimeDelay;
             var e = earthSpellQueue.Dequeue();
             e.transform.SetParent(null);
-            e.ActivateSkill(transform, earthSpellQueue, currentDamage, slowDuration, slowPercentage);
+            e.ActivateSkill(transform, earthSpellQueue, CurrentDamage, slowDuration, slowPercentage);
 #if UNITY_EDITOR
             AttackCount++;
 #endif

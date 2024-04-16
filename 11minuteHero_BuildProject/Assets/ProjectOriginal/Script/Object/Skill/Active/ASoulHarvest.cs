@@ -10,7 +10,7 @@ public class ASoulHarvest : AAurora
     private int killCount;
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage;
+        CurrentDamage = damage;
     }
     protected override IEnumerator Co_ActiveSkillAction() //스킬 기능 코루틴
     {
@@ -18,11 +18,11 @@ public class ASoulHarvest : AAurora
         {
             yield return coolTimeDelay;
             mainParticle.Play();
-            killCount = attackRadiusUtility.GetKillCountAttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform.root), currentDamage);
+            killCount = attackRadiusUtility.GetKillCountAttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform.root), CurrentDamage);
 #if UNITY_EDITOR
             AttackCount++;
             int count = attackRadiusUtility.GetLayerInRadius(transform.root).Length;
-            TotalDamage += currentDamage * count;
+            TotalDamage += CurrentDamage * count;
 #endif
             InGameManager.Instance.Player.RecoverHp(recoverValue * killCount, EApplicableType.Value);
         }

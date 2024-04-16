@@ -23,8 +23,8 @@ public class FHellFire : AFireBall
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage;
-        rangedAttackUtility.SetDamage(currentDamage);
+        CurrentDamage = damage;
+        rangedAttackUtility.SetDamage(CurrentDamage);
         foreach (var item in rangedAttackUtility.AllProjectileList)
         {
             item.GetComponent<PHellFire>().SetExplosionDamage(explosionDamage);

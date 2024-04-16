@@ -44,10 +44,10 @@ public class AWisp : AActiveSkill //도깨비불 스킬 클래스
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage + secondDamage * level;
+        CurrentDamage = damage + secondDamage * level;
         foreach (var item in wispList)
         {
-            item.SetDamage(currentDamage);
+            item.SetDamage(CurrentDamage);
         }
     }
     protected override void SetCurrentRange(float value)
@@ -76,7 +76,7 @@ public class AWisp : AActiveSkill //도깨비불 스킬 클래스
             wispList[i].transform.localPosition = angleDirection.normalized * distanceToPlayer;
 
             wispList[i].gameObject.SetActive(true);
-            wispList[i].SetWsip(currentDamage);
+            wispList[i].SetWsip(CurrentDamage);
             yield return null;
         }
     }

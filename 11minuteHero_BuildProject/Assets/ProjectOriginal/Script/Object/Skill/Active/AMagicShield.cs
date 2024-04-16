@@ -31,8 +31,8 @@ public class AMagicShield : AActiveSkill
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage * level;
-        rangedAttackUtility.SetDamage(currentDamage);
+        CurrentDamage = damage * level;
+        rangedAttackUtility.SetDamage(CurrentDamage);
     }
     protected override void SetCurrentRange(float value)
     {

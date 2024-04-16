@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4771983348386073671
 RectTransform:
   m_ObjectHideFlags: 0
@@ -119,6 +119,7 @@ MonoBehaviour:
   - {fileID: 4647108136929120901}
   - {fileID: 4647108137984057369}
   fadeDuration: 1
+  backgroundImage: {fileID: 4771983349624610226}
 --- !u!225 &4771983348386073677
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -305,14 +306,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.6666667}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -431,12 +432,17 @@ PrefabInstance:
     - target: {fileID: 3463767204994255235, guid: 59be64352b546ed4a90e68136233538a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -15.02
+      value: -15.020004
       objectReference: {fileID: 0}
     - target: {fileID: 5642308755366108330, guid: 59be64352b546ed4a90e68136233538a,
         type: 3}
       propertyPath: m_Name
       value: Button_SkillChoice
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642308755366108330, guid: 59be64352b546ed4a90e68136233538a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5642308755366108373, guid: 59be64352b546ed4a90e68136233538a,
         type: 3}
@@ -593,12 +599,17 @@ PrefabInstance:
     - target: {fileID: 3463767204994255235, guid: 59be64352b546ed4a90e68136233538a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -15.02
+      value: -15.020004
       objectReference: {fileID: 0}
     - target: {fileID: 5642308755366108330, guid: 59be64352b546ed4a90e68136233538a,
         type: 3}
       propertyPath: m_Name
       value: Button_SkillChoice
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642308755366108330, guid: 59be64352b546ed4a90e68136233538a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5642308755366108373, guid: 59be64352b546ed4a90e68136233538a,
         type: 3}
@@ -755,12 +766,17 @@ PrefabInstance:
     - target: {fileID: 3463767204994255235, guid: 59be64352b546ed4a90e68136233538a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -15.02
+      value: -15.020004
       objectReference: {fileID: 0}
     - target: {fileID: 5642308755366108330, guid: 59be64352b546ed4a90e68136233538a,
         type: 3}
       propertyPath: m_Name
       value: Button_SkillChoice
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642308755366108330, guid: 59be64352b546ed4a90e68136233538a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5642308755366108373, guid: 59be64352b546ed4a90e68136233538a,
         type: 3}

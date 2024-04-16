@@ -37,8 +37,8 @@ public class AFireBall : AActiveSkill //파이어볼 스킬 클래스
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage * level;
-        rangedAttackUtility.SetDamage(currentDamage);
+        CurrentDamage = damage * level;
+        rangedAttackUtility.SetDamage(CurrentDamage);
     }
     protected override void SetCurrentRange(float value)
     {

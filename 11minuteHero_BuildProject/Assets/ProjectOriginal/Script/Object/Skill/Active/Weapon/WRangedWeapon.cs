@@ -26,8 +26,8 @@ public abstract class WRangedWeapon : AWeapon //원거리 무기. (09/25)액티브 스킬 
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage + secondDamage * level;
-        rangedAttackUtility.SetDamage(currentDamage);
+        CurrentDamage = damage + secondDamage * level;
+        rangedAttackUtility.SetDamage(CurrentDamage);
     }
     public override void Attack() //공격 함수 오버라이딩
     {

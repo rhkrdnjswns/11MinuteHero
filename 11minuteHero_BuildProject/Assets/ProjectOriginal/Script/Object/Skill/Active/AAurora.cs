@@ -29,13 +29,13 @@ public class AAurora : AActiveSkill //오라 스킬 클래스
     }
     protected override void UpdateSkillData()
     {
-        currentDamage = damage * level;
+        CurrentDamage = damage * level;
         attackRadiusUtility.Radius += 0.5f;
         SetParticleByRadius();
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage * level;
+        CurrentDamage = damage * level;
     }
     protected override void SetCurrentRange(float value)
     {
@@ -47,11 +47,11 @@ public class AAurora : AActiveSkill //오라 스킬 클래스
         while(true)
         {
             yield return new WaitForSeconds(CurrentCoolTime);
-            attackRadiusUtility.AttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform.root), currentDamage);
+            attackRadiusUtility.AttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform.root), CurrentDamage);
 #if UNITY_EDITOR
             AttackCount++;
             int count = attackRadiusUtility.GetLayerInRadius(transform.root).Length;
-            TotalDamage += currentDamage * count;
+            TotalDamage += CurrentDamage * count;
 #endif
         }
     }

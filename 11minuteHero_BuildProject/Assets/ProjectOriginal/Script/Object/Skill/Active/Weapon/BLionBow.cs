@@ -21,8 +21,8 @@ public class BLionBow : RBow
     }
     protected override void SetCurrentDamage()
     {
-        currentDamage = damage;
-        rangedAttackUtility.SetDamage(currentDamage);
+        CurrentDamage = damage;
+        rangedAttackUtility.SetDamage(CurrentDamage);
     }
     public override void SetSpeedUp() //플레이어 스피드 증가 함수
     {
@@ -52,7 +52,7 @@ public class BLionBow : RBow
         }
         //타이머가 0초가 되기 전에 코루틴이 정지하면 아래 로직은 실행되지 않는다.
 
-        InGameManager.Instance.Player.DecreaseSpeed(speedUpValue * speedUpCount);//이동속도 원래대로 초기화
+        InGameManager.Instance.Player.DecreaseSpeed(speedUpValue * speedUpCount, EApplicableType.Value);//이동속도 원래대로 초기화
         speedUpCount = 0;
         isSpeedUp = false;
     }
