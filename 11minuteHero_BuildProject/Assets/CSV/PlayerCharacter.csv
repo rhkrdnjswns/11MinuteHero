@@ -1,0 +1,4 @@
+﻿PlayerCharacter,PlayerCharacterHP,PlayerCharacterMoveSpeed,PlayerCharacterAvoidanceCoolTime
+PlayerArcher,80,1.2,8
+PlayerWarrior,120,1,8
+PlayerWizard,100,1,7
