@@ -13,18 +13,13 @@ public class ActiveAurora : ActiveSkill //오라 스킬 클래스
     [SerializeField] private float IncreaseRadiusValue;
 
     protected Collider[] collisionArray = new Collider[100];
-    public override void InitSkill()
+    public override void ActivateSkill()
     {
-        base.InitSkill();
-
-        originRadius = sensingRadius;
+        base.ActivateSkill();
 
         transform.SetParent(null);
-
         SetCurrentDamage();
-        
         SetParticleByRadius();
-        
         mainParticle.Play();
     }
     protected override void UpdateSkillData()
@@ -76,5 +71,15 @@ public class ActiveAurora : ActiveSkill //오라 스킬 클래스
             InGameManager.Instance.SkillManager.SetCanEvolution((int)ESkillEvolutionIndex.SoulHarvest);
             bCanEvolution = true;
         }
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        if (eSkillType == ESkillType.Evolution) return;
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 10);
+        originRadius = sensingRadius;
+
+        IncreaseRadiusValue = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 16);
     }
 }

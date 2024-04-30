@@ -11,7 +11,7 @@ public abstract class CPlayer : Character
     private int maxExp = 100; //요구 경험치
     [SerializeField] private int currentExp; //현재 경험치
     private int level = 1; //레벨
-    private float dodgeCoolTime;
+    [SerializeField] private float dodgeCoolTime;
 
     [SerializeField] private float currentMaxHp; //현재 최대 체력
 
@@ -32,7 +32,7 @@ public abstract class CPlayer : Character
     private SphereCollider itemCollider; //아이템 획득 콜라이더
     private float itemGainRadius; //아이템 획득 콜라이더 반경
 
-    private WaitForSeconds invincibleDelay = new WaitForSeconds(1f);
+    private WaitForSeconds invincibleDelay = new WaitForSeconds(0.3f);
     public Vector3 Direction
     {
         set
@@ -71,6 +71,8 @@ public abstract class CPlayer : Character
         InGameManager.Instance.InGameBasicUIManager.PlayerHpBar.SetFillAmount(currentHp);
         InGameManager.Instance.InGameBasicUIManager.PlayerExpBar.SetFillAmount(0, level.ToString());
 
+        ReadCSVData();
+      
         StartCoroutine(Co_Move());
     }
 #if UNITY_EDITOR
@@ -117,9 +119,9 @@ public abstract class CPlayer : Character
     {
         float timer = 0;
         Color color;
-        for (int i = 0; i < 2; i++) //총 2초동안 플레이어 깜빡거리는 효과
+        for (int i = 0; i < 2; i++) //총 두 번 플레이어 깜빡거리는 효과
         {
-            while (timer < 0.5f)
+            while (timer < 0.3f)
             {
                 timer += Time.deltaTime; //메테리얼 색상 조정
                 for(int j = 0; j < rendererArray.Length; j++)
@@ -144,7 +146,7 @@ public abstract class CPlayer : Character
             }
             yield return null;
         }
-        yield return invincibleDelay; //1초 지연 후 무적 해제
+        yield return invincibleDelay; //지연 후 무적 해제
         isInvincible = false;
     }
     private IEnumerator Co_Move()
@@ -293,5 +295,17 @@ public abstract class CPlayer : Character
         DecreaseSpeed(speedValue, speedApplicableType);
         DecreaseDamage(damagePercentage);
         isInvincible = false;
+    }
+
+    private void ReadCSVData()
+    {
+        maxHp = InGameManager.Instance.CSVManager.GetCSVData<float>(3, InGameManager.Instance.CharacterIndex + 1, 1);
+        currentMaxHp = maxHp;
+        currentHp = maxHp;
+
+        speed = InGameManager.Instance.CSVManager.GetCSVData<float>(3, InGameManager.Instance.CharacterIndex + 1, 2);
+        currentSpeed = speed;
+
+        dodgeCoolTime = InGameManager.Instance.CSVManager.GetCSVData<float>(3, InGameManager.Instance.CharacterIndex + 1, 3);
     }
 }

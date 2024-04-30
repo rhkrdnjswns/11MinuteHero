@@ -21,6 +21,7 @@ public class InGameManager : MonoBehaviour
     private BossUIManager bossUIManager;
     private InGameBasicUIManager inGameBasicUIManager;
     private ItemManager itemManager;
+    private CSVManager csvManager;
 
     [SerializeField] private GameObject[] bossPrefabArray;
 
@@ -30,6 +31,7 @@ public class InGameManager : MonoBehaviour
 
     private int killCount;
 
+    public int CharacterIndex { get => characterIndex; }
     public float Timer { get; private set; }
     public bool bTimeStop { get; set; }
     public bool bAppearBoss { get; private set; }
@@ -70,7 +72,9 @@ public class InGameManager : MonoBehaviour
     public BossUIManager BossUIManager { get => bossUIManager; }
     public InGameBasicUIManager InGameBasicUIManager { get => inGameBasicUIManager; }
     public ItemManager ItemManager { get => itemManager; }
+    public CSVManager CSVManager { get => csvManager; }
     public GrayscaleUtility GrayscaleUtility { get => grayscaleUtility; }
+
 
     private void Awake() //싱글턴으로 인스턴스화. 인게임 내에서는 씬전환이 일어나지 않기 때문에 인게임 씬 로드 시에만 this로 초기화 해주면 됨.
     {
@@ -87,6 +91,7 @@ public class InGameManager : MonoBehaviour
         bossUIManager = FindObjectOfType<BossUIManager>();
         inGameBasicUIManager = FindObjectOfType<InGameBasicUIManager>();
         itemManager = FindObjectOfType<ItemManager>();
+        csvManager = FindObjectOfType<CSVManager>();
 
         // * 스테이지마다 인덱스 다르게 적용해야함
         GameObject boss = Instantiate(bossPrefabArray[0]);

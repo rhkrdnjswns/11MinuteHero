@@ -30,6 +30,7 @@ public class SkillManager : MonoBehaviour
         allSkillList.Add(InGameManager.Instance.Player.Weapon);
         activeSkillList.Add(InGameManager.Instance.Player.Weapon);
         InGameManager.Instance.Player.Weapon.InitSkill();
+        InGameManager.Instance.Player.Weapon.ActivateSkill();
 
         InitGimmickList();
         InGameManager.Instance.DLevelUp += MixSkillOptions;
@@ -80,7 +81,7 @@ public class SkillManager : MonoBehaviour
         if(allSkillList[index].Level == 0)
         {
             allSkillList[index].gameObject.SetActive(true);
-            allSkillList[index].InitSkill();
+            allSkillList[index].ActivateSkill();
             unPossessionSkillList.Remove(allSkillList[index]);
             inPossessionSkillList.Add(allSkillList[index]);
         }
@@ -113,6 +114,7 @@ public class SkillManager : MonoBehaviour
                     break;
             }
             skill.gameObject.SetActive(false);
+            skill.InitSkill(); //스킬 데이터 초기화
         }
         bEvolutionArray = new bool[evolutionSkillList.Count];
     }
@@ -134,9 +136,9 @@ public class SkillManager : MonoBehaviour
             //해당 진화스킬의 진화 가능 여부를 false로 해서 선택지에 등장하지 않게 처리
             bEvolutionArray[evolutionSkillList.IndexOf(selectedChoiceList[index])] = false;
 
-            //보유 스킬 리스트에 해당 진화스킬 추가 및 초기화
+            //보유 스킬 리스트에 해당 진화스킬 추가 및 활성화
             inPossessionSkillList.Add(selectedChoiceList[index]);
-            selectedChoiceList[index].InitSkill();
+            selectedChoiceList[index].ActivateSkill();
         }
         else // * 선택한 스킬이 진화스킬이 아닌 경우의 처리
         {
@@ -150,7 +152,7 @@ public class SkillManager : MonoBehaviour
                 inPossessionSkillList.Add(selectedChoiceList[index]); //보유 스킬 리스트에 추가
                 unPossessionSkillList.Remove(selectedChoiceList[index]); //미보유 스킬 리스트에서 제거
 
-                selectedChoiceList[index].InitSkill(); //스킬 초기화
+                selectedChoiceList[index].ActivateSkill(); //스킬 활성화
             }
             selectedChoiceList[index].SetEvlotionCondition(); //진화 가능한지 검사
         }

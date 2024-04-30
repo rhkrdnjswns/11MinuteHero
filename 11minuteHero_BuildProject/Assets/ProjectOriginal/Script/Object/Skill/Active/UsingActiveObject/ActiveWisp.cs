@@ -8,9 +8,9 @@ public class ActiveWisp : ActiveSkillUsingActiveObject //도깨비불 스킬 클래스
     protected int currentWispCount;
     [SerializeField] private float distanceToPlayer; //도깨비불과 플레이어 사이 거리
 
-    public override void InitSkill() //기믹 첫 선택 시 초기화. 도깨비불을 최대개수만큼 미리 만들어놓음
+    public override void ActivateSkill()
     {
-        base.InitSkill();
+        base.ActivateSkill();
 
         transform.SetParent(null);
         UpdateSkillData();
@@ -18,14 +18,9 @@ public class ActiveWisp : ActiveSkillUsingActiveObject //도깨비불 스킬 클래스
     protected override void UpdateSkillData()
     {
         base.UpdateSkillData();
-        currentWispCount = wispCount + level;
 
+        currentWispCount = wispCount + level;
         ActivateWisp();
-    }
-    protected override void SetCurrentDamage()
-    {
-        base.SetCurrentDamage();
-        activeObjectUtility.SetDamage(currentDamage);
     }
     protected void ActivateWisp() //현재 레벨에 맞는 도깨비불 n개를 설정해줌
     {
@@ -37,7 +32,11 @@ public class ActiveWisp : ActiveSkillUsingActiveObject //도깨비불 스킬 클래스
             }
         }
         for (int i = 0; i < currentWispCount; i++) //도깨비불을 현재 레벨에 맞게 n개를 유효하게 해줌
-        {
+        {        
+            if(!activeObjectUtility.IsValid())
+            {
+                InitActiveObject();
+            }
             //플레이어를 기준으로 방향 벡터를 도깨비불 갯수 / 360으로 구해줌. 첫 번째 도깨비불은 0이 나옴
             ActiveObject obj = activeObjectUtility.GetObjectMaintainParent();
             Vector3 angleDirection = Quaternion.Euler(0, (360 / currentWispCount) * i, 0) * Vector3.forward;
@@ -55,10 +54,6 @@ public class ActiveWisp : ActiveSkillUsingActiveObject //도깨비불 스킬 클래스
             yield return null;
         }
     }
-    protected override void InitActiveObject()
-    {
-        base.InitActiveObject();
-    }
     public override void SetEvlotionCondition()
     {
         if (level == ConstDefine.SKILL_MAX_LEVEL && InGameManager.Instance.SkillManager.GetSkillLevel((int)ESkillPassiveID.ReduceDamage) > 0)
@@ -66,5 +61,15 @@ public class ActiveWisp : ActiveSkillUsingActiveObject //도깨비불 스킬 클래스
             InGameManager.Instance.SkillManager.SetCanEvolution((int)ESkillEvolutionIndex.FireStorm);
             bCanEvolution = true;
         }
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        if (eSkillType == ESkillType.Evolution) return;
+        wispCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 15);
+        currentWispCount = wispCount;
+        
+        distanceToPlayer = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 25);
     }
 }

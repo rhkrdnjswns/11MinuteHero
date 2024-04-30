@@ -27,11 +27,6 @@ public class ActiveRotateSword : ActiveSkill
     [SerializeField] private float radius;
     [SerializeField] private float rotSpeed;
     [SerializeField] private float originRadius;
-
-    private void Awake()
-    {
-        InitSwordObject();
-    }
     private void InitSwordObject()
     {
         GameObject obj = Instantiate(swordPrefab);
@@ -49,11 +44,16 @@ public class ActiveRotateSword : ActiveSkill
     {
         base.InitSkill();
 
+        InitSwordObject();
+    }
+    public override void ActivateSkill()
+    {
+        base.ActivateSkill();
+
         transform.SetParent(null);
         StartCoroutine(Co_FixPos());
         transform.rotation = Quaternion.identity;
 
-        originRadius = radius;
         swordSkillObject.SetDamage(currentDamage);
         swordSkillObject.SetAttackRadius(radius);
         swordSkillObject.InitObject(distance, attackInterval, arrivalSecond, degree, rotSpeed);
@@ -74,7 +74,7 @@ public class ActiveRotateSword : ActiveSkill
         radius += originRadius * value / 100;
         swordSkillObject.SetAttackRadius(radius);
     }
-    private void ActivateSkill()
+    private void ActivateSkillAction()
     {
         swordSkillObject.bEndRev = false;
         swordSkillObject.ActivateSkill(transform);
@@ -85,7 +85,7 @@ public class ActiveRotateSword : ActiveSkill
         while (true)
         {
             yield return coolTimeDelay;
-            ActivateSkill();
+            ActivateSkillAction();
 #if UNITY_EDITOR
             AttackCount++;
 #endif
@@ -124,5 +124,23 @@ public class ActiveRotateSword : ActiveSkill
             default:
                 break;
         }
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        if (eSkillType == ESkillType.Evolution) return;
+
+        attackInterval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 8);
+        
+        radius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 10);
+        originRadius = radius;
+
+        increaseSizeValue = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 16);
+        rotSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 22);
+        arrivalSecond = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 23);
+
+        degree = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 24);
+        distance = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 25);
     }
 }

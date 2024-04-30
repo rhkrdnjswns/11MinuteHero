@@ -74,4 +74,22 @@ public class ActiveFireBall : ActiveSkillUsingProjectile //파이어볼 스킬 클래스
             bCanEvolution = true;
         }
     }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        if (eSkillType == ESkillType.Evolution) return;
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
+
+        shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 13);
+        currentShotCount = shotCount;
+
+        increaseSizeValue = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 16);
+        activateTime = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 17);
+        speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 18);
+
+        penetrationCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 21);
+        currentPenetrationCount = penetrationCount;
+
+    }
 }

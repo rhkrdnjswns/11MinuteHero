@@ -5,28 +5,27 @@ using UnityEngine;
 public class ActiveMeteor : ActiveSkillUsingActiveObject //메테오 스킬 클래스
 {
     [SerializeField] private int meteorCount; //떨어질 메테오 개수
+    private int currentMeteorCount;
 
     [SerializeField] private float summonInteval = 0.2f; //소환 간격
     [SerializeField] private float sensingRadius;
     [SerializeField] private float explosionRadius;
     private float originExplosionRadius;
 
-    private bool bActionDone = true;
     private WaitForSeconds summonDelay;
 
     private Collider[] sensingCollisionArray = new Collider[1];
-    public override void InitSkill() //기믹 초기화 시 메테오 생성
+    public override void ActivateSkill()
     {
-        base.InitSkill();
+        base.ActivateSkill();
 
-        originExplosionRadius = explosionRadius;
-        summonDelay = new WaitForSeconds(summonInteval);
         UpdateSkillData();
     }
     protected override void UpdateSkillData()
     {
         base.UpdateSkillData();
-        meteorCount = level;
+
+        currentMeteorCount = meteorCount * level;
     }
     protected override void SetCurrentRange(float value)
     {
@@ -45,9 +44,7 @@ public class ActiveMeteor : ActiveSkillUsingActiveObject //메테오 스킬 클래스
 #if UNITY_EDITOR
         AttackCount++;
 #endif
-        bActionDone = false;
-
-        for (int i = 0; i < meteorCount; i++) //현재 메테오 개수만큼 리스트에서 활성화
+        for (int i = 0; i < currentMeteorCount; i++) //현재 메테오 개수만큼 리스트에서 활성화
         {
             ActiveObject obj = activeObjectUtility.GetObject();
             obj.transform.position = GetRandomPos(); //반경 내 랜덤한 몬스터 위치로 설정
@@ -56,18 +53,14 @@ public class ActiveMeteor : ActiveSkillUsingActiveObject //메테오 스킬 클래스
 
             if (i < meteorCount - 1) yield return summonDelay; //마지막 메테오 소환 시에는 텀 없게하기
         }
-        bActionDone = true;
     }
     protected override IEnumerator Co_ActiveSkillAction() //액티브 스킬 기능 코루틴
     {
-        WaitUntil actionDone = new WaitUntil(() => bActionDone);
+
         while (true)
         {
             yield return coolTimeDelay;
-
-            StartCoroutine(Co_SummonMeteor());
-
-            yield return actionDone; //모든 메테오가 소환될 때까지 대기
+            yield return StartCoroutine(Co_SummonMeteor());
         }
     }
     private Vector3 GetRandomPos()
@@ -97,5 +90,20 @@ public class ActiveMeteor : ActiveSkillUsingActiveObject //메테오 스킬 클래스
             InGameManager.Instance.SkillManager.SetCanEvolution((int)ESkillEvolutionIndex.MeteorShower);
             bCanEvolution = true;
         }
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
+
+        meteorCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 14);
+        currentMeteorCount = meteorCount;
+
+        summonInteval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 19);
+        summonDelay = new WaitForSeconds(summonInteval);
+
+        explosionRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 27);
+        originExplosionRadius = explosionRadius;
     }
 }

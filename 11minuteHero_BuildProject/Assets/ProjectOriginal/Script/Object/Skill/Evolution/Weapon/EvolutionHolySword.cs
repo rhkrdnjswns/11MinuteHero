@@ -5,9 +5,10 @@ using UnityEngine;
 public class EvolutionHolySword : ActiveSword
 {
     [SerializeField] private float hpRecovery;
-    public override void InitSkill()
+    public override void ActivateSkill()
     {
-        base.InitSkill();
+        base.ActivateSkill();
+
         InGameManager.Instance.Player.ChangeWeapon(this);
     }
     protected override void SetCurrentRange(float value)

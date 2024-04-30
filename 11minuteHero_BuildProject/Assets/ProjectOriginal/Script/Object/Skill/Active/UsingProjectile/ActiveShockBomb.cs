@@ -17,11 +17,10 @@ public class ActiveShockBomb : ActiveSkillUsingProjectile
 
     private float originRadius;
    [SerializeField] private float radius;
-    public override void InitSkill()
+    public override void ActivateSkill()
     {
-        base.InitSkill();
+        base.ActivateSkill();
 
-        shotDelay = new WaitForSeconds(shotInterval);
         UpdateSkillData();
     }
     protected override void UpdateSkillData()
@@ -87,5 +86,24 @@ public class ActiveShockBomb : ActiveSkillUsingProjectile
             InGameManager.Instance.SkillManager.SetCanEvolution((int)ESkillEvolutionIndex.FaintBomb);
             bCanEvolution = true;
         }
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        if (eSkillType == ESkillType.Evolution) return;
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
+
+        shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 14);
+        currentShotCount = shotCount;
+
+        shotInterval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 19);
+        shotDelay = new WaitForSeconds(shotInterval);
+
+        radius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 27);
+        originRadius = radius;
+
+        slowDownValue = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 33);
+        debuffDuration = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 34);
     }
 }

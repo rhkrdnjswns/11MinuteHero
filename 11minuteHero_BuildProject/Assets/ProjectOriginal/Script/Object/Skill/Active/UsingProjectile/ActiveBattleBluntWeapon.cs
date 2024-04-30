@@ -19,6 +19,7 @@ public class ActiveBattleBluntWeapon : ActiveSkillUsingProjectile //전투망치와 �
     protected override void UpdateSkillData()
     {
         base.UpdateSkillData();
+
         projectileUtility.IncreaseSize(increaseSizeValue);
     }
     private void ShotProjectile()
@@ -98,5 +99,18 @@ public class ActiveBattleBluntWeapon : ActiveSkillUsingProjectile //전투망치와 �
                 //Debug.LogError("UnDefined Type");
                 break;
         }
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        if (eSkillType == ESkillType.Evolution) return;
+        shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 13);
+        currentShotCount = shotCount;
+
+        increaseSizeValue = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 16);
+        speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 18);
+        rotateSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 22);
+        distance = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 26);
     }
 }

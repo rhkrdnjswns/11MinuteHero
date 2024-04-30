@@ -21,7 +21,6 @@ public class ActiveSword : ActiveSkill
         base.InitSkill();
 
         CreateParticle();
-        originRadius = sensingRadius;
     }
     private void Attack()
     {
@@ -115,5 +114,16 @@ public class ActiveSword : ActiveSkill
             if (InGameManager.Instance.Player.IsDodge) continue;
             Attack();
         }
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        if (eSkillType == ESkillType.Evolution) return;
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 10);
+        increaseRangeValue = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 11);
+        attackAngle = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 12);
+
+        originRadius = sensingRadius;
     }
 }

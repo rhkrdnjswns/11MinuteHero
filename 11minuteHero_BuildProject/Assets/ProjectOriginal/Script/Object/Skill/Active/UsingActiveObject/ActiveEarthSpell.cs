@@ -9,17 +9,17 @@ public class ActiveEarthSpell : ActiveSkillUsingActiveObject //대지의 마법서 스�
     [SerializeField] protected float slowDuration;
     [SerializeField] protected float slowPercentage;
 
-    public override void InitSkill()//오브젝트 위치 갱신 및 컴포넌트 참조 인스턴스화
+    public override void ActivateSkill()
     {
-        base.InitSkill();
+        base.ActivateSkill();
 
-        originRadius = radius;
         UpdateSkillData();
     }
     protected override void SetCurrentRange(float value)
     {
         base.SetCurrentRange(value);
         radius += originRadius * value / 100;
+        activeObjectUtility.SetAttackRadius(radius);
     }
     protected override IEnumerator Co_ActiveSkillAction() //스킬 기능 코루틴 
     {
@@ -46,5 +46,17 @@ public class ActiveEarthSpell : ActiveSkillUsingActiveObject //대지의 마법서 스�
             InGameManager.Instance.SkillManager.SetCanEvolution((int)ESkillEvolutionIndex.EarthImplosion);
             bCanEvolution = true;
         }
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        if (eSkillType == ESkillType.Evolution) return;
+        radius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 10);
+        originRadius = radius;
+
+        slowPercentage = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 33);
+        slowDuration = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 34);
+
     }
 }

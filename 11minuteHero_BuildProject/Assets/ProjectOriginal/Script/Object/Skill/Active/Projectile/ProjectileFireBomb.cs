@@ -17,7 +17,7 @@ public class ProjectileFireBomb : ParabolaProjectile //Ãæ°ÝÆøÅº°ú ±³ÁýÇÕÀÌ ¸¹¾Æ¼
 
     private Collider[] collisionArray = new Collider[30];
 
-    protected WaitForSeconds coroutineEndDelay = new WaitForSeconds(0.1f);
+    protected WaitForSeconds coroutineEndDelay = new WaitForSeconds(1f);
 
     public override void IncreaseSize(float value)
     {

@@ -15,11 +15,10 @@ public class ActiveFireBomb : ActiveSkillUsingProjectile
 
     private Collider[] sensingCollisionArray = new Collider[50];
     private float originRadius;
-    public override void InitSkill()
+    public override void ActivateSkill()
     {
-        base.InitSkill();
+        base.ActivateSkill();
 
-        shotDelay = new WaitForSeconds(shotInterval);
         UpdateSkillData();
     }
     protected override void UpdateSkillData()
@@ -83,6 +82,25 @@ public class ActiveFireBomb : ActiveSkillUsingProjectile
             InGameManager.Instance.SkillManager.SetCanEvolution((int)ESkillEvolutionIndex.HolyWater);
             bCanEvolution = true;
         }
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        if (eSkillType == ESkillType.Evolution) return;
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
+        dotInterval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 8);
+
+        shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 14);
+        currentShotCount = shotCount;
+
+        shotInterval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 19);
+        shotDelay = new WaitForSeconds(shotInterval);
+
+        dotAreaRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 28);
+        originRadius = dotAreaRadius;
+
+        dotDuration = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 29);
     }
 
 }

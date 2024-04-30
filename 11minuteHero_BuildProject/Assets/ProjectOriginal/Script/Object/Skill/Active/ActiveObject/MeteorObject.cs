@@ -33,4 +33,9 @@ public class MeteorObject : ActiveObject //실제 충돌처리를 할 소환된 메테오
         owner.ReturnActiveObject(this);
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
 }

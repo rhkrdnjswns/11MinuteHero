@@ -9,10 +9,10 @@ public abstract class ActiveSkillUsingActiveObject : ActiveSkill
     [SerializeField] private GameObject activeObjectPrefab;
     [SerializeField] private int createCount;
 
-    private void Awake()
+    public override void InitSkill()
     {
+        base.InitSkill();
         activeObjectUtility = new ActiveObjectUtility(activeObjectPrefab, createCount, transform);
-
         InitActiveObject();
     }
     protected virtual void InitActiveObject()

@@ -81,15 +81,27 @@ public abstract class Skill : MonoBehaviour //무기, 패시브, 액티브 스킬 등 모든 
         level++;
         UpdateSkillData();
     }
-    public virtual void InitSkill() //기믹에 맞는 초기화 재정의
+    public virtual void InitSkill() //기믹 초기화
+    {
+        ReadCSVData();
+    }
+    public virtual void ActivateSkill() //기믹 활성화
     {
         level = 1;
         transform.SetParent(InGameManager.Instance.Player.transform);
         transform.localPosition = Vector3.up * 0.5f;
         transform.localRotation = Quaternion.identity;
+
+#if UNITY_EDITOR
         Debug.Log($"{name} 추가"); //테스트
+#endif
 
         gameObject.SetActive(true);
+    }
+    protected virtual void ReadCSVData()
+    {
+        name = InGameManager.Instance.CSVManager.GetCSVData<string>((int)eSkillType, id, 2);
+        description = InGameManager.Instance.CSVManager.GetCSVData<string>((int)eSkillType, id, 3);
     }
     protected abstract void UpdateSkillData();
     public abstract void SetEvlotionCondition();

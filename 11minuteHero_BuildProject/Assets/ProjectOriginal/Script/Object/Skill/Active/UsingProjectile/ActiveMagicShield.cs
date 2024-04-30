@@ -9,11 +9,10 @@ public class ActiveMagicShield : ActiveSkillUsingProjectile
     [SerializeField] protected float rotateSpeed;
 
     private WaitForSeconds shotDelay;
-    public override void InitSkill()
+    public override void ActivateSkill()
     {
-        base.InitSkill();
+        base.ActivateSkill();
 
-        shotDelay = new WaitForSeconds(shotInterval);
         UpdateSkillData();
     }
     protected override void UpdateSkillData()
@@ -72,5 +71,19 @@ public class ActiveMagicShield : ActiveSkillUsingProjectile
             InGameManager.Instance.SkillManager.SetCanEvolution((int)ESkillEvolutionIndex.Renotoros);
             bCanEvolution = true;
         }
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        if (eSkillType == ESkillType.Evolution) return;
+        shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 14);
+        currentShotCount = shotCount;
+
+        speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 18);
+        shotInterval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 19);
+        shotDelay = new WaitForSeconds(shotInterval);
+
+        rotateSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 22);
     }
 }

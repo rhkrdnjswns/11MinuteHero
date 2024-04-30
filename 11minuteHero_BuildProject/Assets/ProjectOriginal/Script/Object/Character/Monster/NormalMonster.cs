@@ -203,14 +203,13 @@ public class NormalMonster : Monster, IDebuffApplicable
     }
     private void SetSlowDonw(float value, float duration)
     {
-        if(slowDownCoroutine != null)
-        {
-            currentSpeed += currentSlowDownValue;
-            StopCoroutine(slowDownCoroutine);
-        }
-
         if (value >= currentSlowDownValue)
         {
+            if (slowDownCoroutine != null)
+            {
+                StopCoroutine(slowDownCoroutine);
+                currentSpeed += currentSlowDownValue;
+            }
             currentSlowDownValue = value;
             currentSpeed -= value;
             slowDownCoroutine = StartCoroutine(Co_SlowDown(duration));
@@ -225,6 +224,7 @@ public class NormalMonster : Monster, IDebuffApplicable
             yield return null;
         }
         currentSpeed += currentSlowDownValue;
+        currentSlowDownValue = 0;
     }
     public void SetStiffness(float sec)
     {

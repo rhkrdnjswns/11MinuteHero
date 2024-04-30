@@ -13,9 +13,14 @@ public class EvolutionLionBow : ActiveBow
     {
         base.InitSkill();
 
-        InGameManager.Instance.Player.ChangeWeapon(this);
         arrowAngle = GetArrowAngle();
         projectileUtility.SetAction(SetSpeedUp);
+    }
+    public override void ActivateSkill()
+    {
+        base.ActivateSkill();
+
+        InGameManager.Instance.Player.ChangeWeapon(this);
     }
     private void SetSpeedUp() //플레이어 스피드 증가 함수
     {

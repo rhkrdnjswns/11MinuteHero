@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class WispObject : ActiveObject //도깨비불 오브젝트
 {
-    private string targetTag;
 #if UNITY_EDITOR
     public int index;
 #endif

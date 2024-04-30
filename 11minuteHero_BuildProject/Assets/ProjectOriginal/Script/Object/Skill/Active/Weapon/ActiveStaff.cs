@@ -9,11 +9,11 @@ public class ActiveStaff : ActiveSkillUsingProjectile //마법사가 사용하는 무기. 
 
     private Collider[] sensingCollisionArray = new Collider[50];
     private WaitForSeconds shotDelay;
-    public override void InitSkill() //무기 초기화
+    public override void ActivateSkill()
     {
-        base.InitSkill();
+        base.ActivateSkill();
+
         UpdateSkillData();
-        shotDelay = new WaitForSeconds(shotInterval);
     }
     protected override void UpdateSkillData()
     {
@@ -72,6 +72,23 @@ public class ActiveStaff : ActiveSkillUsingProjectile //마법사가 사용하는 무기. 
 
             yield return StartCoroutine(Co_Shot());
         }
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        if (eSkillType == ESkillType.Evolution) return;
+
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
+        maxTargetCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 9);
+
+        shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 14);
+        currentShotCount = shotCount;
+
+        speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 18);
+
+        shotInterval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 19);
+        shotDelay = new WaitForSeconds(shotInterval);
     }
 }
 

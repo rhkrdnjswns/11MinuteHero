@@ -13,8 +13,10 @@ public abstract class ActiveSkillUsingProjectile : ActiveSkill
     [SerializeField] protected float speed;
 
     private string targetTag = "Monster";
-    private void Awake()
+    public override void InitSkill()
     {
+        base.InitSkill();
+
         projectileUtility = new ProjectileUtility(projectilePrefab, createCount, transform);
 
         InitProjectile();

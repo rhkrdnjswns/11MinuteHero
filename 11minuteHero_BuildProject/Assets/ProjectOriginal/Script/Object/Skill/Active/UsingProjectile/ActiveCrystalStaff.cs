@@ -10,9 +10,9 @@ public class ActiveCrystalStaff : ActiveSkillUsingProjectile
     [SerializeField] private float sensingRadius;
 
     private Collider[] sensingCollisionArray = new Collider[50];
-    public override void InitSkill()
+    public override void ActivateSkill()
     {
-        base.InitSkill();
+        base.ActivateSkill();
 
         UpdateSkillData();
     }
@@ -59,5 +59,17 @@ public class ActiveCrystalStaff : ActiveSkillUsingProjectile
             InGameManager.Instance.SkillManager.SetCanEvolution((int)ESkillEvolutionIndex.MagicArrow);
             bCanEvolution = true;
         }
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        if (eSkillType == ESkillType.Evolution) return;
+
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
+        activateTime = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 17);
+        speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 18);
+
+        penetrationCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 20);
     }
 }

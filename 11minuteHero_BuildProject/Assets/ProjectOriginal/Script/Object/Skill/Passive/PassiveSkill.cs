@@ -8,9 +8,9 @@ public abstract class PassiveSkill : Skill //패시브 스킬 클래스.
 
     protected StringBuilder descriptionStringBuilder = new StringBuilder();
 
-    public override void InitSkill()
+    public override void ActivateSkill()
     {
-        base.InitSkill();
+        base.ActivateSkill();
 
         UpdateSkillData();
     }
@@ -21,5 +21,12 @@ public abstract class PassiveSkill : Skill //패시브 스킬 클래스.
     protected override void UpdateSkillData()
     {
         description = descriptionStringBuilder.ToString();
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        percentage = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
+        increaseValueByLevel = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 5);
     }
 }

@@ -9,9 +9,9 @@ public class ActiveBow : ActiveSkillUsingProjectile //궁수가 사용하는 무기. (09/
     [SerializeField] private float activateTime;
 
     protected float arrowAngle;    //화살 갯수에 따른 화살 각도
-    public override void InitSkill() //무기 초기화
+    public override void ActivateSkill()
     {
-        base.InitSkill();
+        base.ActivateSkill();
 
         UpdateSkillData();
     }
@@ -32,7 +32,7 @@ public class ActiveBow : ActiveSkillUsingProjectile //궁수가 사용하는 무기. (09/
 #endif
         float angleY = arrowAngle; //첫 화살의 각도
 
-        for (int i = 0; i < shotCount; i++) //화살 개수만큼 반복
+        for (int i = 0; i < currentShotCount; i++) //화살 개수만큼 반복
         {
             if (!projectileUtility.IsValid())
             {
@@ -49,7 +49,7 @@ public class ActiveBow : ActiveSkillUsingProjectile //궁수가 사용하는 무기. (09/
     }
     protected float GetArrowAngle() //발사하는 화살 갯수에 따라 각 화살의 각도를 설정하기 위한 함수 (맨 첫 화살의 각도를 설정해준다)
     {
-        return shotCount > 1 ? -5f + (-(shotCount - 2) * 5f) : 0;
+        return currentShotCount > 1 ? -5f + (-(currentShotCount - 2) * 5f) : 0;
     }
     public override void SetEvlotionCondition()
     {
@@ -75,5 +75,20 @@ public class ActiveBow : ActiveSkillUsingProjectile //궁수가 사용하는 무기. (09/
     {
         base.InitProjectile();
         projectileUtility.SetActivateTime(activateTime);
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        if (eSkillType == ESkillType.Evolution) return;
+
+        shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 14);
+        currentShotCount = shotCount;
+
+        activateTime = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 17);
+        speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 18);
+
+        penetrationCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 21);
+        currentPenetrationCount = penetrationCount;
     }
 }

@@ -24,22 +24,18 @@ public abstract class ActiveSkill : Skill //액티브 스킬 클래스. 기믹 클래스 상속
     public float TotalDamage { get; set; }
 #endif
 
-    public override void InitSkill()
+    public override void ActivateSkill()
     {
-        base.InitSkill();
+        base.ActivateSkill();
 #if UNITY_EDITOR
         UnityEditor.EditorWindow.GetWindow<ForTest.DPSLogWindow>()?.AddSkill(this);
         ActivateTime = $"{(int)InGameManager.Instance.Timer / 60}분{(int)InGameManager.Instance.Timer % 60}초";
 #endif
-        currentCoolTime = coolTime;
-        currentCoolTime -= coolTime * coolTimeReducePercentage / 100;
-        coolTimeDelay = new WaitForSeconds(currentCoolTime);
         StartCoroutine(Co_ActiveSkillAction());
         InGameManager.Instance.DGameOver += StopAllCoroutines;
 
         SetCurrentDamage();
     }
-
     protected abstract IEnumerator Co_ActiveSkillAction(); //액티브 스킬 작동 코루틴
     
     public virtual void ReduceCoolTime(float value) //쿨타임 감소 함수 (패시브 스킬 쿨타임 감소에서 호출함)
@@ -76,4 +72,15 @@ public abstract class ActiveSkill : Skill //액티브 스킬 클래스. 기믹 클래스 상속
         SetCurrentDamage();
     }
     protected abstract void SetCurrentRange(float value); //각 스킬별 공격 범위 갱신 함수 
+
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        baseDamage = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 5);
+        secondDamage = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 6);
+        coolTime = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 7);
+        currentCoolTime = coolTime;
+        coolTimeDelay = new WaitForSeconds(currentCoolTime);
+    }
 }

@@ -11,11 +11,10 @@ public class ActiveKnife : ActiveSkillUsingProjectile
 
     protected Collider[] sensingCollisionArray = new Collider[50];
     private WaitForSeconds shotDelay;
-    public override void InitSkill()
+    public override void ActivateSkill()
     {
-        base.InitSkill();
+        base.ActivateSkill();
 
-        shotDelay = new WaitForSeconds(shotInterval);
         UpdateSkillData();
     }
     protected override IEnumerator Co_ActiveSkillAction()
@@ -71,5 +70,21 @@ public class ActiveKnife : ActiveSkillUsingProjectile
             InGameManager.Instance.SkillManager.SetCanEvolution((int)ESkillEvolutionIndex.ShadowKnife);
             bCanEvolution = true;
         }
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+        if (eSkillType == ESkillType.Evolution) return;
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
+
+        shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 14);
+        currentShotCount = shotCount;
+
+        speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 18);
+        shotInterval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 19);
+        shotDelay = new WaitForSeconds(shotInterval);
+
+        projectileSensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 31);
+        bounceCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 32);
     }
 }

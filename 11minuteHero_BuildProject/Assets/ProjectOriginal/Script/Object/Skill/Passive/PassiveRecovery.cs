@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PassiveRecovery : PassiveSkill //체력 재생 패시브 스킬
 {
-    public override void InitSkill() //체력 재생의 경우 기믹 선택과 동시에 작동해야 해서 초기화 시에 체력 재생 코루틴을 호출함.
+    public override void ActivateSkill()
     {
-        base.InitSkill();
+        base.ActivateSkill();
         StartCoroutine(Co_Recovery());
     }
     protected override void UpdateSkillData()

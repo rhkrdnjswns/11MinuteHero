@@ -28,7 +28,7 @@ public class EarthSpellObject : ActiveObject
     }
     public override void IncreaseSize(float value)
     {
-        transform.localScale = (Vector3.one - Vector3.up) * value;
+        transform.localScale += (Vector3.one - Vector3.up) * value;
     }
     protected override IEnumerator Co_Activation()
     {
@@ -42,5 +42,9 @@ public class EarthSpellObject : ActiveObject
         yield return particleEndDelay; //파티클 종료 딜레이
 
         owner.ReturnActiveObject(this);
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 }
