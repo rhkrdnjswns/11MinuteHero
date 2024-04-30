@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8170997959978788877}
-  - component: {fileID: 9018466173932515308}
+  - component: {fileID: 2595753386764411009}
   - component: {fileID: 3049443356227956141}
   m_Layer: 0
   m_Name: 11_Skill_Active_Evolution_MagicArrow
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9018466173932515308
+--- !u!114 &2595753386764411009
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,32 +41,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 8170997959978788866}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe0bfc9b86924e04bb7a935277967a48, type: 3}
+  m_Script: {fileID: 11500000, guid: fe58bc85a815e814b9dda7fc03df5432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   eSkillType: 2
-  id: 37
+  id: 0
   icon: {fileID: 0}
-  description: "\uB9C8\uBC95\uC758 \uC815\uC218\uB97C \uB0A0\uB9BD\uB2C8\uB2E4."
-  name: "\uB9C8\uB825\uC758 \uD654\uC0B4"
+  description: 
+  name: "\uB9C8\uB825\uC758\uD654\uC0B4"
   bCanEvolution: 0
-  coolTime: 0.4
-  currentCoolTime: 0
-  damage: 30
-  currentDamage: 0
+  coolTime: 0
   baseDamage: 0
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 9010175292445108458, guid: 93f19e88d26cb0c408777acb80b714cf,
-      type: 3}
-    projectileCreateCount: 30
-    projectileSpeed: 10
-  attackRadiusUtility:
-    radius: 8
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
-  count: 3
-  activateTime: 2
+  secondDamage: 0
+  increaseDamagePercentage: 0
+  currentDamage: 0
+  projectilePrefab: {fileID: 0}
+  createCount: 0
+  shotCount: 0
+  currentShotCount: 0
+  speed: 0
+  penetrationCount: 0
+  activateTime: 0
+  sensingRadius: 0
 --- !u!114 &3049443356227956141
 MonoBehaviour:
   m_ObjectHideFlags: 0

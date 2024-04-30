@@ -24220,7 +24220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7639962811196861599}
-  - component: {fileID: -3021835444656890254}
+  - component: {fileID: 592630098568793519}
   m_Layer: 0
   m_Name: 14_Skill_Active_FireBomb_Projectile
   m_TagString: Untagged
@@ -24244,7 +24244,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-3021835444656890254
+--- !u!114 &592630098568793519
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24253,7 +24253,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7639962811196861584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a54158423bc2e524baeb48b3e7965b88, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e823eb37153d2849aa04c0cc4a2a854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   index: 11

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3945138274681689986}
-  - component: {fileID: 9127390401300905529}
+  - component: {fileID: 2524335583042255140}
   m_Layer: 0
   m_Name: 05_Skill_Active_BattleAx
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9127390401300905529
+--- !u!114 &2524335583042255140
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,23 +40,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 2792967444685428581}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ebc3321ef7a81540a808b0044412da3, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b84517927d1e09418221e50c03777d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eSkillType: 0
   id: 5
   icon: {fileID: 0}
-  description: "\uACE0\uC815\uB41C \uB124 \uBC29\uD5A5\uC73C\uB85C \uB418\uB3CC\uC544\uC624\uB294
-    \uB3C4\uB07C\uB97C \uB358\uC9D1\uB2C8\uB2E4."
+  description: 
   name: "\uC804\uD22C\uB3C4\uB07C"
+  bCanEvolution: 0
   coolTime: 5
-  currentCoolTime: 0
-  damage: 10
+  baseDamage: 10
+  secondDamage: 0
+  increaseDamagePercentage: 0
   currentDamage: 0
-  baseDamage: 0
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 1521535841796138435, guid: 4ce127f6ff237ec4582ca99c84b0da14,
-      type: 3}
-    projectileCreateCount: 8
-    projectileSpeed: 5
-  distance: 5
+  projectilePrefab: {fileID: 1521535841796138435, guid: 4ce127f6ff237ec4582ca99c84b0da14,
+    type: 3}
+  createCount: 4
+  shotCount: 4
+  currentShotCount: 0
+  speed: 6
   type: 1
+  distance: 5
+  increaseSizeValue: 0.1
+  rotateSpeed: 1440

@@ -43,20 +43,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7f477b0c2f1774f91abbcd6d7f9b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eSkillType: 0
   id: 1
   icon: {fileID: 0}
   description: "\uC804\uBC29\uC744 \uD729\uC4F8\uC5B4 \uC801\uC744 \uACF5\uACA9\uD569\uB2C8\uB2E4."
   name: "\uAC80"
+  bCanEvolution: 0
   coolTime: 1.4
-  currentCoolTime: 0
-  damage: 20
+  baseDamage: 20
+  secondDamage: 0
+  increaseDamagePercentage: 0
   currentDamage: 0
-  baseDamage: 0
   attackAngle: 140
-  attackRadiusUtility:
-    radius: 2
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
+  sensingRadius: 2
   particlePrefab: {fileID: 8065957138504221954, guid: fcb4ab3d4867d814fa743e9ead8de3ef,
     type: 3}

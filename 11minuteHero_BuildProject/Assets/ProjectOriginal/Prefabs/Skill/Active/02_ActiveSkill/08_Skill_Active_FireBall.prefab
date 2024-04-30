@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 30835422586831772}
-  - component: {fileID: 30835422586831763}
+  - component: {fileID: 7492171364649208123}
   m_Layer: 0
   m_Name: 08_Skill_Active_FireBall
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &30835422586831763
+--- !u!114 &7492171364649208123
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,27 +40,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 30835422586831762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7530ca5e3098dd24c969057407bd0df0, type: 3}
+  m_Script: {fileID: 11500000, guid: f4ede4d1db703e84fb70fdd6376203ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eSkillType: 0
   id: 8
   icon: {fileID: 0}
-  description: "\uCEE4\uB2E4\uB780 \uBD88\uAF43\uC744 \uB0A0\uB824 \uC801\uC744 \uACF5\uACA9\uD569\uB2C8\uB2E4."
+  description: 
   name: "\uD30C\uC774\uC5B4\uBCFC"
-  coolTime: 3.5
-  currentCoolTime: 0
-  damage: 20
+  bCanEvolution: 0
+  coolTime: 3
+  baseDamage: 10
+  secondDamage: 0
+  increaseDamagePercentage: 0
   currentDamage: 0
-  baseDamage: 0
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 2778722528646606139, guid: 9719faa6ace0d4d4c965a333f070c4a6,
-      type: 3}
-    projectileCreateCount: 4
-    projectileSpeed: 4
-  activateTime: 4
+  projectilePrefab: {fileID: 2778722528646606139, guid: 9719faa6ace0d4d4c965a333f070c4a6,
+    type: 3}
+  createCount: 5
+  shotCount: 1
+  currentShotCount: 0
+  speed: 7
+  activateTime: 5
+  sensingRadius: 8
+  penetrationCount: 9
+  currentPenetrationCount: 0
+  increaseSizeValue: 0.4
   attackRadiusUtility:
     radius: 12
     layerMask:
       serializedVersion: 2
       m_Bits: 128
-  penetrationCount: 9

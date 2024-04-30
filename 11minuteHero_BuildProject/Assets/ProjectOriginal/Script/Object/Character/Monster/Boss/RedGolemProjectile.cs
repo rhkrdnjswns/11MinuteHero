@@ -12,21 +12,21 @@ public class RedGolemProjectile : Projectile
     }
     protected override IEnumerator Co_Shot()
     {
-        Vector3 summonPos = rangedAttackUtility.Parent.position;
+        Vector3 summonPos = Vector3.zero;//rangedAttackUtility.Parent.position;
         summonPos.y = 0.5f;
         while(Vector3.Distance(summonPos, transform.position) < distance)
         {
-            transform.position += shotDirection.normalized * rangedAttackUtility.ProjectileSpeed * Time.deltaTime;
+           // transform.position += shotDirection.normalized * rangedAttackUtility.ProjectileSpeed * Time.deltaTime;
             yield return null;
         }
-        rangedAttackUtility.Parent.GetComponent<BRedGolem>().SummonStone(transform.position);
-        rangedAttackUtility.ReturnProjectile(this);
+      //  rangedAttackUtility.Parent.GetComponent<BRedGolem>().SummonStone(transform.position);
+      //  rangedAttackUtility.ReturnProjectile(this);
     }
     protected override void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(ConstDefine.TAG_PLAYER))
         {
-            InGameManager.Instance.Player.Hit(rangedAttackUtility.ProjectileDamage);
+          //  InGameManager.Instance.Player.Hit(rangedAttackUtility.ProjectileDamage);
         }
     }
 }

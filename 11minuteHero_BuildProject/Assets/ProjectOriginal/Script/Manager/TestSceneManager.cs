@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Text;
+using UnityEngine.SceneManagement;
 
 namespace ForTest
 {
@@ -24,6 +25,7 @@ namespace ForTest
                 m.gameObject.SetActive(false);
                 m.transform.SetParent(obj.transform);
                 m.InitDamageUIContainer();
+                m.name = m.name + i;
 
                 dummyPool.Enqueue(m);
             }
@@ -50,7 +52,7 @@ namespace ForTest
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity, layer))
                     {
                         Monster m = dummyPool.Dequeue();
-                        m.transform.position = hit.point + Vector3.up * 0.5f;
+                        m.transform.position = hit.point;
                         m.gameObject.SetActive(true);
                     }
                     bSummonDummy = false;
@@ -89,7 +91,7 @@ namespace ForTest
         }
         public void BtnEvt_Weapon()
         {
-            FindObjectOfType<AWeapon>().Reinforce();
+            FindObjectOfType<SkillManager>().Test_SkillLevelUp(0);
         }
         public void BtnEvt_ActiveObject(GameObject obj)
         {
@@ -120,7 +122,7 @@ namespace ForTest
     }
     public class DPSLogWindow : EditorWindow
     {
-        private List<SActive> activatedSkillList = new List<SActive>();
+        private List<ActiveSkill> activatedSkillList = new List<ActiveSkill>();
 
         StringBuilder sb = new StringBuilder();
 
@@ -132,6 +134,11 @@ namespace ForTest
         }
         private void OnGUI()
         {
+            if (SceneManager.GetActiveScene().name != "Scene05_InGameTest")
+            {
+                GUILayout.Label("DPS Log는 'Scene05_InGameTest' 씬에서만 확인 가능합니다.");
+                return;
+            }
             if (activatedSkillList.Count == 0)
             {
                 GUILayout.Label("활성화된 스킬이 없습니다.");
@@ -154,7 +161,7 @@ namespace ForTest
 
             }
         }
-        public void AddSkill(SActive skill)
+        public void AddSkill(ActiveSkill skill)
         {
             activatedSkillList.Add(skill);
         }

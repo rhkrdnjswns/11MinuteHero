@@ -14524,7 +14524,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7468732480564370219}
   - component: {fileID: 3835994290716620645}
-  - component: {fileID: 1711395471238756237}
+  - component: {fileID: 4209413836191813499}
   m_Layer: 10
   m_Name: 13_Skill_Active_CrystalStaff_Projectile
   m_TagString: Untagged
@@ -14560,7 +14560,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1711395471238756237
+--- !u!114 &4209413836191813499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14569,7 +14569,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9029226216996433268}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7b9be4f896d26c469260e68e2d682e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 45fe88d953672694d80fa36d1bd32b62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   index: 10

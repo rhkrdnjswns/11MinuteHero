@@ -51,20 +51,18 @@ MonoBehaviour:
   name: "\uC800\uC8FC\uBC1B\uC740 \uAC80"
   bCanEvolution: 0
   coolTime: 1.8
-  currentCoolTime: 0
-  damage: 5
+  baseDamage: 5
+  secondDamage: 5
+  increaseDamagePercentage: 0
   currentDamage: 0
-  baseDamage: 0
   eSwordType: 1
-  attackRadiusUtility:
-    radius: 1.2
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
   swordPrefab: {fileID: 76802914061711246, guid: ed8b385abf23d7649bcb988b91a2c38e,
     type: 3}
-  arrivalSecond: 2
-  degree: 180
-  distance: 4
+  arrivalSecond: 3
+  degree: 190
+  distance: 6
   attackInterval: 0.25
-  secondDamage: 5
+  increaseSizeValue: 0.2
+  radius: 1.2
+  rotSpeed: 720
+  originRadius: 0

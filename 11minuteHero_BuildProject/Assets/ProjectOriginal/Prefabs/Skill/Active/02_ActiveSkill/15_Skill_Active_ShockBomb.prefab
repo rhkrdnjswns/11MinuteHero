@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5640789589368670909}
-  - component: {fileID: 6258366372055816801}
+  - component: {fileID: 5987966701871515866}
   m_Layer: 0
   m_Name: 15_Skill_Active_ShockBomb
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6258366372055816801
+--- !u!114 &5987966701871515866
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,33 +40,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 5640789589368670908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c0473e9c7eb62e4986bd20aa913dc03, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c9b338861fcbfc428e49ca6618ce03c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eSkillType: 0
   id: 15
   icon: {fileID: 0}
-  description: "\uBB34\uC791\uC704 \uC801\uB4E4\uC5D0\uAC8C \uD3ED\uD0C4\uC744 \uB358\uC9D1\uB2C8\uB2E4."
+  description: 
   name: "\uCDA9\uACA9\uD3ED\uD0C4"
+  bCanEvolution: 0
   coolTime: 3.8
-  currentCoolTime: 0
-  damage: 10
-  currentDamage: 0
-  baseDamage: 0
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 5112974711347155062, guid: c72b25b0b0e20e74a89dbb550269e7f6,
-      type: 3}
-    projectileCreateCount: 15
-    projectileSpeed: 0
-  attackRadiusUtility:
-    radius: 12
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
-  bombAttackRadiusUtility:
-    radius: 1.5
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
-  shotInterval: 0.3
+  baseDamage: 10
   secondDamage: 10
-  angle: 45
+  increaseDamagePercentage: 0
+  currentDamage: 0
+  projectilePrefab: {fileID: 5112974711347155062, guid: c72b25b0b0e20e74a89dbb550269e7f6,
+    type: 3}
+  createCount: 10
+  shotCount: 1
+  currentShotCount: 0
+  speed: 0
+  angle: 60
+  shotInterval: 0.3
+  slowDownValue: 1.5
+  slowDownDuration: 1
+  sensingRadius: 12

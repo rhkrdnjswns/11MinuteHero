@@ -11,6 +11,7 @@ public class BRedGolemHard : BRedGolemNormal
     [SerializeField] private List<Decal> hpEventEarthQuakeDecalList;
     [SerializeField] private List<ParticleSystem> earthQuakeParticleList;
 
+    private Collider[] earthQuakeCollisionArray = new Collider[1];
     public override void InitBoss()
     {
         base.InitBoss();
@@ -70,7 +71,9 @@ public class BRedGolemHard : BRedGolemNormal
             for (int i = 0; i < hpEventEarthQuakeDecalList.Count; i++)
             {
                 earthQuakeParticleList[i].Play();
-                attackInSquareUtility.AttackLayerInSquare(attackInSquareUtility.GetLayerInSquare(hpEventEarthQuakeDecalList[i].transform.position, new Vector3(bossAreaWidth / 2, 1, 2), Quaternion.identity), 20);
+                int num = Physics.OverlapBoxNonAlloc(hpEventEarthQuakeDecalList[i].transform.position, new Vector3(bossAreaWidth / 2, 1, 2), earthQuakeCollisionArray, Quaternion.identity, ConstDefine.LAYER_PLAYER);
+                AttackInRangeUtility.AttackLayerInRange(earthQuakeCollisionArray, 10, num);
+
                 hpEventEarthQuakeDecalList[i].InActiveDecal(transform);
             }
             StartCoroutine(cameraUtility.Co_ShakeCam(0.2f, 1, 0.1f));
@@ -104,7 +107,9 @@ public class BRedGolemHard : BRedGolemNormal
             for (int i = 0; i < hpEventEarthQuakeDecalList.Count; i++)
             {
                 earthQuakeParticleList[i].Play();
-                attackInSquareUtility.AttackLayerInSquare(attackInSquareUtility.GetLayerInSquare(hpEventEarthQuakeDecalList[i].transform.position, new Vector3(2, 1, bossAreaHeight / 2), Quaternion.identity), 20);
+
+                int num = Physics.OverlapBoxNonAlloc(hpEventEarthQuakeDecalList[i].transform.position, new Vector3(2, 1, bossAreaHeight / 2), earthQuakeCollisionArray, Quaternion.identity, ConstDefine.LAYER_PLAYER);
+                AttackInRangeUtility.AttackLayerInRange(earthQuakeCollisionArray, 10, num);
                 hpEventEarthQuakeDecalList[i].InActiveDecal(transform);
             }
             StartCoroutine(cameraUtility.Co_ShakeCam(0.2f, 1, 0.1f));

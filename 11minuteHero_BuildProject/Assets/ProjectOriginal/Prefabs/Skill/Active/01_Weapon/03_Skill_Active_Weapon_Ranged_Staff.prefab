@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8410069343088775611}
-  - component: {fileID: 2885418477529728505}
+  - component: {fileID: 338326726313631479}
   m_Layer: 0
   m_Name: 03_Skill_Active_Weapon_Ranged_Staff
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2885418477529728505
+--- !u!114 &338326726313631479
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,28 +40,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 8410069343088775610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b54ca4ca57fd20448520691b7654281, type: 3}
+  m_Script: {fileID: 11500000, guid: c85f9ce0fd556d6489409bea8baadbb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eSkillType: 0
   id: 3
   icon: {fileID: 0}
-  description: "\uAC00\uAE4C\uC6B4 \uC801\uB4E4\uC5D0\uAC8C \uC720\uB3C4\uB418\uB294
-    \uB9C8\uBC95\uC744 \uC2DC\uC804\uD569\uB2C8\uB2E4."
+  description: 
   name: "\uC2A4\uD0DC\uD504"
-  coolTime: 1.2
-  currentCoolTime: 0
-  damage: 5
-  currentDamage: 0
-  baseDamage: 0
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 3109970578877561699, guid: 79d9da980dc9b7b4dbb2401762a10d07,
-      type: 3}
-    projectileCreateCount: 40
-    projectileSpeed: 0
+  bCanEvolution: 0
+  coolTime: 1
+  baseDamage: 5
   secondDamage: 5
+  increaseDamagePercentage: 0
+  currentDamage: 0
+  projectilePrefab: {fileID: 3109970578877561699, guid: 79d9da980dc9b7b4dbb2401762a10d07,
+    type: 3}
+  createCount: 30
+  shotCount: 2
+  currentShotCount: 0
+  speed: 8
   attackRadiusUtility:
     radius: 8
     layerMask:
       serializedVersion: 2
       m_Bits: 128
   shotInterval: 0.15
+  maxTargetCount: 6
+  sensingRadius: 8

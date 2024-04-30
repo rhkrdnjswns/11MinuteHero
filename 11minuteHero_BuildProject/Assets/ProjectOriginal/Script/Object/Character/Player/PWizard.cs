@@ -5,26 +5,7 @@ using UnityEngine;
 public class PWizard : CPlayer
 {
     private bool bCanDodge; //회피 가능한지 체크 (전방 장애물 여부)
-    protected override IEnumerator Co_Attack()
-    {
-        float timer = 0;
-        WaitUntil shotDone = new WaitUntil(() => weapon.GetBShotDone());
-        while (true)
-        {
-            timer = 0;
-            while (timer < weapon.CoolTime)
-            {
-                timer += Time.deltaTime;
-                yield return null;
-            }
-            if (!isDodge && eCharacterActionable == ECharacterActionable.Actionable)
-            {
-                weapon.Attack();
-                yield return shotDone;
-            }
-            yield return null;
-        }
-    }
+
     public override bool Dodge()
     {
         bCanDodge = Physics.CheckSphere(transform.position + transform.forward * 3, 0.5f, LayerMask.GetMask("Obstacle", "BossArea"));

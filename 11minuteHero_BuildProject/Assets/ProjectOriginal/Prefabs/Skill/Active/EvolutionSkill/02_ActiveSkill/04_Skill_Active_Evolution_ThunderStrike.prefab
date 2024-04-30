@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8842751802267446223}
-  - component: {fileID: 8842751802267446222}
+  - component: {fileID: 8926509799336007922}
   - component: {fileID: -8014140643572223747}
   m_Layer: 0
   m_Name: 04_Skill_Active_Evolution_ThunderStrike
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8842751802267446222
+--- !u!114 &8926509799336007922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,28 +41,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 8842751802267446221}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7f65a5bca0ee324c98fa4c4753ebb83, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b84517927d1e09418221e50c03777d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   eSkillType: 2
-  id: 30
+  id: 0
   icon: {fileID: 0}
-  description: "\uBC88\uAC1C\uAC00 \uC11C\uB9B0 \uACE0\uB300\uC758 \uB9DD\uCE58"
-  name: "\uCC9C\uB465\uAC15\uD0C0"
+  description: 
+  name: 
   bCanEvolution: 0
-  coolTime: 5
-  currentCoolTime: 0
-  damage: 50
-  currentDamage: 0
+  coolTime: 0
   baseDamage: 0
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 2317998400837105987, guid: c4e1beafe12b4de4eb1f11736c2ab251,
-      type: 3}
-    projectileCreateCount: 24
-    projectileSpeed: 7
-  distance: 6
+  secondDamage: 0
+  increaseDamagePercentage: 0
+  currentDamage: 0
+  projectilePrefab: {fileID: 0}
+  createCount: 0
+  shotCount: 0
+  currentShotCount: 0
+  speed: 0
   type: 2
-  shotCount: 8
+  distance: 0
+  increaseSizeValue: 0
+  rotateSpeed: 0
 --- !u!114 &-8014140643572223747
 MonoBehaviour:
   m_ObjectHideFlags: 0

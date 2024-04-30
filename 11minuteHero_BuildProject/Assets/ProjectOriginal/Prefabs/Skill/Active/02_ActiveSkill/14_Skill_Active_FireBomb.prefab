@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4962604167655279046}
-  - component: {fileID: -7623728002139008158}
+  - component: {fileID: 1967707782768715955}
   m_Layer: 0
   m_Name: 14_Skill_Active_FireBomb
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7623728002139008158
+--- !u!114 &1967707782768715955
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,36 +40,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 4962604167655279044}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16bab50276938ed4b97f3c8ee6d16daf, type: 3}
+  m_Script: {fileID: 11500000, guid: 09951ba59f02fd246ad9eee6dead3bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eSkillType: 0
   id: 14
   icon: {fileID: 0}
-  description: "\uBB34\uC791\uC704 \uC801\uB4E4\uC5D0\uAC8C \uD3ED\uD0C4\uC744 \uB358\uC838
-    \uBD88\uD0C0\uC624\uB974\uB294 \uAD6C\uC5ED\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4."
+  description: 
   name: "\uD654\uC5FC\uD3ED\uD0C4"
+  bCanEvolution: 0
   coolTime: 3.8
-  currentCoolTime: 0
-  damage: 10
+  baseDamage: 5
+  secondDamage: 10
+  increaseDamagePercentage: 0
   currentDamage: 0
-  baseDamage: 0
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 7639962811196861584, guid: e30521f6f008a884dba1c30739af6a6b,
-      type: 3}
-    projectileCreateCount: 20
-    projectileSpeed: 0
-  attackRadiusUtility:
-    radius: 12
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
-  bombAttackRadiusUtility:
-    radius: 2
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
+  projectilePrefab: {fileID: 7639962811196861584, guid: e30521f6f008a884dba1c30739af6a6b,
+    type: 3}
+  createCount: 10
+  shotCount: 1
+  currentShotCount: 0
+  speed: 0
+  angle: 65
   shotInterval: 0.3
-  secondDamage: 5
-  angle: 45
   dotDuration: 3
   dotInterval: 0.6
+  dotAreaRadius: 2
+  sensingRadius: 12

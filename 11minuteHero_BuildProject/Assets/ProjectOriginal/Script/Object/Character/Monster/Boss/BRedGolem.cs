@@ -18,8 +18,7 @@ public class BRedGolem : Boss
     protected bool bReturnStone;
 
     [SerializeField] protected RangedAttackUtility rangedAttackUtility;
-    [SerializeField] private AttackRadiusUtility jumpAttack;
-    [SerializeField] protected AttackInSquareUtility attackInSquareUtility;
+
     [SerializeField] private GameObject stonePrefab;
 
     protected List<CRedGolemStone> stoneList = new List<CRedGolemStone>();
@@ -32,6 +31,11 @@ public class BRedGolem : Boss
 
     protected Vector3 stoneSummonPos = Vector3.zero;
     protected float summonedStonePosY;
+
+    protected Collider[] jumpAttackCollisionArray = new Collider[1];
+    protected Collider[] summonStoneCollisionArray = new Collider[1];
+    protected Collider[] summonStoneRandCollisionArray = new Collider[1];
+    protected Collider[] punchCollisionArray = new Collider[1];
     protected virtual void SetSummonedStonePosY()
     {
         summonedStonePosY = 0.5f;
@@ -175,7 +179,8 @@ public class BRedGolem : Boss
 
             yield return new WaitForSeconds(2f);
 
-            jumpAttack.AttackLayerInRadius(jumpAttack.GetLayerInRadius(decalList[(int)EDecalNumber.SummonStoneRandomPos].transform, 1), 10);
+            int num = Physics.OverlapSphereNonAlloc(decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.position, 1, summonStoneRandCollisionArray, ConstDefine.LAYER_PLAYER);
+            AttackInRangeUtility.AttackLayerInRange(summonStoneRandCollisionArray, 10, num);
             SummonStone(decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.position);
             decalList[(int)EDecalNumber.SummonStoneRandomPos].InActiveDecal(transform);
         }
@@ -355,10 +360,10 @@ public class BRedGolem : Boss
         decalList[(int)EDecalNumber.KnockbackPunch].InActiveDecal(transform);
 
         animator.SetTrigger("Punch");
-        Collider[] col = attackInSquareUtility.GetLayerInSquare(transform.position + transform.forward * 2, new Vector3(2, 1, 3), transform.rotation);
-        if(col.Length > 0)
+        int num = Physics.OverlapBoxNonAlloc(transform.position + transform.forward * 2, new Vector3(2, 1, 3), punchCollisionArray, transform.rotation, ConstDefine.LAYER_PLAYER);
+        if(num > 0)
         {
-            attackInSquareUtility.AttackLayerInSquare(col, 10);
+            AttackInRangeUtility.AttackLayerInRange(punchCollisionArray, 10, num);
             InGameManager.Instance.Player.KnockBack(5f, 1f, transform.forward); //플레이어 넉백
         }
     }
@@ -450,7 +455,8 @@ public class BRedGolem : Boss
     }
     public void AnimEvent_JumpAttack()
     {
-        jumpAttack.AttackLayerInRadius(jumpAttack.GetLayerInRadius(transform), 20);
+        int num = Physics.OverlapSphereNonAlloc(transform.position, 5, jumpAttackCollisionArray, ConstDefine.LAYER_PLAYER);
+        AttackInRangeUtility.AttackLayerInRange(jumpAttackCollisionArray, 20, num);
     }
     public void AnimEvent_JumpStart()
     {
@@ -470,7 +476,8 @@ public class BRedGolem : Boss
     }
     public virtual void AnimEvent_SummonStone()
     {
-        jumpAttack.AttackLayerInRadius(jumpAttack.GetLayerInRadius(decalList[(int)EDecalNumber.SummonStone].transform, 1), 10);
+        int num = Physics.OverlapSphereNonAlloc(decalList[(int)EDecalNumber.SummonStone].transform.position, 1, summonStoneCollisionArray, ConstDefine.LAYER_PLAYER);
+        AttackInRangeUtility.AttackLayerInRange(summonStoneCollisionArray, 10, num);
         SummonStone(decalList[(int)EDecalNumber.SummonStone].transform.position);
         decalList[(int)EDecalNumber.SummonStone].InActiveDecal(transform);
     }

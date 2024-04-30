@@ -52,17 +52,19 @@ MonoBehaviour:
   name: "\uC0AC\uC790\uAD81"
   bCanEvolution: 0
   coolTime: 1.2
-  currentCoolTime: 0
-  damage: 30
-  currentDamage: 0
   baseDamage: 0
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 6150599522273784603, guid: e488ac5d5f3a3b54292361166a37f008,
-      type: 3}
-    projectileCreateCount: 30
-    projectileSpeed: 8
   secondDamage: 0
-  activateTime: 4
+  increaseDamagePercentage: 0
+  currentDamage: 0
+  projectilePrefab: {fileID: 6150599522273784603, guid: e488ac5d5f3a3b54292361166a37f008,
+    type: 3}
+  createCount: 30
+  shotCount: 6
+  currentShotCount: 0
+  speed: 5
+  penetrationCount: 5
+  currentPenetrationCount: 0
+  activateTime: 5
   speedUpValue: 0.1
   speedUpDuration: 3
 --- !u!114 &-3955167641235347899

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6328688291637746918}
   - component: {fileID: 5404349767722124756}
-  - component: {fileID: 327329048421453458}
+  - component: {fileID: 3206846947147120456}
   m_Layer: 10
   m_Name: 08_Skill_Active_FireBall_Projectile
   m_TagString: Untagged
@@ -46,7 +46,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &327329048421453458
+--- !u!114 &3206846947147120456
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,7 +55,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2778722528646606139}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7b9be4f896d26c469260e68e2d682e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 45fe88d953672694d80fa36d1bd32b62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   index: 5

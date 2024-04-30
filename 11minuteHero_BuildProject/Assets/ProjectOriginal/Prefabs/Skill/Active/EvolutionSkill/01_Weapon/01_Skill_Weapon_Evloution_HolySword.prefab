@@ -51,16 +51,12 @@ MonoBehaviour:
   name: "\uC131\uAC80"
   bCanEvolution: 0
   coolTime: 1.4
-  currentCoolTime: 0
-  damage: 100
+  baseDamage: 100
+  secondDamage: 0
+  increaseDamagePercentage: 0
   currentDamage: 0
-  baseDamage: 0
   attackAngle: 140
-  attackRadiusUtility:
-    radius: 3
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
+  sensingRadius: 3
   particlePrefab: {fileID: 8065957138504221954, guid: d2db3da969318154084484ea6719ed9e,
     type: 3}
   hpRecovery: 0.5

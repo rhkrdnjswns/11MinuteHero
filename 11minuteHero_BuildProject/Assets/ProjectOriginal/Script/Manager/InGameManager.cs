@@ -107,17 +107,10 @@ public class InGameManager : MonoBehaviour
     private IEnumerator Co_Timer()
     {
         while (gameState != EGameState.GameOver || !bAppearBoss)
-        {        
-            Timer += Time.deltaTime;
-
-            inGameBasicUIManager.TimerHourText.text = ((int)Timer / 60).ToString();
-            inGameBasicUIManager.TimerMinuteText.text = ((int)Timer % 60).ToString();
-            yield return null;
-        }
-        if(bAppearBoss)
         {
-            inGameBasicUIManager.TimerHourText.text = "11";
-            inGameBasicUIManager.TimerMinuteText.text = "0";
+            Timer += Time.deltaTime;
+            inGameBasicUIManager.SetTimer((int)Timer / 60, (int)Timer % 60);
+            yield return null;
         }
     }
     private void GameOverDebug()

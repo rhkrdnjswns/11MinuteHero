@@ -43,24 +43,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3fa5dc8928ccc54b854bc993d4b7142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eSkillType: 0
   id: 10
   icon: {fileID: 0}
   description: "\uB9C8\uBC95\uC73C\uB85C \uB545\uC744 \uC6B8\uB9AC\uAC8C \uD558\uC5EC
     \uC801\uC5D0\uAC8C \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."
   name: "\uB300\uC9C0\uC758 \uB9C8\uBC95\uC11C"
+  bCanEvolution: 0
   coolTime: 1.5
-  currentCoolTime: 0
-  damage: 5
-  currentDamage: 0
-  baseDamage: 0
-  earthSpellPrefab: {fileID: 1812335273778974956, guid: 549f3f251ca567b4197db91e9fff434e,
-    type: 3}
-  attackRadiusUtility:
-    radius: 4
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
+  baseDamage: 5
   secondDamage: 5
+  increaseDamagePercentage: 0
+  currentDamage: 0
+  activeObjectPrefab: {fileID: 1812335273778974956, guid: 549f3f251ca567b4197db91e9fff434e,
+    type: 3}
   createCount: 10
+  radius: 4
   slowDuration: 1
   slowPercentage: 20

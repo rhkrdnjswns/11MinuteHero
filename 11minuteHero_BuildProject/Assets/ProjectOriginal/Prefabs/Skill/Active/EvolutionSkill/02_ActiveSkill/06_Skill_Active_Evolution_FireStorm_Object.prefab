@@ -24104,7 +24104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4459157162866382502}
   - component: {fileID: 2597682910890170935}
-  - component: {fileID: 803815201423651150}
+  - component: {fileID: -7529055632379623261}
   m_Layer: 10
   m_Name: 06_Skill_Active_Evolution_FireStorm_Object
   m_TagString: Untagged
@@ -24135,12 +24135,12 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6558279543627232394}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &803815201423651150
+--- !u!114 &-7529055632379623261
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24149,7 +24149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6558279543627232394}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9bb50d363faad14aa894d49109052b0, type: 3}
+  m_Script: {fileID: 11500000, guid: a07dc8d55364db24fb58ea7e1cc2b811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   index: 20

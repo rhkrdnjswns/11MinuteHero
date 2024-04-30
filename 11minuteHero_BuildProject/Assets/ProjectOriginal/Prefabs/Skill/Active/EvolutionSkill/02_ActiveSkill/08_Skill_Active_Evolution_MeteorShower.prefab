@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3293738516118094026}
-  - component: {fileID: 4399964581636358177}
+  - component: {fileID: 6955090971244896304}
   - component: {fileID: 5850407740829391498}
   m_Layer: 0
   m_Name: 08_Skill_Active_Evolution_MeteorShower
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4399964581636358177
+--- !u!114 &6955090971244896304
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,35 +41,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 4330128029916152184}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d437a1696b8d2f548986ff8f02903ec1, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d9e5f3aae9bca441b06501937f8b95c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   eSkillType: 2
-  id: 34
+  id: 0
   icon: {fileID: 0}
-  description: "\uD558\uB298\uC5D0\uC11C \uBCC4\uC774 \uB0B4\uB824\uC635\uB2C8\uB2E4."
-  name: "\uC720\uC131\uC6B0"
+  description: 
+  name: 
   bCanEvolution: 0
-  coolTime: 4.2
-  currentCoolTime: 0
-  damage: 65
-  currentDamage: 0
+  coolTime: 0
   baseDamage: 0
-  meteorPrefab: {fileID: 3809579804668762146, guid: af6360c139bf4e14f98a43a7a9381a7c,
-    type: 3}
-  summonInteval: 0.1
-  attackRadiusUtility:
-    radius: 12
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
-  meteorAttackRadiusUtility:
-    radius: 1.5
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
-  createCount: 30
-  shotCount: 12
+  secondDamage: 0
+  increaseDamagePercentage: 0
+  currentDamage: 0
+  meteorPrefab: {fileID: 0}
+  summonInteval: 0.2
+  createCount: 0
+  sensingRadius: 0
 --- !u!114 &5850407740829391498
 MonoBehaviour:
   m_ObjectHideFlags: 0

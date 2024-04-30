@@ -18,17 +18,19 @@ public class SkillManager : MonoBehaviour
 
     [SerializeField] private List<Skill> allSkillList = new List<Skill>();
 
-    [SerializeField] private List<SActive> activeSkillList = new List<SActive>();
-    [SerializeField] private List<SPassive> passiveSkillList = new List<SPassive>();
+    [SerializeField] private List<ActiveSkill> activeSkillList = new List<ActiveSkill>();
+    [SerializeField] private List<PassiveSkill> passiveSkillList = new List<PassiveSkill>();
     public List<Skill> SelectedChoiceList { get => selectedChoiceList; }
-    public List<SActive> ActiveSkillList { get => activeSkillList; set => activeSkillList = value; }
+    public List<ActiveSkill> ActiveSkillList { get => activeSkillList; set => activeSkillList = value; }
     public List<Skill> InPossessionSkillList { get => inPossessionSkillList; set => inPossessionSkillList = value; }
 
     private void Start()
     {
-        inPossessionSkillList.Add(FindObjectOfType<AWeapon>());
-        allSkillList.Add(inPossessionSkillList[0]);
-        activeSkillList.Add(inPossessionSkillList[0].GetComponent<SActive>());
+        inPossessionSkillList.Add(InGameManager.Instance.Player.Weapon);
+        allSkillList.Add(InGameManager.Instance.Player.Weapon);
+        activeSkillList.Add(InGameManager.Instance.Player.Weapon);
+        InGameManager.Instance.Player.Weapon.InitSkill();
+
         InitGimmickList();
         InGameManager.Instance.DLevelUp += MixSkillOptions;
         //StartCoroutine(Co_SuffleGimmick());
@@ -96,15 +98,15 @@ public class SkillManager : MonoBehaviour
             switch (skill.ESkillType)
             {
                 case ESkillType.Active:
-                    activeSkillList.Add(skill.GetComponent<SActive>());
+                    activeSkillList.Add(skill.GetComponent<ActiveSkill>());
                     unPossessionSkillList.Add(skill);
                     break;
                 case ESkillType.Passive:
-                    passiveSkillList.Add(skill.GetComponent<SPassive>());
+                    passiveSkillList.Add(skill.GetComponent<PassiveSkill>());
                     unPossessionSkillList.Add(skill);
                     break;
                 case ESkillType.Evolution:
-                    activeSkillList.Add(skill.GetComponent<SActive>());
+                    activeSkillList.Add(skill.GetComponent<ActiveSkill>());
                     evolutionSkillList.Add(skill);
                     break;
                 default:
@@ -223,7 +225,7 @@ public class SkillManager : MonoBehaviour
             for (int i = 0; i < unPossessionSkillList.Count; i++)
             {
                 //보유중이지 않은 스킬이 등장할 때 액티브 스킬은 등장하지 않게 처리
-                if (unPossessionSkillList[i].GetComponent<SActive>())
+                if (unPossessionSkillList[i].GetComponent<ActiveSkill>())
                 {
                     unPossessionIndexList.Remove(i);
                 }
@@ -234,7 +236,7 @@ public class SkillManager : MonoBehaviour
             for (int i = 0; i < unPossessionSkillList.Count; i++)
             {
                 //보유중이지 않은 스킬이 등장할 때 패시브 스킬은 등장하지 않게 처리
-                if (unPossessionSkillList[i].GetComponent<SPassive>())
+                if (unPossessionSkillList[i].GetComponent<PassiveSkill>())
                 {
                     unPossessionIndexList.Remove(i);
                 }
@@ -321,9 +323,9 @@ public class SkillManager : MonoBehaviour
     {
         if(isActive)
         {
-            return inPossessionSkillList.Where(w => w.GetComponent<SActive>()).Count() == ConstDefine.SKILL_MAX_HAVE_COUNT;
+            return inPossessionSkillList.Where(w => w.GetComponent<ActiveSkill>()).Count() == ConstDefine.SKILL_MAX_HAVE_COUNT;
         }
-        return inPossessionSkillList.Where(w => w.GetComponent<SPassive>()).Count() == ConstDefine.SKILL_MAX_HAVE_COUNT;
+        return inPossessionSkillList.Where(w => w.GetComponent<PassiveSkill>()).Count() == ConstDefine.SKILL_MAX_HAVE_COUNT;
     }
     //private List<int> GetValidIndexInPossessionList() //보유한 스킬 중에서 선택지에 등장 가능한 스킬의 인덱스만 가져옴
     //{
