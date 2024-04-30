@@ -43,25 +43,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff3559cfd63d6ae4fb7c916d3fea9aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eSkillType: 0
   id: 11
   icon: {fileID: 0}
   description: "\uAC80\uC774 \uC8FC\uBCC0\uC744 \uD68C\uC804\uD558\uBA74\uC11C \uC801\uC744
     \uACF5\uACA9\uD569\uB2C8\uB2E4."
   name: "\uD53C\uB85C\uBB3C\uB4E0 \uAC80"
+  bCanEvolution: 0
   coolTime: 1.8
-  currentCoolTime: 0
-  damage: 5
+  baseDamage: 5
+  secondDamage: 5
+  increaseDamagePercentage: 0
   currentDamage: 0
-  baseDamage: 0
-  attackRadiusUtility:
-    radius: 1.2
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
+  eSwordType: 0
   swordPrefab: {fileID: 5378978053688931722, guid: ed9bf48c44cc1d64a80541493726bc37,
     type: 3}
-  arrivalSecond: 2
-  degree: 180
-  distance: 4
+  arrivalSecond: 3
+  degree: 190
+  distance: 6
   attackInterval: 0.25
-  secondDamage: 5
+  increaseSizeValue: 0.2
+  radius: 1.2
+  rotSpeed: 720
+  originRadius: 0

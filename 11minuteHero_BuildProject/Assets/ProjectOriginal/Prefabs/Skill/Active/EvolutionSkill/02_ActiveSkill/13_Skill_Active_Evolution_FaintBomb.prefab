@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6058349621801331925}
-  - component: {fileID: 6695125183077823938}
+  - component: {fileID: 4967021265027566677}
   - component: {fileID: -9054833956046877722}
   m_Layer: 0
   m_Name: 13_Skill_Active_Evolution_FaintBomb
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6695125183077823938
+--- !u!114 &4967021265027566677
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,39 +41,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 6058349621801331926}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e49018b3f0f4a474d8dbda6a4c06783c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c9b338861fcbfc428e49ca6618ce03c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   eSkillType: 2
-  id: 39
+  id: 0
   icon: {fileID: 0}
-  description: "\uD55C\uB300\uB9CC \uB9DE\uC544\uB3C4 \uC815\uC2E0\uC774 \uC544\uCC14\uD569\uB2C8\uB2E4."
+  description: 
   name: "\uAE30\uC808\uD3ED\uD0C4"
   bCanEvolution: 0
-  coolTime: 4
-  currentCoolTime: 0
-  damage: 45
-  currentDamage: 0
+  coolTime: 0
   baseDamage: 0
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 2447267553195785924, guid: 608ed1708c3bef5488ec36d73c29c4f4,
-      type: 3}
-    projectileCreateCount: 30
-    projectileSpeed: 0
-  attackRadiusUtility:
-    radius: 12
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
-  bombAttackRadiusUtility:
-    radius: 2
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
-  shotInterval: 0.3
   secondDamage: 0
-  angle: 45
-  shotCount: 7
+  increaseDamagePercentage: 0
+  currentDamage: 0
+  projectilePrefab: {fileID: 0}
+  createCount: 0
+  shotCount: 0
+  currentShotCount: 0
+  speed: 0
+  angle: 0
+  shotInterval: 0.3
+  slowDownValue: 0
+  slowDownDuration: 0
+  sensingRadius: 0
 --- !u!114 &-9054833956046877722
 MonoBehaviour:
   m_ObjectHideFlags: 0

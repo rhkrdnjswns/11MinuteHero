@@ -4957,7 +4957,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1340821505183520371}
   - component: {fileID: 1257172722151017176}
-  - component: {fileID: 6609698254985216001}
+  - component: {fileID: 5277449688903008503}
   m_Layer: 10
   m_Name: 14_Skill_Active_Evolution_Renotoros_Projectile
   m_TagString: Untagged
@@ -4993,7 +4993,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6609698254985216001
+--- !u!114 &5277449688903008503
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5002,10 +5002,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7267913664221306614}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9118faf787e659441a5dc6e2fc4edcb4, type: 3}
+  m_Script: {fileID: 11500000, guid: 2bd65913f9707c04a9d342aa232d5579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   index: 28
-  objTransform: {fileID: 1340821505183520371}
+  objTransform: {fileID: 7346668255820776079}
   radius: 2
   angularSpeed: 90

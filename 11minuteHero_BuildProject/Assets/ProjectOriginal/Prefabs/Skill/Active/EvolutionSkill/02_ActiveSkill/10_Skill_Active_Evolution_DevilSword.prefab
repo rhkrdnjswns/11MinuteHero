@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8432472758876134828}
-  - component: {fileID: 2631096231938546603}
+  - component: {fileID: 7370930521895574930}
   - component: {fileID: -2045003220573438307}
   m_Layer: 0
   m_Name: 10_Skill_Active_Evolution_DevilSword
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2631096231938546603
+--- !u!114 &7370930521895574930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,33 +41,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 8432472758876134829}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1c2eb072132ab244a6a8b368a590557, type: 3}
+  m_Script: {fileID: 11500000, guid: ff3559cfd63d6ae4fb7c916d3fea9aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   eSkillType: 2
-  id: 36
+  id: 0
   icon: {fileID: 0}
-  description: "\uAC80\uC774 \uC18D\uC0AD\uC778\uB2E4."
+  description: 
   name: "\uB9C8\uAC80"
   bCanEvolution: 0
-  coolTime: 3
-  currentCoolTime: 0
-  damage: 120
-  currentDamage: 0
+  coolTime: 2
   baseDamage: 0
+  secondDamage: 0
+  increaseDamagePercentage: 0
+  currentDamage: 0
   eSwordType: 2
-  attackRadiusUtility:
-    radius: 2
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
   swordPrefab: {fileID: 3246602146529043488, guid: 9de602cd7e0dbe44a8e90eef527b138d,
     type: 3}
   arrivalSecond: 3
-  degree: 360
-  distance: 6
+  degree: 190
+  distance: 3.5
   attackInterval: 0.25
-  secondDamage: 0
 --- !u!114 &-2045003220573438307
 MonoBehaviour:
   m_ObjectHideFlags: 0

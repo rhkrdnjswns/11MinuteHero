@@ -24198,7 +24198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9010175292445108244}
   - component: {fileID: 9010175292445108245}
-  - component: {fileID: 9010175292445108247}
+  - component: {fileID: 5667544132248704914}
   m_Layer: 10
   m_Name: 11_Skill_Active_Evolution_MagicArrow_Projectile
   m_TagString: Untagged
@@ -24234,7 +24234,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0.05}
---- !u!114 &9010175292445108247
+--- !u!114 &5667544132248704914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24243,7 +24243,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9010175292445108458}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7b9be4f896d26c469260e68e2d682e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 45fe88d953672694d80fa36d1bd32b62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   index: 25

@@ -43,19 +43,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3086d2060a264004dbde3913c8227ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eSkillType: 0
   id: 2
   icon: {fileID: 0}
   description: "\uC804\uBC29\uC73C\uB85C \uD65C\uC2DC\uC704\uB97C \uB2F9\uAE41\uB2C8\uB2E4."
   name: "\uD65C"
+  bCanEvolution: 0
   coolTime: 1.2
-  currentCoolTime: 0
-  damage: 5
-  currentDamage: 0
-  baseDamage: 0
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 7449331635726017638, guid: 7458466426014cf45ad4b87734c41c56,
-      type: 3}
-    projectileCreateCount: 30
-    projectileSpeed: 8
+  baseDamage: 5
   secondDamage: 5
-  activateTime: 4
+  increaseDamagePercentage: 0
+  currentDamage: 0
+  projectilePrefab: {fileID: 7449331635726017638, guid: 7458466426014cf45ad4b87734c41c56,
+    type: 3}
+  createCount: 20
+  shotCount: 1
+  currentShotCount: 0
+  speed: 8
+  penetrateCount: 2
+  currentPenetrateCount: 0
+  activateTime: 5

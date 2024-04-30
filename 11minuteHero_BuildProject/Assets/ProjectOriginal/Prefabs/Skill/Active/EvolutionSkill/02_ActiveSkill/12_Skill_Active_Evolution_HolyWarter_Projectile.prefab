@@ -14540,7 +14540,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1396219953349506800}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.65}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8040685913976439908}
@@ -19400,7 +19400,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1907925760873042683}
-  - component: {fileID: 5499826665316388749}
+  - component: {fileID: 1667067582073437089}
   m_Layer: 0
   m_Name: 12_Skill_Active_Evolution_HolyWarter_Projectile
   m_TagString: Untagged
@@ -19424,7 +19424,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5499826665316388749
+--- !u!114 &1667067582073437089
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19433,7 +19433,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1907925760873042682}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a54158423bc2e524baeb48b3e7965b88, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e823eb37153d2849aa04c0cc4a2a854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   index: 26

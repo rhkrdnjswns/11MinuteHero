@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6108138646102466921}
-  - component: {fileID: 99118351183554904}
+  - component: {fileID: 6229880297536598873}
   m_Layer: 0
   m_Name: 17_Skill_Active_Knife
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &99118351183554904
+--- !u!114 &6229880297536598873
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,31 +40,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 319551728528934423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b97a51b704578b4c9b80285e0588e87, type: 3}
+  m_Script: {fileID: 11500000, guid: db4cd2ae0bbd846469f80eb5b4252ed8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eSkillType: 0
   id: 17
   icon: {fileID: 0}
-  description: "\uBB34\uC791\uC704 \uC801\uC5D0\uAC8C \uB2E8\uAC80\uC744 \uD22C\uCC99\uD569\uB2C8\uB2E4."
+  description: 
   name: "\uB2E8\uAC80"
+  bCanEvolution: 0
   coolTime: 4
-  currentCoolTime: 0
-  damage: 10
+  baseDamage: 10
+  secondDamage: 0
+  increaseDamagePercentage: 0
   currentDamage: 0
-  baseDamage: 0
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 1876358657589074605, guid: 2f984c9b83b3cb64c9def4bfd6bf6d57,
-      type: 3}
-    projectileCreateCount: 20
-    projectileSpeed: 7
-  attackRadiusUtility:
-    radius: 12
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
-  knifeAttackRadiusUtility:
-    radius: 3
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
+  projectilePrefab: {fileID: 1876358657589074605, guid: 2f984c9b83b3cb64c9def4bfd6bf6d57,
+    type: 3}
+  createCount: 10
+  shotCount: 1
+  currentShotCount: 0
+  speed: 7
   shotInterval: 0.2
+  sensingRadius: 12
+  projectileSensingRadius: 3
+  bounceCount: 2

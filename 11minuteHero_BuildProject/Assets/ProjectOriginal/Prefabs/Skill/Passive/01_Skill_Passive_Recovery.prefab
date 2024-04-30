@@ -49,5 +49,4 @@ MonoBehaviour:
   description: "\uCD08\uB2F9 \uCD5C\uB300 \uCCB4\uB825\uC758 0.25%\uB97C \uD68C\uBCF5\uD569\uB2C8\uB2E4."
   name: "\uD608\uC11D"
   percentage: 0
-  recoveryInterval: 1
-  recoveryPercentage: 0.25
+  increaseValueByLevel: 0.25

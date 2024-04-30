@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1402387952995422391}
-  - component: {fileID: 4766411737604487774}
+  - component: {fileID: 3247285993372743014}
   - component: {fileID: -8832130825472624251}
   m_Layer: 0
   m_Name: 09_Skill_Active_Evolution_EarthImplosion
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4766411737604487774
+--- !u!114 &3247285993372743014
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,31 +41,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 7602808190532842726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c720234d50e71947b2dc1fbe3ae6ba5, type: 3}
+  m_Script: {fileID: 11500000, guid: b3fa5dc8928ccc54b854bc993d4b7142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   eSkillType: 2
-  id: 35
+  id: 0
   icon: {fileID: 0}
-  description: "\uB545\uC774 \uAC08\uB77C\uC9D1\uB2C8\uB2E4."
-  name: "\uB300\uC9C0\uD30C\uC5F4"
+  description: 
+  name: 
   bCanEvolution: 0
-  coolTime: 1.5
-  currentCoolTime: 0
-  damage: 35
-  currentDamage: 0
+  coolTime: 0
   baseDamage: 0
-  earthSpellPrefab: {fileID: 7661302976881533688, guid: 44baf5facaf00e5428f579b3d791c33a,
-    type: 3}
-  attackRadiusUtility:
-    radius: 4
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
   secondDamage: 0
-  createCount: 10
-  slowDuration: 1.5
-  slowPercentage: 40
+  increaseDamagePercentage: 0
+  currentDamage: 0
+  earthSpellPrefab: {fileID: 0}
+  createCount: 0
+  slowDuration: 0
+  slowPercentage: 0
 --- !u!114 &-8832130825472624251
 MonoBehaviour:
   m_ObjectHideFlags: 0

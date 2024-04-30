@@ -719,9 +719,9 @@ MonoBehaviour:
   currentHp: 0
   rendererArray: []
   currentMaxHp: 0
+  weaponSocket: {fileID: 7751244166204542889}
   weaponPrefab: {fileID: 9010942630221436995, guid: d5c4b25032e8fde4097f85a53026472d,
     type: 3}
-  weaponSocket: {fileID: 7751244166204542889}
 --- !u!1 &2768541609620082834
 GameObject:
   m_ObjectHideFlags: 0

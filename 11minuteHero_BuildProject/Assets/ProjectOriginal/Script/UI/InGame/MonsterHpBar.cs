@@ -27,7 +27,7 @@ public class MonsterHpBar : BarImageUtility
             RectTransformUtility.ScreenPointToLocalPointInRectangle(rectParent, screenPos, cam, out localPos); //스크린 좌표를 캔버스의 렉트트랜스폼 로컬포지션 좌표로 변환하여 반환
             rect.localPosition = localPos; //체력바 로컬포지션을 반환받은 값으로 지정
 
-            yield return new WaitForSeconds(ConstDefine.FRAME_DELAY);
+            yield return null;
         }
     }
 }

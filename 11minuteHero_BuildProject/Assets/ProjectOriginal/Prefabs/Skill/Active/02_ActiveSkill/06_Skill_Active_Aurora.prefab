@@ -4875,7 +4875,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3140344413592495452}
-  - component: {fileID: 1399610779615091526}
+  - component: {fileID: 2467207303692153445}
   m_Layer: 0
   m_Name: 06_Skill_Active_Aurora
   m_TagString: Untagged
@@ -4898,7 +4898,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1399610779615091526
+--- !u!114 &2467207303692153445
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4907,27 +4907,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 4370267125963855223}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e3b07928d38bb4b9f7b61c7caa46e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 4828e460c3f6b1346b1017b2c289576c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eSkillType: 0
   id: 6
   icon: {fileID: 0}
-  description: "\uBC94\uC704 \uC548\uC73C\uB85C \uB4E4\uC5B4\uC628 \uC801\uC5D0\uAC8C
-    \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."
-  name: "\uC624\uB85C\uB77C"
+  description: 
+  name: 
+  bCanEvolution: 0
   coolTime: 1
-  currentCoolTime: 0
-  damage: 5
+  baseDamage: 5
+  secondDamage: 0
+  increaseDamagePercentage: 0
   currentDamage: 0
-  baseDamage: 0
-  attackRadiusUtility:
-    radius: 2
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
   mainParticle: {fileID: 2296342633861035494}
   sideParticle: {fileID: 402703297640933741}
   sparksParticle: {fileID: 6849690826117133371}
+  sensingRadius: 2
+  originRadius: 0
+  IncreaseRadiusValue: 0.5
 --- !u!1 &7223468349112288578
 GameObject:
   m_ObjectHideFlags: 0

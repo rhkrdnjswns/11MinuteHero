@@ -98,37 +98,14 @@ public class RangedAttackUtility //모든 투사체를 사용하는 스킬들의 기능과 데이터
             obj.transform.localRotation = Quaternion.identity;
 
             Projectile p = obj.GetComponent<Projectile>();
-            p.SetRangeAttackUtility(this);
+            //p.SetRangeAttackUtility(this);
             projectileQueue.Enqueue(p);
             allProjectileList.Add(p);
             p.IncreaseSize(increaseValue);
         }
     }
-    public void CreateNewProjectile(AttackRadiusUtility attackRadiusUtility)
-    {
-        for (int i = 0; i < projectileCreateCount; i++)
-        {
-            GameObject obj = Object.Instantiate(projectilePrefab); //게임오브젝트 생성 후 초기화
-            obj.SetActive(false);
-            obj.transform.SetParent(parent);
-            obj.transform.localPosition = Vector3.zero;
-            obj.transform.localRotation = Quaternion.identity;
 
-            Projectile p = obj.GetComponent<Projectile>();
-            p.SetRangeAttackUtility(this);
-            p.SetAttackRadiusUtility(attackRadiusUtility);
-            projectileQueue.Enqueue(p);
-            allProjectileList.Add(p);
-            p.IncreaseSize(increaseValue);
-        }
-    }
-    public void SetAttackRadiusUtility(AttackRadiusUtility attackRadiusUtility)
-    {
-        foreach (var projectile in allProjectileList)
-        {
-            projectile.SetAttackRadiusUtility(attackRadiusUtility);
-        }
-    }
+
     public void SetActivateTime(float time)
     {
         foreach (var projectile in allProjectileList)

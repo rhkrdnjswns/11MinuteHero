@@ -74,7 +74,8 @@ public class BRedGolemNormal : BRedGolem
     {
         for(int i = 0; i < decalParentArray.Length; i++)
         {
-            attackInSquareUtility.AttackLayerInSquare(attackInSquareUtility.GetLayerInSquare(decalList[(int)EDecalNumber.SummonStoneX + i].transform.position, new Vector3(0.4f, 1, 2.5f), decalParentArray[i].rotation), 15);
+            int num = Physics.OverlapBoxNonAlloc(decalList[(int)EDecalNumber.SummonStoneX + i].transform.position, new Vector3(0.4f, 1, 2.5f), summonStoneCollisionArray, decalParentArray[i].rotation, ConstDefine.LAYER_PLAYER);
+            AttackInRangeUtility.AttackLayerInRange(summonStoneCollisionArray, 10, num);
 
             decalList[(int)EDecalNumber.SummonStoneX + i].InActiveDecal(decalParentArray[i]);
             decalParentArray[i].transform.SetParent(transform);

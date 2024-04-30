@@ -1,6 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
+public interface IDebuffApplicable
+{
+    public void SlowDown(float value, float duration);
+    public void Stun(float duration);
+}
 public enum EApplicableType //수치 적용 방식
 {
     Value,
@@ -17,7 +22,7 @@ public abstract class Character : MonoBehaviour //플레이어, 몬스터의 부모 클래스
     [SerializeField] protected float speed; //이동속도
 
     [SerializeField] protected float currentHp; //현재 체력
-    protected float currentSpeed; //현재 이동속도
+    [SerializeField] protected float currentSpeed; //현재 이동속도
 
     protected Animator animator; //애니메이터 컴포넌트 참조
 

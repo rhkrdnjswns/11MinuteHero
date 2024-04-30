@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // * 일반 몬스터 AI는 상태머신으로 디자인
-public class NormalMonster : Monster
+public class NormalMonster : Monster, IDebuffApplicable
 {
     public enum EMonsterState
     {
@@ -12,6 +12,9 @@ public class NormalMonster : Monster
     }
 
     private Coroutine stiffnessCoroutine;
+    private Coroutine slowDownCoroutine;
+
+    private float currentSlowDownValue;
 
     [SerializeField] protected EMonsterState monsterState;
     [SerializeField] protected float damage; //데미지
@@ -137,6 +140,7 @@ public class NormalMonster : Monster
         overlappingAvoider.enabled = false;
         boxCollider.enabled = false;
 
+        if (!animator.enabled) animator.enabled = true;
         animator.SetTrigger(ConstDefine.TRIGGER_DIE); //사망 애니메이션
         InGameManager.Instance.KillCount++; //킬카운트 1 증가
 
@@ -189,6 +193,39 @@ public class NormalMonster : Monster
             InGameManager.Instance.Player.Hit(damage);
         }
     }
+    public void Stun(float duration)
+    {
+        SetStiffness(duration);
+    }
+    public void SlowDown(float value, float duration)
+    {
+        SetSlowDonw(value, duration);
+    }
+    private void SetSlowDonw(float value, float duration)
+    {
+        if(slowDownCoroutine != null)
+        {
+            currentSpeed += currentSlowDownValue;
+            StopCoroutine(slowDownCoroutine);
+        }
+
+        if (value >= currentSlowDownValue)
+        {
+            currentSlowDownValue = value;
+            currentSpeed -= value;
+            slowDownCoroutine = StartCoroutine(Co_SlowDown(duration));
+        }
+    }
+    private IEnumerator Co_SlowDown(float duration)
+    {
+        float timer = 0;
+        while(timer < duration)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        currentSpeed += currentSlowDownValue;
+    }
     public void SetStiffness(float sec)
     {
         isStiffness = true;
@@ -215,6 +252,6 @@ public class NormalMonster : Monster
     }
     private EItemID GetItemIDByWeight()
     {
-        return EItemID.Clock;
+        return EItemID.ExpRed;
     }
 }
