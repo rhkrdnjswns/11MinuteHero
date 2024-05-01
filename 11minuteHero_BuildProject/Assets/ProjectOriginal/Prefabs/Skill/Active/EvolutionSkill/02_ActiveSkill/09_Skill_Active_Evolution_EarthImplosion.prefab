@@ -51,12 +51,15 @@ MonoBehaviour:
   name: 
   bCanEvolution: 0
   coolTime: 0
+  currentCoolTime: 0
   baseDamage: 0
   secondDamage: 0
   increaseDamagePercentage: 0
   currentDamage: 0
-  earthSpellPrefab: {fileID: 0}
-  createCount: 0
+  activeObjectPrefab: {fileID: 7661302976881533688, guid: 44baf5facaf00e5428f579b3d791c33a,
+    type: 3}
+  createCount: 5
+  radius: 0
   slowDuration: 0
   slowPercentage: 0
 --- !u!114 &-8832130825472624251

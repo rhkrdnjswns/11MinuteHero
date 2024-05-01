@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class ActiveMagicShield : ActiveSkillUsingProjectile
 {
-    [SerializeField] private float shotInterval;
+    [SerializeField] protected float shotInterval;
     [SerializeField] protected float activateTime;
     [SerializeField] protected float rotateSpeed;
+    protected float knockBackSpeed;
+    protected float knockBackDuration;
 
-    private WaitForSeconds shotDelay;
+    protected WaitForSeconds shotDelay;
     public override void ActivateSkill()
     {
         base.ActivateSkill();
@@ -62,6 +64,7 @@ public class ActiveMagicShield : ActiveSkillUsingProjectile
         base.InitProjectile();
         projectileUtility.SetActivateTime(activateTime);
         projectileUtility.SetRotateSpeed(rotateSpeed);
+        projectileUtility.SetKnockBackData(knockBackSpeed, knockBackDuration);
     }
     public override void SetEvlotionCondition()
     {
@@ -72,18 +75,22 @@ public class ActiveMagicShield : ActiveSkillUsingProjectile
             bCanEvolution = true;
         }
     }
-    protected override void ReadCSVData()
+    protected override void ReadActiveCSVData()
     {
-        base.ReadCSVData();
+        base.ReadActiveCSVData();
 
-        if (eSkillType == ESkillType.Evolution) return;
         shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 14);
         currentShotCount = shotCount;
+
+        activateTime = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 17);
 
         speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 18);
         shotInterval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 19);
         shotDelay = new WaitForSeconds(shotInterval);
 
         rotateSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 22);
+
+        knockBackSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 35);
+        knockBackDuration = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 36);
     }
 }

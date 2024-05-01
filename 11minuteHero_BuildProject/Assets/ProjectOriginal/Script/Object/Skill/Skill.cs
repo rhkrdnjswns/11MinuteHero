@@ -77,6 +77,10 @@ public abstract class Skill : MonoBehaviour //무기, 패시브, 액티브 스킬 등 모든 
     public int Id { get => id; }
     public void Reinforce() //모든 스킬의 강화 함수. 세부 내용은 각 객체들이 재정의
     {
+        if (eSkillType == ESkillType.Evolution)
+        {
+            throw new System.EvolutionSkillReinforceException();
+        }
         if (level == ConstDefine.SKILL_MAX_LEVEL) return;
         level++;
         UpdateSkillData();

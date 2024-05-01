@@ -29,4 +29,13 @@ public class EvolutionSoulHarvest : ActiveAurora
         ParticleSystem.ShapeModule shape = healingParticle.shape;
         shape.radius = sensingRadius;
     }
+    protected override void ReadEvolutionCSVData()
+    {
+        base.ReadEvolutionCSVData();
+
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 9);
+        originRadius = sensingRadius;
+
+        recoverValue = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 32);
+    }
 }

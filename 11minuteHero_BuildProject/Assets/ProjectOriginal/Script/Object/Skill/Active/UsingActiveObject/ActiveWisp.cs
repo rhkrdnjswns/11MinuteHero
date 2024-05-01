@@ -7,7 +7,7 @@ public class ActiveWisp : ActiveSkillUsingActiveObject //도깨비불 스킬 클래스
     [SerializeField] protected int wispCount; //도깨비불 개수
     protected int currentWispCount;
     [SerializeField] private float distanceToPlayer; //도깨비불과 플레이어 사이 거리
-
+    private float rotSpeed;
     public override void ActivateSkill()
     {
         base.ActivateSkill();
@@ -62,14 +62,29 @@ public class ActiveWisp : ActiveSkillUsingActiveObject //도깨비불 스킬 클래스
             bCanEvolution = true;
         }
     }
-    protected override void ReadCSVData()
+    protected override void InitActiveObject()
     {
-        base.ReadCSVData();
+        base.InitActiveObject();
+        activeObjectUtility.SetSpeed(rotSpeed);
+    }
+    protected override void ReadActiveCSVData()
+    {
+        base.ReadActiveCSVData();
 
-        if (eSkillType == ESkillType.Evolution) return;
         wispCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 15);
         currentWispCount = wispCount;
-        
+
+        rotSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 22);
         distanceToPlayer = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 25);
+    }
+    protected override void ReadEvolutionCSVData()
+    {
+        base.ReadEvolutionCSVData();
+
+        wispCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 11);
+        currentWispCount = wispCount;
+
+        rotSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 16);
+        distanceToPlayer = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 19);
     }
 }

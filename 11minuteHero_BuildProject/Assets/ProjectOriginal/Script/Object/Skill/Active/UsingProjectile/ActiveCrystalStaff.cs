@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class ActiveCrystalStaff : ActiveSkillUsingProjectile
 {
@@ -60,16 +59,24 @@ public class ActiveCrystalStaff : ActiveSkillUsingProjectile
             bCanEvolution = true;
         }
     }
-    protected override void ReadCSVData()
+    protected override void ReadActiveCSVData()
     {
-        base.ReadCSVData();
-
-        if (eSkillType == ESkillType.Evolution) return;
+        base.ReadActiveCSVData();
 
         sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
         activateTime = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 17);
         speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 18);
 
         penetrationCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 20);
+    }
+    protected override void ReadEvolutionCSVData()
+    {
+        base.ReadEvolutionCSVData();
+
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
+        activateTime = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 12);
+        speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 13);
+
+        penetrationCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 15);
     }
 }

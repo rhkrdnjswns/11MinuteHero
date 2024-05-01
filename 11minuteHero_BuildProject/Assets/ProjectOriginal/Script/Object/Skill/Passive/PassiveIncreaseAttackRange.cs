@@ -6,17 +6,22 @@ public class PassiveIncreaseAttackRange : PassiveSkill //공격 사거리 증가 패시브
         {
             item.IncreaseRange(percentage);
         }
-        descriptionStringBuilder.Clear();
-        descriptionStringBuilder.Append("공격 범위가 ");
-        descriptionStringBuilder.Append(GetPercentageForDescription());
-        descriptionStringBuilder.Append("%만큼 증가합니다.");
-
-        base.UpdateSkillData();
+        SetDescription();
     }
     public override void SetEvlotionCondition()
     {
         Skill skill = InGameManager.Instance.SkillManager.GetActiveSkill((int)ESkillActiveID.FireBomb);
         if (skill == null) return;
         skill.SetEvlotionCondition();
+    }
+
+    protected override void SetDescription()
+    {
+        descriptionStringBuilder.Clear();
+        descriptionStringBuilder.Append("공격 범위가 ");
+        descriptionStringBuilder.Append(GetPercentageForDescription());
+        descriptionStringBuilder.Append("%만큼 증가합니다.");
+
+        base.SetDescription();
     }
 }

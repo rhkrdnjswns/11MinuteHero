@@ -34,4 +34,18 @@ public class EvolutionShadowKnife : ActiveKnife
         base.InitProjectile();
         projectileUtility.SetAction(() => isReturn = true);
     }
+    protected override void ReadEvolutionCSVData()
+    {
+        base.ReadEvolutionCSVData();
+
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
+
+        shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 11);
+        currentShotCount = shotCount;
+
+        speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 13);
+
+        projectileSensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 31);
+        originRadius = projectileSensingRadius;
+    }
 }

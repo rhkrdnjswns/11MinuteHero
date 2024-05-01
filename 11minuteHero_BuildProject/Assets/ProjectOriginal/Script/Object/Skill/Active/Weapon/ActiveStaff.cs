@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class ActiveStaff : ActiveSkillUsingProjectile //마법사가 사용하는 무기. (09/25)액티브 스킬 제작 완료 후 리팩토링 시에 Staff로 클래스 이름 바꿔야함
 {
-    [SerializeField] private float shotInterval;
-    [SerializeField] private int maxTargetCount;
-    [SerializeField] private float sensingRadius;
+    [SerializeField] protected float shotInterval;
+    [SerializeField] protected int maxTargetCount;
+    [SerializeField] protected float sensingRadius;
 
     private Collider[] sensingCollisionArray = new Collider[50];
-    private WaitForSeconds shotDelay;
+    protected WaitForSeconds shotDelay;
     public override void ActivateSkill()
     {
         base.ActivateSkill();
@@ -73,11 +73,9 @@ public class ActiveStaff : ActiveSkillUsingProjectile //마법사가 사용하는 무기. 
             yield return StartCoroutine(Co_Shot());
         }
     }
-    protected override void ReadCSVData()
+    protected override void ReadActiveCSVData()
     {
-        base.ReadCSVData();
-
-        if (eSkillType == ESkillType.Evolution) return;
+        base.ReadActiveCSVData();
 
         sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
         maxTargetCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 9);

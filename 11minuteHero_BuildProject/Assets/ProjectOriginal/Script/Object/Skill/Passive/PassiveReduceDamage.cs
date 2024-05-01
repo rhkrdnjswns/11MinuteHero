@@ -8,12 +8,7 @@ public class PassiveReduceDamage : PassiveSkill //피해량 감소 패시브 스킬.
     {
         InGameManager.Instance.Player.DamageReduction += percentage;
 
-        descriptionStringBuilder.Clear();
-        descriptionStringBuilder.Append("받는 피해량이 ");
-        descriptionStringBuilder.Append(GetPercentageForDescription());
-        descriptionStringBuilder.Append("%만큼 감소합니다.");
-
-        base.UpdateSkillData();
+        SetDescription();
     }
     public override void SetEvlotionCondition()
     {
@@ -24,5 +19,14 @@ public class PassiveReduceDamage : PassiveSkill //피해량 감소 패시브 스킬.
         skill = InGameManager.Instance.SkillManager.GetActiveSkill((int)ESkillActiveID.MagicShield);
         if (skill == null) return;
         skill.SetEvlotionCondition();
+    }
+
+    protected override void SetDescription()
+    {
+        descriptionStringBuilder.Clear();
+        descriptionStringBuilder.Append("받는 피해량이 ");
+        descriptionStringBuilder.Append(GetPercentageForDescription());
+        descriptionStringBuilder.Append("%만큼 감소합니다.");
+        base.SetDescription();
     }
 }

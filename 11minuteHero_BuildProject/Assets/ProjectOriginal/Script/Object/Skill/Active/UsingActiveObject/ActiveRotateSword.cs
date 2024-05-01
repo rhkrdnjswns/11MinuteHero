@@ -119,17 +119,15 @@ public class ActiveRotateSword : ActiveSkill
                 }
                 break;
             case ESwordType.DevilSword:
-               // Debug.LogError("UnDefined Type");
                 break;
             default:
+                Debug.LogError("UnDefined Type");
                 break;
         }
     }
-    protected override void ReadCSVData()
+    protected override void ReadActiveCSVData()
     {
-        base.ReadCSVData();
-
-        if (eSkillType == ESkillType.Evolution) return;
+        base.ReadActiveCSVData();
 
         attackInterval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 8);
         
@@ -142,5 +140,20 @@ public class ActiveRotateSword : ActiveSkill
 
         degree = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 24);
         distance = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 25);
+    }
+    protected override void ReadEvolutionCSVData()
+    {
+        base.ReadEvolutionCSVData();
+
+        attackInterval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 7);
+
+        radius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 9);
+        originRadius = radius;
+
+        rotSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 16);
+        arrivalSecond = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 17);
+
+        degree = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 18);
+        distance = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 19);
     }
 }
