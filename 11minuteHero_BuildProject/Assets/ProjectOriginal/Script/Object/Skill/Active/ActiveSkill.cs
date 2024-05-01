@@ -19,7 +19,7 @@ public abstract class ActiveSkill : Skill //액티브 스킬 클래스. 기믹 클래스 상속
 
 #if UNITY_EDITOR
     public float Damage { get => currentDamage; }
-    public string ActivateTime { get; private set; }
+    public float ActivateTime { get; private set; }
     public int AttackCount { get; set; }
     public float TotalDamage { get; set; }
 #endif
@@ -29,7 +29,7 @@ public abstract class ActiveSkill : Skill //액티브 스킬 클래스. 기믹 클래스 상속
         base.ActivateSkill();
 #if UNITY_EDITOR
         UnityEditor.EditorWindow.GetWindow<ForTest.DPSLogWindow>()?.AddSkill(this);
-        ActivateTime = $"{(int)InGameManager.Instance.Timer / 60}분{(int)InGameManager.Instance.Timer % 60}초";
+        ActivateTime = InGameManager.Instance.Timer;
 #endif
         StartCoroutine(Co_ActiveSkillAction());
         InGameManager.Instance.DGameOver += StopAllCoroutines;

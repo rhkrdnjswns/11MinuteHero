@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Text;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 namespace ForTest
 {
@@ -32,7 +33,7 @@ namespace ForTest
         }
         private void Awake()
         {
-            EditorApplication.playModeStateChanged += ShowLog;
+            EditorApplication.playModeStateChanged += BroadCastEndTime;
             CreateDummy();
         }
         private void Update()
@@ -105,11 +106,11 @@ namespace ForTest
         {
             bDeleteDummy = true;
         }
-        private void ShowLog(PlayModeStateChange state)
+        private void BroadCastEndTime(PlayModeStateChange state)
         {
             if(state == PlayModeStateChange.ExitingPlayMode)
             {
-                Debug.Log($"종료 시간 : {(int)InGameManager.Instance.Timer / 60}분{(int)InGameManager.Instance.Timer % 60}초");
+                EditorWindow.GetWindow<DPSLogWindow>()?.SetEndTime(InGameManager.Instance.Timer);
             }
         }
 
@@ -123,14 +124,15 @@ namespace ForTest
     public class DPSLogWindow : EditorWindow
     {
         private List<ActiveSkill> activatedSkillList = new List<ActiveSkill>();
-
+        private float endTime;
         StringBuilder sb = new StringBuilder();
 
         [MenuItem("Window/DPS Log")]//DPS Log = 메뉴 이름, 해당 메뉴 선택 시 아래 함수 호출
         public static void ShowWindow()
         {
             //DPSLogWindow 타입의 윈도우를 가져온다. DPS Log = 윈도우 타이틀
-            GetWindow(typeof(DPSLogWindow), false, "DPS Log");
+            DPSLogWindow window = (DPSLogWindow)GetWindow(typeof(DPSLogWindow), utility: true, title: "DPSLog"); //false, "DPS Log");
+            window.Show();
         }
         private void OnGUI()
         {
@@ -147,7 +149,7 @@ namespace ForTest
             for(int i = 0; i < activatedSkillList.Count; i++)
             {
                 AddString("스킬 이름 : ", activatedSkillList[i].Name,
-                    "\n활성화 시간 : ", activatedSkillList[i].ActivateTime,
+                    "\n활성화 시간 : ", ((int)activatedSkillList[i].ActivateTime / 60).ToString(),"분", ((int)activatedSkillList[i].ActivateTime % 60).ToString(),"초",
                     "\n스킬 레벨 : ", activatedSkillList[i].Level.ToString(),
                     "\n스킬 피해량 :", activatedSkillList[i].Damage.ToString(),
                     "\n공격(사용) 회수 : ", activatedSkillList[i].AttackCount.ToString(),
@@ -156,14 +158,41 @@ namespace ForTest
                 sb.Clear();
             }
 
-            if(GUILayout.Button("로그 저장하기"))
+            if (GUILayout.Button("로그 저장하기"))
             {
-
+                if (EditorApplication.isPlaying)
+                {
+                    Debug.LogError("플레이 모드에서는 로그를 저장할 수 없습니다");
+                    return;
+                }
+                string filePath = EditorUtility.SaveFilePanel("SaveLog", "", "DPS_Log", "txt");
+                if (filePath.Length != 0)
+                {
+                    using (StreamWriter writer = new StreamWriter(filePath))
+                    {
+                        writer.WriteLine($"종료 시간 : {(int)endTime / 60}분{(int)endTime % 60}초\n");
+                        foreach (ActiveSkill skill in activatedSkillList)
+                        {
+                            writer.WriteLine($"스킬 이름: {skill.Name}");
+                            writer.WriteLine($"활성화 시간: {(int)skill.ActivateTime / 60}분{(int)skill.ActivateTime % 60}초");
+                            writer.WriteLine($"총 활성화 시간:{(int)(endTime - skill.ActivateTime) / 60}분{(int)(endTime - skill.ActivateTime) % 60}초");
+                            writer.WriteLine($"스킬 레벨: {skill.Level}");
+                            writer.WriteLine($"스킬 피해량: {skill.Damage}");
+                            writer.WriteLine($"공격(사용) 회수: {skill.AttackCount}");
+                            writer.WriteLine($"누적 피해량: {skill.TotalDamage}\n");
+                        }
+                    }
+                }
             }
         }
+
         public void AddSkill(ActiveSkill skill)
         {
             activatedSkillList.Add(skill);
+        }
+        public void SetEndTime(float time)
+        {
+            endTime = time;
         }
         private void AddString(params string[] values)
         {
