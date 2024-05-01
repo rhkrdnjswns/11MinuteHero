@@ -6,7 +6,8 @@ public class ActiveKnife : ActiveSkillUsingProjectile
 {
     [SerializeField] private float shotInterval;
     [SerializeField] protected float sensingRadius;
-    [SerializeField] private float projectileSensingRadius;
+    [SerializeField] protected float projectileSensingRadius;
+    protected float originRadius;
     [SerializeField] private int bounceCount;
 
     protected Collider[] sensingCollisionArray = new Collider[50];
@@ -24,6 +25,13 @@ public class ActiveKnife : ActiveSkillUsingProjectile
             yield return coolTimeDelay;
             yield return StartCoroutine(Co_AttackInRadius());
         }
+    }
+    protected override void SetCurrentRange(float value)
+    {
+        base.SetCurrentRange(value);
+
+        projectileSensingRadius += originRadius * value / 100;
+        projectileUtility.SetAttackRadius(projectileSensingRadius);
     }
     protected override void UpdateSkillData()
     {
@@ -71,10 +79,10 @@ public class ActiveKnife : ActiveSkillUsingProjectile
             bCanEvolution = true;
         }
     }
-    protected override void ReadCSVData()
+    protected override void ReadActiveCSVData()
     {
-        base.ReadCSVData();
-        if (eSkillType == ESkillType.Evolution) return;
+        base.ReadActiveCSVData();
+
         sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
 
         shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 14);
@@ -85,6 +93,8 @@ public class ActiveKnife : ActiveSkillUsingProjectile
         shotDelay = new WaitForSeconds(shotInterval);
 
         projectileSensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 31);
+        originRadius = projectileSensingRadius;
+
         bounceCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 32);
     }
 }

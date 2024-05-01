@@ -14,6 +14,8 @@ public class ActiveBattleBluntWeapon : ActiveSkillUsingProjectile //ÀüÅõ¸ÁÄ¡¿Í À
     [SerializeField] private float distance;
     [SerializeField] private float increaseSizeValue;
     [SerializeField] private float rotateSpeed;
+    private float knockBackSpeed;
+    private float knockBackDuration;
 
     private int returnCount;
     protected override void UpdateSkillData()
@@ -76,6 +78,7 @@ public class ActiveBattleBluntWeapon : ActiveSkillUsingProjectile //ÀüÅõ¸ÁÄ¡¿Í À
         projectileUtility.SetRotateSpeed(rotateSpeed);
         projectileUtility.SetDistance(distance);
         projectileUtility.SetAction(() => returnCount++);
+        projectileUtility.SetKnockBackData(knockBackSpeed, knockBackDuration);
     }
     public override void SetEvlotionCondition()
     {
@@ -100,11 +103,10 @@ public class ActiveBattleBluntWeapon : ActiveSkillUsingProjectile //ÀüÅõ¸ÁÄ¡¿Í À
                 break;
         }
     }
-    protected override void ReadCSVData()
+    protected override void ReadActiveCSVData()
     {
-        base.ReadCSVData();
+        base.ReadActiveCSVData();
 
-        if (eSkillType == ESkillType.Evolution) return;
         shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 13);
         currentShotCount = shotCount;
 
@@ -112,5 +114,22 @@ public class ActiveBattleBluntWeapon : ActiveSkillUsingProjectile //ÀüÅõ¸ÁÄ¡¿Í À
         speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 18);
         rotateSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 22);
         distance = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 26);
+
+        knockBackSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 35);
+        knockBackDuration = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 36);
+    }
+    protected override void ReadEvolutionCSVData()
+    {
+        base.ReadEvolutionCSVData();
+
+        shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 11);
+        currentShotCount = shotCount;
+
+        speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 13);
+        rotateSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 16);
+        distance = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 20);
+
+        knockBackSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 34);
+        knockBackDuration = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 35);
     }
 }

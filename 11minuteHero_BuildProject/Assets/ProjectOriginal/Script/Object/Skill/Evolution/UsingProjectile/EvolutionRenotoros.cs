@@ -50,4 +50,21 @@ public class EvolutionRenotoros : ActiveMagicShield
         base.InitProjectile();
         projectileUtility.SetAction(() => returnCount++);
     }
+
+    protected override void ReadEvolutionCSVData()
+    {
+        base.ReadEvolutionCSVData();
+
+        shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 11);
+        currentShotCount = shotCount;
+
+        activateTime = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 12);
+
+        speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 13);
+
+        rotateSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 16);
+
+        knockBackSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 34);
+        knockBackDuration = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 35);
+    }
 }

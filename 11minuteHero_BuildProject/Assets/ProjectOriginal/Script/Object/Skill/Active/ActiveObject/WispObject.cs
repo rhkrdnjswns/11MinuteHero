@@ -3,10 +3,15 @@ using UnityEngine;
 
 public class WispObject : ActiveObject //도깨비불 오브젝트
 {
+    private float rotSpeed;
 #if UNITY_EDITOR
     public int index;
 #endif
 
+    public override void SetSpeed(float value)
+    {
+        rotSpeed = value;
+    }
     public override void IncreaseSize(float value)
     {
         foreach (var child in GetComponentsInChildren<Transform>())
@@ -18,7 +23,7 @@ public class WispObject : ActiveObject //도깨비불 오브젝트
     {
         while (true) //플레이어 주위를 회전하는 코루틴
         {
-            transform.RotateAround(InGameManager.Instance.Player.transform.position, Vector3.up, 120 * Time.deltaTime);
+            transform.RotateAround(InGameManager.Instance.Player.transform.position, Vector3.up, rotSpeed * Time.deltaTime);
             transform.LookAt(InGameManager.Instance.Player.transform);
 
             yield return null;

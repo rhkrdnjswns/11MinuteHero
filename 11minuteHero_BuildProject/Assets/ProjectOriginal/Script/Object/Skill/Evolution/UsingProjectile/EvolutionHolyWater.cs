@@ -26,4 +26,24 @@ public class EvolutionHolyWater : ActiveFireBomb
             yield return shotDelay;
         }
     }
+    protected override void ReadEvolutionCSVData()
+    {
+        base.ReadEvolutionCSVData();
+
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
+        dotInterval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 7);
+
+        shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 11);
+        currentShotCount = shotCount;
+
+        shotInterval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 14);
+        shotDelay = new WaitForSeconds(shotInterval);
+
+        distance = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 20);
+
+        dotAreaRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 22);
+        originRadius = dotAreaRadius;
+
+        dotDuration = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 23);
+    }
 }

@@ -184,6 +184,13 @@ public class ProjectileUtility : IProjectileUsable
             item.SetAction(action);
         }
     }
+    public void SetKnockBackData(float speed, float duration)
+    {
+        foreach (var item in allProjectileList)
+        {
+            item.SetKnockBackData(speed, duration);
+        }
+    }
     public void IncreaseSize(float value)
     {
         foreach (var item in allProjectileList)

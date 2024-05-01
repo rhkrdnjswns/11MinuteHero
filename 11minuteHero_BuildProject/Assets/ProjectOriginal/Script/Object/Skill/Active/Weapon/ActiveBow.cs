@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ActiveBow : ActiveSkillUsingProjectile //궁수가 사용하는 무기. (09/25)액티브 스킬 제작 완료 후 리팩토링 시에 Bow로 클래스 이름 바꿔야함
 {
-    [SerializeField] private int penetrationCount;
-    [SerializeField] private int currentPenetrationCount;
-    [SerializeField] private float activateTime;
-
+    [SerializeField] protected int penetrationCount;
+    [SerializeField] protected int currentPenetrationCount;
+    [SerializeField] protected float activateTime;
+    
     protected float arrowAngle;    //화살 갯수에 따른 화살 각도
     public override void ActivateSkill()
     {
@@ -76,11 +76,9 @@ public class ActiveBow : ActiveSkillUsingProjectile //궁수가 사용하는 무기. (09/
         base.InitProjectile();
         projectileUtility.SetActivateTime(activateTime);
     }
-    protected override void ReadCSVData()
+    protected override void ReadActiveCSVData()
     {
-        base.ReadCSVData();
-
-        if (eSkillType == ESkillType.Evolution) return;
+        base.ReadActiveCSVData();
 
         shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 14);
         currentShotCount = shotCount;

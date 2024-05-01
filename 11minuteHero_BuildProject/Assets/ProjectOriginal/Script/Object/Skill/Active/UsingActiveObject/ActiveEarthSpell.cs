@@ -47,16 +47,24 @@ public class ActiveEarthSpell : ActiveSkillUsingActiveObject //대지의 마법서 스�
             bCanEvolution = true;
         }
     }
-    protected override void ReadCSVData()
+    protected override void ReadActiveCSVData()
     {
-        base.ReadCSVData();
+        base.ReadActiveCSVData();
 
-        if (eSkillType == ESkillType.Evolution) return;
         radius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 10);
         originRadius = radius;
 
         slowPercentage = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 33);
         slowDuration = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 34);
+    }
+    protected override void ReadEvolutionCSVData()
+    {
+        base.ReadEvolutionCSVData();
 
+        radius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 9);
+        originRadius = radius;
+
+        slowPercentage = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 26);
+        slowDuration = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 27);
     }
 }

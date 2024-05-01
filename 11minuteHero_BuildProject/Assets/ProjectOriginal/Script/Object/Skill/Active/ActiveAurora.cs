@@ -9,7 +9,7 @@ public class ActiveAurora : ActiveSkill //오라 스킬 클래스
     [SerializeField] protected ParticleSystem sparksParticle;
 
     [SerializeField] protected float sensingRadius;
-    [SerializeField] private float originRadius;
+    [SerializeField] protected float originRadius;
     [SerializeField] private float IncreaseRadiusValue;
 
     protected Collider[] collisionArray = new Collider[100];
@@ -72,11 +72,10 @@ public class ActiveAurora : ActiveSkill //오라 스킬 클래스
             bCanEvolution = true;
         }
     }
-    protected override void ReadCSVData()
+    protected override void ReadActiveCSVData()
     {
-        base.ReadCSVData();
+        base.ReadActiveCSVData();
 
-        if (eSkillType == ESkillType.Evolution) return;
         sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 10);
         originRadius = sensingRadius;
 

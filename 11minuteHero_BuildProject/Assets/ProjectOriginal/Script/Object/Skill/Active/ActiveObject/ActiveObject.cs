@@ -22,6 +22,10 @@ public class ActiveObject : MonoBehaviour
     {
         //슬로우 디버프를 적용하는 오브젝트의 슬로우 관련 설정
     }
+    public virtual void SetSpeed(float value)
+    {
+        //속도를 가지는 오브젝트의 속도 설정
+    }
     public virtual void IncreaseSize(float value)
     {
         transform.localScale += Vector3.one * value;
