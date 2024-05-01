@@ -86,6 +86,13 @@ public class ActiveObjectUtility : IActiveObjectUsable
             item.SetDamage(damage);
         }
     }
+    public void SetSpeed(float value)
+    {
+        foreach (var item in allActiveObjectList)
+        {
+            item.SetSpeed(value);
+        }
+    }
     public void SetAttackRadius(float radius)
     {
         foreach (var item in allActiveObjectList)

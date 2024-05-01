@@ -51,14 +51,18 @@ MonoBehaviour:
   name: 
   bCanEvolution: 0
   coolTime: 0
+  currentCoolTime: 0
   baseDamage: 0
   secondDamage: 0
   increaseDamagePercentage: 0
   currentDamage: 0
-  meteorPrefab: {fileID: 0}
+  activeObjectPrefab: {fileID: 3809579804668762146, guid: af6360c139bf4e14f98a43a7a9381a7c,
+    type: 3}
+  createCount: 30
+  meteorCount: 0
   summonInteval: 0.2
-  createCount: 0
   sensingRadius: 0
+  explosionRadius: 0
 --- !u!114 &5850407740829391498
 MonoBehaviour:
   m_ObjectHideFlags: 0

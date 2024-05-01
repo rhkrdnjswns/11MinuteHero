@@ -52,17 +52,19 @@ MonoBehaviour:
   bCanEvolution: 0
   coolTime: 2.8
   currentCoolTime: 0
-  damage: 80
-  currentDamage: 0
   baseDamage: 0
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 7267913664221306614, guid: c7410a7d060a7d74789f6fa8dd314d84,
-      type: 3}
-    projectileCreateCount: 10
-    projectileSpeed: 2.8
+  secondDamage: 0
+  increaseDamagePercentage: 0
+  currentDamage: 0
+  projectilePrefab: {fileID: 7267913664221306614, guid: c7410a7d060a7d74789f6fa8dd314d84,
+    type: 3}
+  createCount: 4
+  shotCount: 2
+  currentShotCount: 0
+  speed: 0
   shotInterval: 0
   activateTime: 5
-  shotCount: 2
+  rotateSpeed: 0
 --- !u!114 &8686117590004485063
 MonoBehaviour:
   m_ObjectHideFlags: 0

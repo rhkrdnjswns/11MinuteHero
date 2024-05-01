@@ -6,15 +6,15 @@ public class ActiveFireBomb : ActiveSkillUsingProjectile
     [Range(1, 89)]
     [SerializeField] protected float angle;
     [SerializeField] protected float shotInterval = 0.3f;
-    [SerializeField] private float dotDuration;
-    [SerializeField] private float dotInterval;
-    [SerializeField] private float dotAreaRadius;
-    [SerializeField] private float sensingRadius;
+    [SerializeField] protected float dotDuration;
+    [SerializeField] protected float dotInterval;
+    [SerializeField] protected float dotAreaRadius;
+    [SerializeField] protected float sensingRadius;
 
     protected WaitForSeconds shotDelay;
 
     private Collider[] sensingCollisionArray = new Collider[50];
-    private float originRadius;
+    protected float originRadius;
     public override void ActivateSkill()
     {
         base.ActivateSkill();
@@ -83,11 +83,10 @@ public class ActiveFireBomb : ActiveSkillUsingProjectile
             bCanEvolution = true;
         }
     }
-    protected override void ReadCSVData()
+    protected override void ReadActiveCSVData()
     {
-        base.ReadCSVData();
+        base.ReadActiveCSVData();
 
-        if (eSkillType == ESkillType.Evolution) return;
         sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
         dotInterval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 8);
 

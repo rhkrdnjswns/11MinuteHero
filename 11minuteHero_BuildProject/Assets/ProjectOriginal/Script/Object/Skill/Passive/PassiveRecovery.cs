@@ -12,12 +12,7 @@ public class PassiveRecovery : PassiveSkill //체력 재생 패시브 스킬
     protected override void UpdateSkillData()
     {
         percentage += increaseValueByLevel;
-        descriptionStringBuilder.Clear();
-        descriptionStringBuilder.Append("초당 최대 체력의 ");
-        descriptionStringBuilder.Append(GetPercentageForDescription());
-        descriptionStringBuilder.Append("%를 회복합니다.");
-
-        base.UpdateSkillData();
+        SetDescription();
     }
     private IEnumerator Co_Recovery() //체력 재생 코루틴
     {
@@ -33,5 +28,14 @@ public class PassiveRecovery : PassiveSkill //체력 재생 패시브 스킬
         Skill skill = InGameManager.Instance.SkillManager.GetActiveSkill((int)ESkillActiveID.Aurora);
         if (skill == null) return;
         skill.SetEvlotionCondition();
+    }
+
+    protected override void SetDescription()
+    {
+        descriptionStringBuilder.Clear();
+        descriptionStringBuilder.Append("초당 최대 체력의 ");
+        descriptionStringBuilder.Append(GetPercentageForDescription());
+        descriptionStringBuilder.Append("%를 회복합니다.");
+        base.SetDescription();
     }
 }

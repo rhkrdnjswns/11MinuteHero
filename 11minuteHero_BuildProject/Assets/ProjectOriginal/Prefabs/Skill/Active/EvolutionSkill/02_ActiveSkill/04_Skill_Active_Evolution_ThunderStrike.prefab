@@ -51,12 +51,14 @@ MonoBehaviour:
   name: 
   bCanEvolution: 0
   coolTime: 0
+  currentCoolTime: 0
   baseDamage: 0
   secondDamage: 0
   increaseDamagePercentage: 0
   currentDamage: 0
-  projectilePrefab: {fileID: 0}
-  createCount: 0
+  projectilePrefab: {fileID: 2317998400837105987, guid: c4e1beafe12b4de4eb1f11736c2ab251,
+    type: 3}
+  createCount: 8
   shotCount: 0
   currentShotCount: 0
   speed: 0

@@ -115,11 +115,10 @@ public class ActiveSword : ActiveSkill
             Attack();
         }
     }
-    protected override void ReadCSVData()
+    protected override void ReadActiveCSVData()
     {
-        base.ReadCSVData();
+        base.ReadActiveCSVData();
 
-        if (eSkillType == ESkillType.Evolution) return;
         sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 10);
         increaseRangeValue = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 11);
         attackAngle = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 12);

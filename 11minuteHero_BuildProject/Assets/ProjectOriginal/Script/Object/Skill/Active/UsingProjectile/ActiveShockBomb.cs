@@ -87,11 +87,10 @@ public class ActiveShockBomb : ActiveSkillUsingProjectile
             bCanEvolution = true;
         }
     }
-    protected override void ReadCSVData()
+    protected override void ReadActiveCSVData()
     {
-        base.ReadCSVData();
+        base.ReadActiveCSVData();
 
-        if (eSkillType == ESkillType.Evolution) return;
         sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
 
         shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 14);
@@ -105,5 +104,22 @@ public class ActiveShockBomb : ActiveSkillUsingProjectile
 
         slowDownValue = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 33);
         debuffDuration = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 34);
+    }
+    protected override void ReadEvolutionCSVData()
+    {
+        base.ReadEvolutionCSVData();
+
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
+
+        shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 11);
+        currentShotCount = shotCount;
+
+        shotInterval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 14);
+        shotDelay = new WaitForSeconds(shotInterval);
+
+        radius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 21);
+        originRadius = radius;
+
+        debuffDuration = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 33);
     }
 }

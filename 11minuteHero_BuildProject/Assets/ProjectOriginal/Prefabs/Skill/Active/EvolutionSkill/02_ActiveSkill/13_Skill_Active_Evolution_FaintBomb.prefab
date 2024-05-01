@@ -51,20 +51,23 @@ MonoBehaviour:
   name: "\uAE30\uC808\uD3ED\uD0C4"
   bCanEvolution: 0
   coolTime: 0
+  currentCoolTime: 0
   baseDamage: 0
   secondDamage: 0
   increaseDamagePercentage: 0
   currentDamage: 0
-  projectilePrefab: {fileID: 0}
-  createCount: 0
+  projectilePrefab: {fileID: 2447267553195785924, guid: 608ed1708c3bef5488ec36d73c29c4f4,
+    type: 3}
+  createCount: 20
   shotCount: 0
   currentShotCount: 0
   speed: 0
-  angle: 0
+  angle: 60
   shotInterval: 0.3
   slowDownValue: 0
-  slowDownDuration: 0
+  debuffDuration: 0
   sensingRadius: 0
+  radius: 0
 --- !u!114 &-9054833956046877722
 MonoBehaviour:
   m_ObjectHideFlags: 0

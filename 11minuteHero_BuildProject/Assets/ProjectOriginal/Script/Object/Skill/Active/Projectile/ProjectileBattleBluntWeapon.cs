@@ -7,6 +7,8 @@ public class ProjectileBattleBluntWeapon : Projectile
     private float distance; //투사체가 날아가는 거리
     private float rotateSpeed; //자전 속도
     private Vector3 summonPos; //투사체가 날아간 거리 체크를 위한 생성 포인트
+    private float knockBackSpeed;
+    private float knockBackDuration;
 
     [SerializeField] private Transform objTransform; //투사체 메쉬 오브젝트의 트랜스폼 (회전 효과를 위한 참조)
 
@@ -14,6 +16,11 @@ public class ProjectileBattleBluntWeapon : Projectile
 
     private bool isReturn; //투사체가 다시 돌아오는 경우는 넉백기능 X
 
+    public override void SetKnockBackData(float speed, float duration)
+    {
+        knockBackSpeed = speed;
+        knockBackDuration = duration;
+    }
     public override void SetRotationSpeed(float speed)
     {
         rotateSpeed = speed;
@@ -69,7 +76,7 @@ public class ProjectileBattleBluntWeapon : Projectile
 #if UNITY_EDITOR
             InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += damage;
 #endif
-            if (!c.IsDie && !isReturn) c.KnockBack(1f, 0.5f, shotDirection.normalized);
+            if (!c.IsDie && !isReturn) c.KnockBack(knockBackSpeed, knockBackDuration, (c.transform.position - transform.position).normalized);
         }
     }
 }

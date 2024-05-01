@@ -11,7 +11,7 @@ public class EvolutionHolySword : ActiveSword
 
         InGameManager.Instance.Player.ChangeWeapon(this);
     }
-    protected override void SetCurrentRange(float value)
+    protected override void SetCurrentRange(float value) //파티클 사이즈가 달라서 한번 더 재정의
     {
         float increaeValue = originRadius * value / 100;
         sensingRadius += increaeValue;
@@ -39,5 +39,15 @@ public class EvolutionHolySword : ActiveSword
                 InGameManager.Instance.Player.RecoverHp(hpRecovery, EApplicableType.Value);
             }
         }
+    }
+    protected override void ReadEvolutionCSVData()
+    {
+        base.ReadEvolutionCSVData();
+
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 9);
+        originRadius = sensingRadius;
+
+        attackAngle = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 10);
+        hpRecovery = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 28);
     }
 }

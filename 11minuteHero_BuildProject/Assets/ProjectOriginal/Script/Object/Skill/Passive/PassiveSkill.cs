@@ -7,20 +7,24 @@ public abstract class PassiveSkill : Skill //패시브 스킬 클래스.
     [SerializeField] protected float increaseValueByLevel;
 
     protected StringBuilder descriptionStringBuilder = new StringBuilder();
+    protected virtual void SetDescription()
+    {
+        description = descriptionStringBuilder.ToString();
+    }
+    public override void InitSkill()
+    {
+        base.InitSkill();
 
+        SetDescription();
+    }
     public override void ActivateSkill()
     {
         base.ActivateSkill();
-
         UpdateSkillData();
     }
     protected float GetPercentageForDescription()
     {
         return percentage * (level + 1) > percentage * ConstDefine.SKILL_MAX_LEVEL ? percentage * ConstDefine.SKILL_MAX_LEVEL : percentage * (level + 1);
-    }
-    protected override void UpdateSkillData()
-    {
-        description = descriptionStringBuilder.ToString();
     }
     protected override void ReadCSVData()
     {

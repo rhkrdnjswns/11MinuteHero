@@ -6,12 +6,7 @@ public class PassiveIncreaseDamage : PassiveSkill //데미지 증가 패시브 스킬.
         {
             item.IncreaseDamage(percentage);
         }
-        descriptionStringBuilder.Clear();
-        descriptionStringBuilder.Append("공격력이 ");
-        descriptionStringBuilder.Append(GetPercentageForDescription());
-        descriptionStringBuilder.Append("%만큼 증가합니다.");
-
-        base.UpdateSkillData();
+        SetDescription();
     }
     public override void SetEvlotionCondition()
     {
@@ -22,5 +17,14 @@ public class PassiveIncreaseDamage : PassiveSkill //데미지 증가 패시브 스킬.
         skill = InGameManager.Instance.SkillManager.GetActiveSkill((int)ESkillActiveID.MagicShield);
         if (skill == null) return;
         skill.SetEvlotionCondition();
+    }
+    protected override void SetDescription()
+    {
+        descriptionStringBuilder.Clear();
+        descriptionStringBuilder.Append("공격력이 ");
+        descriptionStringBuilder.Append(GetPercentageForDescription());
+        descriptionStringBuilder.Append("%만큼 증가합니다.");
+
+        base.SetDescription();
     }
 }

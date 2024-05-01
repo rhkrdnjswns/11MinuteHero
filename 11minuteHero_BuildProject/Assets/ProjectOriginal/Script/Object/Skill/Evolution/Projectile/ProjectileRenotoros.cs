@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ProjectileRenotoros : ProjectileMagicShield
 {
-    public float radius = 2f; // 원의 반지름
-    public float angularSpeed = 90f; // 회전 속도 (각속도)
-
     private System.Action IncreaseReturnCount;
     public override void SetAction(System.Action action)
     {

@@ -52,27 +52,21 @@ MonoBehaviour:
   bCanEvolution: 0
   coolTime: 4
   currentCoolTime: 0
-  damage: 40
-  currentDamage: 0
   baseDamage: 0
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 4706505867181023926, guid: 40c2782506845e741955c6379ad18228,
-      type: 3}
-    projectileCreateCount: 10
-    projectileSpeed: 4
+  secondDamage: 0
+  increaseDamagePercentage: 0
+  currentDamage: 0
+  projectilePrefab: {fileID: 4706505867181023926, guid: 40c2782506845e741955c6379ad18228,
+    type: 3}
+  createCount: 10
+  shotCount: 0
+  currentShotCount: 0
+  speed: 0
   activateTime: 2
-  attackRadiusUtility:
-    radius: 12
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
+  sensingRadius: 0
   penetrationCount: 8
-  explosionAttackRadiusUtility:
-    radius: 4.5
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
-  explosionDamage: 100
+  currentPenetrationCount: 0
+  increaseSizeValue: 0
 --- !u!114 &-6932872995921954903
 MonoBehaviour:
   m_ObjectHideFlags: 0

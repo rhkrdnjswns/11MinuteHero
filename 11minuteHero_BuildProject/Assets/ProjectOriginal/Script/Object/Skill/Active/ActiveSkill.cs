@@ -73,13 +73,31 @@ public abstract class ActiveSkill : Skill //액티브 스킬 클래스. 기믹 클래스 상속
     }
     protected abstract void SetCurrentRange(float value); //각 스킬별 공격 범위 갱신 함수 
 
-    protected override void ReadCSVData()
+    protected override sealed void ReadCSVData()
     {
         base.ReadCSVData();
 
+        if (eSkillType == ESkillType.Evolution)
+        {
+            ReadEvolutionCSVData();
+        }
+        else
+        {
+            ReadActiveCSVData();
+        }
+    }
+    protected virtual void ReadActiveCSVData()
+    {
         baseDamage = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 5);
         secondDamage = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 6);
         coolTime = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 7);
+        currentCoolTime = coolTime;
+        coolTimeDelay = new WaitForSeconds(currentCoolTime);
+    }
+    protected virtual void ReadEvolutionCSVData()
+    {
+        baseDamage = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 5);
+        coolTime = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 6);
         currentCoolTime = coolTime;
         coolTimeDelay = new WaitForSeconds(currentCoolTime);
     }

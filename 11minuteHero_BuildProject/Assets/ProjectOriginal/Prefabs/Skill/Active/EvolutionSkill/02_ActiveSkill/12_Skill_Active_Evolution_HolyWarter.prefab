@@ -52,30 +52,22 @@ MonoBehaviour:
   bCanEvolution: 0
   coolTime: 4
   currentCoolTime: 0
-  damage: 35
-  currentDamage: 0
   baseDamage: 0
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 1907925760873042682, guid: b0922a04dcd71264a9c77132d8b43feb,
-      type: 3}
-    projectileCreateCount: 20
-    projectileSpeed: 0
-  attackRadiusUtility:
-    radius: 12
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
-  bombAttackRadiusUtility:
-    radius: 3
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
-  shotInterval: 0.3
   secondDamage: 0
+  increaseDamagePercentage: 0
+  currentDamage: 0
+  projectilePrefab: {fileID: 1907925760873042682, guid: b0922a04dcd71264a9c77132d8b43feb,
+    type: 3}
+  createCount: 10
+  shotCount: 5
+  currentShotCount: 0
+  speed: 0
   angle: 45
+  shotInterval: 0.3
   dotDuration: 3
   dotInterval: 0.5
-  shotCount: 5
+  dotAreaRadius: 0
+  sensingRadius: 0
   distance: 5
 --- !u!114 &-8962513225195080663
 MonoBehaviour:

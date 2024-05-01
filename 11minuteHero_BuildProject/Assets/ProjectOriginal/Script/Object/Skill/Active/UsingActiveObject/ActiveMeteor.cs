@@ -91,9 +91,9 @@ public class ActiveMeteor : ActiveSkillUsingActiveObject //메테오 스킬 클래스
             bCanEvolution = true;
         }
     }
-    protected override void ReadCSVData()
+    protected override void ReadActiveCSVData()
     {
-        base.ReadCSVData();
+        base.ReadActiveCSVData();
 
         sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
 
@@ -104,6 +104,21 @@ public class ActiveMeteor : ActiveSkillUsingActiveObject //메테오 스킬 클래스
         summonDelay = new WaitForSeconds(summonInteval);
 
         explosionRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 27);
+        originExplosionRadius = explosionRadius;
+    }
+    protected override void ReadEvolutionCSVData()
+    {
+        base.ReadEvolutionCSVData();
+
+        sensingRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 4);
+
+        meteorCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 11);
+        currentMeteorCount = meteorCount;
+
+        summonInteval = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 14);
+        summonDelay = new WaitForSeconds(summonInteval);
+
+        explosionRadius = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 21);
         originExplosionRadius = explosionRadius;
     }
 }

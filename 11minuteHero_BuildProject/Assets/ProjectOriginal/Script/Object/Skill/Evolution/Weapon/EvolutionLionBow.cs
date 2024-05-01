@@ -9,13 +9,6 @@ public class EvolutionLionBow : ActiveBow
     private bool isSpeedUp;
     [SerializeField] private float speedUpValue;
     [SerializeField] private float speedUpDuration;
-    public override void InitSkill()
-    {
-        base.InitSkill();
-
-        arrowAngle = GetArrowAngle();
-        projectileUtility.SetAction(SetSpeedUp);
-    }
     public override void ActivateSkill()
     {
         base.ActivateSkill();
@@ -55,5 +48,28 @@ public class EvolutionLionBow : ActiveBow
         InGameManager.Instance.Player.DecreaseSpeed(speedUpValue * speedUpCount, EApplicableType.Value);//이동속도 원래대로 초기화
         speedUpCount = 0;
         isSpeedUp = false;
+    }
+    protected override void InitProjectile()
+    {
+        base.InitProjectile();
+
+        projectileUtility.SetAction(SetSpeedUp);
+    }
+    protected override void ReadEvolutionCSVData()
+    {
+        base.ReadEvolutionCSVData();
+
+        shotCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 11);
+        currentShotCount = shotCount;
+
+        activateTime = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 12);
+        speed = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 13);
+
+        penetrationCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 15);
+        currentPenetrationCount = penetrationCount;
+
+        speedUpValue = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 29);
+        speedUpCount = InGameManager.Instance.CSVManager.GetCSVData<int>((int)eSkillType, id, 30);
+        speedUpDuration = InGameManager.Instance.CSVManager.GetCSVData<float>((int)eSkillType, id, 31);
     }
 }

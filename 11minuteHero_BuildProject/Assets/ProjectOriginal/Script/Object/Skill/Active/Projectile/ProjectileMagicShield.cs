@@ -8,6 +8,14 @@ public class ProjectileMagicShield : Projectile
     [SerializeField] protected Transform objTransform;
     protected float activateTime;
     private float rotSpeed;
+    private float knockBackSpeed;
+    private float knockBackDuration;
+
+    public override void SetKnockBackData(float speed, float duration)
+    {
+        knockBackSpeed = speed;
+        knockBackDuration = duration;
+    }
     public override void SetActivateTime(float time)
     {
         activateTime = time;
@@ -27,8 +35,8 @@ public class ProjectileMagicShield : Projectile
         float timer = 0;
         while(timer < activateTime)
         {
-            transform.position += shotDirection * speed * Time.deltaTime;
-            transform.position += yDir * (5 - (5 * timer)) * Time.deltaTime;
+            transform.position += shotDirection * speed / 2 * Time.deltaTime;
+            transform.position += yDir * (5 - (speed * timer)) * Time.deltaTime;
             timer += Time.deltaTime;
             yield return null;
         }
@@ -52,7 +60,7 @@ public class ProjectileMagicShield : Projectile
             InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += damage;
 #endif
 
-            if (!c.IsDie) c.KnockBack(0.3f, 0.3f);
+            if (!c.IsDie) c.KnockBack(knockBackSpeed, knockBackDuration, (c.transform.position - transform.position).normalized);
         }
     }
 }
