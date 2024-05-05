@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ProjectOriginal/Scenes/Scene02_Loading.unity
     guid: a15bd9f12e829bd4ca3d980a5a176b0c
+  - enabled: 1
+    path: Assets/ProjectOriginal/Scenes/Scene03_Main.unity
+    guid: 8499c4f66105c9040978579db2b3ebc3
+  - enabled: 1
+    path: Assets/ProjectOriginal/Scenes/Scene04_InGame.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

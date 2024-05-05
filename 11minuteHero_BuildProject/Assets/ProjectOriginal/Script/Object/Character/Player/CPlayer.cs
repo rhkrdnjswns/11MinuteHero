@@ -75,6 +75,7 @@ public abstract class CPlayer : Character
       
         StartCoroutine(Co_Move());
     }
+
 #if UNITY_EDITOR
     protected virtual void Update()
     {
@@ -82,11 +83,6 @@ public abstract class CPlayer : Character
         {
             Dodge();
         }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            KnockBack(2f, 0.3f);
-        }
-        // Debug.DrawRay(transform.position, (transform.forward + transform.right) * 3, Color.red);
     }
 #endif
     public override void Hit(float damage) //ÇÇ°Ý

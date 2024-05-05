@@ -33,7 +33,9 @@ namespace ForTest
         }
         private void Awake()
         {
+#if UNITY_EDITOR
             EditorApplication.playModeStateChanged += BroadCastEndTime;
+#endif
             CreateDummy();
         }
         private void Update()
@@ -106,6 +108,7 @@ namespace ForTest
         {
             bDeleteDummy = true;
         }
+#if UNITY_EDITOR
         private void BroadCastEndTime(PlayModeStateChange state)
         {
             if(state == PlayModeStateChange.ExitingPlayMode)
@@ -113,6 +116,7 @@ namespace ForTest
                 EditorWindow.GetWindow<DPSLogWindow>()?.SetEndTime(InGameManager.Instance.Timer);
             }
         }
+#endif
 
         public void BtnEvt_SummonMonster(int index)
         {
@@ -121,6 +125,7 @@ namespace ForTest
             InGameManager.Instance.MonsterPool.GetMonster(InGameManager.Instance.Player.transform.position + RotDir.normalized * 25, index);
         }
     }
+#if UNITY_EDITOR
     public class DPSLogWindow : EditorWindow
     {
         private List<ActiveSkill> activatedSkillList = new List<ActiveSkill>();
@@ -202,6 +207,7 @@ namespace ForTest
             }
         }
     }
-
+#endif
 }
+
 

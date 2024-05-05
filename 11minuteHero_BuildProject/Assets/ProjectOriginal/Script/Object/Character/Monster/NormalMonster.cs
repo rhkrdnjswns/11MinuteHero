@@ -252,6 +252,6 @@ public class NormalMonster : Monster, IDebuffApplicable
     }
     private EItemID GetItemIDByWeight()
     {
-        return EItemID.ExpRed;
+        return EItemID.Clock;
     }
 }

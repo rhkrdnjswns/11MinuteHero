@@ -83,6 +83,12 @@ public class InGameManager : MonoBehaviour
         Application.targetFrameRate = 120;//ConstDefine.TARGET_FRAME; //프레임 조정
         Screen.SetResolution(1280, 720, true);
 
+        if (GameManager.instance == null) characterIndex = 1;
+        else
+        {
+            characterIndex = GameManager.instance.characterIndex;
+        }
+
         GameObject obj = Instantiate(playerCharacterArray[characterIndex]); //캐릭터 생성 후 참조를 가져옴
         player = obj.GetComponent<CPlayer>();
         monsterPool = FindObjectOfType<MonsterPool>();

@@ -21,17 +21,17 @@ Shader "Custom/Grayscale"
 			{
 				fixed4 currentText = tex2D(_MainTex, i.uv);
 
-			// simple grayscale
-			float grayscale = (currentText.r + currentText.g + currentText.b) / 3;
+				// simple grayscale
+				float grayscale = (currentText.r + currentText.g + currentText.b) / 3;
 
-			//YUV 
-			//float grayscale = 0.299 * currentText.r + 0.587 * currentText.g + 0.114 * currentText.b;
+				//YUV 
+				//float grayscale = 0.299 * currentText.r + 0.587 * currentText.g + 0.114 * currentText.b;
 
-			fixed4 color = lerp(currentText, grayscale, _Grayscale);
+				fixed4 color = lerp(currentText, grayscale, _Grayscale);
 
-			currentText.rgb = color;
+				currentText.rgb = color;
 
-			return currentText;
+				return currentText;
 			}
 
 		ENDCG
