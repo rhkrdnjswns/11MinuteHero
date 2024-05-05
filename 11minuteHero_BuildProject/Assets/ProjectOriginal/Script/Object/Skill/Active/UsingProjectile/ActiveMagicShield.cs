@@ -20,7 +20,7 @@ public class ActiveMagicShield : ActiveSkillUsingProjectile
     protected override void UpdateSkillData()
     {
         base.UpdateSkillData();
-        currentShotCount = level;
+        currentShotCount = shotCount * level;
     }
     protected override IEnumerator Co_ActiveSkillAction()
     {

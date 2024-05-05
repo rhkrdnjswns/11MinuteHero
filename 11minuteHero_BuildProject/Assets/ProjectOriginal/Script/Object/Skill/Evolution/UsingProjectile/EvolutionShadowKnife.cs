@@ -17,7 +17,7 @@ public class EvolutionShadowKnife : ActiveKnife
 #if UNITY_EDITOR
             AttackCount++;
 #endif
-            int monsterIndex = Random.Range(0, sensingCollisionArray.Length);
+            int monsterIndex = Random.Range(0, num);
 
             Projectile p = projectileUtility.GetProjectile();
             p.SetTargetTransform(sensingCollisionArray[monsterIndex].transform);
@@ -32,6 +32,7 @@ public class EvolutionShadowKnife : ActiveKnife
     protected override void InitProjectile()
     {
         base.InitProjectile();
+        projectileUtility.SetSensingRadius(sensingRadius);
         projectileUtility.SetAction(() => isReturn = true);
     }
     protected override void ReadEvolutionCSVData()

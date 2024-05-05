@@ -59,8 +59,10 @@ public class ProjectileShadowKnife : ProjectileKnife
                 target = InGameManager.Instance.Player.transform;
                 isReturn = true;
                 bFinding = false;
+                Debug.Log("플레이어한테 돌아감");
                 return;
             }
+            num = numNearPlayer;
         }
         // Debug.Log("기존 타겟 : " + target.name);
         for (int i = 0; i < num; i++) //범위 내에서 현재 타겟이었던 몬스터 제외

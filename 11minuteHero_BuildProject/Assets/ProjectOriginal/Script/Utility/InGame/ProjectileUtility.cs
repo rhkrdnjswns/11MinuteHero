@@ -191,6 +191,13 @@ public class ProjectileUtility : IProjectileUsable
             item.SetKnockBackData(speed, duration);
         }
     }
+    public void SetSensingRadius(float radius)
+    {
+        foreach (var item in allProjectileList)
+        {
+            item.SetSensingRadius(radius);
+        }
+    }
     public void IncreaseSize(float value)
     {
         foreach (var item in allProjectileList)

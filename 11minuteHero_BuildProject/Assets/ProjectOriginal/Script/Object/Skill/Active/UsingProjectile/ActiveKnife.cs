@@ -35,6 +35,7 @@ public class ActiveKnife : ActiveSkillUsingProjectile
     }
     protected override void UpdateSkillData()
     {
+        base.UpdateSkillData();
         projectileUtility.SetBounceCount(bounceCount + level);
         currentShotCount = shotCount + level;
     }

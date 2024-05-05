@@ -40,6 +40,51 @@ namespace ForTest
         }
         private void Update()
         {
+            if(Input.GetKey(KeyCode.S))
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Vector3 mousePos = Input.mousePosition;
+
+                    Ray ray = Camera.main.ScreenPointToRay(mousePos);
+
+                    RaycastHit hit;
+
+                    layer = LayerMask.GetMask("Floor");
+
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layer))
+                    {
+                        Monster m = dummyPool.Dequeue();
+                        m.transform.position = hit.point;
+                        m.gameObject.SetActive(true);
+                    }
+                }
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Vector3 mousePos = Input.mousePosition;
+
+                    Ray ray = Camera.main.ScreenPointToRay(mousePos);
+
+                    RaycastHit hit;
+
+                    layer = LayerMask.GetMask("Monster");
+
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layer))
+                    {
+                        if (!hit.transform.GetComponent<NormalMonster>() || !hit.transform.GetComponent<Boss>())
+                        {
+                            Monster m = hit.transform.GetComponent<Monster>();
+                            m.gameObject.SetActive(false);
+                            m.transform.position = Vector3.zero;
+                            m.CurrentHp = m.MaxHp;
+                            dummyPool.Enqueue(m);
+                        }
+                    }
+                }
+            }
             if(bSummonDummy)
             {
                 if(Input.GetMouseButtonDown(0))

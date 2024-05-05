@@ -16,6 +16,11 @@ public class EvolutionRenotoros : ActiveMagicShield
             yield return bReturn;
         }
     }
+    protected override void UpdateSkillData()
+    {
+        base.UpdateSkillData();
+        currentShotCount = shotCount;
+    }
     private void ShotProjectile()
     {
         returnCount = 0;

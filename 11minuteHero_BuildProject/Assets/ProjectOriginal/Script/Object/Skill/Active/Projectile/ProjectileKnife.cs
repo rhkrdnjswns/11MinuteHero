@@ -14,6 +14,12 @@ public class ProjectileKnife : Projectile
     protected WaitUntil finding;
 
     protected Collider[] newTargetCollisionArray = new Collider[50];
+    public override void SetOwner(IProjectileUsable owner)
+    {
+        base.SetOwner(owner);
+
+        finding = new WaitUntil(() => !bFinding);
+    }
     public override void SetBounceCount(int count)
     {
         bounceCount = count;

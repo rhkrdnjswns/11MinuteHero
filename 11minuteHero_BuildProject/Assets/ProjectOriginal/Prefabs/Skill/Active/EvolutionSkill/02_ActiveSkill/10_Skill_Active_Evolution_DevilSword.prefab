@@ -45,12 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eSkillType: 2
-  id: 0
+  id: 36
   icon: {fileID: 0}
   description: 
   name: "\uB9C8\uAC80"
   bCanEvolution: 0
   coolTime: 2
+  currentCoolTime: 0
   baseDamage: 0
   secondDamage: 0
   increaseDamagePercentage: 0
@@ -62,6 +63,10 @@ MonoBehaviour:
   degree: 190
   distance: 3.5
   attackInterval: 0.25
+  increaseSizeValue: 0
+  radius: 0
+  rotSpeed: 0
+  originRadius: 0
 --- !u!114 &-2045003220573438307
 MonoBehaviour:
   m_ObjectHideFlags: 0
