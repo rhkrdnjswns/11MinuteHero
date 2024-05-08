@@ -45,6 +45,7 @@ public class ActiveRotateSword : ActiveSkill
         base.InitSkill();
 
         InitSwordObject();
+        swordSkillObject.InitObject(distance, attackInterval, arrivalSecond, degree, rotSpeed);
     }
     public override void ActivateSkill()
     {
@@ -56,7 +57,6 @@ public class ActiveRotateSword : ActiveSkill
 
         swordSkillObject.SetDamage(currentDamage);
         swordSkillObject.SetAttackRadius(radius);
-        swordSkillObject.InitObject(distance, attackInterval, arrivalSecond, degree, rotSpeed);
     }
     protected override void UpdateSkillData()
     {

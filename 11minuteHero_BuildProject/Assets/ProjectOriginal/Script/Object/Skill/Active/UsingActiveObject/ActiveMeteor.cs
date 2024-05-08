@@ -51,7 +51,7 @@ public class ActiveMeteor : ActiveSkillUsingActiveObject //메테오 스킬 클래스
 
             obj.Activate();
 
-            if (i < meteorCount - 1) yield return summonDelay; //마지막 메테오 소환 시에는 텀 없게하기
+            if (i < currentMeteorCount - 1) yield return summonDelay; //마지막 메테오 소환 시에는 텀 없게하기
         }
     }
     protected override IEnumerator Co_ActiveSkillAction() //액티브 스킬 기능 코루틴
@@ -65,8 +65,8 @@ public class ActiveMeteor : ActiveSkillUsingActiveObject //메테오 스킬 클래스
     }
     private Vector3 GetRandomPos()
     {
-        float xPos = Random.Range(-sensingRadius, sensingRadius + 1); //공격 반경만큼 랜덤한 x, z 위치 설정
-        float yPos = Random.Range(-sensingRadius, sensingRadius + 1);
+        int xPos = Random.Range((int)-sensingRadius, (int)sensingRadius + 1); //공격 반경만큼 랜덤한 x, z 위치 설정
+        int yPos = Random.Range((int)-sensingRadius, (int)sensingRadius + 1);
         Vector3 randomPos = new Vector3(transform.root.position.x + xPos, 0, transform.root.position.z + yPos);
 
         float distance = Vector3.Distance(randomPos, transform.root.position); //플레이어와 랜덤 설정된 위치 사이의 거리 체크

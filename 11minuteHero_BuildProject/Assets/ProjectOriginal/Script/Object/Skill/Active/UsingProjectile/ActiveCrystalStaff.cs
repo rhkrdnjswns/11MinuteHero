@@ -40,7 +40,8 @@ public class ActiveCrystalStaff : ActiveSkillUsingProjectile
             InitProjectile();
         }
         Projectile p = projectileUtility.GetProjectile();
-        p.SetShotDirection((targetPos - p.transform.position).normalized);
+        p.transform.forward = (targetPos - p.transform.position).normalized;
+        p.SetShotDirection(p.transform.forward);
 
         p.ShotProjectile();
     }

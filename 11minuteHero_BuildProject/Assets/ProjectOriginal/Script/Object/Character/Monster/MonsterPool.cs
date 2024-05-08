@@ -8,6 +8,7 @@ public class MonsterPool : MonoBehaviour //몬스터를 풀링, 관리하는 클래스. 몬스�
     private List<Queue<NormalMonster>> monsterQueue = new List<Queue<NormalMonster>>(); //풀
     private Transform field; //생성된 몬스터의 transform parent가 될 참조
 
+    private List<ObjectPool<NormalMonster>> monsterPoolList = new List<ObjectPool<NormalMonster>>();
     private List<NormalMonster> activatedMonsterList = new List<NormalMonster>();
 
     [SerializeField] private float spawnInterval;

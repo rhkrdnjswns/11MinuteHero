@@ -85,7 +85,7 @@ public class SwordSkillObject : ActiveObject
 
         particle.Play();
 
-        if(eSwordType != ESwordType.DevilSword) StartCoroutine(Co_RotationSword());
+        StartCoroutine(Co_RotationSword());
         StartCoroutine(Co_RevolutionSword(revAxis));
         StartCoroutine(Co_ActiveAfterImage(revAxis));
 
@@ -105,7 +105,7 @@ public class SwordSkillObject : ActiveObject
         {
             yield return afterImageDelay;
             item.transform.localPosition = activePos;
-            item.SetAfterImage(revAxis, transform, rotDirection, arrivalSecond, degree, transform.localScale, eSwordType != ESwordType.DevilSword);
+            item.SetAfterImage(revAxis, transform, rotDirection, arrivalSecond, degree, transform.localScale, rotateSpeed);
         }
     }
     private IEnumerator Co_AttakcRadius()
