@@ -17,15 +17,16 @@ public class BRedGolem : Boss
     private bool bAction;
     protected bool bReturnStone;
 
-    [SerializeField] protected RangedAttackUtility rangedAttackUtility;
 
+    [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private GameObject stonePrefab;
 
     protected List<CRedGolemStone> stoneList = new List<CRedGolemStone>();
     protected List<CRedGolemStone> spareStoneList = new List<CRedGolemStone>();
     protected Queue<CRedGolemStone> stoneQueue = new Queue<CRedGolemStone>();
 
-    protected CRedGolemStone stoneRef;
+    protected ObjectPool<CRedGolemStone> stonePool;
+    protected ProjectileUtility projectileUtility;
 
     protected Vector3 appearPos;
 
@@ -36,15 +37,21 @@ public class BRedGolem : Boss
     protected Collider[] summonStoneCollisionArray = new Collider[1];
     protected Collider[] summonStoneRandCollisionArray = new Collider[1];
     protected Collider[] punchCollisionArray = new Collider[1];
+    public override void InitBoss()
+    {
+        base.InitBoss();
+        InitStoneQueue();
+
+    }
     protected virtual void SetSummonedStonePosY()
     {
         summonedStonePosY = 0.5f;
     }
-    public override void InitBoss()
+    public override void ActiveBoss()
     {
         appearPos = transform.position;
         SetSummonedStonePosY();
-        base.InitBoss();
+        base.ActiveBoss();
         StartCoroutine(Co_SummonStoneRandomPos());
     }
     protected override void PlayHpEvent(int index)
@@ -116,14 +123,6 @@ public class BRedGolem : Boss
                )
            );
     }
-    protected override void Awake()
-    {
-        base.Awake();
-        InitStoneQueue();
-        rangedAttackUtility.Parent = transform;
-        rangedAttackUtility.CreateNewProjectile();
-        rangedAttackUtility.SetDamage(10);
-    }
     protected virtual void InitStoneQueue()
     {
         for (int i = 0; i < 20; i++)
@@ -174,7 +173,6 @@ public class BRedGolem : Boss
 
             decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.SetParent(null);
             decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.position = randomPos;
-            decalList[(int)EDecalNumber.SummonStoneRandomPos].gameObject.SetActive(true);
             StartCoroutine(decalList[(int)EDecalNumber.SummonStoneRandomPos].Co_ActiveDecal(2));
 
             yield return new WaitForSeconds(2f);
@@ -416,23 +414,23 @@ public class BRedGolem : Boss
     public virtual void SummonStone(Vector3 pos)
     {
         if (stoneQueue.Count == 0) InitStoneQueue();
-        stoneRef = stoneQueue.Dequeue();
+        CRedGolemStone stone = stoneQueue.Dequeue();
 
         if (bReturnStone)
         {
-            spareStoneList.Add(stoneRef);
+            spareStoneList.Add(stone);
         }
         else
         {
-            stoneList.Add(stoneRef);
+            stoneList.Add(stone);
         }
         stoneSummonPos = pos;
         stoneSummonPos.y = summonedStonePosY;
 
-        stoneRef.transform.SetParent(null);
-        stoneRef.transform.position = stoneSummonPos;
-        stoneRef.gameObject.SetActive(true);
-        stoneRef.ResetStatus();
+        stone.transform.SetParent(null);
+        stone.transform.position = stoneSummonPos;
+        stone.gameObject.SetActive(true);
+        stone.ResetStatus();
     }
     public void ReturnStone(CRedGolemStone redGolemStone, int stoneLevel)
     {
@@ -469,7 +467,9 @@ public class BRedGolem : Boss
     }
     public virtual void AnimEvent_ThrowStone()
     {
-        Projectile p = rangedAttackUtility.SummonProjectile(0.5f);
+        Projectile p = projectileUtility.GetProjectile();
+        p.transform.localPosition += Vector3.up * 0.5f;
+
         p.SetShotDirection(transform.forward);
         p.SetDistance(12);
         p.ShotProjectile();

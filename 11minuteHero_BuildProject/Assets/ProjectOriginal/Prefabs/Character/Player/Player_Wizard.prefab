@@ -248,11 +248,18 @@ MonoBehaviour:
   maxHp: 100
   speed: 2
   currentHp: 0
+  currentSpeed: 0
+  dieParticlePrefab: {fileID: 2258678213759902398, guid: 6b6ce7fe23a51894b8b387f6a897e06b,
+    type: 3}
   rendererArray: []
+  currentExp: 0
+  dodgeCoolTime: 0
   currentMaxHp: 0
+  expGained: 0
+  damageReduction: 0
+  weaponSocket: {fileID: 7095794216596337781}
   weaponPrefab: {fileID: 8410069343088775610, guid: fd011bd0f65ce1e40b1e28affb4ec0fc,
     type: 3}
-  weaponSocket: {fileID: 7095794216596337781}
 --- !u!1 &6765008872688633212
 GameObject:
   m_ObjectHideFlags: 0

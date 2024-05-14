@@ -12,9 +12,9 @@ public class BRedGolemHard : BRedGolemNormal
     [SerializeField] private List<ParticleSystem> earthQuakeParticleList;
 
     private Collider[] earthQuakeCollisionArray = new Collider[1];
-    public override void InitBoss()
+    public override void ActiveBoss()
     {
-        base.InitBoss();
+        base.ActiveBoss();
         foreach (var item in earthQuakeParticleList)
         {
             item.transform.SetParent(null);
@@ -140,41 +140,42 @@ public class BRedGolemHard : BRedGolemNormal
     {
         int rand = Random.Range(1, 101);
         float posY;
-  
+
+        CRedGolemStone stone;
         if (rand <= 60)
         {
             if (stoneQueue.Count == 0) InitStoneQueue();
-            stoneRef = stoneQueue.Dequeue();
+            stone = stoneQueue.Dequeue();
             posY = summonedStonePosY;
         }
         else if (rand <= 90)
         {
             if (indestructibleStoneQueue.Count == 0) InitStoneQueue();
-            stoneRef = indestructibleStoneQueue.Dequeue();
+            stone = indestructibleStoneQueue.Dequeue();
             posY = summonedIndestructibleStonePosY;
         }
         else
         {
             if (earthQuakeStoneQueue.Count == 0) InitStoneQueue();
-            stoneRef = earthQuakeStoneQueue.Dequeue();
+            stone = earthQuakeStoneQueue.Dequeue();
             posY = summonedEarthQuakeStonePosY;
         }
 
         if (bReturnStone)
         {
-            spareStoneList.Add(stoneRef);
+            spareStoneList.Add(stone);
         }
         else
         {
-            stoneList.Add(stoneRef);
+            stoneList.Add(stone);
         }
         stoneSummonPos = pos;
         stoneSummonPos.y = summonedStonePosY;
 
-        stoneRef.transform.SetParent(null);
-        stoneRef.transform.position = stoneSummonPos;
-        stoneRef.gameObject.SetActive(true);
-        stoneRef.ResetStatus();
+        stone.transform.SetParent(null);
+        stone.transform.position = stoneSummonPos;
+        stone.gameObject.SetActive(true);
+        stone.ResetStatus();
     }
     protected override void ReturnStoneByLevel(CRedGolemStone redGolemStone, int stoneLevel)
     {

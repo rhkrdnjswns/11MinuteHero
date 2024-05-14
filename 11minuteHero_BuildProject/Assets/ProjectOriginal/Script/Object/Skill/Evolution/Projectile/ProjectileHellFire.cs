@@ -13,7 +13,7 @@ public class ProjectileHellFire : ProjectilePenetration
 
     private float explosionRadius;
 
-    private WaitForSeconds explosionDelay;
+    private WaitForSeconds explosionDelay = new WaitForSeconds(1f);
     public override void SetAttackRadius(float radius)
     {
         explosionRadius = radius;
@@ -29,11 +29,15 @@ public class ProjectileHellFire : ProjectilePenetration
         isExplosion = false;
         while (timer < activateTime)
         {
+            if (isExplosion) break;
             transform.position += shotDirection * speed * Time.deltaTime;
             timer += Time.deltaTime;
             yield return null;
         }
-        StartCoroutine(Co_Explosion());
+        if(!isExplosion)
+        {
+            StartCoroutine(Co_Explosion());
+        }
     }
     protected override void OnTriggerEnter(Collider other)
     {
@@ -45,6 +49,8 @@ public class ProjectileHellFire : ProjectilePenetration
 #endif
             currentCount--;
 
+            if(other.TryGetComponent(out Boss b)) StartCoroutine(Co_Explosion());
+
             if (currentCount > 0) return;
             StartCoroutine(Co_Explosion());
         }
@@ -52,6 +58,7 @@ public class ProjectileHellFire : ProjectilePenetration
     private IEnumerator Co_Explosion()
     {
         if (isExplosion) yield break;
+
         fireBallObj.SetActive(false);
         isExplosion = true;
         explosionParticle.Play();
@@ -63,6 +70,7 @@ public class ProjectileHellFire : ProjectilePenetration
         yield return explosionDelay;
 
         currentCount = count;
+
         owner.ReturnProjectile(this);
     }
     public override void IncreaseSize(float value)

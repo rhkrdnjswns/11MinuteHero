@@ -6,6 +6,9 @@ public abstract class CPlayer : Character
 {
     private Coroutine invincibilityCoroutine;
 
+    private ParticleSystem dieParticle;
+    [SerializeField] private GameObject dieParticlePrefab;
+
     [SerializeField] private Renderer[] rendererArray; //머티리얼 깜빡이는 효과를 주기 위한 참조
 
     private int maxExp = 100; //요구 경험치
@@ -61,6 +64,13 @@ public abstract class CPlayer : Character
         itemGainRadius = itemCollider.radius;
 
         rendererArray = GetComponentsInChildren<Renderer>();
+
+        GameObject particle = Instantiate(dieParticlePrefab);
+        particle.transform.SetParent(transform);
+        particle.transform.localPosition = Vector3.zero;
+        particle.transform.localRotation = Quaternion.identity;
+
+        dieParticle = particle.GetComponent<ParticleSystem>();
     }
     protected override void Start()
     {
@@ -180,15 +190,35 @@ public abstract class CPlayer : Character
     protected override void DecreaseHp(float value) //체력 감소 함수
     {
         currentHp -= value - (value * damageReduction / 100); //피해 감소량만큼 감소된 피해량 연산
+        InGameManager.Instance.InGameBasicUIManager.PlayerHpBar.SetFillAmount(currentHp / currentMaxHp);
+
         if (currentHp < 0)
         {
+            IsDie = true;
             currentHp = 0;
-            InGameManager.Instance.DGameOver(); //사망한 경우 게임 상태 게임오버로 변경
+            InGameManager.Instance.InGameBasicUIManager.PlayerHpBar.SetFillAmount(currentHp / currentMaxHp);
+            InGameManager.Instance.DGameOver();
+
+            StartCoroutine(Co_Die());
         }
-        InGameManager.Instance.InGameBasicUIManager.PlayerHpBar.SetFillAmount(currentHp / currentMaxHp);
+    }
+    private IEnumerator Co_Die()
+    {
+        animator.SetTrigger(ConstDefine.TRIGGER_DIE);
+
+        yield return new WaitForSeconds(1.5f);
+
+        dieParticle.transform.SetParent(null);
+        dieParticle.Play();
+
+        InGameManager.Instance.StartCoroutine(InGameManager.Instance.Co_ShowResultPopup(false));
+
+        gameObject.SetActive(false);
     }
     public void IncreaseExp(int value) //경험치 증가 함수
     {
+        if (IsDie) return;
+
         currentExp += value + (value * expGained / 100); //경험치 획득량만큼 증가된 경험치 연산
         if (currentExp >= maxExp)
         {
@@ -204,6 +234,8 @@ public abstract class CPlayer : Character
     }
     public void RecoverHp(float value, EApplicableType type) //체력 회복 함수
     {
+        if (IsDie) return;
+
         currentHp += type == EApplicableType.Value ? value : currentMaxHp * value / 100;
         if (currentHp > currentMaxHp) currentHp = currentMaxHp;
         InGameManager.Instance.InGameBasicUIManager.PlayerHpBar.SetFillAmount(currentHp / currentMaxHp);
@@ -214,6 +246,8 @@ public abstract class CPlayer : Character
     }
     public void IncreaseMaxHp(float value)
     {
+        if (IsDie) return;
+
         currentMaxHp += maxHp * value / 100;
         RecoverHp(maxHp * value / 100, EApplicableType.Value);
         InGameManager.Instance.InGameBasicUIManager.PlayerHpBar.SetFillAmount(currentHp / currentMaxHp);
@@ -256,11 +290,13 @@ public abstract class CPlayer : Character
     }
     public override void KnockBack(float speed, float duration) //캐릭터 뒷방향으로의 넉백 함수
     {
+        if (IsDie) return;
         if (isDodge) return;
         base.KnockBack(speed, duration);
     }
     public override void KnockBack(float speed, float duration, Vector3 direction) //임의의 방향으로의 넉백 함수
     {
+        if (IsDie) return;
         if (isDodge) return;
         base.KnockBack(speed, duration, direction);
     }

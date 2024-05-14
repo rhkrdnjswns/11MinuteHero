@@ -23,9 +23,9 @@ public class BRedGolemNormal : BRedGolem
             indestructibleStoneQueue.Enqueue(obj.GetComponent<CRedGolemStone>().SetReference(transform));
         }
     }
-    public override void InitBoss()
+    public override void ActiveBoss()
     {
-        base.InitBoss();
+        base.ActiveBoss();
         for (int i = 0; i < decalParentArray.Length; i++)
         {
             decalParentArray[i] = decalList[i + (int)EDecalNumber.SummonStoneX].transform.parent;
@@ -40,7 +40,8 @@ public class BRedGolemNormal : BRedGolem
     {
         for (int i = -1; i < 2; i++)
         {
-            Projectile p = rangedAttackUtility.SummonProjectile(0.5f);
+            Projectile p = projectileUtility.GetProjectile();
+            p.transform.localPosition += Vector3.up * 0.5f;
             Vector3 direction = Quaternion.Euler(0, 25 * i, 0) * transform.forward;
             p.SetShotDirection(direction);
             p.SetDistance(12);
@@ -87,34 +88,35 @@ public class BRedGolemNormal : BRedGolem
         int rand = Random.Range(1, 101);
         float posY;
 
+        CRedGolemStone stone;
         if (rand <= 70)
         {
             if (stoneQueue.Count == 0) InitStoneQueue();
-            stoneRef = stoneQueue.Dequeue();
+            stone = stoneQueue.Dequeue();
             posY = summonedStonePosY;
         }
         else
         {
             if (indestructibleStoneQueue.Count == 0) InitStoneQueue();
-            stoneRef = indestructibleStoneQueue.Dequeue();
+            stone = indestructibleStoneQueue.Dequeue();
             posY = summonedIndestructibleStonePosY;
         }
 
         if (bReturnStone)
         {
-            spareStoneList.Add(stoneRef);
+            spareStoneList.Add(stone);
         }
         else
         {
-            stoneList.Add(stoneRef);
+            stoneList.Add(stone);
         }
         stoneSummonPos = pos;
         stoneSummonPos.y = posY;
 
-        stoneRef.transform.SetParent(null);
-        stoneRef.transform.position = stoneSummonPos;
-        stoneRef.gameObject.SetActive(true);
-        stoneRef.ResetStatus();
+        stone.transform.SetParent(null);
+        stone.transform.position = stoneSummonPos;
+        stone.gameObject.SetActive(true);
+        stone.ResetStatus();
     }
     protected override void ReturnStoneByLevel(CRedGolemStone redGolemStone, int stoneLevel)
     {

@@ -22,21 +22,20 @@ public abstract class Boss : Monster
     protected GameObject modelObject;
     protected abstract void PlayHpEvent(int index);
     protected abstract void InitBehaviorTree();
-    protected override void Awake()
+    public virtual void InitBoss()
     {
-        base.Awake();
         modelObject = transform.GetChild(0).gameObject;
+        InitDamageUIContainer(modelObject.transform.localScale.y);
+        cameraUtility = Camera.main.GetComponent<CameraUtility>();
+        InitBehaviorTree();
     }
     public float GetStartAnimPlayTime()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         return stateInfo.length;
     }
-    public virtual void InitBoss()
+    public virtual void ActiveBoss()
     {
-        InitDamageUIContainer(modelObject.transform.localScale.y);
-        cameraUtility = Camera.main.GetComponent<CameraUtility>();
-        InitBehaviorTree();
         StartCoroutine(Co_ExcuteBehaviorTree());
         IsActivate = true;
     }

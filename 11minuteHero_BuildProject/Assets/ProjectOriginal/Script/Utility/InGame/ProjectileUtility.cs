@@ -20,7 +20,7 @@ public class ProjectileUtility : IProjectileUsable
 
         CreateProjectile();
     }
-    public void CreateProjectile()
+    private void CreateProjectile()
     {
         projectilePool.CreateObject();
         foreach (var item in projectilePool.Pool)

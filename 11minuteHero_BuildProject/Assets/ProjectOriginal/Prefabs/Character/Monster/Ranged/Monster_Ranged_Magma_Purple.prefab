@@ -14946,18 +14946,17 @@ MonoBehaviour:
   maxHp: 100
   speed: 1.8
   currentHp: 0
-  monsterState: 0
-  damage: 10
-  rewardExp: 10
-  attackRange: 6
+  currentSpeed: 0
   damageUIPrefab: {fileID: 9182912565010467780, guid: 3d13174112c6d8d4e9ac179922aec9cd,
     type: 3}
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 988259513345740439, guid: c39fc57f59c0487449d181d31f3b7141,
-      type: 3}
-    projectileCreateCount: 20
-    projectileSpeed: 6
+  monsterState: 0
+  damage: 10
+  attackRange: 6
+  projectilePrefab: {fileID: 988259513345740439, guid: c39fc57f59c0487449d181d31f3b7141,
+    type: 3}
+  projectileCreateCount: 10
   projectileActivateTime: 6
+  projectileSpeed: 5
   behaviorDelay: 2
 --- !u!1 &7272761789805933003
 GameObject:

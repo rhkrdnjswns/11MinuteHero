@@ -23,7 +23,6 @@ public class NormalMonster : Monster, IDebuffApplicable
 
     protected SphereCollider overlappingAvoider; //몬스터 겹침 방지 콜라이더
     private BoxCollider boxCollider; //몬스터 충돌처리 콜라이더
-    private DebuffList debuffList;
 
     private int returnIndex;
 
@@ -33,7 +32,6 @@ public class NormalMonster : Monster, IDebuffApplicable
 
     private bool isStiffness;
     public float DistToPlayer { get => distToPlayer; }
-    public DebuffList DebuffList { get => debuffList; set => debuffList = value; }
     public int ReturnIndex { set => returnIndex = value; }
     private IEnumerator Co_StateMachine() //일반 몬스터 상태머신
     {
@@ -54,17 +52,12 @@ public class NormalMonster : Monster, IDebuffApplicable
             yield return null;
         }
     }
-    protected override void Awake()
+    public override void InitMonsterData()
     {
-        base.Awake();
-        debuffList = new DebuffList(this);
+        base.InitMonsterData();
 
         overlappingAvoider = transform.Find("OverlappingAvoider").GetComponent<SphereCollider>();
         boxCollider = GetComponent<BoxCollider>();
-    }
-    protected override void Start()
-    {
-        base.Start();
     }
     public void ResetMonster() //몬스터 생성 시 초기화
     {
