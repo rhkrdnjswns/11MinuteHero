@@ -1993,6 +1993,8 @@ MonoBehaviour:
   speed: 2
   currentHp: 0
   currentSpeed: 0
+  dieParticlePrefab: {fileID: 2258678213759902398, guid: 6b6ce7fe23a51894b8b387f6a897e06b,
+    type: 3}
   rendererArray: []
   currentExp: 0
   dodgeCoolTime: 0

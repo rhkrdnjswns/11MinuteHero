@@ -12,13 +12,14 @@ GameObject:
   - component: {fileID: 4523966338676643983}
   - component: {fileID: 4523966338676643982}
   - component: {fileID: 4523966338676643985}
+  - component: {fileID: 1113539832}
   m_Layer: 5
   m_Name: Canvas_Result
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4523966338676643984
 RectTransform:
   m_ObjectHideFlags: 0
@@ -100,6 +101,25 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1113539832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523966338676643987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a021495c20718c242825df52982408d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clearResultText: {fileID: 4523966339124684583}
+  stageNameText: {fileID: 4523966340007005275}
+  stageTimerText: {fileID: 4523966339669206399}
+  bestScoreText: {fileID: 4523966339016903625}
+  currentScoreText: {fileID: 4523966339832258812}
+  killCountText: {fileID: 4523966338915884917}
+  resultGoldText: {fileID: 4523966340141787956}
 --- !u!1 &4523966338805374653
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,7 +154,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -45.828003, y: 0}
+  m_AnchoredPosition: {x: -50.633, y: 0}
   m_SizeDelta: {x: -316.4088, y: -10.1085}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4523966338805374648
@@ -363,7 +383,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4.804199, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -277.3058, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4523966338915884914

@@ -16,33 +16,60 @@ public class StageSelectPopUp : MonoBehaviour, IEndDragHandler, IBeginDragHandle
     public string[] stageNameArray;
     public string[] stageDescriptionArray;
 
+    private bool[,] isLockArray;
+
     public float requiredDragValueMin;
     public float scrollDuration;
 
     private bool isScrolling;
 
     public int stageIndex;
+    public int difficultyIndex;
     private float dragValue;
     public float scrollValue = 400;
+
+    public Image difficultyButtonImage;
+    public Text difficultyButtonText;
+
+    public GameObject difficultyParent;
     private void Awake()
     {
         stageInfoArray = new StageInfoButton[stageArray.Length];
+        isLockArray = new bool[stageArray.Length, 3];
 
-        for (int i = 0; i < stageArray.Length; i++)
+        //스테이지 클리어 데이터 불러오기
+
+        for (int j = 0; j < stageArray.Length; j++)
         {
             GameObject obj = Instantiate(staegInfoPrefab);
             obj.transform.SetParent(contentRect);
             obj.transform.localScale = Vector3.one;
 
-            stageInfoArray[i] = obj.GetComponent<StageInfoButton>();
-            stageInfoArray[i].Init(stageIconArray[i], stageNameArray[i], stageDescriptionArray[i]);
+            stageInfoArray[j] = obj.GetComponent<StageInfoButton>();
+            stageInfoArray[j].Init(stageIconArray[j], stageNameArray[j], stageDescriptionArray[j]);
 
-            if (i >= 1)
+            if (j >= 1)
             {
-                stageInfoArray[i].Rect.sizeDelta = new Vector2(300, 250);
-                stageInfoArray[i].IconImage.color = new Color(0.1f, 0.1f, 0.1f);
-                stageInfoArray[i].StageNameText.gameObject.SetActive(false);
+                stageInfoArray[j].Rect.sizeDelta = new Vector2(300, 250);
+                stageInfoArray[j].IconImage.color = new Color(0.1f, 0.1f, 0.1f);
+                stageInfoArray[j].StageNameText.gameObject.SetActive(false);
             }
+        }
+        BtnEvt_SelectDifficulty(0);
+    }
+    public void BtnEvt_ShowDifficulties()
+    {
+        difficultyParent.SetActive(!difficultyParent.activeSelf);
+    }
+    public void BtnEvt_SelectDifficulty(int index)
+    {
+        difficultyIndex = index;
+        difficultyButtonImage.sprite = difficultyParent.transform.GetChild(index).GetComponent<Image>().sprite;
+        difficultyButtonText.text = difficultyParent.transform.GetChild(index).GetComponentInChildren<Text>().text;
+        difficultyParent.SetActive(false);
+        for (int i = 0; i < stageInfoArray.Length; i++)
+        {
+            stageInfoArray[i].SetIsLock(isLockArray[index, i]);
         }
     }
     public void BtnEvt_ChangeStage(bool isLeft)

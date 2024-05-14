@@ -70,7 +70,8 @@ public class ActiveRotateSword : ActiveSkill
     }
     protected override void SetCurrentRange(float value)
     {
-        swordSkillObject.IncreaseSize(value);
+        float increaeValue = 1 * value / 100;
+        swordSkillObject.IncreaseSize(increaeValue);
         radius += originRadius * value / 100;
         swordSkillObject.SetAttackRadius(radius);
     }

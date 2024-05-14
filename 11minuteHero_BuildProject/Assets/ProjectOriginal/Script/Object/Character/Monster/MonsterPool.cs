@@ -5,7 +5,6 @@ using UnityEngine;
 public class MonsterPool : MonoBehaviour //¸ó½ºÅÍ¸¦ Ç®¸µ, °ü¸®ÇÏ´Â Å¬·¡½º. ¸ó½ºÅÍ Ç®ÀÇ ÂüÁ¶´Â ¸ó½ºÅÍ ½ºÆ÷³Ê¿¡¼­¸¸ ÇÊ¿äÇÏ±â ¶§¹®¿¡ ±»ÀÌ ½Ì±ÛÅÏÀ¸·Î µÑ ÇÊ¿ä°¡ ¾ø´Ù.
 {
     [SerializeField] private GameObject[] monsterPrefabArray; //¸ó½ºÅÍ ÇÁ¸®ÆÕ ¹è¿­
-    private List<Queue<NormalMonster>> monsterQueue = new List<Queue<NormalMonster>>(); //Ç®
     private Transform field; //»ý¼ºµÈ ¸ó½ºÅÍÀÇ transform parent°¡ µÉ ÂüÁ¶
 
     private List<ObjectPool<NormalMonster>> monsterPoolList = new List<ObjectPool<NormalMonster>>();
@@ -24,41 +23,31 @@ public class MonsterPool : MonoBehaviour //¸ó½ºÅÍ¸¦ Ç®¸µ, °ü¸®ÇÏ´Â Å¬·¡½º. ¸ó½ºÅ
     public int summonCountForTest; //Ç®¿¡ »ý¼ºÇÒ ¸ó½ºÅÍ ¼ö
     private void Awake()
     { 
-        CreateNewMonster(summonCountForTest);
+        CreateNewMonster();
         monsterSpawnInterval = new WaitForSeconds(spawnInterval);
         field = GameObject.Find("Field").transform;
     }
-    private void CreateNewMonster(int count) //count¸¸Å­ ¸ó½ºÅÍ »ý¼º
+    private void CreateNewMonster() //count¸¸Å­ ¸ó½ºÅÍ »ý¼º
     {
         for (int i = 0; i < monsterPrefabArray.Length; i++)
         {
-            monsterQueue.Add(new Queue<NormalMonster>());
-            CreateMonster(i);
+            monsterPoolList.Add(new ObjectPool<NormalMonster>(monsterPrefabArray[i], summonCountForTest, transform));
+            monsterPoolList[i].CreateObject();
+            foreach (var item in monsterPoolList[i].Pool)
+            {
+                item.InitMonsterData();
+                item.InitDamageUIContainer();
+                item.ReturnIndex = i;
+            }
         }
     }
-    private void CreateMonster(int index) //¸ó½ºÅÍ »ý¼º
-    {
-        for(int i = 0; i < summonCountForTest; i++)
-        {
-            GameObject obj = Instantiate(monsterPrefabArray[index]);
-            obj.SetActive(false);
-            obj.transform.SetParent(transform); //¸ó½ºÅÍ »ý¼º ÈÄ ºñÈ°¼ºÈ­,¸ó½ºÅÍÇ®À» ºÎ¸ð·Î ÇØÁÜ
-
-            NormalMonster m = obj.GetComponent<NormalMonster>();
-            m.InitDamageUIContainer();
-            m.ReturnIndex = index;
-
-            monsterQueue[index].Enqueue(m);
-        }
-    }
-    public NormalMonster GetMonster(Vector3 pos) //Ç®¿¡¼­ ¸ó½ºÅÍ¸¦ ²¨³»¿À´Â ÇÔ¼ö
+    private NormalMonster GetMonster(Vector3 pos) //Ç®¿¡¼­ ¸ó½ºÅÍ¸¦ ²¨³»¿À´Â ÇÔ¼ö
     {
         int rand = Random.Range(0, monsterPrefabArray.Length);
-        if (monsterQueue[rand].Count <= 0) //Ç®¿¡ ¸ó½ºÅÍ°¡ ¾øÀ¸¸é Ç®¿¡ »õ·Î »ý¼º
-        {
-            CreateMonster(rand);
-        }
-        NormalMonster monster = monsterQueue[rand].Dequeue(); //Ç®¿¡¼­ µðÅ¥
+
+        monsterPoolList[rand].IsValid();
+
+        NormalMonster monster = monsterPoolList[rand].GetObject(); //Ç®¿¡¼­ µðÅ¥
 
         activatedMonsterList.Add(monster); //È°¼ºÈ­µÇ¾îÀÖ´Â ¸ó½ºÅÍ ¸®½ºÆ®¿¡ ³Ö¾îÁÜ
 
@@ -74,11 +63,9 @@ public class MonsterPool : MonoBehaviour //¸ó½ºÅÍ¸¦ Ç®¸µ, °ü¸®ÇÏ´Â Å¬·¡½º. ¸ó½ºÅ
     }
     public NormalMonster GetMonster(Vector3 pos, int index) //Ç®¿¡¼­ ¸ó½ºÅÍ¸¦ ²¨³»¿À´Â ÇÔ¼ö
     {
-        if (monsterQueue[index].Count <= 0) //Ç®¿¡ ¸ó½ºÅÍ°¡ ¾øÀ¸¸é Ç®¿¡ »õ·Î »ý¼º
-        {
-            CreateMonster(index);
-        }
-        NormalMonster monster = monsterQueue[index].Dequeue(); //Ç®¿¡¼­ µðÅ¥
+        monsterPoolList[index].IsValid();
+
+        NormalMonster monster = monsterPoolList[index].GetObject(); //Ç®¿¡¼­ µðÅ¥
 
         activatedMonsterList.Add(monster); //È°¼ºÈ­µÇ¾îÀÖ´Â ¸ó½ºÅÍ ¸®½ºÆ®¿¡ ³Ö¾îÁÜ
 
@@ -99,7 +86,7 @@ public class MonsterPool : MonoBehaviour //¸ó½ºÅÍ¸¦ Ç®¸µ, °ü¸®ÇÏ´Â Å¬·¡½º. ¸ó½ºÅ
         monster.gameObject.SetActive(false); //Ç®·Î µÇµ¹¸®±â °ü·Ã ÃÊ±âÈ­
         monster.transform.SetParent(transform);
 
-        monsterQueue[index].Enqueue(monster);
+        monsterPoolList[index].ReturnObject(monster);
     }
     private IEnumerator Co_SpawnMonster()
     {

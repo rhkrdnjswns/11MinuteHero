@@ -17132,6 +17132,7 @@ MonoBehaviour:
   maxHp: 1000
   speed: 2
   currentHp: 0
+  currentSpeed: 0
   damageUIPrefab: {fileID: 9182912565010467780, guid: 3d13174112c6d8d4e9ac179922aec9cd,
     type: 3}
   bossAreaWidth: 50
@@ -17149,15 +17150,6 @@ MonoBehaviour:
       type: 3}
     projectileCreateCount: 20
     projectileSpeed: 4
-  jumpAttack:
-    radius: 4
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 64
-  attackInSquareUtility:
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 64
   stonePrefab: {fileID: 18903384890475446, guid: a01e366ed1f40974abfa43ec615c4f91,
     type: 3}
 --- !u!1 &6650333540463887087

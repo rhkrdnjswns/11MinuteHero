@@ -50,6 +50,7 @@ public abstract class Character : MonoBehaviour //플레이어, 몬스터의 부모 클래스
     protected virtual void Start()
     {
         InGameManager.Instance.DGameOver += StopAllCoroutines;
+        InGameManager.Instance.DGameOver += () => rigidbody.velocity = Vector3.zero;
     }
     protected virtual void DecreaseHp(float value) //체력 감소
     {

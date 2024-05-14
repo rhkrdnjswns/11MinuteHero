@@ -13,6 +13,7 @@ public class InGameManager : MonoBehaviour
     private static InGameManager instance; //싱글턴 인스턴스
     private CPlayer player; //플레이어 참조. 모든 플레이어 참조는 인게임매니저의 플레이어를 참조함.
 
+    [SerializeField] private ResultPopUp resultPopup;
     [SerializeField] private GameObject[] playerCharacterArray; //플레이어 캐릭터 배열. 플레이 씬 입장 시 인덱스를 전달받아 선택한 캐릭터를 활성화
     [SerializeField] private int characterIndex;
     [SerializeField] private List<NormalMonster> monsterList = new List<NormalMonster>(); //현재 필드 위에 존재하는 몬스터 리스트
@@ -31,6 +32,8 @@ public class InGameManager : MonoBehaviour
 
     private int killCount;
 
+    private int score;
+    private int bossScore;
     public int CharacterIndex { get => characterIndex; }
     public float Timer { get; private set; }
     public bool bTimeStop { get; set; }
@@ -99,6 +102,7 @@ public class InGameManager : MonoBehaviour
         GameObject boss = Instantiate(bossPrefabArray[0]);
         boss.transform.position = Vector3.zero;
         currentBoss = boss.GetComponent<Boss>();
+        currentBoss.InitBoss();
         boss.SetActive(false);
 
         cameraUtility = Camera.main.GetComponent<CameraUtility>();
@@ -107,22 +111,40 @@ public class InGameManager : MonoBehaviour
     //아래 로직은 전부 테스트 (09/25)
     private void Start()
     {
+        dGameOver += () => gameState = EGameState.GameOver;
         dGameOver += GameOverDebug;
         dLevelUp += LevelUpDebug;
         StartCoroutine(Co_Timer());
     }
     private IEnumerator Co_Timer()
     {
-        while (gameState != EGameState.GameOver || !bAppearBoss)
+        while (gameState != EGameState.GameOver)
         {
             Timer += Time.deltaTime;
-            inGameBasicUIManager.SetTimer((int)Timer / 60, (int)Timer % 60);
             yield return null;
+
+            if (Timer > 60 * 11) continue;
+            inGameBasicUIManager.SetTimer((int)Timer / 60, (int)Timer % 60);
         }
+    }
+    private void OperateScore()
+    {
+        score = killCount * (((int)Timer / 60) == 0? 1 : ((int)Timer / 60) > 11? 11 : ((int)Timer / 60));// + bossScore - 보스 시간당 감소 점수
     }
     private void GameOverDebug()
     {
         Debug.Log("Game Over!");
+    }
+    public IEnumerator Co_ShowResultPopup(bool isClear)
+    {
+        OperateScore();
+        resultPopup.SetResultPopUp(isClear, "1스테이지", ((int)Timer / 60).ToString("00") + ":" + ((int)Timer % 60).ToString("00"), score.ToString(), killCount.ToString());
+
+        yield return new WaitForSeconds(1f);
+
+        Time.timeScale = 0;
+        resultPopup.gameObject.SetActive(true);
+        StartCoroutine(TweeningUtility.SetSize(0.3f, resultPopup.transform.GetChild(0).GetChild(0), Vector3.one * 0.25f, Vector3.one, Vector3.one * 1.1f));
     }
     private void LevelUpDebug()
     {
@@ -177,7 +199,7 @@ public class InGameManager : MonoBehaviour
         cameraUtility.UnFocus();
 
         //보스 동작 시작
-        currentBoss.InitBoss();
+        currentBoss.ActiveBoss();
     }
     private Vector3 randomBossPos()
     {
