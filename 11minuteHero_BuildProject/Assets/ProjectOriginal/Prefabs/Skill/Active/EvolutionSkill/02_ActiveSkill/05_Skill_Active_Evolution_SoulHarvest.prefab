@@ -4920,17 +4920,16 @@ MonoBehaviour:
   bCanEvolution: 0
   coolTime: 1
   currentCoolTime: 0
-  damage: 20
-  currentDamage: 0
   baseDamage: 0
-  attackRadiusUtility:
-    radius: 4
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
+  secondDamage: 0
+  increaseDamagePercentage: 0
+  currentDamage: 0
   mainParticle: {fileID: 2010982270947349091}
   sideParticle: {fileID: 117373201364274920}
   sparksParticle: {fileID: 6573200804394914750}
+  sensingRadius: 0
+  originRadius: 0
+  IncreaseRadiusValue: 0
   healingParticle: {fileID: 5376607914436071084}
   recoverValue: 0.2
 --- !u!114 &8624802136997877643

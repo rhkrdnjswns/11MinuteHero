@@ -50,6 +50,7 @@ MonoBehaviour:
   name: "\uB9C8\uBC95\uC774 \uAE43\uB4E0 \uBC29\uD328"
   bCanEvolution: 0
   coolTime: 3
+  currentCoolTime: 0
   baseDamage: 15
   secondDamage: 0
   increaseDamagePercentage: 0
