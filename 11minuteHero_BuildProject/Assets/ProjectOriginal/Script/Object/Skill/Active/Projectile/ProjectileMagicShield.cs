@@ -35,7 +35,7 @@ public class ProjectileMagicShield : Projectile
         float timer = 0;
         while(timer < activateTime)
         {
-            transform.position += shotDirection * 3 / 2 * Time.deltaTime;
+            transform.position += shotDirection * speed / 2 * Time.deltaTime;
             transform.position += yDir * (5 - (5 * timer)) * Time.deltaTime;
             timer += Time.deltaTime;
             yield return null;

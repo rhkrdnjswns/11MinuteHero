@@ -1,0 +1,4 @@
+﻿MobScale,EXPGreenEssence,DecreaseValuePerMinuteEXPGreen,EXPBlueEssence,IncreaseValuePerMinuteEXPBlue,DecreaseValuePerMinuteEXPBlue,EXPRedEssence,IncreaseValuePerMinuteEXPRed,EXPPurpleEssence,IncreaseValuePerMinuteEXPPurple
+0,980,20,20,18,,,2,,
+1,900,30,100,25,,,5,,
+2,,,950,,10,45,8,5,2
