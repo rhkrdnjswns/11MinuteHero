@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 5138311358302208964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6464859794024432221}
   m_RootOrder: 1
@@ -39,7 +39,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5138311358302208964}
-  m_Mesh: {fileID: 4300002, guid: f211a5b5193d34579a53e13b80784079, type: 3}
+  m_Mesh: {fileID: -103915192069883863, guid: c03fd2aed78f2174cb7092ca32403535, type: 3}
 --- !u!23 &5124191573880031790
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 03ddc7e460b33402eb7640fab3881ac9, type: 2}
+  - {fileID: 2100000, guid: 8476ce96c12707c429a9c731a433a1b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5087,21 +5087,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 300
-  speed: 5
+  speed: 9
   currentHp: 0
-  eStoneType: 0
-  eStoneLevel: 2
+  currentSpeed: 0
   damageUIPrefab: {fileID: 9182912565010467780, guid: 3d13174112c6d8d4e9ac179922aec9cd,
     type: 3}
+  eStoneType: 0
+  eStoneLevel: 2
   chargingDecal: {fileID: 8928601778304230511}
   decal: {fileID: 2177042571232997751}
   earthQuakeDecal: {fileID: 559255888192566501}
-  attackRadiusUtility:
-    radius: 2
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 64
   earthQuakeParticle: {fileID: 6464859793616836545}
+  radius: 0
 --- !u!1001 &6464859792162433505
 PrefabInstance:
   m_ObjectHideFlags: 0

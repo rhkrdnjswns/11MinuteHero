@@ -11,6 +11,25 @@ public class NormalMonster : Monster, IDebuffApplicable
         Attack
     }
 
+    public int mobScale;
+    public int id;
+
+    private int expGreenWeight;
+    private int expGreenWeightDecrease;
+    private int expBlueWeight;
+    private int expBlueWeightIncrease;
+    private int expBlueWeightDecrease;
+    private int expRedWeight;
+    private int expRedWeightIncrease;
+    private int expPurpleWeight;
+    private int expPurpleWeightIncrease;
+
+    private float currentDamage;
+
+    private float hpIncrease;
+    private float damageIncrease;
+    private float speedIncrease;
+
     private Coroutine stiffnessCoroutine;
     private Coroutine slowDownCoroutine;
 
@@ -58,11 +77,41 @@ public class NormalMonster : Monster, IDebuffApplicable
 
         overlappingAvoider = transform.Find("OverlappingAvoider").GetComponent<SphereCollider>();
         boxCollider = GetComponent<BoxCollider>();
+        ReadCSVData();
+    }
+    protected virtual void ReadCSVData()
+    {
+        expGreenWeight = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1 , 1);
+        expGreenWeightDecrease = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 2);
+
+        expBlueWeight = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 3);
+        expBlueWeightIncrease = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 4);
+        expBlueWeightDecrease = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 5);
+        
+        expRedWeight = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 6);
+        expRedWeightIncrease = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 7);
+        
+        expPurpleWeight = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 8);
+        expPurpleWeightIncrease = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 9);
+
+        attackRange = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 11);
+        
+        maxHp = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 12);
+        currentHp = maxHp;
+        hpIncrease = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 13);
+
+        damage = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 14);
+        currentDamage = damage;
+        damageIncrease = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 15);
+
+        speed = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 16);
+        speedIncrease = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 17);
     }
     public void ResetMonster() //몬스터 생성 시 초기화
     {
-        currentHp = maxHp;
-        currentSpeed = speed;
+        currentHp = maxHp + (hpIncrease * (InGameManager.Instance.Timer / 60));
+        currentDamage = damage + (damageIncrease * (InGameManager.Instance.Timer / 60));
+        currentSpeed = speed + (speedIncrease * (InGameManager.Instance.Timer / 60)); ;
 
         StartCoroutine(Co_StateMachine()); //몬스터 상태 머신 실행
         StartCoroutine(Co_UpdatePositionData()); //몬스터 위치 관련 코루틴 실행
@@ -183,7 +232,7 @@ public class NormalMonster : Monster, IDebuffApplicable
         if (isStiffness) return;
         if (other.CompareTag(ConstDefine.TAG_PLAYER))
         {
-            InGameManager.Instance.Player.Hit(damage);
+            InGameManager.Instance.Player.Hit(currentDamage);
         }
     }
     public void Stun(float duration)
@@ -245,6 +294,34 @@ public class NormalMonster : Monster, IDebuffApplicable
     }
     private EItemID GetItemIDByWeight()
     {
-        return EItemID.Clock;
+        if(InGameManager.Instance.killCountForItem >= 100)
+        {
+            InGameManager.Instance.killCountForItem = 0;
+            int rand = Random.Range(4, 9);
+            return (EItemID)rand;
+        }
+
+        int green = expGreenWeight - (expGreenWeightDecrease * ((int)InGameManager.Instance.Timer / 60));
+        int blue = expBlueWeight + (expBlueWeightIncrease * ((int)InGameManager.Instance.Timer / 60)) - (expBlueWeightDecrease * ((int)InGameManager.Instance.Timer / 60));
+        int red = expRedWeight + (expRedWeightIncrease * ((int)InGameManager.Instance.Timer / 60)); 
+        int purple = expPurpleWeight + (expPurpleWeightIncrease * ((int)InGameManager.Instance.Timer / 60));
+
+        int[] array = { green, blue, red, purple }; 
+
+        int total = green + blue + red + purple;
+        int weight = Random.Range(1, total + 1);
+
+        int sum = 0;
+
+        for (int i = 0; i < array.Length; i++)
+        {
+            sum += array[i];
+            if(weight < sum)
+            {
+                return (EItemID)i;
+            }
+        }
+
+        return EItemID.ExpGreen;
     }
 }

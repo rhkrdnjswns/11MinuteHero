@@ -45,7 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eSkillType: 1
   id: 21
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 623029f32e384da4387d055c8acb8e52, type: 3}
   description: "\uCCB4\uB825\uC774 25%\uB9CC\uD07C \uC99D\uAC00\uD569\uB2C8\uB2E4."
   name: "\uB3CC\uC758 \uC2EC\uC7A5"
   percentage: 25
+  increaseValueByLevel: 0

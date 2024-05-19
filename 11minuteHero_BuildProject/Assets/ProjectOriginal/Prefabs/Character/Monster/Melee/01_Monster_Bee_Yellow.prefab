@@ -2778,7 +2778,7 @@ GameObject:
   - component: {fileID: 8357684928970863035}
   - component: {fileID: -8167200398390529573}
   m_Layer: 7
-  m_Name: Monster_Bee_Yellow
+  m_Name: 01_Monster_Bee_Yellow
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2917,11 +2917,13 @@ MonoBehaviour:
   maxHp: 100
   speed: 2
   currentHp: 0
+  currentSpeed: 0
   damageUIPrefab: {fileID: 9182912565010467780, guid: 3d13174112c6d8d4e9ac179922aec9cd,
     type: 3}
+  mobScale: 0
+  id: 1
   monsterState: 0
   damage: 10
-  rewardExp: 10
   attackRange: 0.5
 --- !u!1 &6436682609511541222
 GameObject:

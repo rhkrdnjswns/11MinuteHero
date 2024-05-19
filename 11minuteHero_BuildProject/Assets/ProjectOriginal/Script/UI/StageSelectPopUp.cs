@@ -16,8 +16,6 @@ public class StageSelectPopUp : MonoBehaviour, IEndDragHandler, IBeginDragHandle
     public string[] stageNameArray;
     public string[] stageDescriptionArray;
 
-    private bool[,] isLockArray;
-
     public float requiredDragValueMin;
     public float scrollDuration;
 
@@ -35,8 +33,6 @@ public class StageSelectPopUp : MonoBehaviour, IEndDragHandler, IBeginDragHandle
     private void Awake()
     {
         stageInfoArray = new StageInfoButton[stageArray.Length];
-        isLockArray = new bool[stageArray.Length, 3];
-
         //스테이지 클리어 데이터 불러오기
 
         for (int j = 0; j < stageArray.Length; j++)
@@ -47,12 +43,13 @@ public class StageSelectPopUp : MonoBehaviour, IEndDragHandler, IBeginDragHandle
 
             stageInfoArray[j] = obj.GetComponent<StageInfoButton>();
             stageInfoArray[j].Init(stageIconArray[j], stageNameArray[j], stageDescriptionArray[j]);
-
+            stageInfoArray[j].SetIsLock(false);
             if (j >= 1)
             {
                 stageInfoArray[j].Rect.sizeDelta = new Vector2(300, 250);
                 stageInfoArray[j].IconImage.color = new Color(0.1f, 0.1f, 0.1f);
                 stageInfoArray[j].StageNameText.gameObject.SetActive(false);
+                stageInfoArray[j].SetIsLock(true);
             }
         }
         BtnEvt_SelectDifficulty(0);
@@ -67,10 +64,6 @@ public class StageSelectPopUp : MonoBehaviour, IEndDragHandler, IBeginDragHandle
         difficultyButtonImage.sprite = difficultyParent.transform.GetChild(index).GetComponent<Image>().sprite;
         difficultyButtonText.text = difficultyParent.transform.GetChild(index).GetComponentInChildren<Text>().text;
         difficultyParent.SetActive(false);
-        for (int i = 0; i < stageInfoArray.Length; i++)
-        {
-            stageInfoArray[i].SetIsLock(isLockArray[index, i]);
-        }
     }
     public void BtnEvt_ChangeStage(bool isLeft)
     {
@@ -128,7 +121,8 @@ public class StageSelectPopUp : MonoBehaviour, IEndDragHandler, IBeginDragHandle
     public void BtnEvt_StartStage()
     {
         if (isScrolling) return;
-        MainManager.instance.StartStage(stageIndex);
+        if (stageIndex > 0) return;
+        MainManager.instance.StartStage(stageIndex, difficultyIndex);
     }
     private IEnumerator Co_MoveContentRect(Vector3 direction)
     {

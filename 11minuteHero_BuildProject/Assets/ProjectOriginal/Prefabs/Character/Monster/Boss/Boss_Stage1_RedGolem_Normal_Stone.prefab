@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052526799263781474}
-  m_Mesh: {fileID: 4300002, guid: 9b13982b2c553e84ea61fe688c5cfc10, type: 3}
+  m_Mesh: {fileID: -103915192069883863, guid: c03fd2aed78f2174cb7092ca32403535, type: 3}
 --- !u!23 &2030615310900019890
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 03ddc7e460b33402eb7640fab3881ac9, type: 2}
+  - {fileID: 2100000, guid: e73146a9813cbdf4686d6041c66aceaa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -128,12 +128,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 100
-  speed: 5
+  speed: 7
   currentHp: 0
-  eStoneType: 1
-  eStoneLevel: 1
+  currentSpeed: 0
   damageUIPrefab: {fileID: 9182912565010467780, guid: 3d13174112c6d8d4e9ac179922aec9cd,
     type: 3}
+  eStoneType: 1
+  eStoneLevel: 1
   chargingDecal: {fileID: 5103106266772992793}
   decal: {fileID: 2186092417033830222}
 --- !u!1 &5414585989581751223

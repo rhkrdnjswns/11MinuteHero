@@ -40,6 +40,11 @@ public class BRedGolem : Boss
     public override void InitBoss()
     {
         base.InitBoss();
+        projectileUtility = new ProjectileUtility(projectilePrefab, 20, transform);
+        projectileUtility.SetOwner();
+        projectileUtility.SetDamage(20);
+        projectileUtility.SetAction<Vector3>(SummonStone);
+        projectileUtility.SetSpeed(7);
         InitStoneQueue();
 
     }

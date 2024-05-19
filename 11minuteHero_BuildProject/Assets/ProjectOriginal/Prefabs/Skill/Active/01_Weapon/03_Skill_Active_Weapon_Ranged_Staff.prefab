@@ -45,11 +45,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eSkillType: 0
   id: 3
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 03f16fcd1dcd728408d017b43f4d3acd, type: 3}
   description: 
   name: "\uC2A4\uD0DC\uD504"
   bCanEvolution: 0
   coolTime: 1
+  currentCoolTime: 0
   baseDamage: 5
   secondDamage: 5
   increaseDamagePercentage: 0
@@ -60,11 +61,6 @@ MonoBehaviour:
   shotCount: 2
   currentShotCount: 0
   speed: 8
-  attackRadiusUtility:
-    radius: 8
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
   shotInterval: 0.15
   maxTargetCount: 6
   sensingRadius: 8

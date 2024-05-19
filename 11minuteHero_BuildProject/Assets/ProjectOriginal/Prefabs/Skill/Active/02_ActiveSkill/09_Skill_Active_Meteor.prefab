@@ -45,11 +45,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eSkillType: 0
   id: 9
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: ad12350a0e797444da256ed258303f9c, type: 3}
   description: 
   name: "\uBA54\uD14C\uC624"
   bCanEvolution: 0
   coolTime: 5
+  currentCoolTime: 0
   baseDamage: 10
   secondDamage: 5
   increaseDamagePercentage: 0
@@ -57,6 +58,7 @@ MonoBehaviour:
   activeObjectPrefab: {fileID: 9023581761401557395, guid: be7b6c4b31edf854099d99aa859bbbcb,
     type: 3}
   createCount: 7
+  meteorCount: 0
   summonInteval: 0.2
   sensingRadius: 12
   explosionRadius: 2

@@ -22,7 +22,7 @@ public class CRedGolemStone : Monster //1½ºÅ×ÀÌÁö º¸½º ·¹µå°ñ·½ÀÇ µ¹ ¿ÀºêÁ§Æ® (Ç
 
     private Transform parent;
     private Transform decalParent;
-    private DamageUIContainer damageUIContainer = new DamageUIContainer();
+  //  private DamageUIContainer damageUIContainer = new DamageUIContainer();
 
     [SerializeField] private Decal chargingDecal;
     [SerializeField] private Decal decal;

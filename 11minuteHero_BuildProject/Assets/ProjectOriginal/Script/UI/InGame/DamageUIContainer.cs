@@ -41,10 +41,10 @@ public class DamageUIContainer
     }
     public void ActiveDamageUI(float damage)
     {
-        if(!damageUIPool.IsValid())
-        {
+        //if(!damageUIPool.IsValid())
+        //{
 
-        }
+        //}
         DamageUI obj = damageUIPool.GetObject();
         obj.transform.SetParent(canvas.transform);
 

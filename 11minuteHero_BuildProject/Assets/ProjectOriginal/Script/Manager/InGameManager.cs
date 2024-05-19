@@ -16,6 +16,7 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private ResultPopUp resultPopup;
     [SerializeField] private GameObject[] playerCharacterArray; //플레이어 캐릭터 배열. 플레이 씬 입장 시 인덱스를 전달받아 선택한 캐릭터를 활성화
     [SerializeField] private int characterIndex;
+    [SerializeField] private int bossIndex;
     [SerializeField] private List<NormalMonster> monsterList = new List<NormalMonster>(); //현재 필드 위에 존재하는 몬스터 리스트
                                                                               //[SerializeField] private CustomPriorityQueue<Monster> monster
     private SkillManager skillManager;
@@ -23,6 +24,7 @@ public class InGameManager : MonoBehaviour
     private InGameBasicUIManager inGameBasicUIManager;
     private ItemManager itemManager;
     private CSVManager csvManager;
+    [SerializeField] private PossessedSKillUI possessedSkillUI;
 
     [SerializeField] private GameObject[] bossPrefabArray;
 
@@ -31,6 +33,7 @@ public class InGameManager : MonoBehaviour
     private GrayscaleUtility grayscaleUtility;
 
     private int killCount;
+    public int killCountForItem { get; set; }
 
     private int score;
     private int bossScore;
@@ -69,6 +72,7 @@ public class InGameManager : MonoBehaviour
         {
             killCount = value;
             inGameBasicUIManager.KillCountText.text = killCount.ToString();
+            killCountForItem = value;
         }
     }
     public SkillManager SkillManager { get => skillManager; }
@@ -77,6 +81,7 @@ public class InGameManager : MonoBehaviour
     public ItemManager ItemManager { get => itemManager; }
     public CSVManager CSVManager { get => csvManager; }
     public GrayscaleUtility GrayscaleUtility { get => grayscaleUtility; }
+    public PossessedSKillUI PossessedSkillUI { get => possessedSkillUI; }
 
 
     private void Awake() //싱글턴으로 인스턴스화. 인게임 내에서는 씬전환이 일어나지 않기 때문에 인게임 씬 로드 시에만 this로 초기화 해주면 됨.
@@ -87,6 +92,7 @@ public class InGameManager : MonoBehaviour
         Screen.SetResolution(1280, 720, true);
 
         if (GameManager.instance != null) characterIndex = GameManager.instance.characterIndex;
+
 
         GameObject obj = Instantiate(playerCharacterArray[characterIndex]); //캐릭터 생성 후 참조를 가져옴
         player = obj.GetComponent<CPlayer>();
@@ -99,7 +105,9 @@ public class InGameManager : MonoBehaviour
         csvManager = FindObjectOfType<CSVManager>();
 
         // * 스테이지마다 인덱스 다르게 적용해야함
-        GameObject boss = Instantiate(bossPrefabArray[0]);
+        if (GameManager.instance != null) bossIndex = GameManager.instance.difficultyIndex;
+
+        GameObject boss = Instantiate(bossPrefabArray[bossIndex]);
         boss.transform.position = Vector3.zero;
         currentBoss = boss.GetComponent<Boss>();
         currentBoss.InitBoss();
@@ -123,7 +131,17 @@ public class InGameManager : MonoBehaviour
             Timer += Time.deltaTime;
             yield return null;
 
-            if (Timer > 60 * 11) continue;
+            if (Timer > 60 * 11)
+            {
+                if(!bAppearBoss)
+                {
+                    StartCoroutine(Co_AppearBoss());
+                }
+                else
+                {
+                    continue;
+                }
+            }
             inGameBasicUIManager.SetTimer((int)Timer / 60, (int)Timer % 60);
         }
     }

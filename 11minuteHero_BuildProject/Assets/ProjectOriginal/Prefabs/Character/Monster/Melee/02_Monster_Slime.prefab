@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 597144740}
   - component: {fileID: 2371580581926746409}
   m_Layer: 7
-  m_Name: Monster_Slime
+  m_Name: 02_Monster_Slime
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -237,11 +237,13 @@ MonoBehaviour:
   maxHp: 100
   speed: 2
   currentHp: 0
+  currentSpeed: 0
   damageUIPrefab: {fileID: 9182912565010467780, guid: 3d13174112c6d8d4e9ac179922aec9cd,
     type: 3}
+  mobScale: 1
+  id: 2
   monsterState: 0
   damage: 10
-  rewardExp: 10
   attackRange: 0.5
 --- !u!1 &7182747468237515038
 GameObject:
