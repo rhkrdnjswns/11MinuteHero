@@ -17145,11 +17145,8 @@ MonoBehaviour:
   - {fileID: 1267113715161251338}
   - {fileID: 6664552384069372328}
   hpEventArray: 46000000
-  rangedAttackUtility:
-    projectilePrefab: {fileID: 8256960205127500495, guid: 45afb0a9d89df5a49b814da5debf3f09,
-      type: 3}
-    projectileCreateCount: 20
-    projectileSpeed: 4
+  projectilePrefab: {fileID: 8256960205127500495, guid: 49b848358a94f4d469cfc9b30285cd00,
+    type: 3}
   stonePrefab: {fileID: 18903384890475446, guid: a01e366ed1f40974abfa43ec615c4f91,
     type: 3}
 --- !u!1 &6650333540463887087

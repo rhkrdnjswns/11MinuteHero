@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eSkillType: 0
   id: 16
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: da6d81bf72e025d40acb699a8b3e6840, type: 3}
   description: 
   name: "\uB9C8\uBC95\uC774 \uAE43\uB4E0 \uBC29\uD328"
   bCanEvolution: 0

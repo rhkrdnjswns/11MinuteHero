@@ -45,12 +45,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eSkillType: 0
   id: 7
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e141e9c8f0aa9b34ca30407b4d1f2ee0, type: 3}
   description: "\uBD88\uB369\uC774\uB4E4\uC774 \uC8FC\uBCC0\uC744 \uD68C\uC804\uD558\uBA70
     \uACF5\uACA9\uD569\uB2C8\uB2E4."
   name: "\uB3C4\uAE68\uBE44\uBD88"
   bCanEvolution: 0
   coolTime: 0
+  currentCoolTime: 0
   baseDamage: 4
   secondDamage: 4
   increaseDamagePercentage: 0

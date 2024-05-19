@@ -798,7 +798,7 @@ GameObject:
   - component: {fileID: 4411970031654204820}
   - component: {fileID: 3262799910112323154}
   m_Layer: 7
-  m_Name: Monster_GreenGolem
+  m_Name: 04_Monster_GreenGolem
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -896,11 +896,13 @@ MonoBehaviour:
   maxHp: 100
   speed: 2
   currentHp: 0
+  currentSpeed: 0
   damageUIPrefab: {fileID: 9182912565010467780, guid: 3d13174112c6d8d4e9ac179922aec9cd,
     type: 3}
+  mobScale: 2
+  id: 4
   monsterState: 0
   damage: 10
-  rewardExp: 10
   attackRange: 0.5
 --- !u!1 &3610096224567142103
 GameObject:

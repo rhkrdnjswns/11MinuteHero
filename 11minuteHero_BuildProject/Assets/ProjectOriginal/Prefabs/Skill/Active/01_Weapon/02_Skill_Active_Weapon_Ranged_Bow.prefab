@@ -45,11 +45,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eSkillType: 0
   id: 2
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 0afc43dbb7840774c8a8f7e2ce245aa1, type: 3}
   description: "\uC804\uBC29\uC73C\uB85C \uD65C\uC2DC\uC704\uB97C \uB2F9\uAE41\uB2C8\uB2E4."
   name: "\uD65C"
   bCanEvolution: 0
   coolTime: 1.2
+  currentCoolTime: 0
   baseDamage: 5
   secondDamage: 5
   increaseDamagePercentage: 0
@@ -60,6 +61,6 @@ MonoBehaviour:
   shotCount: 1
   currentShotCount: 0
   speed: 8
-  penetrateCount: 2
-  currentPenetrateCount: 0
+  penetrationCount: 0
+  currentPenetrationCount: 0
   activateTime: 5

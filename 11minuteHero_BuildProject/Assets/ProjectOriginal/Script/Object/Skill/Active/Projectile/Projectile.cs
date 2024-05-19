@@ -102,6 +102,10 @@ public abstract class Projectile : MonoBehaviour //투사체 클래스. 화살, 단검 등 
     {
         //특정 이벤트를 발신해야 하는 투사체의 경우 이벤트 설정
     }
+    public virtual void SetAction<T>(System.Action<T> action)
+    {
+        //매개변수를 받는 이벤트 설정
+    }
     public virtual void SetKnockBackData(float speed, float duration)
     {
         //넉백시키는 투사체의 경우 넉백 관련 설정

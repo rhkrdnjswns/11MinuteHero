@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     public int characterIndex;
     public int stageIndex;
+    public int difficultyIndex;
+
     private void Awake()
     {
         if(instance == null)

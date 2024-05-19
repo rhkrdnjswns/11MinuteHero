@@ -1635,7 +1635,7 @@ GameObject:
   - component: {fileID: 3096425184673104137}
   - component: {fileID: 2721412705709438411}
   m_Layer: 7
-  m_Name: Monster_Ranged_BlueGolem
+  m_Name: 05_Monster_Ranged_BlueGolem
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1736,10 +1736,12 @@ MonoBehaviour:
   currentSpeed: 0
   damageUIPrefab: {fileID: 9182912565010467780, guid: 3d13174112c6d8d4e9ac179922aec9cd,
     type: 3}
+  mobScale: 2
+  id: 5
   monsterState: 0
   damage: 20
   attackRange: 8
-  projectilePrefab: {fileID: 988259513345740439, guid: c39fc57f59c0487449d181d31f3b7141,
+  projectilePrefab: {fileID: 988259513345740439, guid: bdd95d823250e12478688a0c1896fce2,
     type: 3}
   projectileCreateCount: 5
   projectileActivateTime: 6

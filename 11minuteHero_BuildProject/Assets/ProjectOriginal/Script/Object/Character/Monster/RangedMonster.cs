@@ -26,6 +26,12 @@ public class RangedMonster : NormalMonster
 
         delay = new WaitForSeconds(behaviorDelay);
     }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        projectileSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 18);
+    }
     protected override IEnumerator Co_Attack()
     {
         transform.LookAt(InGameManager.Instance.Player.transform);

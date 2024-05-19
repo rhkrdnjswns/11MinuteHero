@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5568220146740195240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5568220146740195243}
+  - component: {fileID: 5568220146740195242}
+  m_Layer: 0
+  m_Name: ItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5568220146740195243
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5568220146740195240}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5568220146740195242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5568220146740195240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12fef06e9fabeb341934a97aecd3be46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPrefabArray:
+  - {fileID: 1607007696792561702, guid: b3ebc1100b4041447a06189c06fea6c5, type: 3}
+  - {fileID: 2336912955553764650, guid: 85c8f672c5ada254d90a4409e022ecb3, type: 3}
+  - {fileID: 8562407658801983166, guid: 34636be58ece25648a03bc524c2f7dd0, type: 3}
+  - {fileID: 4109961792583822816, guid: 67eb65577294b0d4dbc4ab1543680f7f, type: 3}
+  - {fileID: 6195899906012327882, guid: 2e0190ab9540ffd478fd3a6a0652272e, type: 3}
+  - {fileID: 6643965681987712794, guid: 34ec9a9267be3884f9f3d38c0ade0dc0, type: 3}
+  - {fileID: 6058132680231757693, guid: 2d11a491b4dee694ab48198d1ed001cc, type: 3}
+  - {fileID: 5402938151033334639, guid: 3d391c9c44089c344bee4524aa6f08f3, type: 3}
+  - {fileID: 2240452245837985699, guid: b7fb823546f82d7468d186ec8ad9d196, type: 3}
+  itemInitCount: c80000006400000032000000190000000500000005000000050000000500000005000000

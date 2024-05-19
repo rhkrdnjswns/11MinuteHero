@@ -3,7 +3,7 @@ using UnityEngine;
 public class Monster : Character
 {
     [SerializeField] private GameObject damageUIPrefab; //데미지 UI 프리팹
-    private DamageUIContainer damageUIContainer = new DamageUIContainer(); //데미지 UI를 관리할 컨테이너
+    protected DamageUIContainer damageUIContainer = new DamageUIContainer(); //데미지 UI를 관리할 컨테이너
 
     public virtual void InitMonsterData()
     {

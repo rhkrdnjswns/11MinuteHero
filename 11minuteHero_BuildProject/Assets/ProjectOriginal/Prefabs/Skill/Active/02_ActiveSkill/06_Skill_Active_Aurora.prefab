@@ -4912,11 +4912,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eSkillType: 0
   id: 6
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: ac57e1d13a005ca44b41ee5896933ee6, type: 3}
   description: 
   name: 
   bCanEvolution: 0
   coolTime: 1
+  currentCoolTime: 0
   baseDamage: 5
   secondDamage: 0
   increaseDamagePercentage: 0
