@@ -7,7 +7,8 @@ public class LoadManager : MonoBehaviour
     private bool bLoadComplete;
     private IEnumerator Start()
     {
-        yield return new WaitUntil(() => bLoadComplete);
+        yield return new WaitForSeconds(3f);
+        //yield return new WaitUntil(() => bLoadComplete);
         StartCoroutine(SceneUtility.TransitionScene(SceneInfo.Main));
     }
 }
