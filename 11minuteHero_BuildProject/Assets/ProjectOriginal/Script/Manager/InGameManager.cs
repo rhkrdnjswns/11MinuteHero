@@ -72,7 +72,7 @@ public class InGameManager : MonoBehaviour
         {
             killCount = value;
             inGameBasicUIManager.KillCountText.text = killCount.ToString();
-            killCountForItem = value;
+            killCountForItem++;
         }
     }
     public SkillManager SkillManager { get => skillManager; }

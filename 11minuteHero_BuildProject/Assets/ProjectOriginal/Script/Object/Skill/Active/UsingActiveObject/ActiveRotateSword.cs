@@ -62,7 +62,7 @@ public class ActiveRotateSword : ActiveSkill
     {
         base.UpdateSkillData();
         swordSkillObject.IncreaseSize(increaseSizeValue);
-        radius += originRadius * increaseSizeValue / 100;
+        radius += increaseSizeValue;
         swordSkillObject.SetAttackRadius(radius);
     }
     protected override void SetCurrentDamage()

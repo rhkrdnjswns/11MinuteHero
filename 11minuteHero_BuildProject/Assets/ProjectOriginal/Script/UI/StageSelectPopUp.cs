@@ -6,12 +6,14 @@ using UnityEngine.UI;
 
 public class StageSelectPopUp : MonoBehaviour, IEndDragHandler, IBeginDragHandler, IDragHandler
 {
+    public Image fade;
     public RectTransform contentRect;
     public GameObject staegInfoPrefab;
 
     private StageInfoButton[] stageInfoArray;
 
     public GameObject[] stageArray;
+    
     public Sprite[] stageIconArray;
     public string[] stageNameArray;
     public string[] stageDescriptionArray;
@@ -122,6 +124,12 @@ public class StageSelectPopUp : MonoBehaviour, IEndDragHandler, IBeginDragHandle
     {
         if (isScrolling) return;
         if (stageIndex > 0) return;
+        StartCoroutine(Co_Start());
+    }
+    private IEnumerator Co_Start()
+    {
+        fade.gameObject.SetActive(true);
+        yield return StartCoroutine(TweeningUtility.FadeIn(1, fade));
         MainManager.instance.StartStage(stageIndex, difficultyIndex);
     }
     private IEnumerator Co_MoveContentRect(Vector3 direction)

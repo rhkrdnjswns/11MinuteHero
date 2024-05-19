@@ -11,7 +11,7 @@ public enum EItemID
     Magnet,
     Bomb,
     Clock,
-    Invincibility,
+    //Invincibility,
     Potion
 }
 public class ItemManager : MonoBehaviour

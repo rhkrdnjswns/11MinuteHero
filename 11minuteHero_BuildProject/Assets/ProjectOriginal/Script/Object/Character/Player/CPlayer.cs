@@ -11,7 +11,10 @@ public abstract class CPlayer : Character
 
     [SerializeField] private Renderer[] rendererArray; //머티리얼 깜빡이는 효과를 주기 위한 참조
 
-    private int maxExp = 100; //요구 경험치
+    private int maxExp; //요구 경험치
+    private int expIncrease;
+    private int expIncreaseMax; //요구 경험치
+
     [SerializeField] private int currentExp; //현재 경험치
     private int level = 1; //레벨
     [SerializeField] private float dodgeCoolTime;
@@ -224,8 +227,11 @@ public abstract class CPlayer : Character
         {
             level++;
             currentExp -= maxExp;
-            maxExp += 100 * (level - 1);
+            maxExp += maxExp >= expIncreaseMax ? 0 : expIncrease;
             InGameManager.Instance.DLevelUp();
+            isInvincible = true;
+
+            StartCoroutine(Co_HitInvincible());
         }
         if (InGameManager.Instance.InGameBasicUIManager.PlayerExpBar.gameObject.activeSelf)
         {
@@ -337,6 +343,10 @@ public abstract class CPlayer : Character
 
         speed = InGameManager.Instance.CSVManager.GetCSVData<float>(3, InGameManager.Instance.CharacterIndex + 1, 2);
         currentSpeed = speed;
+
+        expIncrease = InGameManager.Instance.CSVManager.GetCSVData<int>(6, 1, 0);
+        maxExp = expIncrease;
+        expIncreaseMax = InGameManager.Instance.CSVManager.GetCSVData<int>(6, 1, 1);
 
         dodgeCoolTime = InGameManager.Instance.CSVManager.GetCSVData<float>(3, InGameManager.Instance.CharacterIndex + 1, 3);
     }

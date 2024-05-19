@@ -52,6 +52,12 @@ public class NormalMonster : Monster, IDebuffApplicable
     private bool isStiffness;
     public float DistToPlayer { get => distToPlayer; }
     public int ReturnIndex { set => returnIndex = value; }
+    protected override void Start()
+    {
+        base.Start();
+
+        InGameManager.Instance.DGameOver += () => overlappingAvoider.enabled = false;
+    }
     private IEnumerator Co_StateMachine() //일반 몬스터 상태머신
     {
         while (!IsDie)
@@ -109,17 +115,17 @@ public class NormalMonster : Monster, IDebuffApplicable
     }
     public void ResetMonster() //몬스터 생성 시 초기화
     {
+        IsDie = false; //상호작용 유효하도록 초기화
+        eCharacterActionable = ECharacterActionable.Actionable;
+        overlappingAvoider.enabled = true;
+        boxCollider.enabled = true;
+
         currentHp = maxHp + (hpIncrease * (InGameManager.Instance.Timer / 60));
         currentDamage = damage + (damageIncrease * (InGameManager.Instance.Timer / 60));
         currentSpeed = speed + (speedIncrease * (InGameManager.Instance.Timer / 60)); ;
 
         StartCoroutine(Co_StateMachine()); //몬스터 상태 머신 실행
         StartCoroutine(Co_UpdatePositionData()); //몬스터 위치 관련 코루틴 실행
-
-        IsDie = false; //상호작용 유효하도록 초기화
-        eCharacterActionable = ECharacterActionable.Actionable;
-        overlappingAvoider.enabled = true;
-        boxCollider.enabled = true;
     }
     public override void Hit(float damage) //몬스터 피격 함수
     {
@@ -297,7 +303,7 @@ public class NormalMonster : Monster, IDebuffApplicable
         if(InGameManager.Instance.killCountForItem >= 100)
         {
             InGameManager.Instance.killCountForItem = 0;
-            int rand = Random.Range(4, 9);
+            int rand = Random.Range(4, 8);
             return (EItemID)rand;
         }
 

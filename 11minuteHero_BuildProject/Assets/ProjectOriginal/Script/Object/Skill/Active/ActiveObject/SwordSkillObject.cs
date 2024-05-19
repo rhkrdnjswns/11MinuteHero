@@ -141,4 +141,8 @@ public class SwordSkillObject : ActiveObject
         gameObject.SetActive(false);
         bEndRev = true;
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
+    }
 }
