@@ -28,6 +28,7 @@ public abstract class Boss : Monster
         InitDamageUIContainer(modelObject.transform.localScale.y);
         cameraUtility = Camera.main.GetComponent<CameraUtility>();
         InitBehaviorTree();
+        InGameManager.Instance.DGameOver += StopAllCoroutines;
     }
     public float GetStartAnimPlayTime()
     {
@@ -75,7 +76,7 @@ public abstract class Boss : Monster
     }
     private IEnumerator Co_ExcuteBehaviorTree()
     {
-        while (true)
+        while (!IsDie)
         {
             yield return null;
             if (bHpEvent) continue;
@@ -87,12 +88,27 @@ public abstract class Boss : Monster
         if (bHpEvent) return;
         base.Hit(damage);
         InGameManager.Instance.BossUIManager.UpdateBossHpBar(currentHp / maxHp);
+        if(currentHp <= 0 && !IsDie)
+        {
+            InGameManager.Instance.DGameOver();
+            StartCoroutine(Co_Die());
+            return;
+        }
         if (hpEventIndex >= hpEventArray.Length) return;
         if((currentHp / maxHp * 100) <= hpEventArray[hpEventIndex])
         {
             bHpEvent = true;
             PlayHpEvent(hpEventIndex++);
         }
+        
+    }
+    protected IEnumerator Co_Die()
+    {
+        IsDie = true;
+        animator.SetTrigger(ConstDefine.TRIGGER_DIE);
+        yield return new WaitForSeconds(1.5f);
+
+        InGameManager.Instance.StartCoroutine(InGameManager.Instance.Co_ShowResultPopup(true));
     }
     protected virtual void IncreaseHp(float value)
     {

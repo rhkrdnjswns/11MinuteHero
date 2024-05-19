@@ -83,6 +83,7 @@ public abstract class CPlayer : Character
 
         InGameManager.Instance.InGameBasicUIManager.PlayerHpBar.SetFillAmount(currentHp);
         InGameManager.Instance.InGameBasicUIManager.PlayerExpBar.SetFillAmount(0, level.ToString());
+        InGameManager.Instance.DGameOver += () => isInvincible = true;
 
         ReadCSVData();
       

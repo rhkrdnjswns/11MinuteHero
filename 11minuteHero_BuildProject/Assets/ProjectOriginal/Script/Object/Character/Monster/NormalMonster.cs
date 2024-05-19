@@ -189,6 +189,7 @@ public class NormalMonster : Monster, IDebuffApplicable
         boxCollider.enabled = false;
 
         if (!animator.enabled) animator.enabled = true;
+        animator.SetBool(ConstDefine.BOOL_ISMOVE, false);
         animator.SetTrigger(ConstDefine.TRIGGER_DIE); //사망 애니메이션
         InGameManager.Instance.KillCount++; //킬카운트 1 증가
 

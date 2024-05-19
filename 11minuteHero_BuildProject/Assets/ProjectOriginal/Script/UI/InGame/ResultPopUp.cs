@@ -16,7 +16,7 @@ public class ResultPopUp : MonoBehaviour
 
     public void SetResultPopUp(bool isClear, string stageName, string time, string score, string killCount)
     {
-        clearResultText.text = isClear ? "Clear" : "Game Over";
+        clearResultText.text = isClear ? "Stage Clear" : "Game Over";
         stageNameText.text = stageName;
         stageTimerText.text = time;
         //bestScoreText.text = 최고점수 불러오기

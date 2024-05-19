@@ -409,6 +409,7 @@ public class BRedGolem : Boss
             yield return null;
         }
         animator.SetBool(ConstDefine.BOOL_ISMOVE, false);
+        yield return StartCoroutine(Co_Behavior_KnockBackPunch());
     }
     protected override bool Move()
     {

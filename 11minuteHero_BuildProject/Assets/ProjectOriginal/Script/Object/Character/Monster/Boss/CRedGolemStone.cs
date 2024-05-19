@@ -95,7 +95,7 @@ public class CRedGolemStone : Monster //1½ºÅ×ÀÌÁö º¸½º ·¹µå°ñ·½ÀÇ µ¹ ¿ÀºêÁ§Æ® (Ç
     public CRedGolemStone SetReference(Transform parent)
     {
         this.parent = parent;
-
+        InGameManager.Instance.DGameOver += StopAllCoroutines;
         return this;
     }
     public override void Hit(float damage) //¸ó½ºÅÍ ÇÇ°İ ÇÔ¼ö
