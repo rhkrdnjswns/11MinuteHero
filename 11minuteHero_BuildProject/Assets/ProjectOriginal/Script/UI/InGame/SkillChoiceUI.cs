@@ -28,7 +28,11 @@ public class SkillChoiceUI : ButtonComponent //스킬 선택지 UI
         }
         else
         {
-            if(eSkillType == ESkillType.Active)
+            if(eSkillType == ESkillType.None)
+            {
+                typeText.text = "아이템";
+            }
+            else if(eSkillType == ESkillType.Active)
             {
                 typeText.text = "액티브 스킬";
             }
@@ -40,7 +44,7 @@ public class SkillChoiceUI : ButtonComponent //스킬 선택지 UI
             deco.SetActive(true);
         }
 
-        iconFrame.sprite = iconFrameArray[(int)eSkillType];
+        iconFrame.sprite = iconFrameArray[eSkillType == ESkillType.None? 1 : (int)eSkillType];
         this.icon.sprite = icon;
         nameText.text = name;
         descriptionText.text = description;

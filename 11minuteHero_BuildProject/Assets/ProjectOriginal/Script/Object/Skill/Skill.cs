@@ -6,7 +6,8 @@ public enum ESkillType
 {
     Active = 0,
     Passive,
-    Evolution
+    Evolution,
+    None
 }
 public enum ESkillActiveID
 {

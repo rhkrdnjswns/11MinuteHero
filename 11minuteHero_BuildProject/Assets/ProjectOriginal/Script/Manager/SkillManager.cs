@@ -138,6 +138,13 @@ public class SkillManager : MonoBehaviour
     {
         if (selectedChoiceList.Count == 0) return; //null 참조 예외 방지
 
+        if(index < 0)
+        {
+            InGameManager.Instance.Player.RecoverHp(10, EApplicableType.Percentage);
+            StartCoroutine(skillChoicePopUp.InActivePopUp());
+            return;
+        }
+
         // * 선택한 스킬이 진화스킬인 경우의 처리
         if(selectedChoiceList[index].ESkillType == ESkillType.Evolution)
         {
@@ -249,12 +256,12 @@ public class SkillManager : MonoBehaviour
                 inPossessionIndexList.Add(i);
             }
         }
-        if(IsMaxHaveCount(true)) //보유중인 액티브 스킬이 최대치인 경우
+        if (IsMaxHaveCount(true)) //보유중인 액티브 스킬이 최대치인 경우
         {
             for (int i = 0; i < unPossessionSkillList.Count; i++)
             {
                 //보유중이지 않은 스킬이 등장할 때 액티브 스킬은 등장하지 않게 처리
-                if (unPossessionSkillList[i].GetComponent<ActiveSkill>())
+                if (unPossessionSkillList[i].TryGetComponent(out ActiveSkill a))
                 {
                     unPossessionIndexList.Remove(i);
                 }
@@ -265,19 +272,28 @@ public class SkillManager : MonoBehaviour
             for (int i = 0; i < unPossessionSkillList.Count; i++)
             {
                 //보유중이지 않은 스킬이 등장할 때 패시브 스킬은 등장하지 않게 처리
-                if (unPossessionSkillList[i].GetComponent<PassiveSkill>())
+                if (unPossessionSkillList[i].TryGetComponent(out PassiveSkill p))
                 {
                     unPossessionIndexList.Remove(i);
                 }
             }
         }
+        int inPossesionCount = inPossessionIndexList.Count;
         for (int i = 0; i < currentSelectCount; i++) //선택지 개수 - 진화 스킬 개수 만큼 반복 (진화 가능한 스킬이 없는 경우 3번 반복)
         {
             int weight = Random.Range(1, 101); // 1~100까지 구함
 
             if (inPossessionIndexList.Count == 0) weight = 0; //보유중인 스킬이 모두 선택지에 추가된 경우의 처리 (보유중이지 않은 스킬만 선택지에 추가되도록)
 
-            if (inPossessionSkillList.Count == ConstDefine.SKILL_MAX_HAVE_COUNT * 2) weight = 100; //보유 스킬이 꽉 찬 경우의 처리 (보유중인 스킬만 선택지에 추가되도록)
+            if (inPossessionSkillList.Count == ConstDefine.SKILL_MAX_HAVE_COUNT * 2) //보유 스킬이 꽉 찬 경우의 처리 (보유중인 스킬만 선택지에 추가되도록)
+            {
+                if (i >= inPossesionCount) //선택지에 등장 가능한 보유 스킬의 개수가 선택지 개수보다 적은 경우
+                {
+                    selectedChoiceList.Add(null);
+                    continue;
+                }
+                weight = 100;
+            }
 
             if (weight < 41) //보유중이지 않은 스킬 선택지에 추가
             {
