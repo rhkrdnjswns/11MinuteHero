@@ -47,15 +47,18 @@ public class NormalMonster : Monster, IDebuffApplicable
 
     private float distToPlayer;
 
-    private WaitForSeconds dieAnimDelay;
+    private WaitForSeconds dieAnimDelay = new WaitForSeconds(0.2f);
 
     private bool isStiffness;
     public float DistToPlayer { get => distToPlayer; }
     public int ReturnIndex { set => returnIndex = value; }
+    public Animator Animator { get => animator; }
     protected override void Start()
     {
         base.Start();
 
+        InGameManager.Instance.DGameOver += () => animator.enabled = false;
+        InGameManager.Instance.DGameOver += StopAllCoroutines;
         InGameManager.Instance.DGameOver += () => overlappingAvoider.enabled = false;
     }
     private IEnumerator Co_StateMachine() //일반 몬스터 상태머신
@@ -74,6 +77,7 @@ public class NormalMonster : Monster, IDebuffApplicable
                     Debug.LogError("유효하지 않은 몬스터 상태입니다.");
                     yield break;
             }
+            
             yield return null;
         }
     }
@@ -115,9 +119,11 @@ public class NormalMonster : Monster, IDebuffApplicable
     }
     public void ResetMonster() //몬스터 생성 시 초기화
     {
-        if (!animator.enabled) animator.enabled = true;
+        if (!animator.enabled)
+        {
+            animator.enabled = true;
+        }
         IsDie = false; //상호작용 유효하도록 초기화
-        animator.SetBool(ConstDefine.BOOL_ISMOVE, true);
         eCharacterActionable = ECharacterActionable.Actionable;
         overlappingAvoider.enabled = true;
         boxCollider.enabled = true;
@@ -132,10 +138,11 @@ public class NormalMonster : Monster, IDebuffApplicable
     public override void Hit(float damage) //몬스터 피격 함수
     {
         base.Hit(damage);
-        if (currentHp <= 0) StartCoroutine(Co_DieEvent()); //죽었으면 사망 코루틴 실행
+        if (IsDie) StartCoroutine(Co_DieEvent()); //죽었으면 사망 코루틴 실행
     }
     public override void KnockBack(float speed, float duration)
     {
+        if (InGameManager.Instance.bTimeStop) return;
         overlappingAvoider.enabled = false; //몬스터 겹침방지 콜라이더를 꺼줌 (rigidbody.velocity가 0이라 뒤에 다른 몬스터가 있는 경우 밀려나지 않음)
 
         base.KnockBack(speed, duration);
@@ -191,20 +198,19 @@ public class NormalMonster : Monster, IDebuffApplicable
         boxCollider.enabled = false;
 
         if (!animator.enabled) animator.enabled = true;
-        animator.SetBool(ConstDefine.BOOL_ISMOVE, false);
         animator.SetTrigger(ConstDefine.TRIGGER_DIE); //사망 애니메이션
         InGameManager.Instance.KillCount++; //킬카운트 1 증가
 
         InGameManager.Instance.ItemManager.GetItem(transform.position, GetItemIDByWeight());
 
-        while (transform.position.y > -1.5) //몬스터가 땅 밑으로 사라지는 효과
+        yield return dieAnimDelay;
+        while (transform.position.y > -3) //몬스터가 땅 밑으로 사라지는 효과
         {
-            transform.position += Vector3.down * 1 * Time.deltaTime;
+            transform.position += Vector3.down * 2 * Time.deltaTime;
             yield return null;
         }
-
-        if (dieAnimDelay == null) dieAnimDelay = new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-        yield return dieAnimDelay;//애니메이션 재생 시간만큼 딜레이
+        animator.SetTrigger(ConstDefine.TRIGGER_DIEEND);
+        yield return dieAnimDelay;
         InGameManager.Instance.MonsterPool.ReturnMonster(this, returnIndex); //몬스터 풀로 되돌림   
 
         InGameManager.Instance.MonsterList.Remove(this);
@@ -246,10 +252,12 @@ public class NormalMonster : Monster, IDebuffApplicable
     }
     public void Stun(float duration)
     {
+        if (InGameManager.Instance.bTimeStop) return;
         SetStiffness(duration);
     }
     public void SlowDown(float value, float duration)
     {
+        if (InGameManager.Instance.bTimeStop) return;
         SetSlowDonw(value, duration);
     }
     private void SetSlowDonw(float value, float duration)
@@ -279,12 +287,10 @@ public class NormalMonster : Monster, IDebuffApplicable
     }
     public void SetStiffness(float sec)
     {
-        if (InGameManager.Instance.bTimeStop) return;
         isStiffness = true;
         eCharacterActionable = ECharacterActionable.Unactionable;
         animator.enabled = false;
-
-        if(stiffnessCoroutine != null)
+        if (stiffnessCoroutine != null)
         {
             StopCoroutine(stiffnessCoroutine);
         }
@@ -293,7 +299,7 @@ public class NormalMonster : Monster, IDebuffApplicable
     private IEnumerator Co_Stiffness(float sec)
     {
         float timer = 0;
-        while(timer < sec)
+        while (timer < sec)
         {
             timer += Time.deltaTime;
             yield return null;

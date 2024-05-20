@@ -49,7 +49,6 @@ public abstract class Character : MonoBehaviour //플레이어, 몬스터의 부모 클래스
     }
     protected virtual void Start()
     {
-        InGameManager.Instance.DGameOver += StopAllCoroutines;
         InGameManager.Instance.DGameOver += () => rigidbody.velocity = Vector3.zero;
     }
     protected virtual void DecreaseHp(float value) //체력 감소
@@ -64,6 +63,7 @@ public abstract class Character : MonoBehaviour //플레이어, 몬스터의 부모 클래스
     }
     public virtual void Hit(float damage)
     {
+        if (IsDie) return;
         DecreaseHp(damage);
     }
     protected virtual bool Move() //이동 함수
@@ -74,14 +74,19 @@ public abstract class Character : MonoBehaviour //플레이어, 몬스터의 부모 클래스
     public virtual void KnockBack(float speed, float duration) //캐릭터 뒷방향으로의 넉백 함수
     {
         if (IsKnockBack) return;
+        if (InGameManager.Instance.bTimeStop) return;
+
         IsKnockBack = true;
         eCharacterActionable = ECharacterActionable.Unactionable; //행동 불가 처리
+
 
         StartCoroutine(Co_KnockBack(speed, duration));
     }
     public virtual void KnockBack(float speed, float duration, Vector3 direction) //임의의 방향으로의 넉백 함수
     {
         if (IsKnockBack) return;
+        if (InGameManager.Instance.bTimeStop) return;
+
         IsKnockBack = true;
         eCharacterActionable = ECharacterActionable.Unactionable; //행동 불가 처리
 

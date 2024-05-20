@@ -170,17 +170,19 @@ public class BRedGolem : Boss
     }
     private IEnumerator Co_SummonStoneRandomPos()
     {
-        while(true)
+        WaitForSeconds summonDelay = new WaitForSeconds(5f);
+        WaitForSeconds decalDelay = new WaitForSeconds(2f);
+        while (!IsDie)
         {
             Vector3 randomPos = new Vector3(appearPos.x + Random.Range(-(bossAreaWidth / 2), bossAreaWidth / 2), 0, appearPos.z + Random.Range(-(bossAreaHeight / 2), bossAreaHeight / 2));
-            yield return new WaitForSeconds(5f);
+            yield return summonDelay;
             Debug.Log(randomPos);
 
             decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.SetParent(null);
             decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.position = randomPos;
             StartCoroutine(decalList[(int)EDecalNumber.SummonStoneRandomPos].Co_ActiveDecal(2));
 
-            yield return new WaitForSeconds(2f);
+            yield return decalDelay;
 
             int num = Physics.OverlapSphereNonAlloc(decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.position, 1, summonStoneRandCollisionArray, ConstDefine.LAYER_PLAYER);
             AttackInRangeUtility.AttackLayerInRange(summonStoneRandCollisionArray, 10, num);

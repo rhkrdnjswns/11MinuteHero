@@ -6,9 +6,9 @@ public class MagnetItem : InteractiveItem
 {
     protected override void Interaction()
     {
-        foreach (var item in InGameManager.Instance.ItemManager.ActivatedExpItemList)
+        for (int i = 0; i < InGameManager.Instance.ItemManager.ActivatedExpItemList.Count; i++)
         {
-            item.GetExpItem();
+            InGameManager.Instance.ItemManager.ActivatedExpItemList[i].GetExpItem();
         }
         ReturnItem();
     }

@@ -55,7 +55,7 @@ public class ItemManager : MonoBehaviour
         int index = (int)itemID;
         if (itemPool[index].Count == 0) CreateItem(itemID);
 
-        if(activatedItemList.Count > 100)
+        if(activatedItemList.Count > 200)
         {
             ReturnItem(activatedExpItemList[0], activatedExpItemList[0].ItemID);
         }
