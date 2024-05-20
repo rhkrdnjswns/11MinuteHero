@@ -1,4 +1,4 @@
 ﻿PlayerCharacter,PlayerCharacterHP,PlayerCharacterMoveSpeed,PlayerCharacterAvoidanceCoolTime
-PlayerArcher,80,2.4,8
-PlayerWarrior,120,2,8
-PlayerWizard,100,2,7
+PlayerArcher,80,3,8
+PlayerWarrior,120,2.8,8
+PlayerWizard,90,2.8,7
