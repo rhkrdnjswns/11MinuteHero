@@ -115,14 +115,16 @@ public class NormalMonster : Monster, IDebuffApplicable
     }
     public void ResetMonster() //몬스터 생성 시 초기화
     {
+        if (!animator.enabled) animator.enabled = true;
         IsDie = false; //상호작용 유효하도록 초기화
+        animator.SetBool(ConstDefine.BOOL_ISMOVE, true);
         eCharacterActionable = ECharacterActionable.Actionable;
         overlappingAvoider.enabled = true;
         boxCollider.enabled = true;
 
-        currentHp = maxHp + (hpIncrease * (InGameManager.Instance.Timer / 60));
-        currentDamage = damage + (damageIncrease * (InGameManager.Instance.Timer / 60));
-        currentSpeed = speed + (speedIncrease * (InGameManager.Instance.Timer / 60)); ;
+        currentHp = maxHp + (hpIncrease * (int)(InGameManager.Instance.Timer / 60));
+        currentDamage = damage + (damageIncrease * (int)(InGameManager.Instance.Timer / 60));
+        currentSpeed = speed + (speedIncrease * (int)(InGameManager.Instance.Timer / 60)); 
 
         StartCoroutine(Co_StateMachine()); //몬스터 상태 머신 실행
         StartCoroutine(Co_UpdatePositionData()); //몬스터 위치 관련 코루틴 실행
@@ -277,6 +279,7 @@ public class NormalMonster : Monster, IDebuffApplicable
     }
     public void SetStiffness(float sec)
     {
+        if (InGameManager.Instance.bTimeStop) return;
         isStiffness = true;
         eCharacterActionable = ECharacterActionable.Unactionable;
         animator.enabled = false;

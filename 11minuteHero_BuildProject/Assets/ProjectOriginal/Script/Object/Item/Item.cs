@@ -11,6 +11,7 @@ public abstract class Item : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private WaitUntil waitUntilTimeStopFalse;
+    public EItemID ItemID { get => itemID; }
     protected abstract void Interaction();
     private void Awake()
     {

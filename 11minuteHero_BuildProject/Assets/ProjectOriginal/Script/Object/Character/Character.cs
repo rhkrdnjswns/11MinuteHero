@@ -55,7 +55,7 @@ public abstract class Character : MonoBehaviour //플레이어, 몬스터의 부모 클래스
     protected virtual void DecreaseHp(float value) //체력 감소
     {
         currentHp -= value;
-        if (currentHp < 0) //체력이 0이 된 경우 처리
+        if (currentHp <= 0) //체력이 0이 된 경우 처리
         {
             currentHp = 0;
             IsDie = true;
