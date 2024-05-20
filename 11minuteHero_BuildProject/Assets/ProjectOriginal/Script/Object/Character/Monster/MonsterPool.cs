@@ -145,12 +145,15 @@ public class MonsterPool : MonoBehaviour //몬스터를 풀링, 관리하는 클래스. 몬스�
         Vector3 rotDir;
         while(InGameManager.Instance.Timer < createEndTime[index])
         {
-            if(!InGameManager.Instance.bTimeStop)
+            if(activatedMonsterList.Count < 200)
             {
-                for (int i = 0; i < createCount[index]; i++)
+                if (!InGameManager.Instance.bTimeStop)
                 {
-                    rotDir = Quaternion.Euler(0, Random.Range(0, 361), 0) * Vector3.forward; //랜덤한 방향 설정
-                    GetMonster(InGameManager.Instance.Player.transform.position + rotDir.normalized * monsterSpawnDistance, index);
+                    for (int i = 0; i < createCount[index]; i++)
+                    {
+                        rotDir = Quaternion.Euler(0, Random.Range(0, 361), 0) * Vector3.forward; //랜덤한 방향 설정
+                        GetMonster(InGameManager.Instance.Player.transform.position + rotDir.normalized * monsterSpawnDistance, index);
+                    }
                 }
             }
             yield return monsterSpawnIntervalArray[index];

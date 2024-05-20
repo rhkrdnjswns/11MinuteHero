@@ -62,7 +62,7 @@ public class ActiveAurora : ActiveSkill //오라 스킬 클래스
     }
     private void FixedUpdate()
     {
-        transform.position = InGameManager.Instance.Player.transform.position;
+        transform.position = InGameManager.Instance.Player.transform.position + Vector3.up * 0.2f;
     }
     public override void SetEvlotionCondition()
     {
