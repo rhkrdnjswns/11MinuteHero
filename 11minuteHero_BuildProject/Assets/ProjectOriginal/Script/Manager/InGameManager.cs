@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum EGameState //인게임 상태 체크. GameOver면 모든 코루틴 작동 정지함.
 {
@@ -10,6 +11,8 @@ public enum EGameState //인게임 상태 체크. GameOver면 모든 코루틴 작동 정지함.
 }
 public class InGameManager : MonoBehaviour
 {
+    public Text testText;
+
     private static InGameManager instance; //싱글턴 인스턴스
     private CPlayer player; //플레이어 참조. 모든 플레이어 참조는 인게임매니저의 플레이어를 참조함.
 
@@ -131,7 +134,7 @@ public class InGameManager : MonoBehaviour
             Timer += Time.deltaTime;
             yield return null;
 
-            if (Timer > 60 * 11)
+            if (Timer > 60 * 8)
             {
                 if(!bAppearBoss)
                 {
@@ -147,7 +150,7 @@ public class InGameManager : MonoBehaviour
     }
     private void OperateScore()
     {
-        score = killCount * (((int)Timer / 60) == 0? 1 : ((int)Timer / 60) > 11? 11 : ((int)Timer / 60));// + bossScore - 보스 시간당 감소 점수
+        score = killCount * (((int)Timer / 60) == 0? 1 : ((int)Timer / 60) > 8? 8 : ((int)Timer / 60));// + bossScore - 보스 시간당 감소 점수
     }
     private void GameOverDebug()
     {
@@ -187,6 +190,10 @@ public class InGameManager : MonoBehaviour
     }
     public IEnumerator Co_AppearBoss()
     {
+        foreach (var item in monsterList)
+        {
+            item.Hit(9999);
+        }
         bAppearBoss = true;
 
         //보스 UI 출력 -> 보스UI매니저

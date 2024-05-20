@@ -143,8 +143,9 @@ public class MonsterPool : MonoBehaviour //몬스터를 풀링, 관리하는 클래스. 몬스�
         yield return new WaitForSeconds(createStartTime[index]);
         isActive[index] = true;
         Vector3 rotDir;
-        while(InGameManager.Instance.Timer < createEndTime[index])
+        while(!InGameManager.Instance.bAppearBoss)
         {
+            if (InGameManager.Instance.Timer > createEndTime[index]) break;
             if(activatedMonsterList.Count < 200)
             {
                 if (!InGameManager.Instance.bTimeStop)
