@@ -76,7 +76,7 @@ public class BRedGolemNormal : BRedGolem
         for(int i = 0; i < decalParentArray.Length; i++)
         {
             int num = Physics.OverlapBoxNonAlloc(decalList[(int)EDecalNumber.SummonStoneX + i].transform.position, new Vector3(0.4f, 1, 2.5f), summonStoneCollisionArray, decalParentArray[i].rotation, ConstDefine.LAYER_PLAYER);
-            AttackInRangeUtility.AttackLayerInRange(summonStoneCollisionArray, 10, num);
+            AttackInRangeUtility.AttackLayerInRange(summonStoneCollisionArray, InGameManager.Instance.Player.MaxHp * 20 / 100, num);
 
             decalList[(int)EDecalNumber.SummonStoneX + i].InActiveDecal(decalParentArray[i]);
             decalParentArray[i].transform.SetParent(transform);

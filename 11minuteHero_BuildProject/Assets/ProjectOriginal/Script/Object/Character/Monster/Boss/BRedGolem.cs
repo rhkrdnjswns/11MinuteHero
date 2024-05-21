@@ -42,7 +42,7 @@ public class BRedGolem : Boss
         base.InitBoss();
         projectileUtility = new ProjectileUtility(projectilePrefab, 20, transform);
         projectileUtility.SetOwner();
-        projectileUtility.SetDamage(20);
+        projectileUtility.SetDamage(InGameManager.Instance.Player.MaxHp * 10 / 100);
         projectileUtility.SetAction<Vector3>(SummonStone);
         projectileUtility.SetSpeed(7);
         InitStoneQueue();
@@ -185,7 +185,7 @@ public class BRedGolem : Boss
             yield return decalDelay;
 
             int num = Physics.OverlapSphereNonAlloc(decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.position, 1, summonStoneRandCollisionArray, ConstDefine.LAYER_PLAYER);
-            AttackInRangeUtility.AttackLayerInRange(summonStoneRandCollisionArray, 10, num);
+            AttackInRangeUtility.AttackLayerInRange(summonStoneRandCollisionArray, InGameManager.Instance.Player.MaxHp * 10 / 100, num);
             SummonStone(decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.position);
             decalList[(int)EDecalNumber.SummonStoneRandomPos].InActiveDecal(transform);
         }
@@ -368,7 +368,7 @@ public class BRedGolem : Boss
         int num = Physics.OverlapBoxNonAlloc(transform.position + transform.forward * 2, new Vector3(2, 1, 3), punchCollisionArray, transform.rotation, ConstDefine.LAYER_PLAYER);
         if(num > 0)
         {
-            AttackInRangeUtility.AttackLayerInRange(punchCollisionArray, 10, num);
+            AttackInRangeUtility.AttackLayerInRange(punchCollisionArray, InGameManager.Instance.Player.MaxHp * 20 / 100, num);
             InGameManager.Instance.Player.KnockBack(5f, 1f, transform.forward); //플레이어 넉백
         }
     }
@@ -462,7 +462,7 @@ public class BRedGolem : Boss
     public void AnimEvent_JumpAttack()
     {
         int num = Physics.OverlapSphereNonAlloc(transform.position, 5, jumpAttackCollisionArray, ConstDefine.LAYER_PLAYER);
-        AttackInRangeUtility.AttackLayerInRange(jumpAttackCollisionArray, 20, num);
+        AttackInRangeUtility.AttackLayerInRange(jumpAttackCollisionArray, InGameManager.Instance.Player.MaxHp * 40 / 100, num);
     }
     public void AnimEvent_JumpStart()
     {
@@ -485,7 +485,7 @@ public class BRedGolem : Boss
     public virtual void AnimEvent_SummonStone()
     {
         int num = Physics.OverlapSphereNonAlloc(decalList[(int)EDecalNumber.SummonStone].transform.position, 1, summonStoneCollisionArray, ConstDefine.LAYER_PLAYER);
-        AttackInRangeUtility.AttackLayerInRange(summonStoneCollisionArray, 10, num);
+        AttackInRangeUtility.AttackLayerInRange(summonStoneCollisionArray, InGameManager.Instance.Player.MaxHp * 15 / 100, num);
         SummonStone(decalList[(int)EDecalNumber.SummonStone].transform.position);
         decalList[(int)EDecalNumber.SummonStone].InActiveDecal(transform);
     }

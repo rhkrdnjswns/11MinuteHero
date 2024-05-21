@@ -39,7 +39,7 @@ public class CRedGolemStoneHard : CRedGolemStone
 
             earthQuakeParticle.Play();
             int num = Physics.OverlapSphereNonAlloc(transform.position, 1, earthQuakeCollisionArray, ConstDefine.LAYER_PLAYER);
-            AttackInRangeUtility.AttackLayerInRange(earthQuakeCollisionArray, 20, num);
+            AttackInRangeUtility.AttackLayerInRange(earthQuakeCollisionArray, InGameManager.Instance.Player.MaxHp * 20 / 100, num);
             earthQuakeDecal.InActiveDecal();
         }
     }
