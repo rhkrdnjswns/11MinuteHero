@@ -90,7 +90,7 @@ public abstract class Boss : Monster
         if(IsDie)
         {
             if (InGameManager.Instance.GameState == EGameState.GameOver) return;
-            StartCoroutine(Co_Die());
+            InGameManager.Instance.StartCoroutine(Co_Die());
         }
         if (hpEventIndex >= hpEventArray.Length) return;
         if((currentHp / maxHp * 100) <= hpEventArray[hpEventIndex])

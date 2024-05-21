@@ -93,6 +93,10 @@ public class PossessedSKillUI : MonoBehaviour
                 skillName.text = item.Name;
                 skillIcon.sprite = item.Icon;
                 description.text = item.Description;
+                if(item.TryGetComponent(out PassiveSkill p))
+                {
+                    description.text = p.descriptionCurrentPercentage;
+                }
             }
         }
     }

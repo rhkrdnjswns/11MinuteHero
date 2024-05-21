@@ -8,12 +8,16 @@ public class PassiveIncreaseMoveSpeed : PassiveSkill //이동 속도 증가 패시브 스�
     public override void SetEvlotionCondition()
     {
         Skill skill = InGameManager.Instance.SkillManager.GetActiveSkill((int)ESkillActiveID.EarthSpell);
-        if (skill == null) return;
-        skill.SetEvlotionCondition();
+        if (skill != null)
+        {
+            skill.SetEvlotionCondition();
+        }
 
         skill = InGameManager.Instance.SkillManager.GetActiveSkill((int)ESkillActiveID.ShockBomb);
-        if (skill == null) return;
-        skill.SetEvlotionCondition();
+        if (skill != null)
+        {
+            skill.SetEvlotionCondition();
+        }
     }
 
     protected override void SetDescription()
@@ -22,6 +26,12 @@ public class PassiveIncreaseMoveSpeed : PassiveSkill //이동 속도 증가 패시브 스�
         descriptionStringBuilder.Append("이동속도가 ");
         descriptionStringBuilder.Append(GetPercentageForDescription());
         descriptionStringBuilder.Append("%만큼 증가합니다.");
+
+        currentDescriptionStringBuilder.Clear();
+        currentDescriptionStringBuilder.Append("이동속도가 ");
+        currentDescriptionStringBuilder.Append(percentage * level);
+        currentDescriptionStringBuilder.Append("%만큼 증가합니다.");
+
         base.SetDescription();
     }
 }
