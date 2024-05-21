@@ -1515,10 +1515,10 @@ MonoBehaviour:
   testText: {fileID: 0}
   resultPopup: {fileID: 573398671}
   playerCharacterArray:
-  - {fileID: 2450994347642944082, guid: 65dd791a82c702746a7660f98e8febdc, type: 3}
+  - {fileID: 2450994347642944082, guid: c1d74010659a91f47aaf412927660a96, type: 3}
   - {fileID: 1835885862194036, guid: ef92b6c44b7a07745a71425efc01d4bf, type: 3}
   - {fileID: 5364643443396227517, guid: b05adb27457197f4fa22c4e76cbf1b82, type: 3}
-  characterIndex: 2
+  characterIndex: 0
   bossIndex: 0
   monsterList: []
   possessedSkillUI: {fileID: 8792603097708700875}
