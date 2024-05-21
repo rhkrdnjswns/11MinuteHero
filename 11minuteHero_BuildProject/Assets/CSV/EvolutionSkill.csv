@@ -1,9 +1,9 @@
 ﻿ID,SkillType,SkillName,Description,SensingRange,BaseDamage,CoolTime,DamageCycle,MaxMobCount,AttackRange,AttackAngle,ProjectileCount,ProjectileRemoveTime,ProjectileSpeed,ProjectileLifeCycle,ProjectilePenetrateCount,ProjectileRotationSpeed,ProjectileRevolutionSecond,ProjectileRevolutionAngle,ProjectileCreateDistance,ProjectileMaxMoveDistance,ProjectileExplosionRange,FireAreaRange,FireAreaRemoveTime,ProjectileCreateTime,ProjectileSensingRange,MobSpeedDecrease,MobSpeedDecreaseTime,PlayerHpIncreaseCount,PlayerIncreaseMoveSpeed,PlayerIncreaseMoveSpeedCount,PlayerIncreaseMoveSpeedTime,PlayerHpRecovery,MobFaintTime,KnockBackDistance,KnockBaTime
-27,2,성검,검이 악을 정화한다.,,45,1,,,4.4,140,,,,,,,,,,,,,,,,,,0.1,,,,,,,
+27,2,성검,검이 악을 정화한다.,,40,1.2,,,4.4,140,,,,,,,,,,,,,,,,,,0.05,,,,,,,
 28,2,사자궁,별을 떨어뜨렸다던 전설의 활,,25,1.2,,,,,6,3,14,,4,,,,,,,,,,,,,,0.15,5,3,,,,
-29,2,매직미사일,수많은 마법들로 적을 초토화 시킵니다.,8,25,1.2,,8,,,15,,,0.1,,,,,,,,,,,,,,,,,,,,,
+29,2,매직미사일,수많은 마법들로 적을 초토화 시킵니다.,8,20,1.2,,8,,,12,,,0.1,,,,,,,,,,,,,,,,,,,,,
 30,2,천둥강타,번개가 서린 고대의 망치,,40,4.2,,,,,8,,9,,,1440,,,,8,,,,,,,,,,,,,,0.4,0.5
-31,2,영혼수확,적들의 영혼을 먹어치웁니다.,,20,1,,,4.2,,,,,,,,,,,,,,,,,,,,,,,0.1,,,
+31,2,영혼수확,적들의 영혼을 먹어치웁니다.,,20,1,,,4.2,,,,,,,,,,,,,,,,,,,,,,,0.05,,,
 32,2,화염폭풍,모든 적들을 불태우기 전까진 사라지지 않습니다.,,20,,,,,,6,,,,,140,,,4.5,,,,,,,,,,,,,,,,
 33,2,헬파이어,모든 것을 불태웁니다.,12,50,4,,,,,1,2.8,4,,6,,,,,,4.5,,,,,,,,,,,,,,
 34,2,유성우,하늘에서 별이 내려옵니다.,12,50,4,,,,,12,,12,0.1,,,,,,,2.1,,,,,,,,,,,,,,
