@@ -39,7 +39,7 @@ public class SkillChoicePopUp : MonoBehaviour //강화 선택지 팝업
         foreach (var item in skillChoiceUIList)
         {
             item.gameObject.SetActive(true);
-            StartCoroutine(TweeningUtility.SetSize(0.3f, item.transform, Vector3.one * 0.25f, Vector3.one, Vector3.one * 1.1f));
+            StartCoroutine(TweeningUtility.SetSize(0.2f, item.transform, Vector3.one * 0.25f, Vector3.one, Vector3.one * 1.1f));
         }
         canvasGroup.interactable = true;
     }

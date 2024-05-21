@@ -22,6 +22,11 @@ public class PassiveIncreaseAttackRange : PassiveSkill //공격 사거리 증가 패시브
         descriptionStringBuilder.Append(GetPercentageForDescription());
         descriptionStringBuilder.Append("%만큼 증가합니다.");
 
+        currentDescriptionStringBuilder.Clear();
+        currentDescriptionStringBuilder.Append("공격 범위가 ");
+        currentDescriptionStringBuilder.Append(percentage * level);
+        currentDescriptionStringBuilder.Append("%만큼 증가합니다.");
+
         base.SetDescription();
     }
 }

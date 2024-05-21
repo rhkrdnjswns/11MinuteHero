@@ -15,12 +15,16 @@ public class PassiveReduceCoolTime : PassiveSkill //무기 쿨타임 감소 패시브 스킬
     public override void SetEvlotionCondition()
     {
         Skill skill = InGameManager.Instance.SkillManager.GetActiveSkill((int)ESkillActiveID.FireBall);
-        if (skill == null) return;
-        skill.SetEvlotionCondition();
+        if (skill != null)
+        {
+            skill.SetEvlotionCondition();
+        }
 
         skill = InGameManager.Instance.SkillManager.GetActiveSkill((int)ESkillActiveID.CrystalStaff);
-        if (skill == null) return;
-        skill.SetEvlotionCondition();
+        if (skill != null)
+        {
+            skill.SetEvlotionCondition();
+        }
     }
 
     protected override void SetDescription()
@@ -29,6 +33,12 @@ public class PassiveReduceCoolTime : PassiveSkill //무기 쿨타임 감소 패시브 스킬
         descriptionStringBuilder.Append("스킬 쿨타임이 ");
         descriptionStringBuilder.Append(GetPercentageForDescription());
         descriptionStringBuilder.Append("%만큼 감소합니다.");
+
+        currentDescriptionStringBuilder.Clear();
+        currentDescriptionStringBuilder.Append("스킬 쿨타임이 ");
+        currentDescriptionStringBuilder.Append(percentage * level);
+        currentDescriptionStringBuilder.Append("%만큼 감소합니다.");
+
         base.SetDescription();
     }
 }

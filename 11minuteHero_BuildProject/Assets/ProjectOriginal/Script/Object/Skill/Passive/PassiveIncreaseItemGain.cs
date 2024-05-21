@@ -8,12 +8,15 @@ public class PassiveIncreaseItemGain : PassiveSkill //아이템 획득 범위 증가 패시
     public override void SetEvlotionCondition()
     {
         Skill skill = InGameManager.Instance.SkillManager.GetActiveSkill((int)ESkillActiveID.Bow);
-        if (skill == null) return;
-        skill.SetEvlotionCondition();
-
+        if (skill != null)
+        {
+            skill.SetEvlotionCondition();
+        }
         skill = InGameManager.Instance.SkillManager.GetActiveSkill((int)ESkillActiveID.Knife);
-        if (skill == null) return;
-        skill.SetEvlotionCondition();
+        if (skill != null)
+        {
+            skill.SetEvlotionCondition();
+        }
     }
 
     protected override void SetDescription()
@@ -22,6 +25,12 @@ public class PassiveIncreaseItemGain : PassiveSkill //아이템 획득 범위 증가 패시
         descriptionStringBuilder.Append("아이템 획득 범위가 ");
         descriptionStringBuilder.Append(GetPercentageForDescription());
         descriptionStringBuilder.Append("%만큼 증가합니다.");
+
+        currentDescriptionStringBuilder.Clear();
+        currentDescriptionStringBuilder.Append("아이템 획득 범위가 ");
+        currentDescriptionStringBuilder.Append(percentage * level);
+        currentDescriptionStringBuilder.Append("%만큼 증가합니다.");
+
         base.SetDescription();
     }
 }
