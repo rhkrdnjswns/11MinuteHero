@@ -72,7 +72,7 @@ public class BRedGolemHard : BRedGolemNormal
             {
                 earthQuakeParticleList[i].Play();
                 int num = Physics.OverlapBoxNonAlloc(hpEventEarthQuakeDecalList[i].transform.position, new Vector3(bossAreaWidth / 2, 1, 2), earthQuakeCollisionArray, Quaternion.identity, ConstDefine.LAYER_PLAYER);
-                AttackInRangeUtility.AttackLayerInRange(earthQuakeCollisionArray, 10, num);
+                AttackInRangeUtility.AttackLayerInRange(earthQuakeCollisionArray, InGameManager.Instance.Player.MaxHp * 30 / 100, num);
 
                 hpEventEarthQuakeDecalList[i].InActiveDecal(transform);
             }
@@ -109,7 +109,7 @@ public class BRedGolemHard : BRedGolemNormal
                 earthQuakeParticleList[i].Play();
 
                 int num = Physics.OverlapBoxNonAlloc(hpEventEarthQuakeDecalList[i].transform.position, new Vector3(2, 1, bossAreaHeight / 2), earthQuakeCollisionArray, Quaternion.identity, ConstDefine.LAYER_PLAYER);
-                AttackInRangeUtility.AttackLayerInRange(earthQuakeCollisionArray, 10, num);
+                AttackInRangeUtility.AttackLayerInRange(earthQuakeCollisionArray, InGameManager.Instance.Player.MaxHp * 30 / 100, num);
                 hpEventEarthQuakeDecalList[i].InActiveDecal(transform);
             }
             StartCoroutine(cameraUtility.Co_ShakeCam(0.2f, 1, 0.1f));
@@ -132,7 +132,6 @@ public class BRedGolemHard : BRedGolemNormal
             obj.transform.rotation = Quaternion.identity;
 
             CRedGolemStone stone = obj.GetComponent<CRedGolemStone>().SetReference(transform);
-            stone.InitDamageUIContainer();
             earthQuakeStoneQueue.Enqueue(stone);
         }
     }

@@ -119,7 +119,7 @@ public class CRedGolemStone : Monster //1½ºÅ×ÀÌÁö º¸½º ·¹µå°ñ·½ÀÇ µ¹ ¿ÀºêÁ§Æ® (Ç
         if (eCharacterActionable == ECharacterActionable.Unactionable) return;
         if(other.CompareTag(ConstDefine.TAG_PLAYER))
         {
-            InGameManager.Instance.Player.Hit(currentDamage);
+            InGameManager.Instance.Player.Hit(InGameManager.Instance.Player.MaxHp * (10 + (5 * ((int)eStoneLevel + 1))) / 100);
             parent.GetComponent<BRedGolem>().ReturnStone(this, (int)eStoneLevel);
         }
     }
