@@ -46,6 +46,7 @@ public class BRedGolem : Boss
         projectileUtility.SetAction<Vector3>(SummonStone);
         projectileUtility.SetSpeed(7);
         InitStoneQueue();
+        InGameManager.Instance.DGameOver += StopAllCoroutines;
 
     }
     protected virtual void SetSummonedStonePosY()
@@ -311,21 +312,21 @@ public class BRedGolem : Boss
         bReturnStone = true;
         animator.SetTrigger("ReturnStone");
         animator.SetBool("IsEndReturn", false);
-        foreach (var item in stoneList)
-        {
-            StartCoroutine(item.Co_CollectStone(2));
-            //yield return null;
-        }
+        //foreach (var item in stoneList)
+        //{
+        //    StartCoroutine(item.Co_CollectStone(1.5f));
+        //    //yield return null;
+        //}
         for (int i = 0; i < stoneList.Count; i++)
         {
-            StartCoroutine(stoneList[i].Co_CollectStone(2));
+            StartCoroutine(stoneList[i].Co_CollectStone(1.5f));
             if(i < stoneList.Count - 1)
             {
-                StartCoroutine(stoneList[i].Co_CollectStone(2));
+                StartCoroutine(stoneList[i].Co_CollectStone(1.5f));
             }
             else
             {
-                yield return StartCoroutine(stoneList[i].Co_CollectStone(2));
+                yield return StartCoroutine(stoneList[i].Co_CollectStone(1.5f));
             }
         }
         IncreaseHp(5 * stoneList.Count);
@@ -408,6 +409,11 @@ public class BRedGolem : Boss
         while (Vector3.Distance(transform.position, InGameManager.Instance.Player.transform.position) > 4)
         {
             animator.SetBool(ConstDefine.BOOL_ISMOVE, Move());
+            if (bHpEvent)
+            {
+                animator.SetBool(ConstDefine.BOOL_ISMOVE, false);
+                yield break;
+            }
             yield return null;
         }
         animator.SetBool(ConstDefine.BOOL_ISMOVE, false);

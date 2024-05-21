@@ -8,12 +8,16 @@ public class PassiveIncreaseHp : PassiveSkill //최대 체력 증가 패시브 스킬.
     public override void SetEvlotionCondition()
     {
         Skill skill = InGameManager.Instance.SkillManager.GetActiveSkill((int)ESkillActiveID.Sword);
-        if (skill == null) return;
-        skill.SetEvlotionCondition();
+        if (skill != null)
+        {
+            skill.SetEvlotionCondition();
+        }
 
         skill = InGameManager.Instance.SkillManager.GetActiveSkill((int)ESkillActiveID.Knife);
-        if (skill == null) return;
-        skill.SetEvlotionCondition();
+        if (skill != null)
+        {
+            skill.SetEvlotionCondition();
+        }
     }
 
     protected override void SetDescription()
@@ -22,6 +26,12 @@ public class PassiveIncreaseHp : PassiveSkill //최대 체력 증가 패시브 스킬.
         descriptionStringBuilder.Append("체력이 ");
         descriptionStringBuilder.Append(GetPercentageForDescription());
         descriptionStringBuilder.Append("%만큼 증가합니다.");
+
+        currentDescriptionStringBuilder.Clear();
+        currentDescriptionStringBuilder.Append("체력이 ");
+        currentDescriptionStringBuilder.Append(percentage * level);
+        currentDescriptionStringBuilder.Append("%만큼 증가합니다.");
+
         base.SetDescription();
     }
 }
