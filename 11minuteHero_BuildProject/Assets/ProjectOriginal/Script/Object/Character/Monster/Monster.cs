@@ -15,6 +15,7 @@ public class Monster : Character
     }
     public override void Hit(float damage) //몬스터 피격 함수
     {
+        if (IsDie) return;
         base.Hit(damage);
         damageUIContainer.ActiveDamageUI(damage);
     }

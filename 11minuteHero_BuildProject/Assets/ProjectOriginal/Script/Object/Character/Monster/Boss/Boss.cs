@@ -18,6 +18,7 @@ public abstract class Boss : Monster
     private int hpEventIndex;
     protected bool bHpEvent;
 
+    private bool bBossDie;
     public bool IsActivate { get; private set; }
     protected GameObject modelObject;
     protected abstract void PlayHpEvent(int index);
@@ -84,12 +85,13 @@ public abstract class Boss : Monster
     }
     public override void Hit(float damage)
     {
-        if (bHpEvent) return;
+        if (bHpEvent || IsDie) return;
         base.Hit(damage);
         InGameManager.Instance.BossUIManager.UpdateBossHpBar(currentHp / maxHp);
         if(IsDie)
         {
-            if (InGameManager.Instance.GameState == EGameState.GameOver) return;
+            if (bBossDie) return;
+            bBossDie = true;
             InGameManager.Instance.StartCoroutine(Co_Die());
         }
         if (hpEventIndex >= hpEventArray.Length) return;

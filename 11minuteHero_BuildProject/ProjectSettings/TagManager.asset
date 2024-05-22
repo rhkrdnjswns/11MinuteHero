@@ -48,3 +48,6 @@ TagManager:
   - name: PlayerUI
     uniqueID: 2763893497
     locked: 0
+  - name: Decal
+    uniqueID: 826163065
+    locked: 0

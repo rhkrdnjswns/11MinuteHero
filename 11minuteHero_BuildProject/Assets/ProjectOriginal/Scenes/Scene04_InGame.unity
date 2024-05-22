@@ -1013,7 +1013,7 @@ MonoBehaviour:
   - {fileID: 3610095233444495201, guid: 44d42989af7abb74fa1b6cf8f9cc0464, type: 3}
   - {fileID: 1953081435042727829, guid: 815c0529382ba3a4aae906064a2b13e5, type: 3}
   monsterSpawnDistance: 25
-  summonCountForTest: 10
+  summonCountForTest: 200
 --- !u!4 &558824669
 Transform:
   m_ObjectHideFlags: 0
@@ -1515,7 +1515,7 @@ MonoBehaviour:
   testText: {fileID: 0}
   resultPopup: {fileID: 573398671}
   playerCharacterArray:
-  - {fileID: 2450994347642944082, guid: c1d74010659a91f47aaf412927660a96, type: 3}
+  - {fileID: 2450994347642944082, guid: 65dd791a82c702746a7660f98e8febdc, type: 3}
   - {fileID: 1835885862194036, guid: ef92b6c44b7a07745a71425efc01d4bf, type: 3}
   - {fileID: 5364643443396227517, guid: b05adb27457197f4fa22c4e76cbf1b82, type: 3}
   characterIndex: 1

@@ -5106,6 +5106,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6464859794024432221}
     m_Modifications:
+    - target: {fileID: 564037188763661000, guid: 7c32032604142a44bb0c996bfa9b4860,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 564037188763661000, guid: 7c32032604142a44bb0c996bfa9b4860,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 826163065
+      objectReference: {fileID: 0}
     - target: {fileID: 564037189540373836, guid: 7c32032604142a44bb0c996bfa9b4860,
         type: 3}
       propertyPath: m_Name
@@ -5299,6 +5309,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2476715603478667783, guid: 62a4a8caeca5ecd4c89d3db98b1a14d6,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2476715603478667783, guid: 62a4a8caeca5ecd4c89d3db98b1a14d6,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 826163065
       objectReference: {fileID: 0}
     - target: {fileID: 2476715603514218984, guid: 62a4a8caeca5ecd4c89d3db98b1a14d6,
         type: 3}

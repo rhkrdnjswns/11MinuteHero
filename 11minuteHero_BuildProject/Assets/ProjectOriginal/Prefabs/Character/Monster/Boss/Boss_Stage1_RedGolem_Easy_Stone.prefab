@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a39eb6b79c81be4d89fd74ff8b69884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 2000
+  maxHp: 700
   speed: 12
   currentHp: 0
   currentSpeed: 0
@@ -272,6 +272,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2476715603478667783, guid: 62a4a8caeca5ecd4c89d3db98b1a14d6,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2476715603478667783, guid: 62a4a8caeca5ecd4c89d3db98b1a14d6,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 826163065
       objectReference: {fileID: 0}
     - target: {fileID: 2476715603514218984, guid: 62a4a8caeca5ecd4c89d3db98b1a14d6,
         type: 3}

@@ -32,7 +32,7 @@ public abstract class ActiveSkill : Skill //액티브 스킬 클래스. 기믹 클래스 상속
         ActivateTime = InGameManager.Instance.Timer;
 #endif
         StartCoroutine(Co_ActiveSkillAction());
-        InGameManager.Instance.DGameOver += StopAllCoroutines;
+        //InGameManager.Instance.DGameOver += StopAllCoroutines;
 
         SetCurrentDamage();
     }
