@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class MonsterPool : MonoBehaviour //¸ó½ºÅÍ¸¦ Ç®¸µ, °ü¸®ÇÏ´Â Å¬·¡½º. ¸ó½ºÅÍ Ç®ÀÇ ÂüÁ¶´Â ¸ó½ºÅÍ ½ºÆ÷³Ê¿¡¼­¸¸ ÇÊ¿äÇÏ±â ¶§¹®¿¡ ±»ÀÌ ½Ì±ÛÅÏÀ¸·Î µÑ ÇÊ¿ä°¡ ¾ø´Ù.
 {
@@ -19,6 +20,10 @@ public class MonsterPool : MonoBehaviour //¸ó½ºÅÍ¸¦ Ç®¸µ, °ü¸®ÇÏ´Â Å¬·¡½º. ¸ó½ºÅ
     private int[] createCount;
     private int[] createCountIncrease;
     private bool[] isActive;
+
+    public int[] waveWeightArray;
+
+    public Cartel cartel;
 
     [Range(25, 50)]
     [SerializeField] private float monsterSpawnDistance;
@@ -51,6 +56,7 @@ public class MonsterPool : MonoBehaviour //¸ó½ºÅÍ¸¦ Ç®¸µ, °ü¸®ÇÏ´Â Å¬·¡½º. ¸ó½ºÅ
             spawnCoroutineArray[i] = StartCoroutine(Co_SpawnMonster(i));
         }
         StartCoroutine(Co_UpdateData());
+        StartCoroutine(Co_ExecuteRandomWave());
     }
     private void ReadCSVData()
     {
@@ -129,6 +135,32 @@ public class MonsterPool : MonoBehaviour //¸ó½ºÅÍ¸¦ Ç®¸µ, °ü¸®ÇÏ´Â Å¬·¡½º. ¸ó½ºÅ
 
         return monster;
     }
+    public NormalMonster GetMonster(Vector3 pos, int index, bool isRush, Vector3 rushDir, float distance) //Ç®¿¡¼­ ¸ó½ºÅÍ¸¦ ²¨³»¿À´Â ÇÔ¼ö
+    {
+        if (!monsterPoolList[index].IsValid())
+        {
+            foreach (var item in monsterPoolList[index].Pool)
+            {
+                item.InitMonsterData();
+                item.InitDamageUIContainer();
+                item.ReturnIndex = index;
+            }
+        }
+
+        NormalMonster monster = monsterPoolList[index].GetObject(); //Ç®¿¡¼­ µðÅ¥
+
+        activatedMonsterList.Add(monster); //È°¼ºÈ­µÇ¾îÀÖ´Â ¸ó½ºÅÍ ¸®½ºÆ®¿¡ ³Ö¾îÁÜ
+
+        monster.transform.SetParent(field); //È°¼ºÈ­ °ü·Ã ÃÊ±âÈ­
+        monster.transform.position = pos; //¸ó½ºÅÍ À§Ä¡ ¼³Á¤
+        monster.gameObject.SetActive(true);
+
+        monster.ResetMonster(isRush, rushDir, distance); //¸ó½ºÅÍ¸¦ À¯È¿ÇÑ »óÅÂ·Î Àç¼³Á¤
+
+        InGameManager.Instance.MonsterList.Add(monster);
+
+        return monster;
+    }
     public void ReturnMonster(NormalMonster monster, int index) //¸ó½ºÅÍ¸¦ Ç®·Î µÇµ¹¸®´Â ÇÔ¼ö
     {
         activatedMonsterList.Remove(monster); //È°¼ºÈ­µÇ¾îÀÖ´Â ¸ó½ºÅÍ ¸®½ºÆ®¿¡¼­ ¸ó½ºÅÍ »èÁ¦
@@ -177,5 +209,146 @@ public class MonsterPool : MonoBehaviour //¸ó½ºÅÍ¸¦ Ç®¸µ, °ü¸®ÇÏ´Â Å¬·¡½º. ¸ó½ºÅ
             }
         }
     }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            ExecuteWave(3);
+        }
+    }
+    private IEnumerator Co_ExecuteRandomWave()
+    {
+        while(!InGameManager.Instance.bAppearBoss)
+        {
+            float timer = 0;
+            while(timer < 120)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            ExecuteWave(GetRandomWeight());
+        }
+    }
+    private void ExecuteWave(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                Debug.Log("¿þÀÌºê ½ºÅµ");
+                break;
+            case 1:
+                ExcuteWave_Swarm();
+                break;
+            case 2:
+                ExcuteWave_Rush();
+                break;
+            case 3:
+                ExcuteWave_Cartel();
+                break;
+            case 4:
+                ExcuteWave_GiftBox();
+                break;
+            case 5:
+                //ExcuteWave_Fight();
+                break;
+            default:
+                Debug.LogError("Wave Index is Not Valid");
+                break;
+        }
+    }
+    private void ExcuteWave_Swarm()
+    {
+        int rand = Random.Range(0, 4);
+        Vector3 dir = GetRandomDirection();
 
+        float summonRadius = InGameManager.Instance.Player.Level / 2;
+        Vector3 randomPos;
+        
+        for (int i = 0; i < InGameManager.Instance.Player.Level; i++)
+        {
+            randomPos = new Vector3(Random.Range(0, summonRadius), 0, Random.Range(0, summonRadius));
+            GetMonster(InGameManager.Instance.Player.transform.position + dir * monsterSpawnDistance + randomPos, 0);
+        }
+    }
+    private void ExcuteWave_Rush()
+    {
+        int rand = Random.Range(10, 16);
+        Vector3 dir = GetRandomDirection();
+
+        Vector3 summonPos = InGameManager.Instance.Player.transform.position + dir * monsterSpawnDistance;
+        int pivot = rand / 2;
+
+        Vector3 sortDir = Vector3.zero;
+        if(dir == Vector3.forward || dir == Vector3.back)
+        {
+            sortDir = Vector3.right;
+            summonPos.x += pivot;
+        }
+        else
+        {
+            sortDir = Vector3.forward;
+            summonPos.z += pivot;
+        }
+
+        for (int i = 0; i < rand; i++)
+        {
+            GetMonster(summonPos - sortDir * i, 0, true, dir * -1, 20);
+        }
+    }
+    private void ExcuteWave_Cartel()
+    {
+        cartel.ActiveCartel(5f);
+    }
+    private void ExcuteWave_GiftBox()
+    {
+
+    }
+    private void ExcuteWave_Fight()
+    {
+
+    }
+    private Vector3 GetRandomDirection()
+    {
+        int rand = Random.Range(0, 4);
+        Vector3 dir = Vector3.zero;
+        switch (rand)
+        {
+            case 0:
+                dir = Vector3.forward;
+                break;
+            case 1:
+                dir = Vector3.back;
+                break;
+            case 2:
+                dir = Vector3.left;
+                break;
+            case 3:
+                dir = Vector3.right;
+                break;
+            default:
+                Debug.LogError("Random Value Error");
+                break;
+        }
+        return dir;
+    }
+    private int GetRandomWeight()
+    {
+        int rand = Random.Range(0, waveWeightArray.Sum());
+
+        int weight = waveWeightArray[0];
+
+        for (int i = 0; i < waveWeightArray.Length; i++)
+        {
+            if(rand < weight)
+            {
+                return i;
+            }
+            else
+            {
+                weight += waveWeightArray[i];
+            }
+        }
+
+        return waveWeightArray.Length - 1;
+    }
 }

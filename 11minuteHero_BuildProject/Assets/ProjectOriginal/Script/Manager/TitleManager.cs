@@ -27,11 +27,11 @@ public class TitleManager : MonoBehaviour
         if (!canTouch) return;
         if (Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(SceneUtility.TransitionScene(SceneInfo.Loading));
+            GameManager.instance.LoadScene((int)SceneInfo.Main);
         }
         if (Input.touchCount > 0) //터치 시 호출
         {
-            StartCoroutine(SceneUtility.TransitionScene(SceneInfo.Loading));
+            GameManager.instance.LoadScene((int)SceneInfo.Main);
         }
     }
     private IEnumerator Co_BlinkTouchText()

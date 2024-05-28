@@ -15,6 +15,6 @@ public class ExitButton : ButtonComponent
         fade.gameObject.SetActive(true);
         yield return StartCoroutine(TweeningUtility.FadeIn(1, fade));
         Time.timeScale = 1;
-        StartCoroutine(SceneUtility.TransitionScene(SceneInfo.Main));
+        GameManager.instance.LoadScene((int)SceneInfo.Main);
     }
 }

@@ -7,7 +7,7 @@ public class Monster : Character
 
     public virtual void InitMonsterData()
     {
-
+        
     }
     public void InitDamageUIContainer(float offsetY = 0)
     {

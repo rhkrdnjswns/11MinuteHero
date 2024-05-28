@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
     public int stageIndex;
     public int difficultyIndex;
 
+    public int sceneIndex { get; private set; }
     private void Awake()
     {
         if(instance == null)
@@ -22,15 +24,9 @@ public class GameManager : MonoBehaviour
         }
         DontDestroyOnLoad(instance);
     }
-    // Start is called before the first frame update
-    void Start()
+    public void LoadScene(int sceneIndex)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        this.sceneIndex = sceneIndex;
+        SceneManager.LoadScene((int)SceneInfo.Loading);
     }
 }

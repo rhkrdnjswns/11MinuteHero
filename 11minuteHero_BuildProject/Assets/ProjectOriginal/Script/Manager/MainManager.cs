@@ -9,6 +9,7 @@ public class MainManager : MonoBehaviour
     public GameObject[] characterArray;
     public Image fadeImage;
 
+    private bool isEscape;
     private GameObject currentCharacter;
     private void Awake()
     {
@@ -18,6 +19,26 @@ public class MainManager : MonoBehaviour
     {
         SetActiveCharacter(GameManager.instance.characterIndex);
         StartCoroutine(TweeningUtility.FadeOut(2f, fadeImage));
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(isEscape)
+            {
+                GameManager.instance.LoadScene((int)SceneInfo.Title);
+            }
+            else
+            {
+                StartCoroutine(Co_SetEscapeFalse());
+            }
+        }
+    }
+    private IEnumerator Co_SetEscapeFalse()
+    {
+        isEscape = true;
+        yield return new WaitForSeconds(2f);
+        isEscape = false;
     }
     public void SetActiveCharacter(int index)
     {
@@ -39,7 +60,7 @@ public class MainManager : MonoBehaviour
         GameManager.instance.stageIndex = index;
         GameManager.instance.difficultyIndex = difficulty;
 
-        StartCoroutine(SceneUtility.TransitionScene(SceneInfo.InGame));
+        GameManager.instance.LoadScene((int)SceneInfo.InGame);
     }
 
 

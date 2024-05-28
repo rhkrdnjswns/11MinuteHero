@@ -54,6 +54,7 @@ public abstract class CPlayer : Character
     public Animator Animator { get => animator; }
     protected abstract IEnumerator Co_Dodge();
     public ActiveSkill Weapon { get => weapon; }
+    public int Level { get => level; }
     protected override void Awake() //플레이어 캐릭터 관련 초기화
     {
         base.Awake();

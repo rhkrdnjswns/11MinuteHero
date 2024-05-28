@@ -135,6 +135,72 @@ public class NormalMonster : Monster, IDebuffApplicable
         StartCoroutine(Co_StateMachine()); //몬스터 상태 머신 실행
         StartCoroutine(Co_UpdatePositionData()); //몬스터 위치 관련 코루틴 실행
     }
+    public void ResetMonster(bool isRush, Vector3 rushDir, float distance) //몬스터 생성 시 초기화
+    {
+        if(isRush)
+        {
+            StartCoroutine(Co_Rush(rushDir, distance));
+            return;
+        }
+        if (!animator.enabled)
+        {
+            animator.enabled = true;
+        }
+        IsDie = false; //상호작용 유효하도록 초기화
+        eCharacterActionable = ECharacterActionable.Actionable;
+        overlappingAvoider.enabled = true;
+        boxCollider.enabled = true;
+
+        currentHp = maxHp + (hpIncrease * (int)(InGameManager.Instance.Timer / 60));
+        currentDamage = damage + (damageIncrease * (int)(InGameManager.Instance.Timer / 60));
+        currentSpeed = speed + (speedIncrease * (int)(InGameManager.Instance.Timer / 60));
+
+        StartCoroutine(Co_StateMachine()); //몬스터 상태 머신 실행
+        StartCoroutine(Co_UpdatePositionData()); //몬스터 위치 관련 코루틴 실행
+    }
+    private IEnumerator Co_Rush(Vector3 dir, float distance)
+    {
+        animator.SetBool(ConstDefine.BOOL_ISMOVE, true);
+        transform.LookAt(dir);
+        overlappingAvoider.enabled = false;
+
+        while(true)
+        {
+            if(dir == Vector3.forward)
+            {
+                if(transform.position.z - InGameManager.Instance.Player.transform.position.z > distance)
+                {
+                    break;
+                }
+            }
+            else if(dir == Vector3.back)
+            {
+                if (InGameManager.Instance.Player.transform.position.z - transform.position.z > distance)
+                {
+                    break;
+                }
+            }
+            else if(dir == Vector3.left)
+            {
+                if (InGameManager.Instance.Player.transform.position.x - transform.position.x > distance)
+                {
+                    break;
+                }
+            }
+            else
+            {
+                if (transform.position.x - InGameManager.Instance.Player.transform.position.x > distance)
+                {
+                    break;
+                }
+            }
+            transform.position += dir * speed * Time.deltaTime;
+            yield return null;
+        }
+        InGameManager.Instance.MonsterPool.ReturnMonster(this, returnIndex); //몬스터 풀로 되돌림   
+
+        InGameManager.Instance.MonsterList.Remove(this);
+    }
     public override void Hit(float damage) //몬스터 피격 함수
     {
         base.Hit(damage);
