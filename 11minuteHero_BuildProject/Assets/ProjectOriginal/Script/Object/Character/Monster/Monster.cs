@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class Monster : Character
 {
+    public enum EMonsterState
+    {
+        Chase = 0,
+        Attack
+    }
+
     [SerializeField] private GameObject damageUIPrefab; //데미지 UI 프리팹
     protected DamageUIContainer damageUIContainer = new DamageUIContainer(); //데미지 UI를 관리할 컨테이너
 

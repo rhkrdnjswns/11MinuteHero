@@ -5,11 +5,6 @@ using UnityEngine;
 // * 일반 몬스터 AI는 상태머신으로 디자인
 public class NormalMonster : Monster, IDebuffApplicable
 {
-    public enum EMonsterState
-    {
-        Chase = 0,
-        Attack
-    }
 
     public int mobScale;
     public int id;
@@ -41,13 +36,13 @@ public class NormalMonster : Monster, IDebuffApplicable
     [SerializeField] private float attackRange;
 
     protected SphereCollider overlappingAvoider; //몬스터 겹침 방지 콜라이더
-    private BoxCollider boxCollider; //몬스터 충돌처리 콜라이더
+    protected BoxCollider boxCollider; //몬스터 충돌처리 콜라이더
 
     private int returnIndex;
 
     private float distToPlayer;
 
-    private WaitForSeconds dieAnimDelay = new WaitForSeconds(0.2f);
+    protected WaitForSeconds dieAnimDelay = new WaitForSeconds(0.2f);
 
     private bool isStiffness;
     public float DistToPlayer { get => distToPlayer; }
@@ -257,9 +252,8 @@ public class NormalMonster : Monster, IDebuffApplicable
             yield return null;
         }
     }
-    private IEnumerator Co_DieEvent() //사망 효과 코루틴
+    protected virtual IEnumerator Co_DieEvent() //사망 효과 코루틴
     { 
-        IsDie = true; //상호작용 하지 않게 처리
         overlappingAvoider.enabled = false;
         boxCollider.enabled = false;
 

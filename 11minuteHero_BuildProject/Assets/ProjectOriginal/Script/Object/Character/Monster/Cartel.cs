@@ -7,6 +7,7 @@ public class Cartel : MonoBehaviour
     private CartelWall[] wallArray;
     private GameObject decal;
 
+    private WaitForSeconds destroyDelay = new WaitForSeconds(20f);
     private void Awake()
     {
         InitCartel();
@@ -47,7 +48,7 @@ public class Cartel : MonoBehaviour
     }
     private IEnumerator Co_CheckTime()
     {
-        yield return new WaitForSeconds(10f);
+        yield return destroyDelay;
         if(wallArray[0].gameObject.activeSelf)
         {
             ResetCartel();
@@ -60,9 +61,5 @@ public class Cartel : MonoBehaviour
             wallArray[i].gameObject.SetActive(false);
             wallArray[i].CurrentHp = wallArray[i].MaxHp;
         }
-    }
-    void Update()
-    {
-        
     }
 }

@@ -24,6 +24,7 @@ public class MonsterPool : MonoBehaviour //¸ó½ºÅÍ¸¦ Ç®¸µ, °ü¸®ÇÏ´Â Å¬·¡½º. ¸ó½ºÅ
     public int[] waveWeightArray;
 
     public Cartel cartel;
+    public GiftBox giftBox;
 
     [Range(25, 50)]
     [SerializeField] private float monsterSpawnDistance;
@@ -57,6 +58,8 @@ public class MonsterPool : MonoBehaviour //¸ó½ºÅÍ¸¦ Ç®¸µ, °ü¸®ÇÏ´Â Å¬·¡½º. ¸ó½ºÅ
         }
         StartCoroutine(Co_UpdateData());
         StartCoroutine(Co_ExecuteRandomWave());
+
+        giftBox.InitGiftBox();
     }
     private void ReadCSVData()
     {
@@ -213,7 +216,7 @@ public class MonsterPool : MonoBehaviour //¸ó½ºÅÍ¸¦ Ç®¸µ, °ü¸®ÇÏ´Â Å¬·¡½º. ¸ó½ºÅ
     {
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            ExecuteWave(3);
+            ExecuteWave(4);
         }
     }
     private IEnumerator Co_ExecuteRandomWave()
@@ -301,7 +304,7 @@ public class MonsterPool : MonoBehaviour //¸ó½ºÅÍ¸¦ Ç®¸µ, °ü¸®ÇÏ´Â Å¬·¡½º. ¸ó½ºÅ
     }
     private void ExcuteWave_GiftBox()
     {
-
+        giftBox.ActiveGiftBox();
     }
     private void ExcuteWave_Fight()
     {
