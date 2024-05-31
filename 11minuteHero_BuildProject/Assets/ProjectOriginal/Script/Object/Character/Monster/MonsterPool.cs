@@ -216,6 +216,18 @@ public class MonsterPool : MonoBehaviour //몬스터를 풀링, 관리하는 클래스. 몬스�
     {
         if(Input.GetKeyDown(KeyCode.Q))
         {
+            ExecuteWave(1);
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            ExecuteWave(2);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ExecuteWave(3);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
             ExecuteWave(4);
         }
     }
@@ -264,10 +276,10 @@ public class MonsterPool : MonoBehaviour //몬스터를 풀링, 관리하는 클래스. 몬스�
         int rand = Random.Range(0, 4);
         Vector3 dir = GetRandomDirection();
 
-        float summonRadius = InGameManager.Instance.Player.Level / 2;
+        float summonRadius = 5;
         Vector3 randomPos;
         
-        for (int i = 0; i < InGameManager.Instance.Player.Level; i++)
+        for (int i = 0; i < 20; i++)
         {
             randomPos = new Vector3(Random.Range(0, summonRadius), 0, Random.Range(0, summonRadius));
             GetMonster(InGameManager.Instance.Player.transform.position + dir * monsterSpawnDistance + randomPos, 0);

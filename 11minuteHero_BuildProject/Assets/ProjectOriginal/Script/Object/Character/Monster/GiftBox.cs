@@ -9,7 +9,7 @@ public class GiftBox : Monster
     public Mimic mimic;
     public BoxCollider boxCollider;
     
-    private WaitForSeconds activeDelay = new WaitForSeconds(2f);
+    private WaitForSeconds activeDelay = new WaitForSeconds(1f);
     public void InitGiftBox()
     {
         InitDamageUIContainer();
