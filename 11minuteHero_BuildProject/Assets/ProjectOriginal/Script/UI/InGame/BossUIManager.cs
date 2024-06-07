@@ -8,11 +8,13 @@ public class BossUIManager : MonoBehaviour
     [SerializeField] private RectTransform bossDirectionRect;
     [SerializeField] private RectTransform directionArrowRect;
     [SerializeField] private BarImageUtility bossHpBar;
+    [SerializeField] private GameObject playerHpBar;
     public IEnumerator Co_AppearBoss()
     {
         bossApperation.gameObject.SetActive(true);
         yield return StartCoroutine(TweeningUtility.Blink(0.5f, 2, 0.5f, bossApperation));
         bossApperation.gameObject.SetActive(false);
+        playerHpBar.SetActive(false);
     }
     public void ActiveBossHpBar()
     {

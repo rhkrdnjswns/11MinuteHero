@@ -5,20 +5,10 @@ using System.IO;
 
 public class CSVReader : MonoBehaviour
 {
-    public enum EColumnIndex
-    {
-        SkillType = 1,
-        SkillName,
-        Description,
-        BaseDamage,
-        SecondDamage,
-        CoolTime
-    }
-
     public TextAsset[] csvFileArray;
-    public List<List<string[]>> skillDataList = new List<List<string[]>>();
+    public List<object[]> skillDataList = new List<object[]>();
 
-    private void Start()
+    private void Awake()
     {
         StartCoroutine(Co_ReadCSVFile());
     }
@@ -31,46 +21,58 @@ public class CSVReader : MonoBehaviour
             while(reader.Peek() > -1)
             {
                 string line = reader.ReadLine();
-                string[] rowData = line.Split(',');
-                List<string[]> strArrList = new List<string[]>();
-                strArrList.Add(rowData);
-
-                skillDataList.Add(strArrList);
+                object[] rowData = line.Split(',');
+                for(int j = 0; j < rowData.Length; j++)
+                {
+                    if(rowData[j].ToString().Contains("."))
+                    {
+                        float f = 0;
+                        if(float.TryParse(rowData[j].ToString(), out f))
+                        {
+                            rowData[j] = f;
+                        }
+                    }
+                }
+                skillDataList.Add(rowData);
                 yield return null;
             }
         }
     }
 
-    public string[] GetSkillNameAndDescription(ESkillType skillType, int id)
+    public string[] GetSkillData(int id)
     {
-        if (id > skillDataList.Count) return null;
-        string[] strArr = new string[2];
-        strArr[0] = skillDataList[(int)skillType][id][(int)EColumnIndex.SkillName];
-        strArr[1] = skillDataList[(int)skillType][id][(int)EColumnIndex.Description];
-        return strArr;
+        return null;
     }
-    public float GetBaseDamage(ESkillType skillType, int id)
-    {
-        if (id > skillDataList.Count) return -1;
-        if (skillType == ESkillType.Passive) return -1;
-        float f = 0;
-        if(float.TryParse(skillDataList[(int)skillType][id][(int)EColumnIndex.BaseDamage], out f))
-        {
-            return f;
-        }
-        Debug.LogError("문자열을 실수로 변환할 수 없습니다. CSV 파일의 값 또는 행을 확인해 주세요.");
-        return -1;
-    }
-    public float GetCoolTime(ESkillType skillType, int id)
-    {
-        if (id > skillDataList.Count) return -1;
-        if (skillType == ESkillType.Passive) return -1;
-        float f = 0;
-        if (float.TryParse(skillDataList[(int)skillType][id][(int)EColumnIndex.CoolTime], out f))
-        {
-            return f;
-        }
-        Debug.LogError("문자열을 실수로 변환할 수 없습니다. CSV 파일의 값 또는 행을 확인해 주세요.");
-        return -1;
-    }
+    //public string[] GetSkillNameAndDescription(ESkillType skillType, int id)
+    //{
+    //    if (id > skillDataList.Count) return null;
+    //    string[] strArr = new string[2];
+    //    strArr[0] = skillDataList[(int)skillType][id][(int)EColumnIndex.SkillName];
+    //    strArr[1] = skillDataList[(int)skillType][id][(int)EColumnIndex.Description];
+    //    return strArr;
+    //}
+    //public float GetBaseDamage(ESkillType skillType, int id)
+    //{
+    //    if (id > skillDataList.Count) return -1;
+    //    if (skillType == ESkillType.Passive) return -1;
+    //    float f = 0;
+    //    if(float.TryParse(skillDataList[(int)skillType][id][(int)EColumnIndex.BaseDamage], out f))
+    //    {
+    //        return f;
+    //    }
+    //    Debug.LogError("문자열을 실수로 변환할 수 없습니다. CSV 파일의 값 또는 행을 확인해 주세요.");
+    //    return -1;
+    //}
+    //public float GetCoolTime(ESkillType skillType, int id)
+    //{
+    //    if (id > skillDataList.Count) return -1;
+    //    if (skillType == ESkillType.Passive) return -1;
+    //    float f = 0;
+    //    if (float.TryParse(skillDataList[(int)skillType][id][(int)EColumnIndex.CoolTime], out f))
+    //    {
+    //        return f;
+    //    }
+    //    Debug.LogError("문자열을 실수로 변환할 수 없습니다. CSV 파일의 값 또는 행을 확인해 주세요.");
+    //    return -1;
+    //}
 }

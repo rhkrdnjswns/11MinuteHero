@@ -33,6 +33,7 @@ public class ObstacleUtility : MonoBehaviour
 
     public void SetTransparent() //오브젝트의 투명도를 현재 상태에 맞게 조절
     {
+     //   InGameManager.Instance.testText.text = "오브젝트 투명 처리 호출중";
         if (isTransparent) //이미 투명 상태인 경우 timer를 초기화하여 투명 상태 끝나지 않게 유지
         {
             timer = 0f;

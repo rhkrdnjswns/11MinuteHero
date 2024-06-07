@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 3114256336935469129}
   - component: {fileID: 3114256336938336361}
   - component: {fileID: 3114256336937370281}
-  - component: {fileID: -8472849309385510294}
-  - component: {fileID: -828763210203389205}
+  - component: {fileID: 2591162643880467351}
   m_Layer: 0
   m_Name: house-egypt-medium
   m_TagString: Untagged
@@ -29,7 +28,8 @@ Transform:
   m_GameObject: {fileID: 3114256336935443561}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 1.442592, y: 0, z: 2.433336}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.11844046, y: 1, z: 0.13271098}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &-8472849309385510294
-BoxCollider:
+--- !u!64 &2591162643880467351
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,18 +94,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 11.002116, y: 3.5, z: 6.998159}
-  m_Center: {x: 0.0000042915353, y: 1.75, z: 0.00000035762795}
---- !u!114 &-828763210203389205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3114256336935443561}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a453ff2d1d6a2f4db6a27bb1ca040c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: bfb5ba982bea446418aeaa1f2539d11b, type: 3}

@@ -18,17 +18,23 @@ public class SkillManager : MonoBehaviour
 
     [SerializeField] private List<Skill> allSkillList = new List<Skill>();
 
-    [SerializeField] private List<SActive> activeSkillList = new List<SActive>();
-    [SerializeField] private List<SPassive> passiveSkillList = new List<SPassive>();
+    [SerializeField] private List<ActiveSkill> activeSkillList = new List<ActiveSkill>();
+    [SerializeField] private List<PassiveSkill> passiveSkillList = new List<PassiveSkill>();
     public List<Skill> SelectedChoiceList { get => selectedChoiceList; }
-    public List<SActive> ActiveSkillList { get => activeSkillList; set => activeSkillList = value; }
+    public List<ActiveSkill> ActiveSkillList { get => activeSkillList; set => activeSkillList = value; }
     public List<Skill> InPossessionSkillList { get => inPossessionSkillList; set => inPossessionSkillList = value; }
+    public List<Skill> AllSkillList { get => allSkillList; set => allSkillList = value; }
 
     private void Start()
     {
-        inPossessionSkillList.Add(FindObjectOfType<AWeapon>());
-        allSkillList.Add(inPossessionSkillList[0]);
-        activeSkillList.Add(inPossessionSkillList[0].GetComponent<SActive>());
+        inPossessionSkillList.Add(InGameManager.Instance.Player.Weapon);
+        allSkillList.Add(InGameManager.Instance.Player.Weapon);
+        activeSkillList.Add(InGameManager.Instance.Player.Weapon);
+        InGameManager.Instance.Player.Weapon.InitSkill();
+        InGameManager.Instance.Player.Weapon.ActivateSkill();
+        InGameManager.Instance.PossessedSkillUI.AddActiveInfomation(InGameManager.Instance.Player.Weapon, InGameManager.Instance.Player.Weapon.Id);
+        InGameManager.Instance.PossessedSkillUI.ChangeDescription(InGameManager.Instance.Player.Weapon.Id);
+
         InitGimmickList();
         InGameManager.Instance.DLevelUp += MixSkillOptions;
         //StartCoroutine(Co_SuffleGimmick());
@@ -78,13 +84,26 @@ public class SkillManager : MonoBehaviour
         if(allSkillList[index].Level == 0)
         {
             allSkillList[index].gameObject.SetActive(true);
-            allSkillList[index].InitSkill();
+            allSkillList[index].ActivateSkill();
             unPossessionSkillList.Remove(allSkillList[index]);
             inPossessionSkillList.Add(allSkillList[index]);
+            if(allSkillList[index].ESkillType == ESkillType.Passive)
+            {
+                InGameManager.Instance.PossessedSkillUI.AddPassiveInfomation(allSkillList[index], allSkillList[index].Id);
+            }
+            else if(allSkillList[index].ESkillType == ESkillType.Active)
+            {
+                InGameManager.Instance.PossessedSkillUI.AddActiveInfomation(allSkillList[index], allSkillList[index].Id);
+            }
+            else
+            {
+                InGameManager.Instance.PossessedSkillUI.AddEvolutionSkill(allSkillList[index], allSkillList[index].Id, allSkillList[index].GetComponent<EvolutionChildID>().GetChildID());
+            }
         }
         else
         {
             allSkillList[index].Reinforce();
+            InGameManager.Instance.PossessedSkillUI.UpdateSkillLevel(allSkillList[index].Id, allSkillList[index].Level);
         }
         allSkillList[index].SetEvlotionCondition(); //진화 가능한지 검사
     }
@@ -96,27 +115,35 @@ public class SkillManager : MonoBehaviour
             switch (skill.ESkillType)
             {
                 case ESkillType.Active:
-                    activeSkillList.Add(skill.GetComponent<SActive>());
+                    activeSkillList.Add(skill.GetComponent<ActiveSkill>());
                     unPossessionSkillList.Add(skill);
                     break;
                 case ESkillType.Passive:
-                    passiveSkillList.Add(skill.GetComponent<SPassive>());
+                    passiveSkillList.Add(skill.GetComponent<PassiveSkill>());
                     unPossessionSkillList.Add(skill);
                     break;
                 case ESkillType.Evolution:
-                    activeSkillList.Add(skill.GetComponent<SActive>());
+                    activeSkillList.Add(skill.GetComponent<ActiveSkill>());
                     evolutionSkillList.Add(skill);
                     break;
                 default:
                     break;
             }
             skill.gameObject.SetActive(false);
+            skill.InitSkill(); //스킬 데이터 초기화
         }
         bEvolutionArray = new bool[evolutionSkillList.Count];
     }
     public void SelectSkill(int index)
     {
         if (selectedChoiceList.Count == 0) return; //null 참조 예외 방지
+
+        if(index < 0)
+        {
+            InGameManager.Instance.Player.RecoverHp(10, EApplicableType.Percentage);
+            StartCoroutine(skillChoicePopUp.InActivePopUp());
+            return;
+        }
 
         // * 선택한 스킬이 진화스킬인 경우의 처리
         if(selectedChoiceList[index].ESkillType == ESkillType.Evolution)
@@ -132,9 +159,10 @@ public class SkillManager : MonoBehaviour
             //해당 진화스킬의 진화 가능 여부를 false로 해서 선택지에 등장하지 않게 처리
             bEvolutionArray[evolutionSkillList.IndexOf(selectedChoiceList[index])] = false;
 
-            //보유 스킬 리스트에 해당 진화스킬 추가 및 초기화
+            //보유 스킬 리스트에 해당 진화스킬 추가 및 활성화
             inPossessionSkillList.Add(selectedChoiceList[index]);
-            selectedChoiceList[index].InitSkill();
+            selectedChoiceList[index].ActivateSkill();
+            InGameManager.Instance.PossessedSkillUI.AddEvolutionSkill(selectedChoiceList[index], selectedChoiceList[index].Id, selectedChoiceList[index].GetComponent<EvolutionChildID>().GetChildID());
         }
         else // * 선택한 스킬이 진화스킬이 아닌 경우의 처리
         {
@@ -142,13 +170,23 @@ public class SkillManager : MonoBehaviour
             if (inPossessionSkillList.Contains(selectedChoiceList[index]))
             {
                 selectedChoiceList[index].Reinforce(); //스킬 강화
+                InGameManager.Instance.PossessedSkillUI.UpdateSkillLevel(selectedChoiceList[index].Id, selectedChoiceList[index].Level);
             }
             else //미보유 스킬인 경우
             {
                 inPossessionSkillList.Add(selectedChoiceList[index]); //보유 스킬 리스트에 추가
                 unPossessionSkillList.Remove(selectedChoiceList[index]); //미보유 스킬 리스트에서 제거
 
-                selectedChoiceList[index].InitSkill(); //스킬 초기화
+                selectedChoiceList[index].ActivateSkill(); //스킬 활성화
+
+                if(selectedChoiceList[index].ESkillType == ESkillType.Passive)
+                {
+                    InGameManager.Instance.PossessedSkillUI.AddPassiveInfomation(selectedChoiceList[index], selectedChoiceList[index].Id);
+                }
+                else
+                {
+                    InGameManager.Instance.PossessedSkillUI.AddActiveInfomation(selectedChoiceList[index], selectedChoiceList[index].Id);
+                }
             }
             selectedChoiceList[index].SetEvlotionCondition(); //진화 가능한지 검사
         }
@@ -218,12 +256,12 @@ public class SkillManager : MonoBehaviour
                 inPossessionIndexList.Add(i);
             }
         }
-        if(IsMaxHaveCount(true)) //보유중인 액티브 스킬이 최대치인 경우
+        if (IsMaxHaveCount(true)) //보유중인 액티브 스킬이 최대치인 경우
         {
             for (int i = 0; i < unPossessionSkillList.Count; i++)
             {
                 //보유중이지 않은 스킬이 등장할 때 액티브 스킬은 등장하지 않게 처리
-                if (unPossessionSkillList[i].GetComponent<SActive>())
+                if (unPossessionSkillList[i].TryGetComponent(out ActiveSkill a))
                 {
                     unPossessionIndexList.Remove(i);
                 }
@@ -234,19 +272,28 @@ public class SkillManager : MonoBehaviour
             for (int i = 0; i < unPossessionSkillList.Count; i++)
             {
                 //보유중이지 않은 스킬이 등장할 때 패시브 스킬은 등장하지 않게 처리
-                if (unPossessionSkillList[i].GetComponent<SPassive>())
+                if (unPossessionSkillList[i].TryGetComponent(out PassiveSkill p))
                 {
                     unPossessionIndexList.Remove(i);
                 }
             }
         }
+        int inPossesionCount = inPossessionIndexList.Count;
         for (int i = 0; i < currentSelectCount; i++) //선택지 개수 - 진화 스킬 개수 만큼 반복 (진화 가능한 스킬이 없는 경우 3번 반복)
         {
             int weight = Random.Range(1, 101); // 1~100까지 구함
 
             if (inPossessionIndexList.Count == 0) weight = 0; //보유중인 스킬이 모두 선택지에 추가된 경우의 처리 (보유중이지 않은 스킬만 선택지에 추가되도록)
 
-            if (inPossessionSkillList.Count == ConstDefine.SKILL_MAX_HAVE_COUNT * 2) weight = 100; //보유 스킬이 꽉 찬 경우의 처리 (보유중인 스킬만 선택지에 추가되도록)
+            if (inPossessionSkillList.Count == ConstDefine.SKILL_MAX_HAVE_COUNT * 2) //보유 스킬이 꽉 찬 경우의 처리 (보유중인 스킬만 선택지에 추가되도록)
+            {
+                if (i >= inPossesionCount) //선택지에 등장 가능한 보유 스킬의 개수가 선택지 개수보다 적은 경우
+                {
+                    selectedChoiceList.Add(null);
+                    continue;
+                }
+                weight = 100;
+            }
 
             if (weight < 41) //보유중이지 않은 스킬 선택지에 추가
             {
@@ -321,9 +368,9 @@ public class SkillManager : MonoBehaviour
     {
         if(isActive)
         {
-            return inPossessionSkillList.Where(w => w.GetComponent<SActive>()).Count() == ConstDefine.SKILL_MAX_HAVE_COUNT;
+            return inPossessionSkillList.Where(w => w.GetComponent<ActiveSkill>()).Count() == ConstDefine.SKILL_MAX_HAVE_COUNT;
         }
-        return inPossessionSkillList.Where(w => w.GetComponent<SPassive>()).Count() == ConstDefine.SKILL_MAX_HAVE_COUNT;
+        return inPossessionSkillList.Where(w => w.GetComponent<PassiveSkill>()).Count() == ConstDefine.SKILL_MAX_HAVE_COUNT;
     }
     //private List<int> GetValidIndexInPossessionList() //보유한 스킬 중에서 선택지에 등장 가능한 스킬의 인덱스만 가져옴
     //{

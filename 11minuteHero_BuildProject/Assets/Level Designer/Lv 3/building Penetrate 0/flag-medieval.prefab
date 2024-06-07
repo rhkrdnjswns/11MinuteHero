@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 8488574070230753916}
   - component: {fileID: 8482091809741590384}
   - component: {fileID: 8472109527349558774}
-  - component: {fileID: 2096586879416602598}
-  - component: {fileID: 8859606674173090928}
+  - component: {fileID: 8367801990607781720}
   m_Layer: 0
   m_Name: flag-medieval
   m_TagString: Untagged
@@ -29,7 +28,8 @@ Transform:
   m_GameObject: {fileID: 8484994283644986326}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.0496998, y: -0.008831322, z: -3.2289746}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.13271098, y: 1, z: 0.11844046}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -84,20 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2096586879416602598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8484994283644986326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a453ff2d1d6a2f4db6a27bb1ca040c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!65 &8859606674173090928
-BoxCollider:
+--- !u!136 &8367801990607781720
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -106,6 +94,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.727557, y: 4.7028003, z: 0.25429243}
-  m_Center: {x: -1.2290019, y: 2.3602302, z: 0.068568885}
+  m_Radius: 0.13109744
+  m_Height: 4.7028008
+  m_Direction: 1
+  m_Center: {x: 0.02, y: 2.21, z: -0.06856966}

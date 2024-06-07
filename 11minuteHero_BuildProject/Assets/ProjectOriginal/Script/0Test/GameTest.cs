@@ -16,6 +16,6 @@ public class GameTest : MonoBehaviour
     public void BtnEvt_SelectCharacter(int index)
     {
         this.index = index;
-        StartCoroutine(SceneUtility.TransitionScene(SceneInfo.InGame));
+        //StartCoroutine(SceneUtility.TransitionScene(SceneInfo.InGame));
     }
 }

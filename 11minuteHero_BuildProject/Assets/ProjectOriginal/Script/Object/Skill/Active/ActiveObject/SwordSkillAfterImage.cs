@@ -23,20 +23,20 @@ public class SwordSkillAfterImage : MonoBehaviour
                 break;
         }
     }
-    public void SetAfterImage(Transform revAxis, Transform parent, Vector3 rotDir, float sec, float degree, Vector3 size, bool bRot)
+    public void SetAfterImage(Transform revAxis, Transform parent, Vector3 rotDir, float sec, float degree, Vector3 size, float rotateSpeed)
     {
         transform.localScale = size;
         gameObject.SetActive(true);
 
         particle.Play();
-        if(bRot) StartCoroutine(Co_RotationSword(rotDir));
+        StartCoroutine(Co_RotationSword(rotDir, rotateSpeed));
         StartCoroutine(Co_RevolutionSword(revAxis, parent, sec, degree));
     }
-    private IEnumerator Co_RotationSword(Vector3 rotDir) //검 오브젝트 자전
+    private IEnumerator Co_RotationSword(Vector3 rotDir, float rotateSpeed) //검 오브젝트 자전
     {
         while (true)
         {
-            rotTransform.Rotate(rotDir * 720 * Time.deltaTime);
+            rotTransform.Rotate(rotDir * rotateSpeed * Time.deltaTime);
             yield return null;
         }
     }

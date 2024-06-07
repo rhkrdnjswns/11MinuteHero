@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 232903770385676045}
   - component: {fileID: 234319215814520707}
   - component: {fileID: 244587601037320303}
-  - component: {fileID: 6387537249745487579}
-  - component: {fileID: 4643637749681631014}
+  - component: {fileID: 204471818503567869}
   m_Layer: 0
   m_Name: tower-castle_round
   m_TagString: Untagged
@@ -29,7 +28,8 @@ Transform:
   m_GameObject: {fileID: 231593170490177527}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.7152147, y: -0.009272397, z: 3.2984684}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.13271098, y: 1, z: 0.11844046}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6387537249745487579
-BoxCollider:
+--- !u!136 &204471818503567869
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,18 +94,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 8.183046, y: 7, z: 8.183047}
-  m_Center: {x: -0.00000023841858, y: 3.5, z: -0.061048508}
---- !u!114 &4643637749681631014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 231593170490177527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a453ff2d1d6a2f4db6a27bb1ca040c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Radius: 3.8748684
+  m_Height: 20
+  m_Direction: 1
+  m_Center: {x: 0, y: 5.93, z: 0}

@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 4735990564496923344}
   - component: {fileID: 4738515753338484412}
   - component: {fileID: 4748515613918254984}
-  - component: {fileID: 6753046233684159760}
-  - component: {fileID: 8158604245497362395}
+  - component: {fileID: 4707655803934552166}
   m_Layer: 0
   m_Name: tree-spruce_orange
   m_TagString: Untagged
@@ -30,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 216.76561, y: 0.7000046, z: -7.145904}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -84,28 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6753046233684159760
-BoxCollider:
+--- !u!64 &4707655803934552166
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4734451093723352102}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.1373167, y: 5.550723, z: 2.781195}
-  m_Center: {x: 0.00000011920929, y: 2.7753615, z: 0.072334886}
---- !u!114 &8158604245497362395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4734451093723352102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a453ff2d1d6a2f4db6a27bb1ca040c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 4e511afc4489e4e03b3acb493a4c5eee, type: 3}

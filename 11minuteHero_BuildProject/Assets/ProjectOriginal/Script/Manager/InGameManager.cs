@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum EGameState //인게임 상태 체크. GameOver면 모든 코루틴 작동 정지함.
 {
@@ -10,17 +11,23 @@ public enum EGameState //인게임 상태 체크. GameOver면 모든 코루틴 작동 정지함.
 }
 public class InGameManager : MonoBehaviour
 {
+    public Text testText;
+
     private static InGameManager instance; //싱글턴 인스턴스
     private CPlayer player; //플레이어 참조. 모든 플레이어 참조는 인게임매니저의 플레이어를 참조함.
 
+    [SerializeField] private ResultPopUp resultPopup;
     [SerializeField] private GameObject[] playerCharacterArray; //플레이어 캐릭터 배열. 플레이 씬 입장 시 인덱스를 전달받아 선택한 캐릭터를 활성화
     [SerializeField] private int characterIndex;
+    [SerializeField] private int bossIndex;
     [SerializeField] private List<NormalMonster> monsterList = new List<NormalMonster>(); //현재 필드 위에 존재하는 몬스터 리스트
                                                                               //[SerializeField] private CustomPriorityQueue<Monster> monster
     private SkillManager skillManager;
     private BossUIManager bossUIManager;
     private InGameBasicUIManager inGameBasicUIManager;
     private ItemManager itemManager;
+    private CSVManager csvManager;
+    [SerializeField] private PossessedSKillUI possessedSkillUI;
 
     [SerializeField] private GameObject[] bossPrefabArray;
 
@@ -29,7 +36,11 @@ public class InGameManager : MonoBehaviour
     private GrayscaleUtility grayscaleUtility;
 
     private int killCount;
+    public int killCountForItem { get; set; }
 
+    private int score;
+    private int bossScore;
+    public int CharacterIndex { get => characterIndex; }
     public float Timer { get; private set; }
     public bool bTimeStop { get; set; }
     public bool bAppearBoss { get; private set; }
@@ -64,13 +75,17 @@ public class InGameManager : MonoBehaviour
         {
             killCount = value;
             inGameBasicUIManager.KillCountText.text = killCount.ToString();
+            killCountForItem++;
         }
     }
     public SkillManager SkillManager { get => skillManager; }
     public BossUIManager BossUIManager { get => bossUIManager; }
     public InGameBasicUIManager InGameBasicUIManager { get => inGameBasicUIManager; }
     public ItemManager ItemManager { get => itemManager; }
+    public CSVManager CSVManager { get => csvManager; }
     public GrayscaleUtility GrayscaleUtility { get => grayscaleUtility; }
+    public PossessedSKillUI PossessedSkillUI { get => possessedSkillUI; }
+
 
     private void Awake() //싱글턴으로 인스턴스화. 인게임 내에서는 씬전환이 일어나지 않기 때문에 인게임 씬 로드 시에만 this로 초기화 해주면 됨.
     {
@@ -78,6 +93,9 @@ public class InGameManager : MonoBehaviour
         //characterIndex = 0;//GameTest.Instance.index;
         Application.targetFrameRate = 120;//ConstDefine.TARGET_FRAME; //프레임 조정
         Screen.SetResolution(1280, 720, true);
+
+        if (GameManager.instance != null) characterIndex = GameManager.instance.characterIndex;
+
 
         GameObject obj = Instantiate(playerCharacterArray[characterIndex]); //캐릭터 생성 후 참조를 가져옴
         player = obj.GetComponent<CPlayer>();
@@ -87,11 +105,15 @@ public class InGameManager : MonoBehaviour
         bossUIManager = FindObjectOfType<BossUIManager>();
         inGameBasicUIManager = FindObjectOfType<InGameBasicUIManager>();
         itemManager = FindObjectOfType<ItemManager>();
+        csvManager = FindObjectOfType<CSVManager>();
 
         // * 스테이지마다 인덱스 다르게 적용해야함
-        GameObject boss = Instantiate(bossPrefabArray[0]);
+        if (GameManager.instance != null) bossIndex = GameManager.instance.difficultyIndex;
+
+        GameObject boss = Instantiate(bossPrefabArray[bossIndex]);
         boss.transform.position = Vector3.zero;
         currentBoss = boss.GetComponent<Boss>();
+        currentBoss.InitBoss();
         boss.SetActive(false);
 
         cameraUtility = Camera.main.GetComponent<CameraUtility>();
@@ -100,29 +122,50 @@ public class InGameManager : MonoBehaviour
     //아래 로직은 전부 테스트 (09/25)
     private void Start()
     {
+        dGameOver += () => gameState = EGameState.GameOver;
         dGameOver += GameOverDebug;
         dLevelUp += LevelUpDebug;
         StartCoroutine(Co_Timer());
     }
     private IEnumerator Co_Timer()
     {
-        while (gameState != EGameState.GameOver || !bAppearBoss)
-        {        
-            Timer += Time.deltaTime;
-
-            inGameBasicUIManager.TimerHourText.text = ((int)Timer / 60).ToString();
-            inGameBasicUIManager.TimerMinuteText.text = ((int)Timer % 60).ToString();
-            yield return null;
-        }
-        if(bAppearBoss)
+        while (gameState != EGameState.GameOver)
         {
-            inGameBasicUIManager.TimerHourText.text = "11";
-            inGameBasicUIManager.TimerMinuteText.text = "0";
+            Timer += Time.deltaTime;
+            yield return null;
+
+            if (Timer > 60 * 8)
+            {
+                if(!bAppearBoss)
+                {
+                    StartCoroutine(Co_AppearBoss());
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            inGameBasicUIManager.SetTimer((int)Timer / 60, (int)Timer % 60);
         }
+    }
+    private void OperateScore()
+    {
+        score = killCount * (((int)Timer / 60) == 0? 1 : ((int)Timer / 60) > 8? 8 : ((int)Timer / 60));// + bossScore - 보스 시간당 감소 점수
     }
     private void GameOverDebug()
     {
         Debug.Log("Game Over!");
+    }
+    public IEnumerator Co_ShowResultPopup(bool isClear)
+    {
+        OperateScore();
+        resultPopup.SetResultPopUp(isClear, "1스테이지", ((int)Timer / 60).ToString("00") + ":" + ((int)Timer % 60).ToString("00"), score.ToString(), killCount.ToString());
+
+        yield return new WaitForSeconds(1f);
+
+        Time.timeScale = 0;
+        resultPopup.gameObject.SetActive(true);
+        StartCoroutine(TweeningUtility.SetSize(0.3f, resultPopup.transform.GetChild(0).GetChild(0), Vector3.one * 0.25f, Vector3.one, Vector3.one * 1.1f));
     }
     private void LevelUpDebug()
     {
@@ -147,6 +190,10 @@ public class InGameManager : MonoBehaviour
     }
     public IEnumerator Co_AppearBoss()
     {
+        foreach (var item in monsterList)
+        {
+            item.Hit(9999);
+        }
         bAppearBoss = true;
 
         //보스 UI 출력 -> 보스UI매니저
@@ -177,7 +224,7 @@ public class InGameManager : MonoBehaviour
         cameraUtility.UnFocus();
 
         //보스 동작 시작
-        currentBoss.InitBoss();
+        currentBoss.ActiveBoss();
     }
     private Vector3 randomBossPos()
     {

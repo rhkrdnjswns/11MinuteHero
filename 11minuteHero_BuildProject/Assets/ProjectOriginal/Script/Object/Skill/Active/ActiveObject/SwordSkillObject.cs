@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwordSkillObject : MonoBehaviour
+public class SwordSkillObject : ActiveObject
 {
     public enum ESwordType
     {
@@ -17,10 +17,14 @@ public class SwordSkillObject : MonoBehaviour
     [SerializeField] private ESwordType eSwordType; //검 타입 (피로물든 검 / 저주받은 검)
 
     [SerializeField] private SwordSkillAfterImage[] afterImageArray; //잔상 참조 배열
-    private AttackRadiusUtility attackRadiusUtility; //반경 공격 클래스 참조
     private Vector3 activePos; //생성 위치
 
-    private float damage; //공격력
+    private float arrivalSecond;
+    private float degree;
+    private float attackRadius;
+    private float rotateSpeed;
+
+    private Collider[] collisionArray = new Collider[50];
 
     private WaitForSeconds attackDelay;
     private WaitForSeconds afterImageDelay;
@@ -32,10 +36,8 @@ public class SwordSkillObject : MonoBehaviour
     {
         return afterImageArray;
     }
-    public void InitObject(AttackRadiusUtility attackRadiusUtility, float distance)
+    public void InitObject(float distance, float attackInterval, float arrivalSecond, float degree, float rotSpeed)
     {
-        this.attackRadiusUtility = attackRadiusUtility;
-
         switch (eSwordType)
         {
             case ESwordType.BloodSword:
@@ -61,14 +63,19 @@ public class SwordSkillObject : MonoBehaviour
         {
             item.SetAfterImage(eSwordType);
         }
+        this.arrivalSecond = arrivalSecond;
+        this.degree = degree;
+        rotateSpeed = rotSpeed;
 
         afterImageDelay = new WaitForSeconds(0.1f);
-        attackDelay = new WaitForSeconds(0.25f);
+        attackDelay = new WaitForSeconds(attackInterval);
     }
-    public void ActivateSkill(Transform revAxis, float arrivalSecond, float degree, float damage, float attackInterval)
+    public override void SetAttackRadius(float radius)
     {
-        this.damage = damage;
-
+        attackRadius = radius;
+    }
+    public void ActivateSkill(Transform revAxis)
+    {
         transform.localPosition = activePos;
         foreach (var item in afterImageArray)
         {
@@ -78,26 +85,27 @@ public class SwordSkillObject : MonoBehaviour
 
         particle.Play();
 
-        if(eSwordType != ESwordType.DevilSword) StartCoroutine(Co_RotationSword());
-        StartCoroutine(Co_RevolutionSword(revAxis, arrivalSecond, degree));
-        StartCoroutine(Co_ActiveAfterImage(revAxis, arrivalSecond, degree));
+        StartCoroutine(Co_RotationSword());
+        StartCoroutine(Co_RevolutionSword(revAxis));
+        StartCoroutine(Co_ActiveAfterImage(revAxis));
 
         StartCoroutine(Co_AttakcRadius());
     }
-    public void SetAfterImageSize()
+    public override void IncreaseSize(float value)
     {
+        base.IncreaseSize(value);
         foreach (var item in afterImageArray)
         {
             item.transform.localScale = transform.localScale;
         }
     }
-    private IEnumerator Co_ActiveAfterImage(Transform revAxis, float arrivalSecond, float degree)
+    private IEnumerator Co_ActiveAfterImage(Transform revAxis)
     {
         foreach(var item in afterImageArray)
         {
             yield return afterImageDelay;
             item.transform.localPosition = activePos;
-            item.SetAfterImage(revAxis, transform, rotDirection, arrivalSecond, degree, transform.localScale, eSwordType != ESwordType.DevilSword);
+            item.SetAfterImage(revAxis, transform, rotDirection, arrivalSecond, degree, transform.localScale, rotateSpeed);
         }
     }
     private IEnumerator Co_AttakcRadius()
@@ -105,10 +113,11 @@ public class SwordSkillObject : MonoBehaviour
         while (true)
         {
             yield return attackDelay;
-            attackRadiusUtility.AttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform), damage);
+
+            int num = Physics.OverlapSphereNonAlloc(transform.position, attackRadius, collisionArray, ConstDefine.LAYER_MONSTER);
+            AttackInRangeUtility.AttackLayerInRange(collisionArray, damage, num);
 #if UNITY_EDITOR
-            int count = attackRadiusUtility.GetLayerInRadius(transform).Length;
-            InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += count * damage;
+            InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += num * damage;
 #endif
         }
     }
@@ -116,11 +125,11 @@ public class SwordSkillObject : MonoBehaviour
     {
         while (true)
         {
-            rotTransform.Rotate(rotDirection * 720 * Time.deltaTime);
+            rotTransform.Rotate(rotDirection * rotateSpeed * Time.deltaTime);
             yield return null;
         }
     }
-    private IEnumerator Co_RevolutionSword(Transform revAxis, float arrivalSecond, float degree) //검 오브젝트 공전. 현재 회전각에서 arrivalSecond동안 degree 까지 회전
+    private IEnumerator Co_RevolutionSword(Transform revAxis) //검 오브젝트 공전. 현재 회전각에서 arrivalSecond동안 degree 까지 회전
     {
         float angle = 0;
         while (angle <= degree)
@@ -134,7 +143,6 @@ public class SwordSkillObject : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        if (attackRadiusUtility == null) return;
-        Gizmos.DrawWireSphere(transform.position, attackRadiusUtility.Radius);
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
     }
 }

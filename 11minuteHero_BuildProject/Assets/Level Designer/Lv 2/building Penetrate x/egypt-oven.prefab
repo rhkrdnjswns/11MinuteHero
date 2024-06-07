@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 4549280511953641445}
   - component: {fileID: 4549280511954968517}
   - component: {fileID: 4549280511956065541}
-  - component: {fileID: 3090450777501959334}
-  - component: {fileID: -123696918596628427}
+  - component: {fileID: 73864746775099818}
   m_Layer: 0
   m_Name: egypt-oven
   m_TagString: Untagged
@@ -29,7 +28,8 @@ Transform:
   m_GameObject: {fileID: 4549280511953798085}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.25035286, y: 0, z: 1.0940728}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.13271098, y: 1, z: 0.11844046}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3090450777501959334
-BoxCollider:
+--- !u!64 &73864746775099818
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,18 +94,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 1.9912109}
-  m_Center: {x: 0, y: 1, z: 0.060821533}
---- !u!114 &-123696918596628427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4549280511953798085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a453ff2d1d6a2f4db6a27bb1ca040c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: e9ea9d86dc99cdf4eaf4e94652d8ab38, type: 3}

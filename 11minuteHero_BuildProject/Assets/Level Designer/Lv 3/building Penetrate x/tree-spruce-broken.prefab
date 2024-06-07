@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 16861766910920180}
   - component: {fileID: 4004892099543419473}
   - component: {fileID: 1184670369519058587}
-  - component: {fileID: 7010016671657950596}
-  - component: {fileID: 6714724590791208026}
+  - component: {fileID: 554328465680081434}
   m_Layer: 0
   m_Name: tree-spruce-broken
   m_TagString: Untagged
@@ -29,7 +28,8 @@ Transform:
   m_GameObject: {fileID: 824219327651815246}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.1002905, y: 0.041220486, z: 2.953905}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalScale: {x: 0.26542196, y: 2, z: 0.23688091}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -84,28 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7010016671657950596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 824219327651815246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a453ff2d1d6a2f4db6a27bb1ca040c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!65 &6714724590791208026
-BoxCollider:
+--- !u!64 &554328465680081434
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 824219327651815246}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.920702, y: 1.7816111, z: 5.365674}
-  m_Center: {x: -0.72708935, y: 0.8495839, z: -2.3357954}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2126343729698544485, guid: af5b13c6c4040ad44a3fc76412975314, type: 3}

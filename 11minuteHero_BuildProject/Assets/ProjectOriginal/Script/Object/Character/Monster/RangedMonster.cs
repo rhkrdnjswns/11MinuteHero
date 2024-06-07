@@ -4,31 +4,54 @@ using UnityEngine;
 
 public class RangedMonster : NormalMonster
 {
-    [SerializeField] protected RangedAttackUtility rangedAttackUtility;
+    private ProjectileUtility projectileUtility;
+
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private int projectileCreateCount;
     [SerializeField] protected float projectileActivateTime;
+    [SerializeField] private float projectileSpeed;
     [SerializeField] private float behaviorDelay;
-    protected override void Awake()
+
+    private WaitForSeconds delay;
+    public override void InitMonsterData()
     {
-        base.Awake();
-        rangedAttackUtility.Parent = transform;
-        rangedAttackUtility.CreateNewProjectile();
-        rangedAttackUtility.SetDamage(damage);
-        rangedAttackUtility.SetActivateTime(projectileActivateTime);
+        base.InitMonsterData();
+
+        projectileUtility = new ProjectileUtility(projectilePrefab, projectileCreateCount, transform);
+
+        projectileUtility.SetOwner();
+        projectileUtility.SetDamage(damage);
+        projectileUtility.SetSpeed(projectileSpeed);
+        projectileUtility.SetActivateTime(projectileActivateTime);
+
+        delay = new WaitForSeconds(behaviorDelay);
+    }
+    protected override void ReadCSVData()
+    {
+        base.ReadCSVData();
+
+        projectileSpeed = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 18);
     }
     protected override IEnumerator Co_Attack()
     {
         transform.LookAt(InGameManager.Instance.Player.transform);
-        if (!rangedAttackUtility.IsValid())
+
+        if(!projectileUtility.IsValid())
         {
-            rangedAttackUtility.CreateNewProjectile();
-            rangedAttackUtility.SetActivateTime(projectileActivateTime);
+            projectileUtility.SetOwner();
+            projectileUtility.SetDamage(damage);
+            projectileUtility.SetSpeed(projectileSpeed);
+            projectileUtility.SetActivateTime(projectileActivateTime);
         }
         overlappingAvoider.enabled = false;
-        Projectile p = rangedAttackUtility.SummonProjectile(0.5f);
+
+        Projectile p = projectileUtility.GetProjectile();
+        p.transform.position += Vector3.up * 0.5f;
         p.SetShotDirection((InGameManager.Instance.Player.transform.position - transform.position).normalized);
         animator.SetTrigger(ConstDefine.TRIGGER_ATTACK);
         p.ShotProjectile();
-        yield return new WaitForSeconds(behaviorDelay);
+
+        yield return delay;
         overlappingAvoider.enabled = true;
         monsterState = EMonsterState.Chase;
     }
