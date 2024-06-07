@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GrayscaleUtility : MonoBehaviour
 {
-    [SerializeField] private Material cameraMaterial;
+    private Material cameraMaterial;
 
     private float grayScale = 0f; // 0 = 기존 색상, 1에 가까워질수록 점점 흑백으로 변함. 1을 넘으면 색상 반전이 일어남
 
@@ -18,8 +18,8 @@ public class GrayscaleUtility : MonoBehaviour
     //후처리 효과. src 이미지(현재 화면)를 dest 이미지로 교체
     void OnRenderImage(RenderTexture src, RenderTexture dest) //이미지 렌더링 시에 카메라 머티리얼의 렌더텍스쳐를 적용
     {
-        cameraMaterial.SetFloat("_Grayscale", grayScale); 
-        Graphics.Blit(src, dest, cameraMaterial); //카메라에 렌더된 이미지를 하나의 이미지로 cameraMaterial로 후처리
+        cameraMaterial.SetFloat("_Grayscale", grayScale);
+        Graphics.Blit(src, dest, cameraMaterial);
     }
     public void SetGrayscale(float time, float value)
     {

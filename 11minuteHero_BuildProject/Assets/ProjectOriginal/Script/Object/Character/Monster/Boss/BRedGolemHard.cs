@@ -11,10 +11,9 @@ public class BRedGolemHard : BRedGolemNormal
     [SerializeField] private List<Decal> hpEventEarthQuakeDecalList;
     [SerializeField] private List<ParticleSystem> earthQuakeParticleList;
 
-    private Collider[] earthQuakeCollisionArray = new Collider[1];
-    public override void ActiveBoss()
+    public override void InitBoss()
     {
-        base.ActiveBoss();
+        base.InitBoss();
         foreach (var item in earthQuakeParticleList)
         {
             item.transform.SetParent(null);
@@ -71,9 +70,7 @@ public class BRedGolemHard : BRedGolemNormal
             for (int i = 0; i < hpEventEarthQuakeDecalList.Count; i++)
             {
                 earthQuakeParticleList[i].Play();
-                int num = Physics.OverlapBoxNonAlloc(hpEventEarthQuakeDecalList[i].transform.position, new Vector3(bossAreaWidth / 2, 1, 2), earthQuakeCollisionArray, Quaternion.identity, ConstDefine.LAYER_PLAYER);
-                AttackInRangeUtility.AttackLayerInRange(earthQuakeCollisionArray, InGameManager.Instance.Player.MaxHp * 30 / 100, num);
-
+                attackInSquareUtility.AttackLayerInSquare(attackInSquareUtility.GetLayerInSquare(hpEventEarthQuakeDecalList[i].transform.position, new Vector3(bossAreaWidth / 2, 1, 2), Quaternion.identity), 20);
                 hpEventEarthQuakeDecalList[i].InActiveDecal(transform);
             }
             StartCoroutine(cameraUtility.Co_ShakeCam(0.2f, 1, 0.1f));
@@ -107,9 +104,7 @@ public class BRedGolemHard : BRedGolemNormal
             for (int i = 0; i < hpEventEarthQuakeDecalList.Count; i++)
             {
                 earthQuakeParticleList[i].Play();
-
-                int num = Physics.OverlapBoxNonAlloc(hpEventEarthQuakeDecalList[i].transform.position, new Vector3(2, 1, bossAreaHeight / 2), earthQuakeCollisionArray, Quaternion.identity, ConstDefine.LAYER_PLAYER);
-                AttackInRangeUtility.AttackLayerInRange(earthQuakeCollisionArray, InGameManager.Instance.Player.MaxHp * 30 / 100, num);
+                attackInSquareUtility.AttackLayerInSquare(attackInSquareUtility.GetLayerInSquare(hpEventEarthQuakeDecalList[i].transform.position, new Vector3(2, 1, bossAreaHeight / 2), Quaternion.identity), 20);
                 hpEventEarthQuakeDecalList[i].InActiveDecal(transform);
             }
             StartCoroutine(cameraUtility.Co_ShakeCam(0.2f, 1, 0.1f));
@@ -132,6 +127,7 @@ public class BRedGolemHard : BRedGolemNormal
             obj.transform.rotation = Quaternion.identity;
 
             CRedGolemStone stone = obj.GetComponent<CRedGolemStone>().SetReference(transform);
+            stone.InitDamageUIContainer();
             earthQuakeStoneQueue.Enqueue(stone);
         }
     }
@@ -139,42 +135,41 @@ public class BRedGolemHard : BRedGolemNormal
     {
         int rand = Random.Range(1, 101);
         float posY;
-
-        CRedGolemStone stone;
+  
         if (rand <= 60)
         {
             if (stoneQueue.Count == 0) InitStoneQueue();
-            stone = stoneQueue.Dequeue();
+            stoneRef = stoneQueue.Dequeue();
             posY = summonedStonePosY;
         }
         else if (rand <= 90)
         {
             if (indestructibleStoneQueue.Count == 0) InitStoneQueue();
-            stone = indestructibleStoneQueue.Dequeue();
+            stoneRef = indestructibleStoneQueue.Dequeue();
             posY = summonedIndestructibleStonePosY;
         }
         else
         {
             if (earthQuakeStoneQueue.Count == 0) InitStoneQueue();
-            stone = earthQuakeStoneQueue.Dequeue();
+            stoneRef = earthQuakeStoneQueue.Dequeue();
             posY = summonedEarthQuakeStonePosY;
         }
 
         if (bReturnStone)
         {
-            spareStoneList.Add(stone);
+            spareStoneList.Add(stoneRef);
         }
         else
         {
-            stoneList.Add(stone);
+            stoneList.Add(stoneRef);
         }
         stoneSummonPos = pos;
         stoneSummonPos.y = summonedStonePosY;
 
-        stone.transform.SetParent(null);
-        stone.transform.position = stoneSummonPos;
-        stone.gameObject.SetActive(true);
-        stone.ResetStatus();
+        stoneRef.transform.SetParent(null);
+        stoneRef.transform.position = stoneSummonPos;
+        stoneRef.gameObject.SetActive(true);
+        stoneRef.ResetStatus();
     }
     protected override void ReturnStoneByLevel(CRedGolemStone redGolemStone, int stoneLevel)
     {

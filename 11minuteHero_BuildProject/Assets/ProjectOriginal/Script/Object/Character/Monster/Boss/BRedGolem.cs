@@ -17,47 +17,30 @@ public class BRedGolem : Boss
     private bool bAction;
     protected bool bReturnStone;
 
-
-    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] protected RangedAttackUtility rangedAttackUtility;
+    [SerializeField] private AttackRadiusUtility jumpAttack;
+    [SerializeField] protected AttackInSquareUtility attackInSquareUtility;
     [SerializeField] private GameObject stonePrefab;
 
     protected List<CRedGolemStone> stoneList = new List<CRedGolemStone>();
     protected List<CRedGolemStone> spareStoneList = new List<CRedGolemStone>();
     protected Queue<CRedGolemStone> stoneQueue = new Queue<CRedGolemStone>();
 
-    protected ObjectPool<CRedGolemStone> stonePool;
-    protected ProjectileUtility projectileUtility;
+    protected CRedGolemStone stoneRef;
 
     protected Vector3 appearPos;
 
     protected Vector3 stoneSummonPos = Vector3.zero;
     protected float summonedStonePosY;
-
-    protected Collider[] jumpAttackCollisionArray = new Collider[1];
-    protected Collider[] summonStoneCollisionArray = new Collider[1];
-    protected Collider[] summonStoneRandCollisionArray = new Collider[1];
-    protected Collider[] punchCollisionArray = new Collider[1];
-    public override void InitBoss()
-    {
-        base.InitBoss();
-        projectileUtility = new ProjectileUtility(projectilePrefab, 20, transform);
-        projectileUtility.SetOwner();
-        projectileUtility.SetDamage(InGameManager.Instance.Player.MaxHp * 10 / 100);
-        projectileUtility.SetAction<Vector3>(SummonStone);
-        projectileUtility.SetSpeed(7);
-        InitStoneQueue();
-        InGameManager.Instance.DGameOver += StopAllCoroutines;
-
-    }
     protected virtual void SetSummonedStonePosY()
     {
         summonedStonePosY = 0.5f;
     }
-    public override void ActiveBoss()
+    public override void InitBoss()
     {
         appearPos = transform.position;
         SetSummonedStonePosY();
-        base.ActiveBoss();
+        base.InitBoss();
         StartCoroutine(Co_SummonStoneRandomPos());
     }
     protected override void PlayHpEvent(int index)
@@ -129,6 +112,14 @@ public class BRedGolem : Boss
                )
            );
     }
+    protected override void Awake()
+    {
+        base.Awake();
+        InitStoneQueue();
+        rangedAttackUtility.Parent = transform;
+        rangedAttackUtility.CreateNewProjectile();
+        rangedAttackUtility.SetDamage(10);
+    }
     protected virtual void InitStoneQueue()
     {
         for (int i = 0; i < 20; i++)
@@ -171,22 +162,20 @@ public class BRedGolem : Boss
     }
     private IEnumerator Co_SummonStoneRandomPos()
     {
-        WaitForSeconds summonDelay = new WaitForSeconds(5f);
-        WaitForSeconds decalDelay = new WaitForSeconds(2f);
-        while (!IsDie)
+        while(true)
         {
             Vector3 randomPos = new Vector3(appearPos.x + Random.Range(-(bossAreaWidth / 2), bossAreaWidth / 2), 0, appearPos.z + Random.Range(-(bossAreaHeight / 2), bossAreaHeight / 2));
-            yield return summonDelay;
+            yield return new WaitForSeconds(5f);
             Debug.Log(randomPos);
 
             decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.SetParent(null);
             decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.position = randomPos;
+            decalList[(int)EDecalNumber.SummonStoneRandomPos].gameObject.SetActive(true);
             StartCoroutine(decalList[(int)EDecalNumber.SummonStoneRandomPos].Co_ActiveDecal(2));
 
-            yield return decalDelay;
+            yield return new WaitForSeconds(2f);
 
-            int num = Physics.OverlapSphereNonAlloc(decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.position, 1, summonStoneRandCollisionArray, ConstDefine.LAYER_PLAYER);
-            AttackInRangeUtility.AttackLayerInRange(summonStoneRandCollisionArray, InGameManager.Instance.Player.MaxHp * 10 / 100, num);
+            jumpAttack.AttackLayerInRadius(jumpAttack.GetLayerInRadius(decalList[(int)EDecalNumber.SummonStoneRandomPos].transform, 1), 10);
             SummonStone(decalList[(int)EDecalNumber.SummonStoneRandomPos].transform.position);
             decalList[(int)EDecalNumber.SummonStoneRandomPos].InActiveDecal(transform);
         }
@@ -312,21 +301,21 @@ public class BRedGolem : Boss
         bReturnStone = true;
         animator.SetTrigger("ReturnStone");
         animator.SetBool("IsEndReturn", false);
-        //foreach (var item in stoneList)
-        //{
-        //    StartCoroutine(item.Co_CollectStone(1.5f));
-        //    //yield return null;
-        //}
+        foreach (var item in stoneList)
+        {
+            StartCoroutine(item.Co_CollectStone(2));
+            //yield return null;
+        }
         for (int i = 0; i < stoneList.Count; i++)
         {
-            StartCoroutine(stoneList[i].Co_CollectStone(1.5f));
+            StartCoroutine(stoneList[i].Co_CollectStone(2));
             if(i < stoneList.Count - 1)
             {
-                StartCoroutine(stoneList[i].Co_CollectStone(1.5f));
+                StartCoroutine(stoneList[i].Co_CollectStone(2));
             }
             else
             {
-                yield return StartCoroutine(stoneList[i].Co_CollectStone(1.5f));
+                yield return StartCoroutine(stoneList[i].Co_CollectStone(2));
             }
         }
         IncreaseHp(5 * stoneList.Count);
@@ -366,10 +355,10 @@ public class BRedGolem : Boss
         decalList[(int)EDecalNumber.KnockbackPunch].InActiveDecal(transform);
 
         animator.SetTrigger("Punch");
-        int num = Physics.OverlapBoxNonAlloc(transform.position + transform.forward * 2, new Vector3(2, 1, 3), punchCollisionArray, transform.rotation, ConstDefine.LAYER_PLAYER);
-        if(num > 0)
+        Collider[] col = attackInSquareUtility.GetLayerInSquare(transform.position + transform.forward * 2, new Vector3(2, 1, 3), transform.rotation);
+        if(col.Length > 0)
         {
-            AttackInRangeUtility.AttackLayerInRange(punchCollisionArray, InGameManager.Instance.Player.MaxHp * 20 / 100, num);
+            attackInSquareUtility.AttackLayerInSquare(col, 10);
             InGameManager.Instance.Player.KnockBack(5f, 1f, transform.forward); //플레이어 넉백
         }
     }
@@ -409,15 +398,9 @@ public class BRedGolem : Boss
         while (Vector3.Distance(transform.position, InGameManager.Instance.Player.transform.position) > 4)
         {
             animator.SetBool(ConstDefine.BOOL_ISMOVE, Move());
-            if (bHpEvent)
-            {
-                animator.SetBool(ConstDefine.BOOL_ISMOVE, false);
-                yield break;
-            }
             yield return null;
         }
         animator.SetBool(ConstDefine.BOOL_ISMOVE, false);
-        yield return StartCoroutine(Co_Behavior_KnockBackPunch());
     }
     protected override bool Move()
     {
@@ -428,23 +411,23 @@ public class BRedGolem : Boss
     public virtual void SummonStone(Vector3 pos)
     {
         if (stoneQueue.Count == 0) InitStoneQueue();
-        CRedGolemStone stone = stoneQueue.Dequeue();
+        stoneRef = stoneQueue.Dequeue();
 
         if (bReturnStone)
         {
-            spareStoneList.Add(stone);
+            spareStoneList.Add(stoneRef);
         }
         else
         {
-            stoneList.Add(stone);
+            stoneList.Add(stoneRef);
         }
         stoneSummonPos = pos;
         stoneSummonPos.y = summonedStonePosY;
 
-        stone.transform.SetParent(null);
-        stone.transform.position = stoneSummonPos;
-        stone.gameObject.SetActive(true);
-        stone.ResetStatus();
+        stoneRef.transform.SetParent(null);
+        stoneRef.transform.position = stoneSummonPos;
+        stoneRef.gameObject.SetActive(true);
+        stoneRef.ResetStatus();
     }
     public void ReturnStone(CRedGolemStone redGolemStone, int stoneLevel)
     {
@@ -467,8 +450,7 @@ public class BRedGolem : Boss
     }
     public void AnimEvent_JumpAttack()
     {
-        int num = Physics.OverlapSphereNonAlloc(transform.position, 5, jumpAttackCollisionArray, ConstDefine.LAYER_PLAYER);
-        AttackInRangeUtility.AttackLayerInRange(jumpAttackCollisionArray, InGameManager.Instance.Player.MaxHp * 40 / 100, num);
+        jumpAttack.AttackLayerInRadius(jumpAttack.GetLayerInRadius(transform), 20);
     }
     public void AnimEvent_JumpStart()
     {
@@ -481,17 +463,14 @@ public class BRedGolem : Boss
     }
     public virtual void AnimEvent_ThrowStone()
     {
-        Projectile p = projectileUtility.GetProjectile();
-        p.transform.localPosition += Vector3.up * 0.5f;
-
+        Projectile p = rangedAttackUtility.SummonProjectile(0.5f);
         p.SetShotDirection(transform.forward);
         p.SetDistance(12);
         p.ShotProjectile();
     }
     public virtual void AnimEvent_SummonStone()
     {
-        int num = Physics.OverlapSphereNonAlloc(decalList[(int)EDecalNumber.SummonStone].transform.position, 1, summonStoneCollisionArray, ConstDefine.LAYER_PLAYER);
-        AttackInRangeUtility.AttackLayerInRange(summonStoneCollisionArray, InGameManager.Instance.Player.MaxHp * 15 / 100, num);
+        jumpAttack.AttackLayerInRadius(jumpAttack.GetLayerInRadius(decalList[(int)EDecalNumber.SummonStone].transform, 1), 10);
         SummonStone(decalList[(int)EDecalNumber.SummonStone].transform.position);
         decalList[(int)EDecalNumber.SummonStone].InActiveDecal(transform);
     }

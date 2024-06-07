@@ -22,7 +22,7 @@ public class CRedGolemStone : Monster //1½ºÅ×ÀÌÁö º¸½º ·¹µå°ñ·½ÀÇ µ¹ ¿ÀºêÁ§Æ® (Ç
 
     private Transform parent;
     private Transform decalParent;
-  //  private DamageUIContainer damageUIContainer = new DamageUIContainer();
+    private DamageUIContainer damageUIContainer = new DamageUIContainer();
 
     [SerializeField] private Decal chargingDecal;
     [SerializeField] private Decal decal;
@@ -95,7 +95,7 @@ public class CRedGolemStone : Monster //1½ºÅ×ÀÌÁö º¸½º ·¹µå°ñ·½ÀÇ µ¹ ¿ÀºêÁ§Æ® (Ç
     public CRedGolemStone SetReference(Transform parent)
     {
         this.parent = parent;
-        InGameManager.Instance.DGameOver += StopAllCoroutines;
+
         return this;
     }
     public override void Hit(float damage) //¸ó½ºÅÍ ÇÇ°Ý ÇÔ¼ö
@@ -119,7 +119,7 @@ public class CRedGolemStone : Monster //1½ºÅ×ÀÌÁö º¸½º ·¹µå°ñ·½ÀÇ µ¹ ¿ÀºêÁ§Æ® (Ç
         if (eCharacterActionable == ECharacterActionable.Unactionable) return;
         if(other.CompareTag(ConstDefine.TAG_PLAYER))
         {
-            InGameManager.Instance.Player.Hit(InGameManager.Instance.Player.MaxHp * (10 + (5 * ((int)eStoneLevel + 1))) / 100);
+            InGameManager.Instance.Player.Hit(currentDamage);
             parent.GetComponent<BRedGolem>().ReturnStone(this, (int)eStoneLevel);
         }
     }

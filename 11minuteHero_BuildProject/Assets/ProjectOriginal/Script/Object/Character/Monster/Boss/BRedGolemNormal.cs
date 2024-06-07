@@ -23,9 +23,9 @@ public class BRedGolemNormal : BRedGolem
             indestructibleStoneQueue.Enqueue(obj.GetComponent<CRedGolemStone>().SetReference(transform));
         }
     }
-    public override void ActiveBoss()
+    public override void InitBoss()
     {
-        base.ActiveBoss();
+        base.InitBoss();
         for (int i = 0; i < decalParentArray.Length; i++)
         {
             decalParentArray[i] = decalList[i + (int)EDecalNumber.SummonStoneX].transform.parent;
@@ -40,8 +40,7 @@ public class BRedGolemNormal : BRedGolem
     {
         for (int i = -1; i < 2; i++)
         {
-            Projectile p = projectileUtility.GetProjectile();
-            p.transform.localPosition += Vector3.up * 0.5f;
+            Projectile p = rangedAttackUtility.SummonProjectile(0.5f);
             Vector3 direction = Quaternion.Euler(0, 25 * i, 0) * transform.forward;
             p.SetShotDirection(direction);
             p.SetDistance(12);
@@ -75,8 +74,7 @@ public class BRedGolemNormal : BRedGolem
     {
         for(int i = 0; i < decalParentArray.Length; i++)
         {
-            int num = Physics.OverlapBoxNonAlloc(decalList[(int)EDecalNumber.SummonStoneX + i].transform.position, new Vector3(0.4f, 1, 2.5f), summonStoneCollisionArray, decalParentArray[i].rotation, ConstDefine.LAYER_PLAYER);
-            AttackInRangeUtility.AttackLayerInRange(summonStoneCollisionArray, InGameManager.Instance.Player.MaxHp * 20 / 100, num);
+            attackInSquareUtility.AttackLayerInSquare(attackInSquareUtility.GetLayerInSquare(decalList[(int)EDecalNumber.SummonStoneX + i].transform.position, new Vector3(0.4f, 1, 2.5f), decalParentArray[i].rotation), 15);
 
             decalList[(int)EDecalNumber.SummonStoneX + i].InActiveDecal(decalParentArray[i]);
             decalParentArray[i].transform.SetParent(transform);
@@ -88,35 +86,34 @@ public class BRedGolemNormal : BRedGolem
         int rand = Random.Range(1, 101);
         float posY;
 
-        CRedGolemStone stone;
         if (rand <= 70)
         {
             if (stoneQueue.Count == 0) InitStoneQueue();
-            stone = stoneQueue.Dequeue();
+            stoneRef = stoneQueue.Dequeue();
             posY = summonedStonePosY;
         }
         else
         {
             if (indestructibleStoneQueue.Count == 0) InitStoneQueue();
-            stone = indestructibleStoneQueue.Dequeue();
+            stoneRef = indestructibleStoneQueue.Dequeue();
             posY = summonedIndestructibleStonePosY;
         }
 
         if (bReturnStone)
         {
-            spareStoneList.Add(stone);
+            spareStoneList.Add(stoneRef);
         }
         else
         {
-            stoneList.Add(stone);
+            stoneList.Add(stoneRef);
         }
         stoneSummonPos = pos;
         stoneSummonPos.y = posY;
 
-        stone.transform.SetParent(null);
-        stone.transform.position = stoneSummonPos;
-        stone.gameObject.SetActive(true);
-        stone.ResetStatus();
+        stoneRef.transform.SetParent(null);
+        stoneRef.transform.position = stoneSummonPos;
+        stoneRef.gameObject.SetActive(true);
+        stoneRef.ResetStatus();
     }
     protected override void ReturnStoneByLevel(CRedGolemStone redGolemStone, int stoneLevel)
     {

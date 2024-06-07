@@ -8,9 +8,9 @@ public class BombItem : InteractiveItem
     [SerializeField] private float damageForBossPercentage;
     protected override void Interaction()
     {
-        for (int i = 0; i < InGameManager.Instance.MonsterList.Count; i++)
+        foreach (var item in InGameManager.Instance.MonsterList)
         {
-            InGameManager.Instance.MonsterList[i].Hit(damageForNormalMonster);
+            item.Hit(damageForNormalMonster);
         }
         if(InGameManager.Instance.CurrentBoss.IsActivate)
         {

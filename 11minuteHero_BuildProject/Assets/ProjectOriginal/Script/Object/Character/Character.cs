@@ -1,11 +1,6 @@
 using System.Collections;
 using UnityEngine;
 
-public interface IDebuffApplicable
-{
-    public void SlowDown(float value, float duration);
-    public void Stun(float duration);
-}
 public enum EApplicableType //수치 적용 방식
 {
     Value,
@@ -22,7 +17,7 @@ public abstract class Character : MonoBehaviour //플레이어, 몬스터의 부모 클래스
     [SerializeField] protected float speed; //이동속도
 
     [SerializeField] protected float currentHp; //현재 체력
-    [SerializeField] protected float currentSpeed; //현재 이동속도
+    protected float currentSpeed; //현재 이동속도
 
     protected Animator animator; //애니메이터 컴포넌트 참조
 
@@ -49,12 +44,12 @@ public abstract class Character : MonoBehaviour //플레이어, 몬스터의 부모 클래스
     }
     protected virtual void Start()
     {
-        InGameManager.Instance.DGameOver += () => rigidbody.velocity = Vector3.zero;
+        InGameManager.Instance.DGameOver += StopAllCoroutines;
     }
     protected virtual void DecreaseHp(float value) //체력 감소
     {
         currentHp -= value;
-        if (currentHp <= 0) //체력이 0이 된 경우 처리
+        if (currentHp < 0) //체력이 0이 된 경우 처리
         {
             currentHp = 0;
             IsDie = true;
@@ -63,7 +58,6 @@ public abstract class Character : MonoBehaviour //플레이어, 몬스터의 부모 클래스
     }
     public virtual void Hit(float damage)
     {
-        if (IsDie) return;
         DecreaseHp(damage);
     }
     protected virtual bool Move() //이동 함수
@@ -74,19 +68,14 @@ public abstract class Character : MonoBehaviour //플레이어, 몬스터의 부모 클래스
     public virtual void KnockBack(float speed, float duration) //캐릭터 뒷방향으로의 넉백 함수
     {
         if (IsKnockBack) return;
-        if (InGameManager.Instance.bTimeStop) return;
-
         IsKnockBack = true;
         eCharacterActionable = ECharacterActionable.Unactionable; //행동 불가 처리
-
 
         StartCoroutine(Co_KnockBack(speed, duration));
     }
     public virtual void KnockBack(float speed, float duration, Vector3 direction) //임의의 방향으로의 넉백 함수
     {
         if (IsKnockBack) return;
-        if (InGameManager.Instance.bTimeStop) return;
-
         IsKnockBack = true;
         eCharacterActionable = ECharacterActionable.Unactionable; //행동 불가 처리
 

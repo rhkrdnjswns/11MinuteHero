@@ -5,17 +5,16 @@ using UnityEngine.UI;
 
 public class InGameBasicUIManager : MonoBehaviour
 {
-    [SerializeField] private Text timerSecondText;
+    [SerializeField] private Text timerHourText;
     [SerializeField] private Text timerMinuteText;
-    [SerializeField] private GameObject timerSecondHeader;
-    [SerializeField] private GameObject timerMinuteHeader;
-
     [SerializeField] private Text killCountText;
     [SerializeField] private Text levelUpText;
     [SerializeField] private Image fadeImage;
     [SerializeField] private BarImageUtility playerHpBar;
     [SerializeField] private BarImageUtility playerExpBar;
 
+    public Text TimerHourText { get => timerHourText; set => timerHourText = value; }
+    public Text TimerMinuteText { get => timerMinuteText; set => timerMinuteText = value; }
     public Text KillCountText { get => killCountText; set => killCountText = value; }
     public BarImageUtility PlayerHpBar { get => playerHpBar; }
     public BarImageUtility PlayerExpBar { get => playerExpBar; }
@@ -29,23 +28,6 @@ public class InGameBasicUIManager : MonoBehaviour
     private void SetLevelUpTextAnim()
     {
         StartCoroutine(TweeningUtility.FadeOut(1f, levelUpText));
-    }
-    public void SetTimer(int minute, int second)
-    {
-        if (minute > 9)
-        {
-            timerMinuteHeader.SetActive(false);
-        }
-        if (second > 9 && timerSecondHeader.activeSelf)
-        {
-            timerSecondHeader.SetActive(false);
-        }
-        else if(second < 10 && !timerSecondHeader.activeSelf)
-        {
-            timerSecondHeader.SetActive(true);
-        }
-        timerSecondText.text = second.ToString();
-        timerMinuteText.text = minute.ToString();
     }
     public void InActiveExpBar()
     {

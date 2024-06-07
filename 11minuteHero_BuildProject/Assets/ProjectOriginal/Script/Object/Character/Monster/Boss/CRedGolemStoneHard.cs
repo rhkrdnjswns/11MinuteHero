@@ -5,10 +5,9 @@ using UnityEngine;
 public class CRedGolemStoneHard : CRedGolemStone
 {
     [SerializeField] private Decal earthQuakeDecal;
+    [SerializeField] private AttackRadiusUtility attackRadiusUtility;
     [SerializeField] private ParticleSystem earthQuakeParticle;
-    [SerializeField] private float radius;
 
-    private Collider[] earthQuakeCollisionArray = new Collider[1];
     private Coroutine earthquakeCoroutine;
     public override void ResetStatus()
     {
@@ -16,8 +15,8 @@ public class CRedGolemStoneHard : CRedGolemStone
         earthquakeCoroutine = StartCoroutine(Co_EarthQuake());
         ParticleSystem.MainModule main = earthQuakeParticle.main;
 
-        main.startSizeX = radius / 2;
-        main.startSizeZ = radius / 2;
+        main.startSizeX = attackRadiusUtility.Radius / 2;
+        main.startSizeZ = attackRadiusUtility.Radius / 2;
     }
     public override IEnumerator Co_CollectStone(float collectTime)
     {
@@ -38,8 +37,7 @@ public class CRedGolemStoneHard : CRedGolemStone
             yield return StartCoroutine(earthQuakeDecal.Co_ActiveDecal(4f, 3f));
 
             earthQuakeParticle.Play();
-            int num = Physics.OverlapSphereNonAlloc(transform.position, 1, earthQuakeCollisionArray, ConstDefine.LAYER_PLAYER);
-            AttackInRangeUtility.AttackLayerInRange(earthQuakeCollisionArray, InGameManager.Instance.Player.MaxHp * 20 / 100, num);
+            attackRadiusUtility.AttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform), 20);
             earthQuakeDecal.InActiveDecal();
         }
     }

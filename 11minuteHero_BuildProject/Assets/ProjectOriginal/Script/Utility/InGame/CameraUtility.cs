@@ -33,10 +33,7 @@ public class CameraUtility : MonoBehaviour //카메라 기능 클래스
             for (int i = 0; i < Physics.RaycastNonAlloc(transform.position, direction, hits, 15, mask); i++)
             {
                 obj = hits[i].transform.GetComponent<ObstacleUtility>();
-                if(obj != null)
-                {
-                    obj.SetTransparent();
-                }
+                obj?.SetTransparent();
             }
         }
     }

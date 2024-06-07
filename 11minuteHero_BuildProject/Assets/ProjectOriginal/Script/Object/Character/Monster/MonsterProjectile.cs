@@ -11,10 +11,10 @@ public class MonsterProjectile : Projectile
         while(timer < activateTime)
         {
             timer += Time.deltaTime;
-            transform.position += shotDirection * speed * Time.deltaTime;
+            transform.position += shotDirection * rangedAttackUtility.ProjectileSpeed * Time.deltaTime;
             yield return null;
         }
-        owner.ReturnProjectile(this);
+        rangedAttackUtility.ReturnProjectile(this);
     }
     public override void SetActivateTime(float time)
     {
@@ -24,8 +24,8 @@ public class MonsterProjectile : Projectile
     {
         if(other.CompareTag(ConstDefine.TAG_PLAYER))
         {
-            InGameManager.Instance.Player.Hit(damage);
-            owner.ReturnProjectile(this); //이후 풀로 되돌림
+            InGameManager.Instance.Player.Hit(rangedAttackUtility.ProjectileDamage);
+            rangedAttackUtility.ReturnProjectile(this); //이후 풀로 되돌림
         }
     }
 }

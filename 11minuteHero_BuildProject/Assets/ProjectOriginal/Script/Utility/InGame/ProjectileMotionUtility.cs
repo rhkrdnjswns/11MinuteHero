@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -13,7 +15,7 @@ public class ProjectileMotionUtility
     /// <returns></returns>
     public static float GetProjectileVelocity(float distance, float angle)
     {
-        return distance / (Mathf.Sin(2 * angle * Mathf.Deg2Rad) / ConstDefine.GRAVITY_SCALE);
+        return distance / (Mathf.Sin(2 * angle * Mathf.Deg2Rad) / ConstDefine.GRAVITY);
     }
     /// <summary>
     /// 포물선 운동의 Vx 반환

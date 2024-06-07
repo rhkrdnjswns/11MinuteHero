@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class PArcher : CPlayer
 {
+    protected override IEnumerator Co_Attack()
+    {
+        float timer = 0;
+        while (true)
+        {
+            timer = 0;
+            while (timer < weapon.CoolTime)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            if (!isDodge && eCharacterActionable == ECharacterActionable.Actionable)
+            {
+                weapon.Attack();
+            }
+            yield return null;
+        }
+    }
     protected override IEnumerator Co_Dodge()
     {
         animator.SetTrigger(ConstDefine.TRIGGER_Dodge);

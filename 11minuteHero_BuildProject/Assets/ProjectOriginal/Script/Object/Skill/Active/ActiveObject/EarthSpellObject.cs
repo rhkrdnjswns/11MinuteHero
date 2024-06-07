@@ -2,49 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EarthSpellObject : ActiveObject
+public class EarthSpellObject : MonoBehaviour
 { 
     [SerializeField] private ParticleSystem particleSystem; //파티클
-    private float radius;
 
-    private readonly WaitForSeconds particleStartDelay = new WaitForSeconds(1.6f);
-    private readonly WaitForSeconds particleEndDelay = new WaitForSeconds(1.5f);
-
-    private Collider[] collisionArray = new Collider[60];
-    private float slowDownValue;
-    private float slowDownDuration;
+    private AttackRadiusUtility attackRadiusUtility; //반경 공격기능 참조
 
 #if UNITY_EDITOR
     public int index;
 #endif
-    public override void SetAttackRadius(float radius)
+    public EarthSpellObject SetAttackRadiusUtility(AttackRadiusUtility reference) //체이닝을 위한 반환타입
     {
-        this.radius = radius;
+        attackRadiusUtility = reference;
+        return this;
     }
-    public override void SetSlowDownData(float value, float duration)
+    public void ActivateSkill(Transform parent, Queue<EarthSpellObject> queue, float damage, float duration, float percentage)  //오브젝트 활성화
     {
-        slowDownValue = value;
-        slowDownDuration = duration;
-    }
-    public override void IncreaseSize(float value)
-    {
-        transform.localScale += (Vector3.one - Vector3.up) * value;
-    }
-    protected override IEnumerator Co_Activation()
-    {
-        particleSystem.Play();
-        yield return particleStartDelay; //지진 파티클 타이밍에 맞게 반경 내의 몬스터 타격
-        int num = Physics.OverlapSphereNonAlloc(transform.position, radius, collisionArray, ConstDefine.LAYER_MONSTER);
-        AttackInRangeUtility.AttackAndSlowDownLayerInRange(collisionArray, damage, num, slowDownValue, slowDownDuration);
-#if UNITY_EDITOR
-        InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += num * damage;
-#endif
-        yield return particleEndDelay; //파티클 종료 딜레이
+        //transform.position = InGameManager.Instance.Player.transform.position + Vector3.up * 0.5f; //위치 조정
 
-        owner.ReturnActiveObject(this);
+        particleSystem.Play();
+        StartCoroutine(Co_Activation(parent, queue, damage, duration, percentage));
     }
-    private void OnDrawGizmos()
+    private IEnumerator Co_Activation(Transform parent, Queue<EarthSpellObject> queue, float damage, float duration, float percentage)
     {
-        Gizmos.DrawWireSphere(transform.position, radius);
+        yield return new WaitForSeconds(1.6f); //지진 파티클 타이밍에 맞게 반경 내의 몬스터 타격
+        attackRadiusUtility.AttackLayerInRadius(attackRadiusUtility.GetLayerInRadius(transform), damage, EAttackType.Slow, duration, percentage);
+#if UNITY_EDITOR
+        int count = attackRadiusUtility.GetLayerInRadius(transform).Length;
+        InGameManager.Instance.SkillManager.ActiveSkillList[index].TotalDamage += count * damage;
+#endif
+        yield return new WaitForSeconds(1.5f); //파티클 종료 딜레이
+
+        transform.SetParent(parent);
+        transform.localPosition = Vector3.zero;
+        queue.Enqueue(this);
     }
 }

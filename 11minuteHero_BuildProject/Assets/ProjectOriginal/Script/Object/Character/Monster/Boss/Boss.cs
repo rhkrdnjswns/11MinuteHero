@@ -18,25 +18,25 @@ public abstract class Boss : Monster
     private int hpEventIndex;
     protected bool bHpEvent;
 
-    private bool bBossDie;
     public bool IsActivate { get; private set; }
     protected GameObject modelObject;
     protected abstract void PlayHpEvent(int index);
     protected abstract void InitBehaviorTree();
-    public virtual void InitBoss()
+    protected override void Awake()
     {
+        base.Awake();
         modelObject = transform.GetChild(0).gameObject;
-        InitDamageUIContainer(modelObject.transform.localScale.y);
-        cameraUtility = Camera.main.GetComponent<CameraUtility>();
-        InitBehaviorTree();
     }
     public float GetStartAnimPlayTime()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         return stateInfo.length;
     }
-    public virtual void ActiveBoss()
+    public virtual void InitBoss()
     {
+        InitDamageUIContainer(modelObject.transform.localScale.y);
+        cameraUtility = Camera.main.GetComponent<CameraUtility>();
+        InitBehaviorTree();
         StartCoroutine(Co_ExcuteBehaviorTree());
         IsActivate = true;
     }
@@ -76,7 +76,7 @@ public abstract class Boss : Monster
     }
     private IEnumerator Co_ExcuteBehaviorTree()
     {
-        while (!IsDie)
+        while (true)
         {
             yield return null;
             if (bHpEvent) continue;
@@ -85,30 +85,15 @@ public abstract class Boss : Monster
     }
     public override void Hit(float damage)
     {
-        if (bHpEvent || IsDie) return;
+        if (bHpEvent) return;
         base.Hit(damage);
         InGameManager.Instance.BossUIManager.UpdateBossHpBar(currentHp / maxHp);
-        if(IsDie)
-        {
-            if (bBossDie) return;
-            bBossDie = true;
-            InGameManager.Instance.StartCoroutine(Co_Die());
-        }
         if (hpEventIndex >= hpEventArray.Length) return;
         if((currentHp / maxHp * 100) <= hpEventArray[hpEventIndex])
         {
             bHpEvent = true;
             PlayHpEvent(hpEventIndex++);
         }
-        
-    }
-    protected IEnumerator Co_Die()
-    {
-        animator.SetTrigger(ConstDefine.TRIGGER_DIE);
-        InGameManager.Instance.DGameOver();
-        yield return new WaitForSeconds(1.5f);
-
-        InGameManager.Instance.StartCoroutine(InGameManager.Instance.Co_ShowResultPopup(true));
     }
     protected virtual void IncreaseHp(float value)
     {

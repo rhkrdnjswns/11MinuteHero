@@ -3,32 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // * 일반 몬스터 AI는 상태머신으로 디자인
-public class NormalMonster : Monster, IDebuffApplicable
+public class NormalMonster : Monster
 {
-
-    public int mobScale;
-    public int id;
-
-    private int expGreenWeight;
-    private int expGreenWeightDecrease;
-    private int expBlueWeight;
-    private int expBlueWeightIncrease;
-    private int expBlueWeightDecrease;
-    private int expRedWeight;
-    private int expRedWeightIncrease;
-    private int expPurpleWeight;
-    private int expPurpleWeightIncrease;
-
-    private float currentDamage;
-
-    private float hpIncrease;
-    private float damageIncrease;
-    private float speedIncrease;
+    public enum EMonsterState
+    {
+        Chase = 0,
+        Attack
+    }
 
     private Coroutine stiffnessCoroutine;
-    private Coroutine slowDownCoroutine;
-
-    private float currentSlowDownValue;
 
     [SerializeField] protected EMonsterState monsterState;
     [SerializeField] protected float damage; //데미지
@@ -36,26 +19,19 @@ public class NormalMonster : Monster, IDebuffApplicable
     [SerializeField] private float attackRange;
 
     protected SphereCollider overlappingAvoider; //몬스터 겹침 방지 콜라이더
-    protected BoxCollider boxCollider; //몬스터 충돌처리 콜라이더
+    private BoxCollider boxCollider; //몬스터 충돌처리 콜라이더
+    private DebuffList debuffList;
 
     private int returnIndex;
 
     private float distToPlayer;
 
-    protected WaitForSeconds dieAnimDelay = new WaitForSeconds(0.2f);
+    private WaitForSeconds dieAnimDelay;
 
     private bool isStiffness;
     public float DistToPlayer { get => distToPlayer; }
+    public DebuffList DebuffList { get => debuffList; set => debuffList = value; }
     public int ReturnIndex { set => returnIndex = value; }
-    public Animator Animator { get => animator; }
-    protected override void Start()
-    {
-        base.Start();
-
-        InGameManager.Instance.DGameOver += () => animator.enabled = false;
-        InGameManager.Instance.DGameOver += StopAllCoroutines;
-        InGameManager.Instance.DGameOver += () => overlappingAvoider.enabled = false;
-    }
     private IEnumerator Co_StateMachine() //일반 몬스터 상태머신
     {
         while (!IsDie)
@@ -72,138 +48,41 @@ public class NormalMonster : Monster, IDebuffApplicable
                     Debug.LogError("유효하지 않은 몬스터 상태입니다.");
                     yield break;
             }
-            
             yield return null;
         }
     }
-    public override void InitMonsterData()
+    protected override void Awake()
     {
-        base.InitMonsterData();
+        base.Awake();
+        debuffList = new DebuffList(this);
 
         overlappingAvoider = transform.Find("OverlappingAvoider").GetComponent<SphereCollider>();
         boxCollider = GetComponent<BoxCollider>();
-        ReadCSVData();
     }
-    protected virtual void ReadCSVData()
+    protected override void Start()
     {
-        expGreenWeight = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1 , 1);
-        expGreenWeightDecrease = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 2);
-
-        expBlueWeight = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 3);
-        expBlueWeightIncrease = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 4);
-        expBlueWeightDecrease = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 5);
-        
-        expRedWeight = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 6);
-        expRedWeightIncrease = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 7);
-        
-        expPurpleWeight = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 8);
-        expPurpleWeightIncrease = InGameManager.Instance.CSVManager.GetCSVData<int>(4, mobScale + 1, 9);
-
-        attackRange = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 11);
-        
-        maxHp = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 12);
-        currentHp = maxHp;
-        hpIncrease = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 13);
-
-        damage = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 14);
-        currentDamage = damage;
-        damageIncrease = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 15);
-
-        speed = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 16);
-        speedIncrease = InGameManager.Instance.CSVManager.GetCSVData<float>(5, id, 17);
+        base.Start();
     }
     public void ResetMonster() //몬스터 생성 시 초기화
     {
-        if (!animator.enabled)
-        {
-            animator.enabled = true;
-        }
+        currentHp = maxHp;
+        currentSpeed = speed;
+
+        StartCoroutine(Co_StateMachine()); //몬스터 상태 머신 실행
+        StartCoroutine(Co_UpdatePositionData()); //몬스터 위치 관련 코루틴 실행
+
         IsDie = false; //상호작용 유효하도록 초기화
         eCharacterActionable = ECharacterActionable.Actionable;
         overlappingAvoider.enabled = true;
         boxCollider.enabled = true;
-
-        currentHp = maxHp + (hpIncrease * (int)(InGameManager.Instance.Timer / 60));
-        currentDamage = damage + (damageIncrease * (int)(InGameManager.Instance.Timer / 60));
-        currentSpeed = speed + (speedIncrease * (int)(InGameManager.Instance.Timer / 60)); 
-
-        StartCoroutine(Co_StateMachine()); //몬스터 상태 머신 실행
-        StartCoroutine(Co_UpdatePositionData()); //몬스터 위치 관련 코루틴 실행
-    }
-    public void ResetMonster(bool isRush, Vector3 rushDir, float distance) //몬스터 생성 시 초기화
-    {
-        if(isRush)
-        {
-            StartCoroutine(Co_Rush(rushDir, distance));
-            return;
-        }
-        if (!animator.enabled)
-        {
-            animator.enabled = true;
-        }
-        IsDie = false; //상호작용 유효하도록 초기화
-        eCharacterActionable = ECharacterActionable.Actionable;
-        overlappingAvoider.enabled = true;
-        boxCollider.enabled = true;
-
-        currentHp = maxHp + (hpIncrease * (int)(InGameManager.Instance.Timer / 60));
-        currentDamage = damage + (damageIncrease * (int)(InGameManager.Instance.Timer / 60));
-        currentSpeed = speed + (speedIncrease * (int)(InGameManager.Instance.Timer / 60));
-
-        StartCoroutine(Co_StateMachine()); //몬스터 상태 머신 실행
-        StartCoroutine(Co_UpdatePositionData()); //몬스터 위치 관련 코루틴 실행
-    }
-    private IEnumerator Co_Rush(Vector3 dir, float distance)
-    {
-        animator.SetBool(ConstDefine.BOOL_ISMOVE, true);
-        transform.LookAt(dir);
-        overlappingAvoider.enabled = false;
-
-        while(true)
-        {
-            if(dir == Vector3.forward)
-            {
-                if(transform.position.z - InGameManager.Instance.Player.transform.position.z > distance)
-                {
-                    break;
-                }
-            }
-            else if(dir == Vector3.back)
-            {
-                if (InGameManager.Instance.Player.transform.position.z - transform.position.z > distance)
-                {
-                    break;
-                }
-            }
-            else if(dir == Vector3.left)
-            {
-                if (InGameManager.Instance.Player.transform.position.x - transform.position.x > distance)
-                {
-                    break;
-                }
-            }
-            else
-            {
-                if (transform.position.x - InGameManager.Instance.Player.transform.position.x > distance)
-                {
-                    break;
-                }
-            }
-            transform.position += dir * speed * Time.deltaTime;
-            yield return null;
-        }
-        InGameManager.Instance.MonsterPool.ReturnMonster(this, returnIndex); //몬스터 풀로 되돌림   
-
-        InGameManager.Instance.MonsterList.Remove(this);
     }
     public override void Hit(float damage) //몬스터 피격 함수
     {
         base.Hit(damage);
-        if (IsDie) StartCoroutine(Co_DieEvent()); //죽었으면 사망 코루틴 실행
+        if (currentHp <= 0) StartCoroutine(Co_DieEvent()); //죽었으면 사망 코루틴 실행
     }
     public override void KnockBack(float speed, float duration)
     {
-        if (InGameManager.Instance.bTimeStop) return;
         overlappingAvoider.enabled = false; //몬스터 겹침방지 콜라이더를 꺼줌 (rigidbody.velocity가 0이라 뒤에 다른 몬스터가 있는 경우 밀려나지 않음)
 
         base.KnockBack(speed, duration);
@@ -252,25 +131,25 @@ public class NormalMonster : Monster, IDebuffApplicable
             yield return null;
         }
     }
-    protected virtual IEnumerator Co_DieEvent() //사망 효과 코루틴
+    private IEnumerator Co_DieEvent() //사망 효과 코루틴
     { 
+        IsDie = true; //상호작용 하지 않게 처리
         overlappingAvoider.enabled = false;
         boxCollider.enabled = false;
 
-        if (!animator.enabled) animator.enabled = true;
         animator.SetTrigger(ConstDefine.TRIGGER_DIE); //사망 애니메이션
         InGameManager.Instance.KillCount++; //킬카운트 1 증가
 
         InGameManager.Instance.ItemManager.GetItem(transform.position, GetItemIDByWeight());
 
-        yield return dieAnimDelay;
-        while (transform.position.y > -3) //몬스터가 땅 밑으로 사라지는 효과
+        while (transform.position.y > -1.5) //몬스터가 땅 밑으로 사라지는 효과
         {
-            transform.position += Vector3.down * 2 * Time.deltaTime;
+            transform.position += Vector3.down * 1 * Time.deltaTime;
             yield return null;
         }
-        animator.SetTrigger(ConstDefine.TRIGGER_DIEEND);
-        yield return dieAnimDelay;
+
+        if (dieAnimDelay == null) dieAnimDelay = new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        yield return dieAnimDelay;//애니메이션 재생 시간만큼 딜레이
         InGameManager.Instance.MonsterPool.ReturnMonster(this, returnIndex); //몬스터 풀로 되돌림   
 
         InGameManager.Instance.MonsterList.Remove(this);
@@ -307,50 +186,16 @@ public class NormalMonster : Monster, IDebuffApplicable
         if (isStiffness) return;
         if (other.CompareTag(ConstDefine.TAG_PLAYER))
         {
-            InGameManager.Instance.Player.Hit(currentDamage);
+            InGameManager.Instance.Player.Hit(damage);
         }
-    }
-    public void Stun(float duration)
-    {
-        if (InGameManager.Instance.bTimeStop) return;
-        SetStiffness(duration);
-    }
-    public void SlowDown(float value, float duration)
-    {
-        if (InGameManager.Instance.bTimeStop) return;
-        SetSlowDonw(value, duration);
-    }
-    private void SetSlowDonw(float value, float duration)
-    {
-        if (value >= currentSlowDownValue)
-        {
-            if (slowDownCoroutine != null)
-            {
-                StopCoroutine(slowDownCoroutine);
-                currentSpeed += currentSlowDownValue;
-            }
-            currentSlowDownValue = value;
-            currentSpeed -= value;
-            slowDownCoroutine = StartCoroutine(Co_SlowDown(duration));
-        }
-    }
-    private IEnumerator Co_SlowDown(float duration)
-    {
-        float timer = 0;
-        while(timer < duration)
-        {
-            timer += Time.deltaTime;
-            yield return null;
-        }
-        currentSpeed += currentSlowDownValue;
-        currentSlowDownValue = 0;
     }
     public void SetStiffness(float sec)
     {
         isStiffness = true;
         eCharacterActionable = ECharacterActionable.Unactionable;
         animator.enabled = false;
-        if (stiffnessCoroutine != null)
+
+        if(stiffnessCoroutine != null)
         {
             StopCoroutine(stiffnessCoroutine);
         }
@@ -359,7 +204,7 @@ public class NormalMonster : Monster, IDebuffApplicable
     private IEnumerator Co_Stiffness(float sec)
     {
         float timer = 0;
-        while (timer < sec)
+        while(timer < sec)
         {
             timer += Time.deltaTime;
             yield return null;
@@ -370,34 +215,6 @@ public class NormalMonster : Monster, IDebuffApplicable
     }
     private EItemID GetItemIDByWeight()
     {
-        if(InGameManager.Instance.killCountForItem >= 100)
-        {
-            InGameManager.Instance.killCountForItem = 0;
-            int rand = Random.Range(4, 8);
-            return (EItemID)rand;
-        }
-
-        int green = expGreenWeight - (expGreenWeightDecrease * ((int)InGameManager.Instance.Timer / 60));
-        int blue = expBlueWeight + (expBlueWeightIncrease * ((int)InGameManager.Instance.Timer / 60)) - (expBlueWeightDecrease * ((int)InGameManager.Instance.Timer / 60));
-        int red = expRedWeight + (expRedWeightIncrease * ((int)InGameManager.Instance.Timer / 60)); 
-        int purple = expPurpleWeight + (expPurpleWeightIncrease * ((int)InGameManager.Instance.Timer / 60));
-
-        int[] array = { green, blue, red, purple }; 
-
-        int total = green + blue + red + purple;
-        int weight = Random.Range(1, total + 1);
-
-        int sum = 0;
-
-        for (int i = 0; i < array.Length; i++)
-        {
-            sum += array[i];
-            if(weight < sum)
-            {
-                return (EItemID)i;
-            }
-        }
-
-        return EItemID.ExpGreen;
+        return EItemID.Clock;
     }
 }

@@ -13,7 +13,6 @@ public class DamageUIContainer
     private Transform target; // Å¸°Ù ¸ó½ºÅÍÀÇ Æ®·£½ºÆû
 
     private Queue<DamageUI> damageUIQueue = new Queue<DamageUI>();
-    private ObjectPool<DamageUI> damageUIPool;
     private GameObject damageUIPrefab;
 
     private Transform container;
@@ -36,16 +35,18 @@ public class DamageUIContainer
     }
     private void CreateDamageUI(int createCount, GameObject prefab)
     {
-        damageUIPool = new ObjectPool<DamageUI>(damageUIPrefab, createCount, container);
-        damageUIPool.CreateObject();
+        for (int i = 0; i < createCount; i++)
+        {
+            GameObject obj = Object.Instantiate(prefab);
+            obj.SetActive(false);
+            obj.transform.SetParent(container);
+            damageUIQueue.Enqueue(obj.GetComponent<DamageUI>());
+        }
     }
     public void ActiveDamageUI(float damage)
     {
-        //if(!damageUIPool.IsValid())
-        //{
-
-        //}
-        DamageUI obj = damageUIPool.GetObject();
+        if (damageUIQueue.Count <= 0) CreateDamageUI(10, damageUIPrefab);
+        DamageUI obj = damageUIQueue.Dequeue();
         obj.transform.SetParent(canvas.transform);
 
         if(damage.ToString().IndexOf('.') >= 1)
@@ -61,9 +62,7 @@ public class DamageUIContainer
     {
         damageUI.transform.SetParent(container);
         damageUI.gameObject.SetActive(false);
-        damageUI.transform.localPosition = Vector3.zero;
-        damageUI.transform.localRotation = Quaternion.identity;
 
-        damageUIPool.ReturnObject(damageUI);
+        damageUIQueue.Enqueue(damageUI);
     }
 }

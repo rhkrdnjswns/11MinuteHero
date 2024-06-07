@@ -11,6 +11,26 @@ public class PWarrior : CPlayer
 
         warriorRush = GetComponentInChildren<WarriorRush>();
     }
+
+    protected override IEnumerator Co_Attack()
+    {
+        float timer;
+        while (true)
+        {
+            timer = 0;
+            while (timer < weapon.CoolTime)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            if (!isDodge && eCharacterActionable == ECharacterActionable.Actionable)
+            {
+                animator.SetTrigger(ConstDefine.TRIGGER_MELEE_ATTACK);
+                weapon.Attack();
+            }
+        }
+    }
+
     protected override IEnumerator Co_Dodge()
     {
         animator.SetTrigger(ConstDefine.TRIGGER_Dodge);

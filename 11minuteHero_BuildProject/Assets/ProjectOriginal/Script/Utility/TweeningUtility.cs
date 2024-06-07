@@ -152,14 +152,14 @@ public class TweeningUtility //트위닝 코루틴의 시간 체크는 Time.unscaledDeltaTim
         {
             while (timer < time)
             {
-                timer += Time.deltaTime;
-                transform.position += transform.up * velocity * Time.deltaTime;
+                timer += Time.unscaledDeltaTime;
+                transform.position += transform.up * velocity * Time.unscaledDeltaTime;
                 yield return null;
             }
             while (timer > 0)
             {
-                timer -= Time.deltaTime;
-                transform.position += transform.up * -velocity * Time.deltaTime;
+                timer -= Time.unscaledDeltaTime;
+                transform.position += transform.up * -velocity * Time.unscaledDeltaTime;
                 yield return null;
             }
             yield return null;

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5495034231940487843}
   - component: {fileID: 1558996128418971244}
   - component: {fileID: 8095447393910751394}
-  - component: {fileID: 5133467976014928136}
+  - component: {fileID: -4150351609221471710}
   m_Layer: 0
   m_Name: Prop_Banner_Torn_Red_01_Atlased
   m_TagString: Untagged
@@ -29,7 +29,6 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: 11.242902, y: 0.70000553, z: 7.117221}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -84,17 +83,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5133467976014928136
-MeshCollider:
+--- !u!65 &-4150351609221471710
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3148273110190009901}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4034168193168164559, guid: 3a0e3fe4cfb4ff749b318bf90961f898, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 1.5810605, y: 2.9486089, z: 0.2564125}
+  m_Center: {x: 0.0000009536743, y: 1.4742997, z: 0.0000011473894}

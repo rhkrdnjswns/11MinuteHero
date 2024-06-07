@@ -6,8 +6,7 @@ public enum ESkillType
 {
     Active = 0,
     Passive,
-    Evolution,
-    None
+    Evolution
 }
 public enum ESkillActiveID
 {
@@ -78,35 +77,27 @@ public abstract class Skill : MonoBehaviour //무기, 패시브, 액티브 스킬 등 모든 
     public int Id { get => id; }
     public void Reinforce() //모든 스킬의 강화 함수. 세부 내용은 각 객체들이 재정의
     {
-        if (eSkillType == ESkillType.Evolution)
-        {
-            throw new System.EvolutionSkillReinforceException();
-        }
         if (level == ConstDefine.SKILL_MAX_LEVEL) return;
         level++;
         UpdateSkillData();
     }
-    public virtual void InitSkill() //기믹 초기화
-    {
-        ReadCSVData();
-    }
-    public virtual void ActivateSkill() //기믹 활성화
+    public virtual void InitSkill() //기믹에 맞는 초기화 재정의
     {
         level = 1;
         transform.SetParent(InGameManager.Instance.Player.transform);
         transform.localPosition = Vector3.up * 0.5f;
         transform.localRotation = Quaternion.identity;
-
-#if UNITY_EDITOR
         Debug.Log($"{name} 추가"); //테스트
-#endif
 
         gameObject.SetActive(true);
     }
-    protected virtual void ReadCSVData()
+    public virtual void IncreaseAdditionalDamage(float value, EApplicableType eApplicableType)
     {
-        name = InGameManager.Instance.CSVManager.GetCSVData<string>((int)eSkillType, id, 2);
-        description = InGameManager.Instance.CSVManager.GetCSVData<string>((int)eSkillType, id, 3);
+        //Only Active
+    }
+    public virtual void DecreaseAdditionalDamage()
+    {
+        //Only Active;
     }
     protected abstract void UpdateSkillData();
     public abstract void SetEvlotionCondition();

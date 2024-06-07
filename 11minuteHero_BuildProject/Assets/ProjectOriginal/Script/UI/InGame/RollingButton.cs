@@ -5,7 +5,12 @@ using UnityEngine.UI;
 public class RollingButton : ButtonComponent
 {
     [SerializeField] private Image coolTimeImage;
+    [SerializeField] private float coolTime;
     private bool bCoolTime;
+    private void Start()
+    {
+        coolTime = InGameManager.Instance.Player.DodgeCoolTime;
+    }
     protected override void BtnEvt()
     {
         if (bCoolTime) return;
@@ -18,11 +23,11 @@ public class RollingButton : ButtonComponent
     }
     private IEnumerator Co_UpdateCoolTime()
     {
-        float timer = InGameManager.Instance.Player.DodgeCoolTime;
-        while (timer > 0)
+        float timer = coolTime;
+        while(timer > 0)
         {
             timer -= Time.deltaTime;
-            coolTimeImage.fillAmount = timer / InGameManager.Instance.Player.DodgeCoolTime;
+            coolTimeImage.fillAmount = timer / coolTime;
             yield return null;
         }
         bCoolTime = false;

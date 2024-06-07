@@ -7,13 +7,13 @@ public class ClockItem : InteractiveItem
     [SerializeField] private float stiffnessTime;
     protected override void Interaction()
     {
-        for (int i = 0; i < InGameManager.Instance.MonsterList.Count; i++)
+        foreach (var item in InGameManager.Instance.MonsterList)
         {
-            InGameManager.Instance.MonsterList[i].SetStiffness(stiffnessTime);
+            item.SetStiffness(stiffnessTime);
         }
-        for (int i = 0; i < InGameManager.Instance.ItemManager.ActivatedItemList.Count; i++)
+        foreach (var item in InGameManager.Instance.ItemManager.ActivatedItemList)
         {
-            InGameManager.Instance.ItemManager.ActivatedItemList[i].StopAnim(stiffnessTime);
+            item.StopAnim(stiffnessTime);
         }
         InGameManager.Instance.GrayscaleUtility.SetGrayscale(stiffnessTime, 0.5f, 0.5f);
         ReturnItem();
