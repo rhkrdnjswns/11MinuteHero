@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 720054099306259197}
   - component: {fileID: 686004870379547021}
   - component: {fileID: 694019424581561739}
-  - component: {fileID: 654205820446154033}
+  - component: {fileID: -4895527116431856077}
+  - component: {fileID: -179854631383691207}
   m_Layer: 0
   m_Name: gibbet
   m_TagString: Untagged
@@ -29,7 +30,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 227.14856, y: 0.6827656, z: 1.6169786}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -84,8 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &654205820446154033
-MeshCollider:
+--- !u!114 &-4895527116431856077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717089523699253833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a453ff2d1d6a2f4db6a27bb1ca040c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &-179854631383691207
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,7 +106,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: 6d6690200a35748e3b6b28d99a433d4b, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 3.4307296, y: 4.189721, z: 2.8701496}
+  m_Center: {x: -0.15963542, y: 2.1120977, z: 0.38178283}

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3378943448914704360}
   - component: {fileID: 1822744809974970445}
   - component: {fileID: 4516908076261854343}
+  - component: {fileID: 2120606379817306388}
   m_Layer: 0
   m_Name: plant-bush-small
   m_TagString: Untagged
@@ -27,8 +28,7 @@ Transform:
   m_GameObject: {fileID: 2715595286910201170}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.8762567, y: 0.03858465, z: -3.283992}
-  m_LocalScale: {x: 0.13271098, y: 1, z: 0.11844046}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -83,3 +83,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2120606379817306388
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2715595286910201170}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4788263, y: 0.96356344, z: 1.4125603}
+  m_Center: {x: 0.057464927, y: 0.4431969, z: 0.0006868243}

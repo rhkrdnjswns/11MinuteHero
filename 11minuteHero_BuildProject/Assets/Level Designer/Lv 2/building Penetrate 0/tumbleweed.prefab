@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4082617675198002067}
   - component: {fileID: 4094712757706298143}
   - component: {fileID: 4104992281527568193}
+  - component: {fileID: 6670937655437949846}
   m_Layer: 0
   m_Name: tumbleweed
   m_TagString: Untagged
@@ -27,8 +28,7 @@ Transform:
   m_GameObject: {fileID: 4081923009366984037}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.5265884, y: 0.56223077, z: -2.7638597}
-  m_LocalScale: {x: 0.13271098, y: 1, z: 0.11844046}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -83,3 +83,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6670937655437949846
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4081923009366984037}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0468346, y: 1.1025707, z: 1.1087407}
+  m_Center: {x: -0.033759013, y: -0.010946572, z: -0.11846824}

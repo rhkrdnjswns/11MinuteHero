@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 4022170201955087829}
   - component: {fileID: 4022170201952220661}
   - component: {fileID: 4022170201953187637}
-  - component: {fileID: 6589410594026233803}
+  - component: {fileID: 5308063449266242303}
+  - component: {fileID: -2325757609584437577}
   m_Layer: 0
   m_Name: egypt-stand
   m_TagString: Untagged
@@ -28,8 +29,7 @@ Transform:
   m_GameObject: {fileID: 4022170201955379701}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.72646785, y: 0, z: 1.4220287}
-  m_LocalScale: {x: 0.13271098, y: 1, z: 0.11844046}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -84,17 +84,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6589410594026233803
-MeshCollider:
+--- !u!65 &5308063449266242303
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4022170201955379701}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 6b30a93b22cc57f428560906c366b70c, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 3.3, y: 2.2704618, z: 2.5000002}
+  m_Center: {x: 0, y: 1.1352309, z: 0}
+--- !u!114 &-2325757609584437577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4022170201955379701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a453ff2d1d6a2f4db6a27bb1ca040c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

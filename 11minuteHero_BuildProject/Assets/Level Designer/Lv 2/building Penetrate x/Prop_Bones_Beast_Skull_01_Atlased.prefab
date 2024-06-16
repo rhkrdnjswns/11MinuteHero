@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 5526509559594023773}
   - component: {fileID: 1558651084538620690}
   - component: {fileID: 7817545610244186083}
-  - component: {fileID: 122707680714301552}
+  - component: {fileID: 5248545959955174162}
+  - component: {fileID: 5273567287775773246}
   m_Layer: 0
   m_Name: Prop_Bones_Beast_Skull_01_Atlased
   m_TagString: Untagged
@@ -28,8 +29,7 @@ Transform:
   m_GameObject: {fileID: 2282740570627466941}
   m_LocalRotation: {x: 0.000000011355516, y: 0.85442924, z: 0.000000018674145, w: 0.5195678}
   m_LocalPosition: {x: 2.9156594, y: 0, z: -1.4982717}
-  m_LocalScale: {x: 0.36359802, y: 3, z: 0.3882307}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1.0235}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &122707680714301552
-MeshCollider:
+--- !u!65 &5248545959955174162
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,7 +94,18 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7784066861274876696, guid: 96e6ccdb3b0da1c4880e6a403c783fa1, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.9603514, y: 1.2058027, z: 3.0506618}
+  m_Center: {x: 0.0000006407499, y: 0.6029006, z: 2.1419333e-15}
+--- !u!114 &5273567287775773246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2282740570627466941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a453ff2d1d6a2f4db6a27bb1ca040c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
