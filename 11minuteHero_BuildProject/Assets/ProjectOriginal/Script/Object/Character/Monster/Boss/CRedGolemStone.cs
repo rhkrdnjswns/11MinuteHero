@@ -49,7 +49,7 @@ public class CRedGolemStone : Monster //1½ºÅ×ÀÌÁö º¸½º ·¹µå°ñ·½ÀÇ µ¹ ¿ÀºêÁ§Æ® (Ç
             transform.position += direction * currentSpeed * Time.deltaTime;
             yield return null;
         }
-        parent.GetComponent<BRedGolem>().ReturnStone(this, (int)eStoneLevel);
+        parent.GetComponent<BRedGolemEasy>().ReturnStone(this, (int)eStoneLevel);
     }
     public virtual IEnumerator Co_CollectStone(float collectTime)
     {
@@ -104,7 +104,7 @@ public class CRedGolemStone : Monster //1½ºÅ×ÀÌÁö º¸½º ·¹µå°ñ·½ÀÇ µ¹ ¿ÀºêÁ§Æ® (Ç
 
         base.Hit(damage);
         damageUIContainer.ActiveDamageUI(damage);
-        if (currentHp <= 0) parent.GetComponent<BRedGolem>().ReturnStone(this, (int)eStoneLevel);
+        if (currentHp <= 0) parent.GetComponent<BRedGolemEasy>().ReturnStone(this, (int)eStoneLevel);
     }
     public override void KnockBack(float speed, float duration)
     {
@@ -120,7 +120,7 @@ public class CRedGolemStone : Monster //1½ºÅ×ÀÌÁö º¸½º ·¹µå°ñ·½ÀÇ µ¹ ¿ÀºêÁ§Æ® (Ç
         if(other.CompareTag(ConstDefine.TAG_PLAYER))
         {
             InGameManager.Instance.Player.Hit(InGameManager.Instance.Player.MaxHp * (10 + (5 * ((int)eStoneLevel + 1))) / 100);
-            parent.GetComponent<BRedGolem>().ReturnStone(this, (int)eStoneLevel);
+            parent.GetComponent<BRedGolemEasy>().ReturnStone(this, (int)eStoneLevel);
         }
     }
 }

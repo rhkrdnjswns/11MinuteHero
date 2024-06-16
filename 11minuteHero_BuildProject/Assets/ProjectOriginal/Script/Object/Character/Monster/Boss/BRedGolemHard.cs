@@ -12,9 +12,9 @@ public class BRedGolemHard : BRedGolemNormal
     [SerializeField] private List<ParticleSystem> earthQuakeParticleList;
 
     private Collider[] earthQuakeCollisionArray = new Collider[1];
-    public override void ActiveBoss()
+    public override void ActiveBossFunction()
     {
-        base.ActiveBoss();
+        base.ActiveBossFunction();
         foreach (var item in earthQuakeParticleList)
         {
             item.transform.SetParent(null);

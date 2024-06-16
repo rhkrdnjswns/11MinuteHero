@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BRedGolemNormal : BRedGolem
+public class BRedGolemNormal : BRedGolemEasy
 {
     private Transform[] decalParentArray = new Transform[2];
     [SerializeField] private GameObject indestructibleStonePrefab;
@@ -23,9 +23,9 @@ public class BRedGolemNormal : BRedGolem
             indestructibleStoneQueue.Enqueue(obj.GetComponent<CRedGolemStone>().SetReference(transform));
         }
     }
-    public override void ActiveBoss()
+    public override void ActiveBossFunction()
     {
-        base.ActiveBoss();
+        base.ActiveBossFunction();
         for (int i = 0; i < decalParentArray.Length; i++)
         {
             decalParentArray[i] = decalList[i + (int)EDecalNumber.SummonStoneX].transform.parent;

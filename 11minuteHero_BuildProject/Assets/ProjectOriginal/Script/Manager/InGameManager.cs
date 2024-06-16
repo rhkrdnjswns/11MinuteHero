@@ -192,7 +192,7 @@ public class InGameManager : MonoBehaviour
     {
         foreach (var item in monsterList)
         {
-            item.Hit(9999);
+            item.Hit(item.MaxHp);
         }
         bAppearBoss = true;
 
@@ -202,19 +202,19 @@ public class InGameManager : MonoBehaviour
         //보스 출현 사운드 실행 -> 보스
 
         //카메라 연출 -> 카메라팔로우
-        currentBoss.transform.position = randomBossPos(); //일정 거리의 랜덤한 위치 지정
+        currentBoss.transform.position = randomBossPos(currentBoss.bossAreaWidth / 2, currentBoss.bossAreaHeight / 2); //일정 거리의 랜덤한 위치 지정
         yield return StartCoroutine(cameraUtility.Co_FocusCam(2.5f, player.transform.position, currentBoss.transform.position)); //카메라 이동
 
         //보스 체력바 활성화, 보스 오브젝트 활성화
         inGameBasicUIManager.InActiveExpBar();
         bossUIManager.ActiveBossHpBar();
-        currentBoss.gameObject.SetActive(true);
-
-        //보스 구역 생성
-        currentBoss.CreateBossArea();
+        currentBoss.ActiveBoss();
 
         //보스 등장 애니메이션만큼 대기
         yield return new WaitForSeconds(currentBoss.GetStartAnimPlayTime());
+
+        //보스 구역 생성
+        currentBoss.CreateBossArea();
 
         //보스 위치 화살표 UI 생성 -> 보스UI매니저
         bossUIManager.SetBossDirectionArrow();
@@ -224,12 +224,12 @@ public class InGameManager : MonoBehaviour
         cameraUtility.UnFocus();
 
         //보스 동작 시작
-        currentBoss.ActiveBoss();
+        currentBoss.ActiveBossFunction();
     }
-    private Vector3 randomBossPos()
+    private Vector3 randomBossPos(float xMax, float zMax)
     {
-        float x = Random.Range(0f, 20f);
-        float z = x < 15 ? Random.Range(15f, 20f) : Random.Range(0f, 20f); //결정된 x위치값에 따라 z위치값을 결정
+        float x = Random.Range(0f, xMax);
+        float z = Random.Range(0f, zMax); //결정된 x위치값에 따라 z위치값을 결정
 
         int xOperation = Random.Range(0, 2) * 2 - 1; // -1 or 1 중 하나 선택
         x *= xOperation;

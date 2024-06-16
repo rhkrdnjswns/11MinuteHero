@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public abstract class Boss : Monster
 {
     protected BehaviorTree behaviorTree;
     [Range(20, 60)]
-    [SerializeField] protected float bossAreaWidth;
+    public float bossAreaWidth;
     [Range(20, 60)]
-    [SerializeField] protected float bossAreaHeight;
+    public float bossAreaHeight;
     [SerializeField] private GameObject bossAreaPrefab;
 
     protected CameraUtility cameraUtility;
@@ -30,13 +31,20 @@ public abstract class Boss : Monster
         cameraUtility = Camera.main.GetComponent<CameraUtility>();
         InitBehaviorTree();
     }
-    public float GetStartAnimPlayTime()
+    public virtual float GetStartAnimPlayTime()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         return stateInfo.length;
     }
     public virtual void ActiveBoss()
     {
+        gameObject.SetActive(true);
+    }
+    public virtual void ActiveBossFunction()
+    {
+        gameObject.tag = "Monster";
+        gameObject.layer = LayerMask.NameToLayer("Monster");
+
         StartCoroutine(Co_ExcuteBehaviorTree());
         IsActivate = true;
     }
@@ -66,16 +74,9 @@ public abstract class Boss : Monster
             else obj.transform.rotation = Quaternion.Euler(0, 90, 0);
         }
     }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            bHpEvent = true;
-            PlayHpEvent(1);
-        }
-    }
     private IEnumerator Co_ExcuteBehaviorTree()
     {
+        if (behaviorTree == null) yield break;
         while (!IsDie)
         {
             yield return null;
@@ -85,6 +86,7 @@ public abstract class Boss : Monster
     }
     public override void Hit(float damage)
     {
+        if (!IsActivate) return;
         if (bHpEvent || IsDie) return;
         base.Hit(damage);
         InGameManager.Instance.BossUIManager.UpdateBossHpBar(currentHp / maxHp);
@@ -100,7 +102,6 @@ public abstract class Boss : Monster
             bHpEvent = true;
             PlayHpEvent(hpEventIndex++);
         }
-        
     }
     protected IEnumerator Co_Die()
     {
@@ -123,5 +124,25 @@ public abstract class Boss : Monster
     public override void KnockBack(float speed, float duration, Vector3 direction)
     {
         return;
+    }
+    protected int GetBehaviorByWeight(params int[] weights)
+    {
+        int rand = Random.Range(0, weights.Sum());
+
+        int index = 0;
+
+        int weight = weights[index];
+
+        while (true)
+        {
+            if (rand < weight)
+            {
+                return index;
+            }
+            else
+            {
+                weight += weights[++index];
+            }
+        }
     }
 }
